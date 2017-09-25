@@ -9,12 +9,19 @@ public class Game
     private Parser parser;
     private Room currentRoom;
         
+    /**
+     * Creates the game object.
+     */
     public Game() 
     {
         createRooms();
         parser = new Parser();
     }
-
+    
+    /**
+     * Creates the rooms in the world. Has the list of rooms as well as their
+     * exits hard coded in the command. Sets the current room as well.
+     */
     private void createRooms()
     {
         Room outside, theatre, pub, lab, office;
@@ -40,7 +47,11 @@ public class Game
 
         currentRoom = outside;
     }
-
+    
+    /**
+     * Starts the game and keeps the player locked in this command's while loop
+     * until the game ends.
+     */
     public void play() 
     {            
         printWelcome();
@@ -52,7 +63,10 @@ public class Game
         }
         System.out.println("Thank you for playing.  Good bye.");
     }
-
+    
+    /**
+     * Prints a welcome message to the player before the game starts.
+     */
     private void printWelcome()
     {
         System.out.println();
@@ -63,6 +77,12 @@ public class Game
         System.out.println(currentRoom.getLongDescription());
     }
 
+    /**
+     * Processes the command entered by the player running its function and
+     * checking if the game should end.
+     * @param command The command entered by the player.
+     * @return A boolean that states if the game should end.
+     */
     private boolean processCommand(Command command) 
     {
         boolean wantToQuit = false;
@@ -85,7 +105,10 @@ public class Game
         }
         return wantToQuit;
     }
-
+    
+    /**
+     * Prints a short description of the game and then a list of commands.
+     */
     private void printHelp() 
     {
         System.out.println("You are lost. You are alone. You wander");
@@ -94,7 +117,14 @@ public class Game
         System.out.println("Your command words are:");
         parser.showCommands();
     }
-
+    
+    /**
+     * Goes to the room specified by the player, if the player has not entered a
+     * second word in the command, asks the player for direction and does
+     * nothing. If the direction is invalid, tells the player that they cannot
+     * go in that direction and does nothing.
+     * @param command The command entered by the player
+     */
     private void goRoom(Command command) 
     {
         if(!command.hasSecondWord()) {
@@ -115,6 +145,11 @@ public class Game
         }
     }
 
+    /**
+     * Quits the game if no second has been entered into the game.
+     * @param command The command entered by the player
+     * @return Returns if the quit command is valid.
+     */
     private boolean quit(Command command) 
     {
         if(command.hasSecondWord()) {

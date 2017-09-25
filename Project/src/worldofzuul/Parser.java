@@ -9,15 +9,25 @@ import java.util.StringTokenizer;
  */
 public class Parser 
 {
-    private CommandWords commands;
+    private CommandWords commands;  //Creates an object to keep track of commands.
     private Scanner reader;
 
+    
+    /**
+     * Constructor for object of the Parser type.
+     * Takes no arguments to create the object.
+     */
     public Parser() 
     {
         commands = new CommandWords();
         reader = new Scanner(System.in);
     }
-
+    
+    /**
+     * A method that reads a two words long command entered by the player.
+     * Takes no argument to read the command.
+     * @return Returns an object of the Command type containing the command entered by the player.
+     */
     public Command getCommand() 
     {
         String inputLine;
@@ -38,7 +48,10 @@ public class Parser
 
         return new Command(commands.getCommandWord(word1), word2);
     }
-
+    
+    /**
+     * Shows a list of valid commands.
+     */
     public void showCommands()
     {
         commands.showAll();
