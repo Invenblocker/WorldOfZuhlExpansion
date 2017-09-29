@@ -100,8 +100,12 @@ public class Game
                 wantToQuit = quit(command);
                 break;
             default:
-                System.out.println("I don't know what you mean...");
+                System.out.println("I don't know what you mean...\nType \"help\" for a list of commands.");
                 return false;
+        }
+        else
+        {
+            System.out.println("Please write in a command before hitting enter.");
         }
         return wantToQuit;
     }
