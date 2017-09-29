@@ -100,7 +100,8 @@ public class Game
                 wantToQuit = quit(command);
                 break;
             default:
-                break;
+                System.out.println("I don't know what you mean...");
+                return false;
         }
         return wantToQuit;
     }
