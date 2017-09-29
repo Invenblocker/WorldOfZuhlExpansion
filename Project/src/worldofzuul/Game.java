@@ -115,8 +115,13 @@ public class Game
      */
     private void printHelp() 
     {
-        System.out.println("You are lost. You are alone. You wander");
-        System.out.println("around at the university.");
+        System.out.println("You have finally gotten a job as a spaceship pilot.");
+        System.out.println("Your first assignment is to fly a cargo ship filled");
+        System.out.println("with important supplies to Earth's base on the moon.");
+        System.out.println("However a saboteur has infiltrated the spaceship, and");
+        System.out.println("does not plan to let you reach the moon.");
+        System.out.println("You have to move around the spaceship to fix his havoc");
+        System.out.println("But do not let him run into you, or he will kill you.");
         System.out.println();
         System.out.println("Your command words are:");
         parser.showCommands();
