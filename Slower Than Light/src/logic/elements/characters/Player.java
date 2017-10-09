@@ -12,6 +12,20 @@ package logic.elements.characters;
 public class Player {
     private Item[] inventory;
     
+    public boolean addItem(Item item)
+    {
+        for(Item slot : inventory)
+        {
+            if(slot == null)
+            {
+                slot = item;
+                
+                return true;
+            }          
+        }
+        return false;
+    }
+    
     public Item[] getInventory()
     {
         int itemCount = 0;
