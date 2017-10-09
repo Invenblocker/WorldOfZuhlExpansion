@@ -10,12 +10,20 @@ import logic.elements.rooms.*;
  *
  * @author Johnn
  */
-public class Saboteur extends RoomHopper {
+public class Saboteur extends RoomHopper
+{
+    private double chanceOfSabotage;
+    private final double DEFAULT_CHANCE_OF_SABOTAGE, CHANCE_OF_SABOTAGE_GROWTH;
+    private boolean chasingPlayer;
     
-    Saboteur(Room room)
+    Saboteur(Room room, double chanceOfSabotage, double chanceOfSabotageGrowth)
     {
         super(room);
         
+        chasingPlayer = false;
+        this.chanceOfSabotage = DEFAULT_CHANCE_OF_SABOTAGE = chanceOfSabotage;
+        CHANCE_OF_SABOTAGE_GROWTH = chanceOfSabotageGrowth;
     }
-  
+    
+    
 }
