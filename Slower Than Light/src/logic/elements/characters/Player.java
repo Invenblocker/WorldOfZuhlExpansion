@@ -49,6 +49,15 @@ public class Player extends RoomHopper
         return false;
     }
     
+    /**
+     * @author Invenblocker
+     * 
+     * Returns the player's inventory and crops it so that all empty slots are
+     * left out. The length of the array is equal to the amount of items carried
+     * by the player.
+     * 
+     * @return The inventory as an array.
+     */
     public Item[] getInventory()
     {
         int itemCount = 0;
