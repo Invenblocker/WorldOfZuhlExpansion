@@ -9,6 +9,36 @@ package logic.elements.rooms;
  *
  * @author Erik
  */
-public class ItemRoom {
+public class ItemRoom extends Room{
+    private Item item;
+    private Item specialItem;
+    private String repairItem;
+
+    public ItemRoom(String name, String repairItem) {
+        super(name, false);
+    }
     
+    public void setItem(Item item) 
+    {
+        this.item = item;
+    }
+     public void setSpecialItem(Item specialItem) 
+    {
+        this.specialItem = specialItem;
+    }
+     
+     public void takeItem(Item item){
+         this.item = null;
+     }
+     
+     public void takeSpecialItem(Item item){
+         this.specialItem = null;
+     }
+     
+     public Item getItem(){
+         return this.item;
+     }
+     
+     
+     
 }
