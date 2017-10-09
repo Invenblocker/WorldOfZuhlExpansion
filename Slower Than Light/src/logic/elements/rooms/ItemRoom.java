@@ -3,8 +3,9 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package logic.elements.rooms;
 
+import logic.elements.characters.Item;
+import logic.elements.rooms.Room;
 /**
  *
  * @author Erik
@@ -40,10 +41,10 @@ public class ItemRoom extends Room{
      }
      
       public Item getSpecialItem(){
-         return this.SpecialItem;
+         return this.specialItem;
      }
      
-      public Item getRepairItem(){
+      public String getRepairItem(){
           return this.repairItem;
       }
 }

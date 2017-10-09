@@ -6,6 +6,7 @@
 package logic.elements.rooms;
 
 import java.util.ArrayList;
+import logic.elements.characters.Item;
 
 /**
  *
@@ -29,6 +30,7 @@ public class WorkshopRoom {
     }
     
     public ArrayList<Item> getItems(){
+        return null;
         
     }
 }
