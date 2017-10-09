@@ -56,6 +56,16 @@ public class Saboteur extends RoomHopper
                 setRoom(getCurrentRoom().getExit(neighbors.get((int) Math.floor(Math.random() * neighbors.size()))));
                 
                 chanceOfSabotage += CHANCE_OF_SABOTAGE_GROWTH;
+                
+                neighbors = getCurrentRoom().getCollectionOfExits();
+                
+                for(int i = 0; i < neighbors.size(); i++)
+                {
+                    if(getCurrentRoom().getExit(neighbors.get(i)).equals(Game.getInstance().getPlayer().getCurrentRoom()))
+                    {
+                        chasingPlayer = true;
+                    }
+                }
             }
         }
         
