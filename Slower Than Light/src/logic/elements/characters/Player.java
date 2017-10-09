@@ -26,6 +26,19 @@ public class Player {
         return false;
     }
     
+    public boolean removeItem(Item item)
+    {
+        for(Item slot : inventory)
+        {
+            if(slot == item)
+            {
+                slot = null;
+                return true;                
+            }
+        }
+        return false;
+    }
+    
     public Item[] getInventory()
     {
         int itemCount = 0;
