@@ -24,11 +24,11 @@ public class Player extends RoomHopper
     
     public boolean addItem(Item item)
     {
-        for(int i = 0; i < inventory.length; i++)
+        for(Item slot : inventory)
         {
-            if(inventory[i] == null)
+            if(slot == null)
             {
-                inventory[i] = item;
+                slot = item;
                 
                 return true;
             }          
@@ -38,11 +38,11 @@ public class Player extends RoomHopper
     
     public boolean removeItem(Item item)
     {
-        for(int i = inventory.length - 1; i >= 0; i++)
+        for(Item slot : inventory)
         {
-            if(inventory[i].equals(item))
+            if(slot.equals(item))
             {
-                inventory[i] = null;
+                slot = null;
                 return true;                
             }
         }
@@ -53,9 +53,9 @@ public class Player extends RoomHopper
     {
         int itemCount = 0;
         
-        for(int i = 0; i < inventory.length; i++)
+        for(Item slot : inventory)
         {
-            if(inventory[i] != null) itemCount++;
+            if(slot != null) itemCount++;
         }
         
         if(itemCount == 0) return(new Item[0]);
@@ -64,11 +64,11 @@ public class Player extends RoomHopper
         
         int currentSlot = 0;
         
-        for(int i = 0; i < inventory.length; i++)
+        for(Item slot : inventory)
         {
-            if(inventory[i] != null)
+            if(slot != null)
             {
-                croppedInventory[currentSlot++] = inventory[i];
+                croppedInventory[currentSlot++] = slot;
             }
         }
         
