@@ -40,7 +40,7 @@ public class Player extends RoomHopper
     {
         for(Item slot : inventory)
         {
-            if(slot == item)
+            if(slot.equals(item))
             {
                 slot = null;
                 return true;                

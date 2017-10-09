@@ -26,4 +26,9 @@ public class Item
     {
         return(name);
     }
+    
+    public String getType()
+    {
+        return("item");
+    }
 }

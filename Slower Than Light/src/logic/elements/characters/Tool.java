@@ -17,4 +17,9 @@ public class Tool extends Item
     {
         super(name, defaultRoom);
     }
+    
+    public String getType()
+    {
+        return("tool");
+    }
 }
