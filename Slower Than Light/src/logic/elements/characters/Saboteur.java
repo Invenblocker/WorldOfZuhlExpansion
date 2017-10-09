@@ -54,6 +54,8 @@ public class Saboteur extends RoomHopper
                 }
                 
                 setRoom(neighbors.get((int) Math.floor(Math.random() * neighbors.size())));
+                
+                chanceOfSabotage += CHANCE_OF_SABOTAGE_GROWTH;
             }
         }
         
