@@ -28,6 +28,13 @@ public class Saboteur extends RoomHopper
         CHANCE_OF_SABOTAGE_GROWTH = chanceOfSabotageGrowth;
     }
     
+    /**
+     * @author Invenblocker
+     * 
+     * A simple AI that causes the saboteur to act.
+     * 
+     * @return an integer dictating the amount of time to the next action.
+     */
     int performAction()
     {
         if(chasingPlayer)
@@ -72,6 +79,18 @@ public class Saboteur extends RoomHopper
         return(5 + (int) Math.floor(Math.random() * 6));
     }
     
+    /**
+     * @author Invenblocker
+     * 
+     * Causes the saboteur to chase the player by entering the room entered in
+     * the parameter if they're actively chasing. Returns -1 if not actively
+     * chasing, if actively chasing, returns an integer from 5 to 10 both
+     * both inclusive stating the amount of time before the saboteur's next
+     * action.
+     * 
+     * @param room The room in which the saboteur should chase
+     * @return The amount of time to the next action (-1 if not actively chasing)
+     */
     int chasePlayer(Room room)
     {
         if(chasingPlayer)
