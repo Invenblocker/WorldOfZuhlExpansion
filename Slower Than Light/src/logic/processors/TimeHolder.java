@@ -5,7 +5,7 @@ public class TimeHolder {
 private int saboteurCountdown;
 private double timeLeft;
 
-public TimerHolder() {
+public TimeHolder() {
     
 }
 

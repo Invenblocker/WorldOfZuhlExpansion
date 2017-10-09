@@ -3,6 +3,8 @@ package logic;
 import database.txtLoader;
 import java.util.HashMap;
 import logic.elements.characters.Player;
+import logic.elements.characters.Saboteur;
+import logic.elements.characters.Item;
 import logic.elements.rooms.Room;
 import logic.processors.TimeHolder;
 import logic.user_input.Command;
@@ -66,26 +68,26 @@ public class Game
     
     public HashMap<String, Room>getRooms()
     {
-        
+        return rooms;
     }
     public HashMap<String, Item>getItems()
     {
-        
+        return items;
     }
     
     public Player getPlayer()
     {
-        
+        return player;
     }
     
     public Saboteur getSaboteur()
     {
-        
+        return saboteur;
     }
     
     public TimeHolder getTimeHolder()
     {
-        
+        return timeholder;
     }
     
      /**
@@ -98,7 +100,7 @@ public class Game
         System.out.println("World of Zuul is a new, incredibly boring adventure game.");
         System.out.println("Type '" + CommandWord.HELP + "' if you need help.");
         System.out.println();
-        System.out.println(currentRoom.getLongDescription());
+        //System.out.println(currentRoom.getLongDescription());
     }
      
     private void createRooms()
@@ -124,26 +126,26 @@ public class Game
 
         office.setExit("west", lab);
 
-        currentRoom = outside;
+        //currentRoom = outside;
     }
     
     /**
      * Starts the game and keeps the player locked in this command's while loop
      * until the game ends.
      */
-    public void play() 
-    {            
-        printWelcome();
-
-        boolean finished = false;
-        while (! finished) {
-            Command command = parser.getCommand();
-            finished = processCommand(command);
-        }
-        System.out.println("Thank you for playing.  Good bye.");
-    }
+    /*public void play()
+    {
+    printWelcome();
     
+    boolean finished = false;
+    while (! finished) {
+    Command command = parser.getCommand();
+    finished = processCommand(command);
+    }
+    System.out.println("Thank you for playing.  Good bye.");
+    }*/
    
+
 
     /**
      * Processes the command entered by the player running its function and
@@ -162,7 +164,7 @@ public class Game
                 printHelp();
                 break;
             case GO:
-                goRoom(command);
+                //goRoom(command);
                 break;
             case QUIT:
                 wantToQuit = quit(command);
@@ -202,7 +204,7 @@ public class Game
      * go in that direction and does nothing.
      * @param command The command entered by the player
      */
-    private void goRoom(Command command) 
+    /*private void goRoom(Command command) 
     {
         if(!command.hasSecondWord()) {
             System.out.println("Go where?");
@@ -220,7 +222,7 @@ public class Game
             currentRoom = nextRoom;
             System.out.println(currentRoom.getLongDescription());
         }
-    }
+    }*/
 
     /**
      * Quits the game if no second has been entered into the game.

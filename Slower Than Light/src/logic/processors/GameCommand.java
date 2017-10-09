@@ -9,7 +9,9 @@ public GameCommand(){
 }
 
 public boolean processCommand(Command command){
+   
     
+    return false;
 }    
 
 private void goRoom (Command command){
@@ -33,7 +35,7 @@ private void investigate () {
 }
 
 private boolean quit() {
-    
+    return false;
 }
 
 
