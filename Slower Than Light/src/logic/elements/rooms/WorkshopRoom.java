@@ -16,21 +16,24 @@ public class WorkshopRoom {
     private ArrayList<Item> items = new ArrayList<Item>();
     
     
-    public WorkshopRoom(String name, String repairItem){
+    public WorkshopRoom(String name, String repairItem){ //constructs workshoproom
         
         
     }
     
-    public void addItem(){
+    public void addItem(Item item){ //Adds/stores item in workshoproom
+        items.add(item);
+                
+    }
+    
+    public void removeItem(Item item){ //Removes/takes item from workshoproom
+        items.remove(item);
+    }
+    
+    public ArrayList<Item> getItems(){  //returns all items in the array/workshoproom
+        return this.items;     
         
     }
     
-    public void removeItem(){
-        
-    }
     
-    public ArrayList<Item> getItems(){
-        return null;
-        
-    }
 }
