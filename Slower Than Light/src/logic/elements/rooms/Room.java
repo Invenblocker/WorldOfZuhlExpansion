@@ -11,16 +11,19 @@ import java.util.Iterator;
  */
 public class Room 
 {
-    private String description;
+    private String name;
+    private boolean controlRoom; 
+    private boolean operating;
     private HashMap<String, Room> exits;
     
     /**
      * A constructor that creates a new room with no exits.
-     * @param description The description of the room.
+     * @param name The name of the room.
      */
-    public Room(String description) 
+    public Room(String name, boolean controlRoom) 
     {
-        this.description = description;
+        this.controlRoom = controlRoom;
+        this.name = name;
         exits = new HashMap<String, Room>();    //Creates an empty HashMap
     }
 
@@ -33,31 +36,35 @@ public class Room
     {
         exits.put(direction, neighbor);
     }
+    
+   
+    
+    public void setOperating(boolean value)
+    {
+        this.operating = value;
+    }
+    
+     public boolean isOperating()
+    {
+        return this.operating;
+    }  
+    
 
     /**
-     * Returns the description of the room.
-     * @return The room's description.
+     * Returns the name of the room.
+     * @return The room's name.
      */
-    public String getShortDescription()
+    public String getName()
     {
-        return description;
+        return this.name;
     }
-
-    /**
-     * Returns a String informing the player of the current room as well as all
-     * possible exits from the room.
-     * @return The current room as well as where the player can go from said room.
-     */
-    public String getLongDescription()
-    {
-        return "You are " + description + ".\n" + getExitString();
-    }
+    
     
     /**
      * Returns a String containing a list of exits.
      * @return A String with a list of possible exits from the current room.
      */
-    private String getExitString()
+    private String getExits()
     {
         String returnString = "Exits:";
         Set<String> keys = exits.keySet();
@@ -75,6 +82,12 @@ public class Room
     public Room getExit(String direction) 
     {
         return exits.get(direction);
+        
+    }
+    
+    public boolean isControlRoom()
+    {
+        return this.controlRoom;
     }
 }
 
