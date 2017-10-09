@@ -5,7 +5,10 @@
  */
 package logic.elements.characters;
 
+import logic.*;
+import logic.elements.*;
 import logic.elements.rooms.*;
+import java.util.*;
 /**
  *
  * @author Johnn
@@ -25,5 +28,36 @@ public class Saboteur extends RoomHopper
         CHANCE_OF_SABOTAGE_GROWTH = chanceOfSabotageGrowth;
     }
     
+    int performAction()
+    {
+        if(chasingPlayer)
+        {
+            
+        }
+        
+        return(5 + (int) Math.floor(Math.random() * 6));
+    }
     
+    int chasePlayer(Room room)
+    {
+        if(chasingPlayer)
+        {
+            setRoom(room);
+            return(5 + (int) Math.floor(Math.random() * 6));
+        }
+        else
+        {
+            return(-1);
+        }
+    }
+    
+    void setChasingPlayer(boolean value)
+    {
+        chasingPlayer = value;
+    }
+    
+    boolean isChasingPlayer()
+    {
+        return(chasingPlayer);
+    }
 }
