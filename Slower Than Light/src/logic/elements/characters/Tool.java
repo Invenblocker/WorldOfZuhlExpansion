@@ -11,19 +11,10 @@ import logic.elements.rooms.*;
  *
  * @author barth_000
  */
-public class Item
+public class Tool extends Item
 {
-    private String name;
-    private Room defaultRoom;
-    
-    Item(String name, Room defaultRoom)
+    Tool(String name, Room defaultRoom)
     {
-        this.name = name;
-        this.defaultRoom = defaultRoom;
-    }
-    
-    public String getName()
-    {
-        return(name);
+        super(name, defaultRoom);
     }
 }
