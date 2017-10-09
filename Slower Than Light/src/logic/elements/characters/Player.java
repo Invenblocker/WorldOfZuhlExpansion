@@ -22,6 +22,15 @@ public class Player extends RoomHopper
         inventory = new Item[2];
     }
     
+    /**
+     * @author JN97
+     * 
+     * Adds an item to the inventory. Returns true if the item was successfully
+     * added, returns false if the inventory is full.
+     * 
+     * @param item The item to be added.
+     * @return A boolean stating if the item was succesfully added.
+     */
     public boolean addItem(Item item)
     {
         for(Item slot : inventory)
@@ -36,6 +45,15 @@ public class Player extends RoomHopper
         return false;
     }
     
+    /**
+     * @author JN97
+     * 
+     * Removes an item from the player's inventory and returns a boolean stating
+     * if the item was in the inventory in the first place.
+     * 
+     * @param item The item that should be removed.
+     * @return A boolean that is true if the removed item was in the inventory.
+     */
     public boolean removeItem(Item item)
     {
         for(Item slot : inventory)
