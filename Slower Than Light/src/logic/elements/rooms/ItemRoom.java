@@ -28,6 +28,17 @@ public class ItemRoom extends Room{
     }
      
      public void takeItem(Item item){
-         
+         this.item = null;
      }
+     
+     public void takeSpecialItem(Item item){
+         this.specialItem = null;
+     }
+     
+     public Item getItem(){
+         return this.item;
+     }
+     
+     
+     
 }
