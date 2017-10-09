@@ -153,32 +153,7 @@ public class Game
      * @param command The command entered by the player.
      * @return A boolean that states if the game should end.
      */
-    private boolean processCommand(Command command) 
-    {
-        boolean wantToQuit = false;
 
-        CommandWord commandWord = command.getCommandWord();
-
-        if (null != commandWord) switch (commandWord) {
-            case HELP:
-                printHelp();
-                break;
-            case GO:
-                //goRoom(command);
-                break;
-            case QUIT:
-                wantToQuit = quit(command);
-                break;
-            default:
-                System.out.println("I don't know what you mean...\nType \"help\" for a list of commands.");
-                return false;
-        }
-        else
-        {
-            System.out.println("Please write in a command before hitting enter.");
-        }
-        return wantToQuit;
-    }
     
     /**
      * Prints a short description of the game and then a list of commands.
