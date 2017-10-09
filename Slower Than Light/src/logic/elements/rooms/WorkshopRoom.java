@@ -12,12 +12,12 @@ import logic.elements.characters.Item;
  *
  * @author Peter
  */
-public class WorkshopRoom {
+public class WorkshopRoom  extends ItemRoom{
     private ArrayList<Item> items = new ArrayList<Item>();
     
     
     public WorkshopRoom(String name, String repairItem){ //constructs workshoproom
-        
+        super(name, repairItem); 
         
     }
     
