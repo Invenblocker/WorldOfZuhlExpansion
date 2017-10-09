@@ -1,10 +1,14 @@
 package database;
 
+import java.util.HashMap;
+import logic.elements.characters.Item;
+import logic.elements.rooms.Room;
+
 public class txtLoader {
 
-private hashMap<String, Room> rooms;
+private HashMap<String, Room> rooms;
 
-private hashMap<String, Item> items;
+private HashMap<String, Item> items;
 
 public txtLoader() {
     
@@ -14,9 +18,15 @@ public void loadGame (String gameName) {
     
 }
 
-public hashMap<String, Room> getRooms();
+public HashMap<String, Room> getRooms()
+{
+    return new HashMap<>();
+}
 
-public hashMap<String, Item> getItems();
+public HashMap<String, Item> getItems()
+{
+    return new HashMap<String, logic.elements.characters.Item>();
+}
 
 
 
