@@ -39,6 +39,11 @@ public class ItemRoom extends Room{
          return this.item;
      }
      
+      public Item getSpecialItem(){
+         return this.SpecialItem;
+     }
      
-     
+      public Item getRepairItem(){
+          return this.repairItem;
+      }
 }
