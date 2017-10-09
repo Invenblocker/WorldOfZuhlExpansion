@@ -27,6 +27,11 @@ public class Item
         return(name);
     }
     
+    public Room getDefaultRoom()
+    {
+        return defaultRoom;
+    }
+    
     public String getType()
     {
         return("item");
