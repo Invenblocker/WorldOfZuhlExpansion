@@ -15,6 +15,11 @@ public class RoomHopper
 {
     private Room currentRoom;
     
+    RoomHopper(Room room)
+    {
+        currentRoom = room;
+    }
+    
     public Room setRoom(Room newRoom)
     {
         Room oldRoom = currentRoom;

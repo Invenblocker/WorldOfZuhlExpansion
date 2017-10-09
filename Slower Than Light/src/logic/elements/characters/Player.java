@@ -5,6 +5,8 @@
  */
 package logic.elements.characters;
 
+import logic.elements.rooms.*;
+
 /**
  *
  * @author Erik
@@ -12,6 +14,13 @@ package logic.elements.characters;
 public class Player extends RoomHopper
 {
     private Item[] inventory;
+    
+    Player(Room room)
+    {
+        super(room);
+        
+        inventory = new Item[2];
+    }
     
     public boolean addItem(Item item)
     {
