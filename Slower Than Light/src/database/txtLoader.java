@@ -1,14 +1,25 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package database;
 
-/**
- *
- * @author Erik
- */
 public class txtLoader {
+
+private hashMap<String, Room> rooms;
+
+private hashMap<String, Item> items;
+
+public txtLoader() {
+    
+}
+
+public void loadGame (String gameName) {
+    
+}
+
+public hashMap<String, Room> getRooms();
+
+public hashMap<String, Item> getItems();
+
+
+
+
     
 }

@@ -1,14 +1,21 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package logic.processors;
 
-/**
- *
- * @author mortenskovgaard
- */
 public class TimeHolder {
+
+private int saboteurCountdown;
+private double timeLeft;
+
+public TimerHolder() {
+    
+}
+
+private void update() {
+    
+}
+
+public void setSaboteurCountdown(int countDown) {
+    
+}
+
     
 }

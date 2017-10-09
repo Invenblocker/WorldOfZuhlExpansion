@@ -1,14 +1,46 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package logic.processors;
 
-/**
- *
- * @author Erik
- */
+import logic.user_input.Command;
+
 public class GameCommand {
+
+public GameCommand(){
+    
+}
+
+public boolean processCommand(Command command){
+    
+}    
+
+private void goRoom (Command command){
+    
+}
+
+private void takeItem (Command command) {
+    
+}
+
+private void dropItem (Command command) {
+    
+}
+
+private void repairItem (Command command) {
+    
+}
+
+private void investigate () {
+    
+}
+
+private boolean quit() {
+    
+}
+
+
+
+
+
+
+
     
 }
