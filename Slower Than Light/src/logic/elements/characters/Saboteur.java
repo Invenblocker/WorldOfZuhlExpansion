@@ -32,7 +32,29 @@ public class Saboteur extends RoomHopper
     {
         if(chasingPlayer)
         {
-            
+            setRoom(Game.getInstance().getPlayer().getCurrentRoom());
+        }
+        else
+        {
+            if(getCurrentRoom().isOperating() && Math.random() < chanceOfSabotage)
+            {
+                getCurrentRoom().setOperating(false);
+                chanceOfSabotage = DEFAULT_CHANCE_OF_SABOTAGE;
+            }
+            else
+            {
+                ArrayList<Room> neighbors = new ArrayList();    //REPLACE THE NEW ARAYLIST WITH THE FUNCTION THAT RETURNS AN ARRAYLIST OF A ROOM'S EXITS.
+                
+                for(int i = neighbors.size() - 1; i >= 0; i--)
+                {
+                    if(neighbors.get(i).isControlRoom())
+                    {
+                        neighbors.remove(i);
+                    }
+                }
+                
+                setRoom(neighbors.get((int) Math.floor(Math.random() * neighbors.size())));
+            }
         }
         
         return(5 + (int) Math.floor(Math.random() * 6));
