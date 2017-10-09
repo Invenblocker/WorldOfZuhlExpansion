@@ -9,7 +9,7 @@ import logic.elements.rooms.*;
 
 /**
  *
- * @author Erik
+ * @author Invenblocker & JN97
  */
 public class Player extends RoomHopper
 {

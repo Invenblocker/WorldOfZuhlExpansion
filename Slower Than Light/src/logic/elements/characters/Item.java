@@ -9,7 +9,7 @@ import logic.elements.rooms.*;
 
 /**
  *
- * @author barth_000
+ * @author Invenblocker & JN97
  */
 public class Item
 {
