@@ -12,44 +12,44 @@ import java.util.Iterator;
 public class Room 
 {
     private String name;
-    private boolean controlRoom; 
-    private boolean operating;
     private HashMap<String, Room> exits;
+        private boolean controlRoom;       //check if player is in CR
+        private boolean operating;          //is room damaged
     
     /**
      * A constructor that creates a new room with no exits.
      * @param name The name of the room.
      */
-    public Room(String name, boolean controlRoom) 
+    public Room(String name, boolean controlRoom) //constructor for  boolean CR
     {
-        this.controlRoom = controlRoom;
+        this.controlRoom = controlRoom;     //constructs value for controlroom 
         this.name = name;
         exits = new HashMap<String, Room>();    //Creates an empty HashMap
     }
 
     /**
      * Adds an exit to the room defining where the player can go from said room.
-     * @param direction The second word of the go command required to use this exit.
+     * @param name The second word of the go command required to use this exit.
      * @param neighbor The room that the exit added to the current leads to.
      */
     public void setExit(String direction, Room neighbor) 
     {
+        
         exits.put(direction, neighbor);
     }
+
     
-   
-    
-    public void setOperating(boolean value)
-    {
+    public void setOperating(boolean value) {     //Sets value  damged or not.
         this.operating = value;
+        
+        }
+    
+    public boolean isOperating(){   //checks boolean value for room
+        
+        return this.operating;       //returns setOperatinge - dameged room or not
     }
     
-     public boolean isOperating()
-    {
-        return this.operating;
-    }  
     
-
     /**
      * Returns the name of the room.
      * @return The room's name.
@@ -58,7 +58,13 @@ public class Room
     {
         return this.name;
     }
-    
+
+    /**
+     * Returns a String informing the player of the current room as well as all
+     * possible exits from the room.
+     * @return The current room as well as where the player can go from said room.
+     */
+
     
     /**
      * Returns a String containing a list of exits.
@@ -82,12 +88,13 @@ public class Room
     public Room getExit(String direction) 
     {
         return exits.get(direction);
-        
     }
     
-    public boolean isControlRoom()
-    {
+    public boolean isControlRoom() {    //returns boolean value, is player in CR
         return this.controlRoom;
     }
+    
+    
+    
 }
 
