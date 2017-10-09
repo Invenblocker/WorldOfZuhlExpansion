@@ -9,7 +9,8 @@ package logic.elements.characters;
  *
  * @author Erik
  */
-public class Player {
+public class Player extends RoomHopper
+{
     private Item[] inventory;
     
     public boolean addItem(Item item)

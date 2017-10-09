@@ -5,21 +5,25 @@
  */
 package logic.elements.characters;
 
+import logic.elements.rooms.*;
+
 /**
  *
  * @author barth_000
  */
-public class Item
+public class RoomHopper
 {
-    private String name;
+    private Room currentRoom;
     
-    Item(String name)
+    public Room setRoom(Room newRoom)
     {
-        this.name = name;
+        Room oldRoom = currentRoom;
+        currentRoom = newRoom;
+        return(oldRoom);
     }
     
-    public String getName()
+    public Room getCurrentRoom()
     {
-        return(name);
+        return(currentRoom);
     }
 }
