@@ -1,5 +1,6 @@
 package logic.elements.rooms;
 
+import java.util.ArrayList;
 import java.util.Set;
 import java.util.HashMap;
 import java.util.Iterator;
@@ -24,7 +25,7 @@ public class Room
     {
         this.controlRoom = controlRoom;     //constructs value for controlroom 
         this.name = name;
-        exits = new HashMap<String, Room>();    //Creates an empty HashMap
+        exits = new HashMap<String, Room>();    //Creates an empty HashMap  key/value
     }
 
     /**
@@ -78,6 +79,19 @@ public class Room
             returnString += " " + exit;
         }
         return returnString;
+    }
+    
+    
+    public ArrayList<String> getCollectionOfExits(){
+        ArrayList<String> list = new ArrayList<String>();  // creates an arraylist
+          
+        Set<String> keys = exits.keySet();                 // creates a set of keys from the hashmap exits.
+        for(String exit : keys) {                          // loops through the keys (from the set of keys)
+            list.add(exit);                                // adds the exit to the arraylist
+        }
+        
+        
+        return list;                                       // returns the list.
     }
 
     /**
