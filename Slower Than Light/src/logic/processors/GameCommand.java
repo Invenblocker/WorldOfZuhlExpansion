@@ -62,37 +62,11 @@ public class GameCommand {
 
     private void goRoom (Command command)
     {
-        Room currentRoom = game.getPlayer().getCurrentRoom();
-        switch (command.getSecondWord())
-        {
-            case "up":
-                if (currentRoom.getExit("up")!=null) 
-                    game.getPlayer().setRoom(currentRoom.getExit("up"));
-                else 
-                    System.out.println("There is no exit this way ! ");
-                break;
-            case "down":
-                if (currentRoom.getExit("down")!=null) 
-                    game.getPlayer().setRoom(currentRoom.getExit("down"));
-                else 
-                    System.out.println("There is no exit this way ! ");
-                break;
-            case "left":
-                if (currentRoom.getExit("left")!=null) 
-                    game.getPlayer().setRoom(currentRoom.getExit("left"));
-                else 
-                    System.out.println("There is no exit this way ! ");
-                break;
-            case "right":
-                if (currentRoom.getExit("right")!=null) 
-                    game.getPlayer().setRoom(currentRoom.getExit("right"));
-                else 
-                    System.out.println("There is no exit this way ! ");
-                break;
-            default:
-             System.out.println("This way is not found");
-                break;
-        }
+          Room currentRoom = game.getPlayer().getCurrentRoom();
+            Room exitRoom = currentRoom.getExit(command.getSecondWord());
+        if (exitRoom != null)
+            game.getPlayer().setRoom(exitRoom);
+        else System.out.println("There is no way here ! ");
     }
 
     private void takeItem (Command command) 
@@ -112,7 +86,7 @@ public class GameCommand {
 
     private void investigate () 
     {
-
+      
     }
 
     private boolean quit(Command command) 
