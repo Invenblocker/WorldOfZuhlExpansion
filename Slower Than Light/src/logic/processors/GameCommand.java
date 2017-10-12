@@ -13,6 +13,12 @@ public class GameCommand {
 
     }
 
+    /**
+     * Processes the command entered by the player running its function and
+     * checking if the game should end.
+     * @param command The command entered by the player.
+     * @return A boolean that states if the game should end.
+     */
     public boolean processCommand(Command command)
         {
 
@@ -114,9 +120,22 @@ public class GameCommand {
         return false;
     }
 
+    /**
+     * Prints a short description of the game and then a list of commands.
+     */
     private void printHelp()
     {
-    System.out.println( "YOU BE FUCKED" );
+        System.out.println( "YOU BE FUCKED" );
+        System.out.println("You have finally gotten a job as a spaceship pilot.");
+        System.out.println("Your first assignment is to fly a cargo ship filled");
+        System.out.println("with important supplies to Earth's base on the moon.");
+        System.out.println("However a saboteur has infiltrated the spaceship, and");
+        System.out.println("does not plan to let you reach the moon.");
+        System.out.println("You have to move around the spaceship to fix his havoc");
+        System.out.println("But do not let him run into you, or he will kill you.");
+        System.out.println();
+        System.out.println("Your command words are:");
+        game.getParser().showCommands();
     }
 
 }
