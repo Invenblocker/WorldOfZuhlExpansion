@@ -1,7 +1,11 @@
 package logic.processors;
 
+import java.util.ArrayList;
 import logic.Game;
+import logic.elements.characters.Item;
+import logic.elements.rooms.ItemRoom;
 import logic.elements.rooms.Room;
+import logic.elements.rooms.WorkshopRoom;
 import logic.user_input.Command;
 import logic.user_input.CommandWord;
 
@@ -86,7 +90,31 @@ public class GameCommand {
 
     private void investigate () 
     {
-      
+        ItemRoom currenItemRoomAsItemRoom = (ItemRoom) game.getPlayer().getCurrentRoom();
+        ArrayList<Item>roomInventory = new ArrayList<>();
+        if (currenItemRoomAsItemRoom != null) 
+        {
+            if (currenItemRoomAsItemRoom.getItem()!=null)
+            roomInventory.add(currenItemRoomAsItemRoom.getItem());
+            if (currenItemRoomAsItemRoom.getSpecialItem()!=null)
+            roomInventory.add(currenItemRoomAsItemRoom.getSpecialItem());
+            
+             WorkshopRoom currentRoomAsWorkshopRoom = (WorkshopRoom) game.getPlayer().getCurrentRoom();
+            if (currentRoomAsWorkshopRoom !=null) 
+            {
+                roomInventory.addAll(currentRoomAsWorkshopRoom.getItems());
+                System.out.println("These items are in this room : ");
+            }    
+            for (int i = 0; i < roomInventory.size(); i++) 
+            {
+                System.out.println(i + roomInventory.get(i).getName());
+            }
+            
+        }
+        else 
+        {
+            System.out.println("There is no item ! ");
+        }
     }
 
     private boolean quit(Command command) 
