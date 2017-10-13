@@ -2,6 +2,7 @@ package logic;
 
 import database.txtLoader;
 import java.util.HashMap;
+import java.util.Timer;
 import logic.elements.characters.Player;
 import logic.elements.characters.Saboteur;
 import logic.elements.characters.Item;
@@ -27,12 +28,16 @@ public class Game
         }
         return instance;
     }
+    
     private Parser parser;
     private HashMap<String, Room>rooms;
     private HashMap<String, Item>items;
     private Player player;
     private Saboteur saboteur;
     private TimeHolder timeholder;
+    private boolean gameFinished;
+    
+    private boolean gameLoaded;
     
         
     /**
@@ -40,117 +45,84 @@ public class Game
      */
     public Game() 
     {
-        parser = new Parser();
+        gameFinished = false;
+        gameLoaded = false;
     }
     
     /**
      * Creates the rooms in the world. Has the list of rooms as well as their
      * exits hard coded in the command. Sets the current room as well.
+     * @param loader Supply the game with a loader which has loaded all of
+     * the data for the game.
      */
     public void addGameLoader(txtLoader loader)
     {
+        rooms = loader.getRooms();
+        items = loader.getItems();
         
+        gameLoaded = true;
     }
+    
      /**
      * Starts the game and keeps the player locked in this command's while loop
      * until the game ends.
      */
     public void play() 
     {            
+        if (!gameLoaded)
+        {
+            System.out.println("A game has not been loaded");
+            return;
+        }
+        
+        timeholder = new TimeHolder(300);
+        Timer timer = new Timer();
+        timer.schedule(timeholder, 0, 1000);
+        
         printWelcome();
         
         GameCommand gameCommand = new GameCommand();
+        parser = new Parser();
         
-        boolean finished = false;
-        while (! finished) {
+        while (!gameFinished) {
             Command command = parser.getCommand();
-            finished = gameCommand.processCommand(command);
+            gameFinished = gameCommand.processCommand(command);
         }
         System.out.println("Thank you for playing.  Good bye.");
+        timer.cancel();
     }
     
-    public Parser getParser ()
+    public Parser getParser () {return parser;}
+    
+    public HashMap<String, Room> getRooms() {return rooms;}
+    
+    public HashMap<String, Item> getItems() {return items;}
+    
+    public Player getPlayer() {return player;}
+    
+    public Saboteur getSaboteur() {return saboteur;}
+    
+    public TimeHolder getTimeHolder() {return timeholder;}
+    
+    public void setGameFinished(boolean value)
     {
-        return parser;
+        gameFinished = value;
     }
     
-    public HashMap<String, Room> getRooms()
-    {
-        return rooms;
-    }
-    public HashMap<String, Item> getItems()
-    {
-        return items;
-    }
-    
-    public Player getPlayer()
-    {
-        return player;
-    }
-    
-    public Saboteur getSaboteur()
-    {
-        return saboteur;
-    }
-    
-    public TimeHolder getTimeHolder()
-    {
-        return timeholder;
-    }
-    
-     /**
-     * Prints a welcome message to the player before the game starts.
-     */
+    /**
+    * Prints a welcome message to the player when the game starts.
+    */
     private void printWelcome()
     {
-        System.out.println();
-        System.out.println("Welcome to the World of Zuul!");
-        System.out.println("World of Zuul is a new, incredibly boring adventure game.");
+        System.out.println("Welcome to the Slower Than Light!");
+        System.out.println("You have finally gotten a job as a spaceship pilot.");
+        System.out.println("Your first assignment is to fly a cargo ship filled");
+        System.out.println("with important supplies to Earth's base on the moon.");
+        System.out.println("However a saboteur has infiltrated the spaceship, and");
+        System.out.println("does not plan to let you reach the moon.");
+        System.out.println("You have to move around the spaceship to fix his havoc");
+        System.out.println("But do not let him run into you, or he will kill you.");
         System.out.println("Type '" + CommandWord.HELP + "' if you need help.");
-        System.out.println();
         //System.out.println(currentRoom.getLongDescription());
-    }
-   
-    /**
-     * Goes to the room specified by the player, if the player has not entered a
-     * second word in the command, asks the player for direction and does
-     * nothing. If the direction is invalid, tells the player that they cannot
-     * go in that direction and does nothing.
-     * @param command The command entered by the player
-     */
-    /*private void goRoom(Command command) 
-    {
-        if(!command.hasSecondWord()) {
-            System.out.println("Go where?");
-            return;
-        }
-
-        String direction = command.getSecondWord();
-
-        Room nextRoom = currentRoom.getExit(direction);
-
-        if (nextRoom == null) {
-            System.out.println("There is no door!");
-        }
-        else {
-            currentRoom = nextRoom;
-            System.out.println(currentRoom.getLongDescription());
-        }
-    }*/
-
-    /**
-     * Quits the game if no second has been entered into the game.
-     * @param command The command entered by the player
-     * @return Returns if the quit command is valid.
-     */
-    private boolean quit(Command command) 
-    {
-        if(command.hasSecondWord()) {
-            System.out.println("Quit what?");
-            return false;
-        }
-        else {
-            return true;
-        }
     }
 }
