@@ -15,6 +15,13 @@ public class Player extends RoomHopper
 {
     private Item[] inventory;
     
+    /**
+     * @author JN97
+     * 
+     * Creates a player and spawns them in the specified room.
+     * 
+     * @param room The player's starting room.
+     */
     Player(Room room)
     {
         super(room);
