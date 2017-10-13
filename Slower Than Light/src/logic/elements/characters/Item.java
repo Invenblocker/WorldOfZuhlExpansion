@@ -16,6 +16,12 @@ public class Item
     private String name;
     private Room defaultRoom;
     
+    Item(String name)
+    {
+        this.name = name;
+        this.defaultRoom = null;
+    }
+    
     Item(String name, Room defaultRoom)
     {
         this.name = name;

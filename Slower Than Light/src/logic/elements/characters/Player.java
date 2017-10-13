@@ -33,11 +33,11 @@ public class Player extends RoomHopper
      */
     public boolean addItem(Item item)
     {
-        for(Item slot : inventory)
+        for(int i = 0; i < inventory.length; i++)
         {
-            if(slot == null)
+            if(inventory[i] == null)
             {
-                slot = item;
+                inventory[i] = item;
                 
                 return true;
             }          
@@ -56,11 +56,11 @@ public class Player extends RoomHopper
      */
     public boolean removeItem(Item item)
     {
-        for(Item slot : inventory)
+        for(int i = inventory.length - 1; i >= 0; i--)
         {
-            if(slot.equals(item))
+            if(inventory[i] != null && inventory[i].equals(item))
             {
-                slot = null;
+                inventory[i] = null;
                 return true;                
             }
         }
@@ -70,35 +70,43 @@ public class Player extends RoomHopper
     /**
      * @author Invenblocker
      * 
-     * Returns the player's inventory and crops it so that all empty slots are
-     * left out. The length of the array is equal to the amount of items carried
-     * by the player.
+     * Removes the item at the inventory's given index.
+     * Returns false if the index is out of bounds or if the slot is already
+     * empty.
      * 
-     * @return The inventory as an array.
+     * @param index The index of the item to be removed.
+     * @return A boolean stating if the item was successfully removed.
+     */
+    public boolean removeItem(int index)
+    {
+        if(index < 0 || index >= inventory.length) return(false);
+        if(inventory[index] == null)
+        {
+            return(false);
+        }
+        else
+        {
+            inventory[index] = null;
+            return(true);
+        }
+    }
+    
+    /**
+     * @author Invenblocker
+     * 
+     * Returns a copy of the player's inventory.
+     * 
+     * @return The inventory as an array passed by value.
      */
     public Item[] getInventory()
     {
-        int itemCount = 0;
+        Item[] copy = new Item[inventory.length];
         
-        for(Item slot : inventory)
+        for(int i = 0; i < inventory.length; i++)
         {
-            if(slot != null) itemCount++;
+            copy[i] = inventory[i];
         }
         
-        if(itemCount == 0) return(new Item[0]);
-        
-        Item[] croppedInventory = new Item[itemCount];
-        
-        int currentSlot = 0;
-        
-        for(Item slot : inventory)
-        {
-            if(slot != null)
-            {
-                croppedInventory[currentSlot++] = slot;
-            }
-        }
-        
-        return(croppedInventory);
+        return(copy);
     }
 }

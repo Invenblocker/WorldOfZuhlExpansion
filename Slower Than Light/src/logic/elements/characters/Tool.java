@@ -13,6 +13,11 @@ import logic.elements.rooms.*;
  */
 public class Tool extends Item
 {
+    Tool(String name)
+    {
+        super(name);
+    }
+    
     Tool(String name, Room defaultRoom)
     {
         super(name, defaultRoom);
