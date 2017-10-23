@@ -21,6 +21,7 @@ public class Player extends RoomHopper
      * Creates a player and spawns them in the specified room.
      * 
      * @param room The player's starting room.
+     * @param inventorySize The size of the player's inventory.
      */
     public Player(Room room, int inventorySize)
     {
