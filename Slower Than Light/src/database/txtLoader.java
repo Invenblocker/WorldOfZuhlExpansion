@@ -35,10 +35,10 @@ public void loadGame (String gameName) throws FileNotFoundException {
         String line = sc.nextLine();  
         String[] words = line.split(" ");
         if(words[0].equals("Room:")){      // adds all rooms to the hashmap rooms.
-            roomToHash(words);
+            roomToHashMap(words);
         }
         else if(words[0].equals("Item:")){
-            itemToHash(words);
+            itemToHashMap(words);
         }
         else{
             addRoomExits(words);
@@ -71,7 +71,7 @@ private void addRoomExits(String[] words){
       }
   }
   
-private void itemToHash(String[] words){
+private void itemToHashMap(String[] words){
     int i = 1;
     int j = 2;
     while (j < words.length){
@@ -86,17 +86,7 @@ private void itemToHash(String[] words){
     }
     System.out.println("added: " + items.keySet());
 }
-    
-private void roomToHash(String[] words){
-    int i = 1;
-    int j = 2;
-    while (j < words.length){
-        rooms.put(words[i], new Room(words[i], Boolean.parseBoolean(words[j])));
-        i = i + 2;
-        j = j + 2;
-    }
-    System.out.println("added: " + rooms.keySet());
-} 
+
  
 
 public HashMap<String, Room> getRooms()
