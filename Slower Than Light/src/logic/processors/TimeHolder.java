@@ -1,21 +1,34 @@
 package logic.processors;
 
-public class TimeHolder {
+import java.util.TimerTask;
 
-private int saboteurCountdown;
-private double timeLeft;
+public class TimeHolder extends TimerTask{
 
-public TimeHolder() {
-    
-}
+    private int saboteurCountdown;
+    private double timeLeft;
 
-private void update() {
-    
-}
+    /**
+     * Creates an object of the type Timeholder
+     * @param gameTime The amount of time in seconds which the game takes
+     */
+    public TimeHolder(int gameTime)
+    {
+        saboteurCountdown = 0;
+        timeLeft = gameTime;
+    }
 
-public void setSaboteurCountdown(int countDown) {
-    
-}
+    @Override
+    public void run()
+    {
+    if (saboteurCountdown == 0) {
+        
+    }    
+    }
+
+    public void setSaboteurCountdown(int countDown)
+    {
+        
+    }
 
     
 }
