@@ -22,7 +22,7 @@ public class Player extends RoomHopper
      * 
      * @param room The player's starting room.
      */
-    Player(Room room)
+    public Player(Room room)
     {
         super(room);
         
