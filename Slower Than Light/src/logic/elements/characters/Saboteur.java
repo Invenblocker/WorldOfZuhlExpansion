@@ -11,7 +11,7 @@ import logic.elements.rooms.*;
 import java.util.*;
 /**
  *
- * @author Johnn
+ * @author Invenblocker & JN97
  */
 public class Saboteur extends RoomHopper
 {
@@ -19,6 +19,15 @@ public class Saboteur extends RoomHopper
     private final double DEFAULT_CHANCE_OF_SABOTAGE, CHANCE_OF_SABOTAGE_GROWTH;
     private boolean chasingPlayer;
     
+    /**
+     * @author Invenblocker
+     * 
+     * The constructor for the basic saboteur.
+     * 
+     * @param room The starting room for the saboteur.
+     * @param chanceOfSabotage The starting chance that the saboteur will sabotage its current room.
+     * @param chanceOfSabotageGrowth How much the chance of sabotaging the current room should grow when moving instead of sabotaging.
+     */
     Saboteur(Room room, double chanceOfSabotage, double chanceOfSabotageGrowth)
     {
         super(room);
@@ -28,6 +37,13 @@ public class Saboteur extends RoomHopper
         CHANCE_OF_SABOTAGE_GROWTH = chanceOfSabotageGrowth;
     }
     
+    /**
+     * @author Invenblocker
+     * 
+     * A simple AI that causes the saboteur to act.
+     * 
+     * @return an integer dictating the amount of time to the next action.
+     */
     int performAction()
     {
         if(chasingPlayer)
@@ -72,6 +88,18 @@ public class Saboteur extends RoomHopper
         return(5 + (int) Math.floor(Math.random() * 6));
     }
     
+    /**
+     * @author Invenblocker
+     * 
+     * Causes the saboteur to chase the player by entering the room entered in
+     * the parameter if they're actively chasing. Returns -1 if not actively
+     * chasing, if actively chasing, returns an integer from 5 to 10 both
+     * both inclusive stating the amount of time before the saboteur's next
+     * action.
+     * 
+     * @param room The room in which the saboteur should chase
+     * @return The amount of time to the next action (-1 if not actively chasing)
+     */
     int chasePlayer(Room room)
     {
         if(chasingPlayer)
@@ -85,11 +113,25 @@ public class Saboteur extends RoomHopper
         }
     }
     
+    /**
+     * @author Invenblocker
+     * 
+     * Modifies whether the saboteur is chasing the player.
+     * 
+     * @param value true if the saboteur should chase, false if not.
+     */
     void setChasingPlayer(boolean value)
     {
         chasingPlayer = value;
     }
     
+    /**
+     * @author Invenblocker
+     * 
+     * Checks to see if the saboteur is chasing the player.
+     * 
+     * @return true if chasing, false if not.
+     */
     boolean isChasingPlayer()
     {
         return(chasingPlayer);

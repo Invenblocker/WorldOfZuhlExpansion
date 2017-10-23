@@ -13,13 +13,28 @@ import logic.elements.rooms.*;
  */
 public class Tool extends Item
 {
+    /**
+     * @author Invenblocker
+     * 
+     * A constructor that creates a tool with a name, but no default room.
+     * 
+     * @param name The name of the item.
+     */
+    Tool(String name)
+    {
+        super(name);
+    }
+    
+    /**
+     * @author JN97
+     * 
+     * A constructor that creates a tool with a name and a default room.
+     * 
+     * @param name The name of the tool.
+     * @param defaultRoom The default room of the tool.
+     */
     Tool(String name, Room defaultRoom)
     {
         super(name, defaultRoom);
-    }
-    
-    public String getType()
-    {
-        return("tool");
     }
 }

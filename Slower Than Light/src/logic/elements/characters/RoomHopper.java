@@ -9,17 +9,32 @@ import logic.elements.rooms.*;
 
 /**
  *
- * @author barth_000
+ * @author Invenblocer & JN97
  */
 public class RoomHopper
 {
     private Room currentRoom;
     
+    /**
+     * @author Invenblocker
+     * 
+     * A constructor for the RoomHopper object.
+     * 
+     * @param room the character's starting room.
+     */
     RoomHopper(Room room)
     {
         currentRoom = room;
     }
     
+    /**
+     * @author Invenblocker
+     * 
+     * Moves the object to a new room and returns the old room.
+     * 
+     * @param newRoom The room the character should move to.
+     * @return The room the character was in before moving.
+     */
     public Room setRoom(Room newRoom)
     {
         Room oldRoom = currentRoom;
@@ -27,6 +42,13 @@ public class RoomHopper
         return(oldRoom);
     }
     
+    /**
+     * @author Invenblocker
+     * 
+     * Checks which room the character is currently in.
+     * 
+     * @return The room in which the character is currently located.
+     */
     public Room getCurrentRoom()
     {
         return(currentRoom);
