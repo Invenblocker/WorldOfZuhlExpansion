@@ -20,7 +20,9 @@ public class TimeHolder extends TimerTask{
     @Override
     public void run()
     {
+    if (saboteurCountdown == 0) {
         
+    }    
     }
 
     public void setSaboteurCountdown(int countDown)
