@@ -28,7 +28,7 @@ public class Saboteur extends RoomHopper
      * @param chanceOfSabotage The starting chance that the saboteur will sabotage its current room.
      * @param chanceOfSabotageGrowth How much the chance of sabotaging the current room should grow when moving instead of sabotaging.
      */
-    Saboteur(Room room, double chanceOfSabotage, double chanceOfSabotageGrowth)
+    public Saboteur(Room room, double chanceOfSabotage, double chanceOfSabotageGrowth)
     {
         super(room);
         
@@ -44,7 +44,7 @@ public class Saboteur extends RoomHopper
      * 
      * @return an integer dictating the amount of time to the next action.
      */
-    int performAction()
+    public int performAction()
     {
         if(chasingPlayer)
         {
@@ -100,7 +100,7 @@ public class Saboteur extends RoomHopper
      * @param room The room in which the saboteur should chase
      * @return The amount of time to the next action (-1 if not actively chasing)
      */
-    int chasePlayer(Room room)
+    public int chasePlayer(Room room)
     {
         if(chasingPlayer)
         {
@@ -120,7 +120,7 @@ public class Saboteur extends RoomHopper
      * 
      * @param value true if the saboteur should chase, false if not.
      */
-    void setChasingPlayer(boolean value)
+    public void setChasingPlayer(boolean value)
     {
         chasingPlayer = value;
     }
@@ -132,7 +132,7 @@ public class Saboteur extends RoomHopper
      * 
      * @return true if chasing, false if not.
      */
-    boolean isChasingPlayer()
+    public boolean isChasingPlayer()
     {
         return(chasingPlayer);
     }
