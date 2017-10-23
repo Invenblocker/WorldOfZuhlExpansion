@@ -22,7 +22,7 @@ public class RoomHopper
      * 
      * @param room the character's starting room.
      */
-    RoomHopper(Room room)
+    public RoomHopper(Room room)
     {
         currentRoom = room;
     }
