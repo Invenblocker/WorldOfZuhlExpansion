@@ -1,5 +1,6 @@
 package logic;
 
+import GUI.GUI;
 import database.txtLoader;
 import java.util.HashMap;
 import java.util.Timer;
@@ -28,6 +29,9 @@ public class Game
         }
         return instance;
     }
+    
+    private final double ALLOWED_ROOMS_DESTROYED_PERCENTAGE = 0.3;
+    private double roomsDestroyedPercentage;
     
     private Parser parser;
     private HashMap<String, Room>rooms;
@@ -88,8 +92,21 @@ public class Game
             Command command = parser.getCommand();
             gameFinished = gameCommand.processCommand(command);
         }
-        System.out.println("Thank you for playing.  Good bye.");
+        System.out.println("Thank you for playing.  Goodbye.");
         timer.cancel();
+    }
+             
+    public double getALLOWED_ROOMS_DESTROYED_PERCENTAGE() {
+        return ALLOWED_ROOMS_DESTROYED_PERCENTAGE;
+    }
+    
+
+    public double getRoomsDestroyedPercentage() {
+        return roomsDestroyedPercentage;
+    }
+
+    public void setRoomsDestroyedPercentage(double roomsDestroyedPercentage) {
+        this.roomsDestroyedPercentage = roomsDestroyedPercentage;
     }
     
     public Parser getParser () {return parser;}
@@ -109,6 +126,10 @@ public class Game
         gameFinished = value;
     }
     
+    public boolean isGameFinished () {
+        return gameFinished;
+    }
+    
     /**
     * Prints a welcome message to the player when the game starts.
     */
@@ -124,5 +145,9 @@ public class Game
         System.out.println("But do not let him run into you, or he will kill you.");
         System.out.println("Type '" + CommandWord.HELP + "' if you need help.");
         //System.out.println(currentRoom.getLongDescription());
+    }
+
+    public GUI getGUI() {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 }
