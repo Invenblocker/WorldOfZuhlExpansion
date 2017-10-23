@@ -22,11 +22,11 @@ public class Player extends RoomHopper
      * 
      * @param room The player's starting room.
      */
-    public Player(Room room)
+    public Player(Room room, int inventorySize)
     {
         super(room);
         
-        inventory = new Item[2];
+        inventory = new Item[inventorySize];
     }
     
     /**
