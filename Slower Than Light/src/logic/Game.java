@@ -39,6 +39,7 @@ public class Game
     private Player player;
     private Saboteur saboteur;
     private TimeHolder timeholder;
+    private GUI gui;
     private boolean gameFinished;
     
     private boolean gameLoaded;
@@ -82,6 +83,8 @@ public class Game
         timeholder = new TimeHolder(300);
         Timer timer = new Timer();
         timer.schedule(timeholder, 0, 1000);
+        
+        gui = new GUI();
         
         printWelcome();
         
@@ -129,6 +132,10 @@ public class Game
     public boolean isGameFinished () {
         return gameFinished;
     }
+
+    public GUI getGUI() {
+        return gui;
+    }
     
     /**
     * Prints a welcome message to the player when the game starts.
@@ -145,9 +152,5 @@ public class Game
         System.out.println("But do not let him run into you, or he will kill you.");
         System.out.println("Type '" + CommandWord.HELP + "' if you need help.");
         //System.out.println(currentRoom.getLongDescription());
-    }
-
-    public GUI getGUI() {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 }
