@@ -5,10 +5,39 @@
  */
 package GUI;
 
+import logic.elements.characters.Item;
+import logic.elements.rooms.Room;
+
 /**
  *
  * @author Erik
  */
 public class GUI {
+  private MiniMap minimap;  
     
+  public GUI() {
+this.minimap = new MiniMap();       //Creates minimap object
 }
+  
+  public void updateRoom(Room room) {   
+      
+  }
+  
+  public void updateInventory(Item[] inventory) {
+      
+  }
+  
+  public void investigate(Room room) {
+      
+  }
+  
+  public void printHelp() {
+      
+  }
+  
+  public void prinInventory(Item[]inventory) {
+      
+  }
+  
+}
+
