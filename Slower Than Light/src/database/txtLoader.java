@@ -82,7 +82,7 @@ private void itemToHashMap(String[] words){
         i = i + 2;
         j = j + 2;
     }
-    System.out.println("added: " + items.keySet());
+  
 }
 
 
@@ -91,14 +91,8 @@ private void itemToHashMap(String[] words){
 private void roomToHashMap(String[] words) {
         
      int i = 1;                 //index for room in our txt file            
-     int j = 2;                 //index for boolean in our txt file
-     
-     
-        //As long as j is less than our array words[] insert room to our
-        //Array rooms[] 
-        //rooms has the parameteres (String, room), but room has parameters
-        //(String boolean)  explains parameteres inside while loop.
-    while (j < words.length) {          //As long j is less than array lenght put room
+     int j = 2;                 //index for boolean in our txt file    
+    while (j < words.length) {                                                       //As long j is less than array lenght put room
         rooms.put(words[i], new Room(words[i], Boolean.parseBoolean(words[j]) ));   //read as string, force to bool
         i += 2;                                                                     //Jumps to room index in our txt
         j += 2;                                                                     //jumps to next boolean in txt

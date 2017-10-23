@@ -37,7 +37,7 @@ public class Item
      * @param name The name of the item.
      * @param defaultRoom The default room for the item.
      */
-    Item(String name, Room defaultRoom)
+  public Item(String name, Room defaultRoom)
     {
         this.name = name;
         this.defaultRoom = defaultRoom;
