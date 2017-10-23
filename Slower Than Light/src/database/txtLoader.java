@@ -66,9 +66,7 @@ private void addRoomExits(String[] words){
         i = i + 2;
         j = j + 2;
     }
-    for (String key : rooms.keySet()){
-          System.out.println( key+" "+rooms.get(key).getExits());
-      }
+    
   }
   
 private void itemToHashMap(String[] words){
@@ -87,16 +85,38 @@ private void itemToHashMap(String[] words){
     System.out.println("added: " + items.keySet());
 }
 
+
+//Method inserts room to our hasmap rooms
+//Private as the method is only used and accessed in the txtLoader class
+private void roomToHashMap(String[] words) {
+        
+     int i = 1;                 //index for room in our txt file            
+     int j = 2;                 //index for boolean in our txt file
+     
+     
+        //As long as j is less than our array words[] insert room to our
+        //Array rooms[] 
+        //rooms has the parameteres (String, room), but room has parameters
+        //(String boolean)  explains parameteres inside while loop.
+    while (j < words.length) {          //As long j is less than array lenght put room
+        rooms.put(words[i], new Room(words[i], Boolean.parseBoolean(words[j]) ));   //read as string, force to bool
+        i += 2;                                                                     //Jumps to room index in our txt
+        j += 2;                                                                     //jumps to next boolean in txt
+                    
+
+        } 
+    
+}
  
 
 public HashMap<String, Room> getRooms()
 {
-    return new HashMap<>();
+    return this.rooms;
 }
 
 public HashMap<String, Item> getItems()
 {
-    return new HashMap<String, logic.elements.characters.Item>();
+    return this.items;
 }
 
 
