@@ -7,11 +7,7 @@ import java.util.Scanner;
 import logic.elements.characters.Item;
 import logic.elements.rooms.Room;
 
-public class txtLoader {
 
-private HashMap<String, Room> rooms;
-
-private HashMap<String, Item> items;
 
 public class txtLoader {
     
