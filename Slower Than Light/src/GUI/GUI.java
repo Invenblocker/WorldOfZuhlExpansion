@@ -19,6 +19,10 @@ public class GUI {
 this.minimap = new MiniMap();       //Creates minimap object
 }
   
+  public void updateMinimap() {
+      
+  }
+  
   public void updateRoom(Room room) {   
       
   }
