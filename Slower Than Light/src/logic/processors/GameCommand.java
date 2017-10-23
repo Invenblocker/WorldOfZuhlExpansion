@@ -88,7 +88,12 @@ public class GameCommand {
         else
             System.out.println("There is no way here !");
     }
-
+/**
+ * Checks if the player types a second word and if it's valid. It checks if the 
+ * player have space in his inventory and if that's the case
+ * it colleges the item that the user picked. 
+ * @param command 
+ */
     private void takeItem (Command command) 
             
     {
