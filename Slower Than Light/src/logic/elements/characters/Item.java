@@ -23,7 +23,7 @@ public class Item
      * 
      * @param name The name of the item.
      */
-    Item(String name)
+   public Item(String name)
     {
         this.name = name;
         this.defaultRoom = null;
