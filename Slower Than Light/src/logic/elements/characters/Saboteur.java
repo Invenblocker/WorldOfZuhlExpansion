@@ -73,15 +73,7 @@ public class Saboteur extends RoomHopper
                 
                 chanceOfSabotage += CHANCE_OF_SABOTAGE_GROWTH;
                 
-                neighbors = getCurrentRoom().getCollectionOfExits();
-                
-                for(int i = 0; i < neighbors.size(); i++)
-                {
-                    if(getCurrentRoom().getExit(neighbors.get(i)).equals(Game.getInstance().getPlayer().getCurrentRoom()))
-                    {
-                        chasingPlayer = true;
-                    }
-                }
+                checkChasingPlayer();
             }
         }
         
@@ -106,24 +98,41 @@ public class Saboteur extends RoomHopper
         {
             setRoom(room);
             chanceOfSabotage += CHANCE_OF_SABOTAGE_GROWTH;
+            
+            if(Game.getInstance().getPlayer().getCurrentRoom().isControlRoom())
+            {
+                chasingPlayer = false;
+            }
+            
             return(5 + (int) Math.floor(Math.random() * 6));
         }
         else
         {
-            return(-1);
+            return(checkChasingPlayer());
         }
     }
     
-    /**
-     * @author Invenblocker
-     * 
-     * Modifies whether the saboteur is chasing the player.
-     * 
-     * @param value true if the saboteur should chase, false if not.
-     */
-    public void setChasingPlayer(boolean value)
+    private int checkChasingPlayer()
     {
-        chasingPlayer = value;
+        if(Game.getInstance().getPlayer().getCurrentRoom().isControlRoom())
+        {
+            chasingPlayer = false;
+            return(-1);
+        }
+        else
+        {
+            ArrayList<String> neighbors = getCurrentRoom().getCollectionOfExits();
+            for(String neighbor : neighbors)
+            {
+                if(getCurrentRoom().getExit(neighbor).equals(Game.getInstance().getPlayer().getCurrentRoom()))
+                {
+                    chasingPlayer = true;
+                    return(5 + (int) Math.floor(Math.random() * 6));
+                }
+            }
+            chasingPlayer = false;
+            return(-1);
+        }
     }
     
     /**
