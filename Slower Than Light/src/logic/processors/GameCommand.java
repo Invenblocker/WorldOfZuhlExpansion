@@ -134,6 +134,12 @@ public class GameCommand {
             }
         } 
     }
+    
+    /**
+     * Checks if the room you have entered is a item room or a workshop room.
+     * If the room holds any items it puts them into an arraylist with all item i a specific room. 
+     * @return 
+     */
     private ArrayList<Item> roomItemList ()
     {
        ItemRoom currenRoomAsItemRoom = (ItemRoom) game.getPlayer().getCurrentRoom();
