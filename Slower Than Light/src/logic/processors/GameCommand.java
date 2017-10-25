@@ -134,12 +134,6 @@ public class GameCommand {
             }
         } 
     }
-    
-    /**
-     * Checks if the room you have entered is a item room or a workshop room.
-     * If the room holds any items it puts them into an arraylist with all item i a specific room. 
-     * @return 
-     */
     private ArrayList<Item> roomItemList ()
     {
        ItemRoom currenRoomAsItemRoom = (ItemRoom) game.getPlayer().getCurrentRoom();
@@ -164,8 +158,27 @@ public class GameCommand {
 
     }
 
-    private void repairRoom (Command command) 
-    {
+    private void repairRoom (Command command) {
+        game.getPlayer().getInventory();
+        Item[] inventory = game.getPlayer().getInventory();
+        Room roomCheck = game.getPlayer().getCurrentRoom();
+        
+        if (!roomCheck.isOperating()) {
+            for (Item item : inventory) {
+                if (item == roomCheck.getRepairTool()) {
+                    System.out.println("You have used the item" + roomCheck.getRepairTool() + " from your inventory.");
+                }
+            }
+            for (Item item : inventory) {
+                if (item == ) {
+                    
+                }
+                
+            }
+                
+        
+            
+        }
         
     }
 
@@ -173,20 +186,32 @@ public class GameCommand {
      * Investigate the room.
      * Prints all the items in the room in which the player is currently located 
      */
-    private void investigate () 
-    {
-    ArrayList<Item>roomInventory = roomItemList();
-        if (roomInventory != null) 
-        {
-              System.out.println("These items are in this room :");
-            for (int i = 0; i < roomInventory.size(); i++) 
-            {
+    private void investigate () {
+        Room roomCheck  = game.getPlayer().getCurrentRoom();
+        
+        if (!roomCheck.isOperating()) {
+            System.out.println("This room is broken, if you want to repair this room, you'll need a " + roomCheck.getRepairTool() + ".");
+        return;
+        }
+        System.out.println("This room is functioning properly.");
+        
+        Item[] inventory = game.getPlayer().getInventory();
+        ArrayList<Item>roomInventory = roomItemList();
+        if (roomInventory != null) {
+            System.out.println("These items are in this room :");
+            for (int i = 0; i < roomInventory.size(); i++) {
                 System.out.println(i + roomInventory.get(i).getName());
             } 
         }
-         else
+        else
             System.out.println("There is no item !");
-    }
+        }
+            
+                
+            
+            
+        
+        
     
     /**
      * Quits the game if no second word has been entered by the player.
