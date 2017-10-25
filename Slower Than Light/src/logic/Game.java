@@ -2,7 +2,10 @@ package logic;
 
 import GUI.GUI;
 import database.txtLoader;
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
+import java.util.Random;
 import java.util.Timer;
 import logic.elements.characters.Player;
 import logic.elements.characters.Saboteur;
@@ -33,14 +36,15 @@ public class Game
     private final double ALLOWED_ROOMS_DESTROYED_PERCENTAGE = 0.3;
     private double roomsDestroyedPercentage;
     
+    private boolean gameFinished;
+    
     private Parser parser;
     private HashMap<String, Room>rooms;
     private HashMap<String, Item>items;
     private Player player;
     private Saboteur saboteur;
-    private TimeHolder timeholder;
     private GUI gui;
-    private boolean gameFinished;
+    private TimeHolder timeholder;
     
     private boolean gameLoaded;
     
@@ -64,6 +68,7 @@ public class Game
     {
         rooms = loader.getRooms();
         items = loader.getItems();
+        player = loader.getPlayer();
         
         gameLoaded = true;
     }
@@ -80,36 +85,45 @@ public class Game
             return;
         }
         
+        // Setup GUI
+        //player = new Player(rooms.get("Control Room"), 2);
+        saboteur = new Saboteur(getRandomRoom(), 0.5, 0.1);
+        gui = new GUI();
+        
+        // Print welcome message
+        printWelcome();
+        
+        // Setup Timer
         timeholder = new TimeHolder(300);
         Timer timer = new Timer();
         timer.schedule(timeholder, 0, 1000);
         
-        gui = new GUI();
-        
-        printWelcome();
-        
+        // Setup user input
         GameCommand gameCommand = new GameCommand();
         parser = new Parser();
         
+        // Game loop
         while (!gameFinished) {
             Command command = parser.getCommand();
             gameFinished = gameCommand.processCommand(command);
         }
+        
+        // Game end
         System.out.println("Thank you for playing.  Goodbye.");
         timer.cancel();
     }
              
-    public double getALLOWED_ROOMS_DESTROYED_PERCENTAGE() {
-        return ALLOWED_ROOMS_DESTROYED_PERCENTAGE;
-    }
-    
+    public double getALLOWED_ROOMS_DESTROYED_PERCENTAGE() {return ALLOWED_ROOMS_DESTROYED_PERCENTAGE;}
 
-    public double getRoomsDestroyedPercentage() {
-        return roomsDestroyedPercentage;
-    }
-
+    public double getRoomsDestroyedPercentage() {return roomsDestroyedPercentage;}
     public void setRoomsDestroyedPercentage(double roomsDestroyedPercentage) {
         this.roomsDestroyedPercentage = roomsDestroyedPercentage;
+    }
+    
+    public boolean isGameFinished () {return gameFinished;}
+    public void setGameFinished(boolean value)
+    {
+        gameFinished = value;
     }
     
     public Parser getParser () {return parser;}
@@ -124,17 +138,24 @@ public class Game
     
     public TimeHolder getTimeHolder() {return timeholder;}
     
-    public void setGameFinished(boolean value)
-    {
-        gameFinished = value;
-    }
+    public GUI getGUI() {return gui;}
     
-    public boolean isGameFinished () {
-        return gameFinished;
-    }
-
-    public GUI getGUI() {
-        return gui;
+    private Room getRandomRoom()
+    {
+        Room randomRoom = null;
+        
+        Random random = new Random();
+        List<String> keys = new ArrayList<>(rooms.keySet());
+        
+        while(randomRoom != null)
+        {
+            String randomKey = keys.get(random.nextInt(keys.size()));
+            Room tempRandomRoom = rooms.get(randomKey);
+            if (!tempRandomRoom.isControlRoom())
+                randomRoom = tempRandomRoom;
+        }
+        
+        return randomRoom;
     }
     
     /**
