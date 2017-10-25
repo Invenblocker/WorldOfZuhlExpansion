@@ -113,6 +113,10 @@ public class Room
     public Tool getRepairTool() {
         return repairTool;
     }
+
+    public void setRepairTool(Tool repairTool) {
+        this.repairTool = repairTool;
+    }
     
     
     
