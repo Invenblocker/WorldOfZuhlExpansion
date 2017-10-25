@@ -42,7 +42,7 @@ public void loadGame (String gameName) throws FileNotFoundException {
         else if(words[0].equals("Item:")){
             itemToHashMap(words);
         }
-        else if(words[0].equals("Player")) {
+        else if(words[0].equals("Player:")) {
             playerAttributes(words);
         }
             
