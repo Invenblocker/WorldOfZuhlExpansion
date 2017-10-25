@@ -88,7 +88,12 @@ public class GameCommand {
         else
             System.out.println("There is no way here !");
     }
-
+/**
+ * Checks if the player types a second word and if it's valid. It checks if the 
+ * player have space in his inventory and if that's the case
+ * it colleges the item that the user picked. 
+ * @param command 
+ */
     private void takeItem (Command command) 
             
     {
@@ -129,6 +134,12 @@ public class GameCommand {
             }
         } 
     }
+    
+    /**
+     * Checks if the room you have entered is a item room or a workshop room.
+     * If the room holds any items it puts them into an arraylist with all item i a specific room. 
+     * @return 
+     */
     private ArrayList<Item> roomItemList ()
     {
        ItemRoom currenRoomAsItemRoom = (ItemRoom) game.getPlayer().getCurrentRoom();
