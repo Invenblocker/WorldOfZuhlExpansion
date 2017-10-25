@@ -107,8 +107,7 @@ public class GameCommand {
         if (inventory != null) 
         {
             for (Item item : inventory) 
-            {
-                
+            { 
                 if (item != null)
                     ItemCount++;
             }
@@ -155,11 +154,34 @@ public class GameCommand {
     }
     private void dropItem (Command command) 
     {
-
+        if (!command.hasSecondWord()) 
+        {
+            System.out.println("What item did you mean ? ");
+            return;
+        }
+        Item[] inventory = game.getPlayer().getInventory();
+             try {
+                int itemIndex = Integer.parseInt(command.getSecondWord());
+                Item itemDropped;
+                itemDropped = inventory[itemIndex];
+                if(game.getPlayer().removeItem(itemDropped)) 
+                {
+                   WorkshopRoom currentRoom = (WorkshopRoom) game.getPlayer().getCurrentRoom();
+                    if (currentRoom != null)
+                        currentRoom.addItem(itemDropped);
+                    else
+                        setItemToDefault(itemDropped);
+                }
+                
+            } 
+            catch (Exception e) 
+            {
+                System.out.println("This is not a valid item ! ");
+            }
+        
     }
 
     private void repairRoom (Command command) {
-        game.getPlayer().getInventory();
         Item[] inventory = game.getPlayer().getInventory();
         Room roomCheck = game.getPlayer().getCurrentRoom();
         
@@ -206,12 +228,6 @@ public class GameCommand {
         else
             System.out.println("There is no item !");
         }
-            
-                
-            
-            
-        
-        
     
     /**
      * Quits the game if no second word has been entered by the player.
@@ -238,6 +254,14 @@ public class GameCommand {
         System.out.println();
         System.out.println("Your command words are:");
         game.getParser().showCommands();
+    }
+    private void setItemToDefault(Item item)
+    {
+        if (item.getDefaultRoom() != null) 
+        {
+            ItemRoom defultRoom = (ItemRoom)item.getDefaultRoom();
+            defultRoom.setItem(item);
+        }
     }
 
 }
