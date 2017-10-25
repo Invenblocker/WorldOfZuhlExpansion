@@ -15,7 +15,7 @@ import logic.elements.rooms.Room;
 public class ItemRoom  extends Room{  //Itemroom inherits funnctionality from room
     private Item item;   //Item from subclass player.
     private Item specialItem;
-    private String repairItem;
+   
 
     
     
@@ -54,8 +54,6 @@ public class ItemRoom  extends Room{  //Itemroom inherits funnctionality from ro
         return specialItem;
     }
     
-    public String getRepairItem() { //returns repairitem from datatype string
-        return repairItem;
-    }
+
     
 }

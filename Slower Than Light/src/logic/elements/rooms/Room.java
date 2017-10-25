@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.Set;
 import java.util.HashMap;
 import java.util.Iterator;
+import logic.elements.characters.Tool;
 
 
 /**
@@ -16,6 +17,7 @@ public class Room
     private HashMap<String, Room> exits;
     private boolean controlRoom;       //check if player is in CR
     private boolean operating;          //is room damaged
+    private Tool repairTool;
     
     /**
      * A constructor that creates a new room with no exits.
@@ -106,6 +108,10 @@ public class Room
     
     public boolean isControlRoom() {    //returns boolean value, is player in CR
         return this.controlRoom;
+    }
+
+    public Tool getRepairool() {
+        return repairTool;
     }
     
     
