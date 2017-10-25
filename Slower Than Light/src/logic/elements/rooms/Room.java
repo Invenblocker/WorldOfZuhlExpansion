@@ -110,7 +110,7 @@ public class Room
         return this.controlRoom;
     }
 
-    public Tool getRepairool() {
+    public Tool getRepairTool() {
         return repairTool;
     }
     
