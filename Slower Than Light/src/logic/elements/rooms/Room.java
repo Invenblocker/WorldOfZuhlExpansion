@@ -14,8 +14,8 @@ public class Room
 {
     private String name;
     private HashMap<String, Room> exits;
-        private boolean controlRoom;       //check if player is in CR
-        private boolean operating;          //is room damaged
+    private boolean controlRoom;       //check if player is in CR
+    private boolean operating;          //is room damaged
     
     /**
      * A constructor that creates a new room with no exits.

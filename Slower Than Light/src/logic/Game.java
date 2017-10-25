@@ -1,5 +1,6 @@
 package logic;
 
+import GUI.GUI;
 import database.txtLoader;
 import java.util.HashMap;
 import java.util.Timer;
@@ -29,12 +30,16 @@ public class Game
         return instance;
     }
     
+    private final double ALLOWED_ROOMS_DESTROYED_PERCENTAGE = 0.3;
+    private double roomsDestroyedPercentage;
+    
     private Parser parser;
     private HashMap<String, Room>rooms;
     private HashMap<String, Item>items;
     private Player player;
     private Saboteur saboteur;
     private TimeHolder timeholder;
+    private GUI gui;
     private boolean gameFinished;
     
     private boolean gameLoaded;
@@ -79,6 +84,8 @@ public class Game
         Timer timer = new Timer();
         timer.schedule(timeholder, 0, 1000);
         
+        gui = new GUI();
+        
         printWelcome();
         
         GameCommand gameCommand = new GameCommand();
@@ -88,8 +95,21 @@ public class Game
             Command command = parser.getCommand();
             gameFinished = gameCommand.processCommand(command);
         }
-        System.out.println("Thank you for playing.  Good bye.");
+        System.out.println("Thank you for playing.  Goodbye.");
         timer.cancel();
+    }
+             
+    public double getALLOWED_ROOMS_DESTROYED_PERCENTAGE() {
+        return ALLOWED_ROOMS_DESTROYED_PERCENTAGE;
+    }
+    
+
+    public double getRoomsDestroyedPercentage() {
+        return roomsDestroyedPercentage;
+    }
+
+    public void setRoomsDestroyedPercentage(double roomsDestroyedPercentage) {
+        this.roomsDestroyedPercentage = roomsDestroyedPercentage;
     }
     
     public Parser getParser () {return parser;}
@@ -107,6 +127,14 @@ public class Game
     public void setGameFinished(boolean value)
     {
         gameFinished = value;
+    }
+    
+    public boolean isGameFinished () {
+        return gameFinished;
+    }
+
+    public GUI getGUI() {
+        return gui;
     }
     
     /**

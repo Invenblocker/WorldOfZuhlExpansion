@@ -1,8 +1,11 @@
 package logic.processors;
 
+import com.sun.media.jfxmedia.MediaManager;
 import java.util.ArrayList;
+import javafx.scene.input.KeyCode;
 import logic.Game;
 import logic.elements.characters.Item;
+import logic.elements.characters.Player;
 import logic.elements.rooms.ItemRoom;
 import logic.elements.rooms.Room;
 import logic.elements.rooms.WorkshopRoom;
@@ -43,7 +46,7 @@ public class GameCommand {
                 dropItem(command);
                 break;
             case REPAIR:
-                repairItem(command);
+                repairRoom(command);
                 break;
             case INVESTIGATE:
                 investigate();
@@ -87,27 +90,48 @@ public class GameCommand {
     }
 
     private void takeItem (Command command) 
+            
     {
-
+        if (!command.hasSecondWord())
+        {
+            System.out.println("Take what ? ");
+            return;
+        }
+        Item[] inventory = game.getPlayer().getInventory();
+        int ItemCount = 0;
+        if (inventory != null) 
+        {
+            for (Item item : inventory) 
+            {
+                
+                if (item != null)
+                    ItemCount++;
+            }
+            if (ItemCount != inventory.length)
+            {
+                System.out.println("Your inventory is full ! ");
+                System.out.println("You need to drop a item to be able to pike up a new item ");
+                return;
+            }
+        }
+        else
+        {
+        ArrayList<Item> roomInventory = roomItemList();
+            try {
+                int itemRefrence = Integer.parseInt(command.getSecondWord());
+                Item itemTaken;
+                itemTaken = roomInventory.get(itemRefrence);
+                game.getPlayer().addItem(itemTaken); 
+            } 
+            catch (Exception e) 
+            {
+                System.out.println("This is not a valid item ! ");
+            }
+        } 
     }
-
-    private void dropItem (Command command) 
+    private ArrayList<Item> roomItemList ()
     {
-
-    }
-
-    private void repairItem (Command command) 
-    {
-
-    }
-
-    /**
-     * Investigate the room.
-     * Prints all the items in the room in which the player is currently located 
-     */
-    private void investigate () 
-    {
-        ItemRoom currenRoomAsItemRoom = (ItemRoom) game.getPlayer().getCurrentRoom();
+       ItemRoom currenRoomAsItemRoom = (ItemRoom) game.getPlayer().getCurrentRoom();
         ArrayList<Item>roomInventory = new ArrayList<>();
         if (currenRoomAsItemRoom != null) 
         {
@@ -119,17 +143,40 @@ public class GameCommand {
             WorkshopRoom currentRoomAsWorkshopRoom = (WorkshopRoom) game.getPlayer().getCurrentRoom();
             if (currentRoomAsWorkshopRoom != null) 
                 roomInventory.addAll(currentRoomAsWorkshopRoom.getItems());
-            
-            System.out.println("These items are in this room :");
+            return roomInventory;
+        }
+        else  
+            return null;
+    }
+    private void dropItem (Command command) 
+    {
+
+    }
+
+    private void repairRoom (Command command) 
+    {
+        
+    }
+
+    /**
+     * Investigate the room.
+     * Prints all the items in the room in which the player is currently located 
+     */
+    private void investigate () 
+    {
+    ArrayList<Item>roomInventory = roomItemList();
+        if (roomInventory != null) 
+        {
+              System.out.println("These items are in this room :");
             for (int i = 0; i < roomInventory.size(); i++) 
             {
                 System.out.println(i + roomInventory.get(i).getName());
             } 
         }
-        else
+         else
             System.out.println("There is no item !");
     }
-
+    
     /**
      * Quits the game if no second word has been entered by the player.
      * @param command The command entered by the player
