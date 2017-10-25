@@ -105,6 +105,7 @@ public class Saboteur extends RoomHopper
         if(chasingPlayer)
         {
             setRoom(room);
+            chanceOfSabotage += CHANCE_OF_SABOTAGE_GROWTH;
             return(5 + (int) Math.floor(Math.random() * 6));
         }
         else
