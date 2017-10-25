@@ -22,8 +22,7 @@ public class WorkshopRoom  extends ItemRoom{
     }
     
     public void addItem(Item item){ //Adds/stores item in workshoproom
-        items.add(item);
-                
+        items.add(item);          
     }
     
     public void removeItem(Item item){ //Removes/takes item from workshoproom

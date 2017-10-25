@@ -9,26 +9,42 @@ import logic.elements.rooms.*;
 
 /**
  *
- * @author Erik
+ * @author Invenblocker & JN97
  */
 public class Player extends RoomHopper
 {
     private Item[] inventory;
     
-    Player(Room room)
+    /**
+     * @author JN97
+     * 
+     * Creates a player and spawns them in the specified room.
+     * 
+     * @param room The player's starting room.
+     */
+    public Player(Room room, int inventorySize)
     {
         super(room);
         
-        inventory = new Item[2];
+        inventory = new Item[inventorySize];
     }
     
+    /**
+     * @author JN97
+     * 
+     * Adds an item to the inventory. Returns true if the item was successfully
+     * added, returns false if the inventory is full.
+     * 
+     * @param item The item to be added.
+     * @return A boolean stating if the item was succesfully added.
+     */
     public boolean addItem(Item item)
     {
-        for(Item slot : inventory)
+        for(int i = 0; i < inventory.length; i++)
         {
-            if(slot == null)
+            if(inventory[i] == null)
             {
-                slot = item;
+                inventory[i] = item;
                 
                 return true;
             }          
@@ -36,42 +52,68 @@ public class Player extends RoomHopper
         return false;
     }
     
+    /**
+     * @author JN97
+     * 
+     * Removes an item from the player's inventory and returns a boolean stating
+     * if the item was in the inventory in the first place.
+     * 
+     * @param item The item that should be removed.
+     * @return A boolean that is true if the removed item was in the inventory.
+     */
     public boolean removeItem(Item item)
     {
-        for(Item slot : inventory)
+        for(int i = inventory.length - 1; i >= 0; i--)
         {
-            if(slot.equals(item))
+            if(inventory[i] != null && inventory[i].equals(item))
             {
-                slot = null;
+                inventory[i] = null;
                 return true;                
             }
         }
         return false;
     }
     
+    /**
+     * @author Invenblocker
+     * 
+     * Removes the item at the inventory's given index.
+     * Returns false if the index is out of bounds or if the slot is already
+     * empty.
+     * 
+     * @param index The index of the item to be removed.
+     * @return A boolean stating if the item was successfully removed.
+     */
+    public boolean removeItem(int index)
+    {
+        if(index < 0 || index >= inventory.length) return(false);
+        if(inventory[index] == null)
+        {
+            return(false);
+        }
+        else
+        {
+            inventory[index] = null;
+            return(true);
+        }
+    }
+    
+    /**
+     * @author Invenblocker
+     * 
+     * Returns a copy of the player's inventory.
+     * 
+     * @return The inventory as an array passed by value.
+     */
     public Item[] getInventory()
     {
-        int itemCount = 0;
+        Item[] copy = new Item[inventory.length];
         
-        for(Item slot : inventory)
+        for(int i = 0; i < inventory.length; i++)
         {
-            if(slot != null) itemCount++;
+            copy[i] = inventory[i];
         }
         
-        if(itemCount == 0) return(new Item[0]);
-        
-        Item[] croppedInventory = new Item[itemCount];
-        
-        int currentSlot = 0;
-        
-        for(Item slot : inventory)
-        {
-            if(slot != null)
-            {
-                croppedInventory[currentSlot++] = slot;
-            }
-        }
-        
-        return(croppedInventory);
+        return(copy);
     }
 }

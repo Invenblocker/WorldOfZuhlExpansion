@@ -11,7 +11,7 @@ import logic.elements.rooms.*;
 import java.util.*;
 /**
  *
- * @author Johnn
+ * @author Invenblocker & JN97
  */
 public class Saboteur extends RoomHopper
 {
@@ -19,7 +19,16 @@ public class Saboteur extends RoomHopper
     private final double DEFAULT_CHANCE_OF_SABOTAGE, CHANCE_OF_SABOTAGE_GROWTH;
     private boolean chasingPlayer;
     
-    Saboteur(Room room, double chanceOfSabotage, double chanceOfSabotageGrowth)
+    /**
+     * @author Invenblocker
+     * 
+     * The constructor for the basic saboteur.
+     * 
+     * @param room The starting room for the saboteur.
+     * @param chanceOfSabotage The starting chance that the saboteur will sabotage its current room.
+     * @param chanceOfSabotageGrowth How much the chance of sabotaging the current room should grow when moving instead of sabotaging.
+     */
+    public Saboteur(Room room, double chanceOfSabotage, double chanceOfSabotageGrowth)
     {
         super(room);
         
@@ -28,17 +37,70 @@ public class Saboteur extends RoomHopper
         CHANCE_OF_SABOTAGE_GROWTH = chanceOfSabotageGrowth;
     }
     
-    int performAction()
+    /**
+     * @author Invenblocker
+     * 
+     * A simple AI that causes the saboteur to act.
+     * 
+     * @return an integer dictating the amount of time to the next action.
+     */
+    public int performAction()
     {
         if(chasingPlayer)
         {
-            
+            setRoom(Game.getInstance().getPlayer().getCurrentRoom());
+        }
+        else
+        {
+            if(getCurrentRoom().isOperating() && Math.random() < chanceOfSabotage)
+            {
+                getCurrentRoom().setOperating(false);
+                chanceOfSabotage = DEFAULT_CHANCE_OF_SABOTAGE;
+            }
+            else
+            {
+                ArrayList<String> neighbors = getCurrentRoom().getCollectionOfExits();
+                
+                for(int i = neighbors.size() - 1; i >= 0; i--)
+                {
+                    if(getCurrentRoom().getExit(neighbors.get(i)).isControlRoom())
+                    {
+                        neighbors.remove(i);
+                    }
+                }
+                
+                setRoom(getCurrentRoom().getExit(neighbors.get((int) Math.floor(Math.random() * neighbors.size()))));
+                
+                chanceOfSabotage += CHANCE_OF_SABOTAGE_GROWTH;
+                
+                neighbors = getCurrentRoom().getCollectionOfExits();
+                
+                for(int i = 0; i < neighbors.size(); i++)
+                {
+                    if(getCurrentRoom().getExit(neighbors.get(i)).equals(Game.getInstance().getPlayer().getCurrentRoom()))
+                    {
+                        chasingPlayer = true;
+                    }
+                }
+            }
         }
         
         return(5 + (int) Math.floor(Math.random() * 6));
     }
     
-    int chasePlayer(Room room)
+    /**
+     * @author Invenblocker
+     * 
+     * Causes the saboteur to chase the player by entering the room entered in
+     * the parameter if they're actively chasing. Returns -1 if not actively
+     * chasing, if actively chasing, returns an integer from 5 to 10 both
+     * both inclusive stating the amount of time before the saboteur's next
+     * action.
+     * 
+     * @param room The room in which the saboteur should chase
+     * @return The amount of time to the next action (-1 if not actively chasing)
+     */
+    public int chasePlayer(Room room)
     {
         if(chasingPlayer)
         {
@@ -51,12 +113,26 @@ public class Saboteur extends RoomHopper
         }
     }
     
-    void setChasingPlayer(boolean value)
+    /**
+     * @author Invenblocker
+     * 
+     * Modifies whether the saboteur is chasing the player.
+     * 
+     * @param value true if the saboteur should chase, false if not.
+     */
+    public void setChasingPlayer(boolean value)
     {
         chasingPlayer = value;
     }
     
-    boolean isChasingPlayer()
+    /**
+     * @author Invenblocker
+     * 
+     * Checks to see if the saboteur is chasing the player.
+     * 
+     * @return true if chasing, false if not.
+     */
+    public boolean isChasingPlayer()
     {
         return(chasingPlayer);
     }
