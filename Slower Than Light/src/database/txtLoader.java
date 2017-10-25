@@ -5,6 +5,7 @@ import java.io.FileNotFoundException;
 import java.util.HashMap;
 import java.util.Scanner;
 import logic.elements.characters.Item;
+import logic.elements.characters.Player;
 import logic.elements.rooms.Room;
 
 
@@ -13,6 +14,7 @@ public class txtLoader {
     
     private HashMap<String, Room> rooms;
     private HashMap<String, Item> items;
+    private Player player;
  
  
     
@@ -40,11 +42,27 @@ public void loadGame (String gameName) throws FileNotFoundException {
         else if(words[0].equals("Item:")){
             itemToHashMap(words);
         }
+        else if(words[0].equals("Player")) {
+            playerAttributes(words);
+        }
+            
         else{
             addRoomExits(words);
         }
     }
  }
+
+private void playerAttributes(String[] words){
+    Room room = null;
+    int inventorySize;
+    for (String key : rooms.keySet()){   // tjekker alle keys i vores hashmap rooms (workshop, controlroom, pub, lab)
+        if (key.equals(words[1])){       // tjekker om plads 0 (et rum) er det rum vi kigger på.
+            room = rooms.get(key);       // sætter rum = det rum vi vil arbejde med.
+        }     
+    }
+    inventorySize = Integer.parseInt(words[2]);
+    player = new Player(room, inventorySize);
+}
   
 private void addRoomExits(String[] words){
     int i = 1;
@@ -113,7 +131,9 @@ public HashMap<String, Item> getItems()
     return this.items;
 }
 
-
+    public Player getPlayer() {
+        return player;
+    }
 
 
     
