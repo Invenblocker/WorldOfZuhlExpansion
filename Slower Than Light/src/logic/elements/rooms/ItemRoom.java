@@ -21,7 +21,7 @@ public class ItemRoom  extends Room{  //Itemroom inherits funnctionality from ro
     
     
     //Constructor for Itemroom, which extends/inherits functionality from room.
-    public ItemRoom(String name, Tool repairTool) {
+    public ItemRoom(String name) {
         super(name, false); //extends room, uses name, and false for cr, as itemroom can't be controlroom
         
         

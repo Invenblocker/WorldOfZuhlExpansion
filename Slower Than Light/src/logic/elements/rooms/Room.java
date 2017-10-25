@@ -15,9 +15,9 @@ public class Room
 {
     private String name;
     private HashMap<String, Room> exits;
+    private ArrayList<Tool> repairTools;
     private boolean controlRoom;       //check if player is in CR
-    private boolean operating;          //is room damaged
-    private Tool repairTool;
+    private boolean operating;         //is room damaged
     
     /**
      * A constructor that creates a new room with no exits.
@@ -110,8 +110,12 @@ public class Room
         return this.controlRoom;
     }
 
-    public Tool getRepairool() {
-        return repairTool;
+    public ArrayList<Tool> getRepairTools() {
+        return this.repairTools;
+    }
+
+    public void setRepairTools(ArrayList<Tool> repairTools) {
+        this.repairTools = repairTools;
     }
     
     
