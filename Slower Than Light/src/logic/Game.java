@@ -10,6 +10,8 @@ import java.util.Timer;
 import logic.elements.characters.Player;
 import logic.elements.characters.Saboteur;
 import logic.elements.characters.Item;
+import logic.elements.characters.Tool;
+import logic.elements.rooms.ItemRoom;
 import logic.elements.rooms.Room;
 import logic.processors.GameCommand;
 import logic.processors.TimeHolder;
@@ -33,18 +35,15 @@ public class Game
         return instance;
     }
     
-    private final double ALLOWED_ROOMS_DESTROYED_PERCENTAGE = 0.3;
-    private double roomsDestroyedPercentage;
-    
-    private boolean gameFinished;
-    
-    private Parser parser;
     private HashMap<String, Room>rooms;
     private HashMap<String, Item>items;
+    
+    private GameInfo gameInfo;
+    private Parser parser;
     private Player player;
     private Saboteur saboteur;
-    private GUI gui;
     private TimeHolder timeholder;
+    private GUI gui;
     
     private boolean gameLoaded;
     
@@ -54,7 +53,6 @@ public class Game
      */
     public Game() 
     {
-        gameFinished = false;
         gameLoaded = false;
     }
     
@@ -85,9 +83,18 @@ public class Game
             return;
         }
         
+        // Setup Game elements
+        Item[] itemsAsArray = items.values().toArray(new Item[0]);
+        Room[] roomsAsArray = rooms.values().toArray(new Room[0]);
+        
+        Game.GameSetup gameSetup = new GameSetup();
+        gameSetup.addItemsToDefaultRooms(itemsAsArray);
+        gameSetup.addRepairItemsToRooms(itemsAsArray, roomsAsArray);
+        
+        gameInfo = new GameInfo();
+        
         // Setup GUI
-        //player = new Player(rooms.get("Control Room"), 2);
-        saboteur = new Saboteur(getRandomRoom(), 0.5, 0.1);
+        saboteur = new Saboteur(gameSetup.getRandomSaboteurStartRoom(roomsAsArray), 0.5, 0.1);
         gui = new GUI();
         
         // Print welcome message
@@ -103,34 +110,24 @@ public class Game
         parser = new Parser();
         
         // Game loop
-        while (!gameFinished) {
+        while (!gameInfo.isGameFinished()) {
             Command command = parser.getCommand();
-            gameFinished = gameCommand.processCommand(command);
+            boolean gameFinished = gameCommand.processCommand(command);
+            gameInfo.setGameFinished(gameFinished);
         }
         
         // Game end
         System.out.println("Thank you for playing.  Goodbye.");
         timer.cancel();
     }
-             
-    public double getALLOWED_ROOMS_DESTROYED_PERCENTAGE() {return ALLOWED_ROOMS_DESTROYED_PERCENTAGE;}
-
-    public double getRoomsDestroyedPercentage() {return roomsDestroyedPercentage;}
-    public void setRoomsDestroyedPercentage(double roomsDestroyedPercentage) {
-        this.roomsDestroyedPercentage = roomsDestroyedPercentage;
-    }
-    
-    public boolean isGameFinished () {return gameFinished;}
-    public void setGameFinished(boolean value)
-    {
-        gameFinished = value;
-    }
-    
-    public Parser getParser () {return parser;}
     
     public HashMap<String, Room> getRooms() {return rooms;}
     
     public HashMap<String, Item> getItems() {return items;}
+
+    public GameInfo getGameInfo() {return gameInfo;}
+    
+    public Parser getParser () {return parser;}
     
     public Player getPlayer() {return player;}
     
@@ -140,7 +137,7 @@ public class Game
     
     public GUI getGUI() {return gui;}
     
-    private Room getRandomRoom()
+    /*private Room getRandomRoom()
     {
         Room randomRoom = null;
         
@@ -156,7 +153,7 @@ public class Game
         }
         
         return randomRoom;
-    }
+    }*/
     
     /**
     * Prints a welcome message to the player when the game starts.
@@ -172,6 +169,35 @@ public class Game
         System.out.println("You have to move around the spaceship to fix his havoc");
         System.out.println("But do not let him run into you, or he will kill you.");
         System.out.println("Type '" + CommandWord.HELP + "' if you need help.");
-        //System.out.println(currentRoom.getLongDescription());
+    }
+    
+    static class GameSetup
+    {
+        void addItemsToDefaultRooms(Item[] items)
+        {
+            
+        }
+    
+        void addRepairItemsToRooms(Item[] items, Room[] rooms)
+        {
+            
+        }
+
+        Room getRandomSaboteurStartRoom (Room[] rooms)
+        {
+            Room randomRoom = null;
+            
+            Random random = new Random();
+            
+            while(randomRoom != null)
+            {
+                int randomIndex = random.nextInt(rooms.length);
+                Room tempRandomRoom = rooms[randomIndex];
+                if (!tempRandomRoom.isControlRoom())
+                    randomRoom = tempRandomRoom;
+            }
+            
+            return randomRoom;
+        }
     }
 }
