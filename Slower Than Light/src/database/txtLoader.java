@@ -188,6 +188,10 @@ public HashMap<String, Item> getItems()
     return this.items;
 }
 
+    public Player getPlayer() {
+        return player;
+    }
+
 
 
 
