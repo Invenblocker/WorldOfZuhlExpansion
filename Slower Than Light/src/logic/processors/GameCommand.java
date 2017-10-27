@@ -92,7 +92,7 @@ public class GameCommand {
           Room pastRoom = game.getPlayer().setRoom(exitRoom);
           if (game.getSaboteur().getCurrentRoom() == exitRoom)
           {
-              game.setGameFinished(true);
+              game.getGameInfo().setGameFinished(true);
               System.out.println("You went into the same room as the saboteur. ");
               System.out.println("Game over !! ");
           }
@@ -213,6 +213,7 @@ public class GameCommand {
 
     private void repairRoom (Command command) 
     {
+        /*
         Item[] inventory = game.getPlayer().getInventory();
         Room roomCheck = game.getPlayer().getCurrentRoom();
         
@@ -237,7 +238,7 @@ public class GameCommand {
         
             
         }
-        
+        */
     }
 
     /**
@@ -248,7 +249,7 @@ public class GameCommand {
         Room roomCheck  = game.getPlayer().getCurrentRoom();
         
         if (!roomCheck.isOperating()) {
-            System.out.println("This room is broken, if you want to repair this room, you'll need a " + roomCheck.getRepairTool() + ".");
+            System.out.println("This room is broken, if you want to repair this room, you'll need a " + roomCheck.getRepairTools().get(0) + ".");
         return;
         }
         
