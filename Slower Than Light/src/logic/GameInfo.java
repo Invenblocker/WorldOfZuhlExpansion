@@ -9,7 +9,7 @@ package logic;
  *
  * @author Erik
  */
-class GameInfo {
+public class GameInfo {
     
     private final double ALLOWED_ROOMS_DESTROYED_PERCENTAGE = 0.3;
     private double roomsDestroyedPercentage;
