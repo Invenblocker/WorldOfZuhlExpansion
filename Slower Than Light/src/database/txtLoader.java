@@ -6,7 +6,6 @@ package database;
  * and open the template in the editor.
  */
 
-
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.util.ArrayList;
@@ -17,13 +16,10 @@ import java.util.Map;
 import java.util.Scanner;
 import logic.elements.characters.Item;
 import logic.elements.characters.Player;
-<<<<<<< HEAD
-=======
 import logic.elements.characters.Tool;
+import logic.elements.rooms.ControlRoom;
 import logic.elements.rooms.ItemRoom;
->>>>>>> RoomsRepair
 import logic.elements.rooms.Room;
-
 import logic.elements.rooms.WorkshopRoom;
 
 
@@ -41,7 +37,6 @@ public txtLoader(){
     
     
 }
- 
 
 /**
  * Takes the name of a txt file containing rooms and their exits, and items and their room.
@@ -61,16 +56,9 @@ public void loadGame (String gameName) throws FileNotFoundException {
         else if(words[0].equals("Item:")){
             itemToHashMap(words);
         }
-<<<<<<< HEAD
-        else if(words[0].equals("Player:")) {
-            playerAttributes(words);
-        }
-            
-=======
         else if(words[0].equals("Player:")){
             loadPlayer(words);
         }
->>>>>>> RoomsRepair
         else{
             addRoomExits(words);
         }
@@ -79,19 +67,6 @@ public void loadGame (String gameName) throws FileNotFoundException {
     addRoomRepairTools();
  }
 
-<<<<<<< HEAD
-private void playerAttributes(String[] words){
-    Room room = null;
-    int inventorySize;
-    for (String key : rooms.keySet()){   // tjekker alle keys i vores hashmap rooms (workshop, controlroom, pub, lab)
-        if (key.equals(words[1])){       // tjekker om plads 0 (et rum) er det rum vi kigger på.
-            room = rooms.get(key);       // sætter rum = det rum vi vil arbejde med.
-        }     
-    }
-    inventorySize = Integer.parseInt(words[2]);
-    player = new Player(room, inventorySize);
-}
-=======
 
 private void loadPlayer(String[] words){
     Room room = null;
@@ -125,7 +100,6 @@ private void addRoomRepairTools(){
     
 }
 
->>>>>>> RoomsRepair
   
 private void addRoomExits(String[] words){
     int i = 1;
@@ -160,15 +134,10 @@ private void itemToHashMap(String[] words){
         }
         for (String key : rooms.keySet()){
             if (key.equals(words[j])){
-                items.put(words[i], new Item(words[i],rooms.get(key)));
-            }
-        }
               if(words[x].equals("Tool")){ 
                 items.put(words[i], new Tool(words[i],rooms.get(key)));
                     
                 
-        i = i + 2;
-        j = j + 2;
              }
             }  
         }
@@ -190,7 +159,6 @@ private void roomToHashMap(String[] words) {
      int i = 1;                 //index for room in our txt file            
      int j = 2;                 //index for boolean in our txt file    
     while (j < words.length) {                                                       //As long j is less than array lenght put room
-        rooms.put(words[i], new Room(words[i], Boolean.parseBoolean(words[j]) ));   //read as string, force to bool
         
         if (words[j].equals("ItemRoom")){
         rooms.put(words[i], new ItemRoom(words[i]));   
@@ -220,9 +188,7 @@ public HashMap<String, Item> getItems()
     return this.items;
 }
 
-    public Player getPlayer() {
-        return player;
-    }
+
 
 
     

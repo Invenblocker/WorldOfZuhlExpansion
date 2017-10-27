@@ -7,10 +7,7 @@ import java.util.Iterator;
 import logic.elements.characters.Tool;
 
 
-/**
- * @author  Michael Kolling and David J. Barnes
- * @version 2006.03.30
- */public class Room 
+public class Room 
 {
     private String name;
     private HashMap<String, Room> exits;
@@ -118,21 +115,12 @@ import logic.elements.characters.Tool;
         return this.controlRoom;
     }
 
-<<<<<<< HEAD
-    public Tool getRepairTool() {
-        return repairTool;
-=======
     public ArrayList<Tool> getRepairTools() {
         return this.repairTools;
     }
 
     public void setRepairTools(Tool tool) {
         this.repairTools.add(tool);
->>>>>>> RoomsRepair
-    }
-
-    public void setRepairTool(Tool repairTool) {
-        this.repairTool = repairTool;
     }
     
     
