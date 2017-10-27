@@ -19,7 +19,7 @@ public class TimeHolder extends TimerTask{
      */
     public TimeHolder(int gameTime)
     {
-        saboteurCountdown = 0;
+        saboteurCountdown = 5;
         timeLeft = gameTime;
         game = Game.getInstance();
         gameInfo = game.getGameInfo();
@@ -76,6 +76,7 @@ public class TimeHolder extends TimerTask{
                 destroyedRooms++;
             }
         }
+        
         double destroyedRoomsPercentage = destroyedRooms / totalRooms;
         gameInfo.setRoomsDestroyedPercentage(destroyedRoomsPercentage);
     }

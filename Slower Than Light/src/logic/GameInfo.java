@@ -11,7 +11,7 @@ package logic;
  */
 public class GameInfo {
     
-    private final double ALLOWED_ROOMS_DESTROYED_PERCENTAGE = 0.3;
+    private final double ALLOWED_ROOMS_DESTROYED_PERCENTAGE = 0.7;
     private double roomsDestroyedPercentage;
     
     private boolean gameFinished;

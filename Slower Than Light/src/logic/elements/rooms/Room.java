@@ -25,15 +25,14 @@ public class Room
          this.controlRoom = false;     //constructs value for controlroom 
          this.name = name;
          this.repairTools = new ArrayList<Tool>();
+         this.operating = true;
          exits = new HashMap<String, Room>();    //Creates an empty HashMap  key/value
     }
     
     public Room(String name, boolean controlRoom) //constructor for  boolean CR
     {
-        this.controlRoom = controlRoom;     //constructs value for controlroom 
-        this.name = name;
-        this.repairTools = new ArrayList<Tool>();
-        exits = new HashMap<String, Room>();    //Creates an empty HashMap  key/value
+        this(name);
+        this.controlRoom = controlRoom;
     }
 
     /**

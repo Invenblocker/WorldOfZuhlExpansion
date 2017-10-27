@@ -5,6 +5,10 @@
  */
 package slowerThanLight;
 
+import database.txtLoader;
+import java.io.FileNotFoundException;
+import logic.Game;
+
 /**
  *
  * @author Erik
@@ -14,8 +18,13 @@ public class SlowerThanLight {
     /**
      * @param args the command line arguments
      */
-    public static void main(String[] args) {
+    public static void main(String[] args) throws FileNotFoundException {
         // TODO code application logic here
+        Game game = Game.getInstance();
+        txtLoader loader = new txtLoader();
+        loader.loadGame("D:\\Users\\Erik\\OneDrive - Syddansk Universitet\\Slower Than Light\\testmap.txt");
+        game.addGameLoader(loader);
+        game.play();
     }
     
 }

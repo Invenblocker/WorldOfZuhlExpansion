@@ -3,6 +3,8 @@ package logic;
 import GUI.GUI;
 import database.txtLoader;
 import java.util.ArrayList;
+import java.util.Collection;
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Random;
@@ -91,10 +93,11 @@ public class Game
         gameSetup.addItemsToDefaultRooms(itemsAsArray);
         gameSetup.addRepairItemsToRooms(itemsAsArray, roomsAsArray);
         
-        gameInfo = new GameInfo();
+        this.gameInfo = new GameInfo();
         
         // Setup GUI
-        saboteur = new Saboteur(gameSetup.getRandomSaboteurStartRoom(roomsAsArray), 0.5, 0.1);
+        Room randomRoom = gameSetup.getRandomSaboteurStartRoom(rooms);
+        saboteur = new Saboteur(randomRoom, 0.5, 0.1);
         gui = new GUI();
         
         // Print welcome message
@@ -117,8 +120,8 @@ public class Game
         }
         
         // Game end
-        System.out.println("Thank you for playing.  Goodbye.");
         timer.cancel();
+        System.out.println("Thank you for playing.  Goodbye.");
     }
     
     public HashMap<String, Room> getRooms() {return rooms;}
@@ -183,18 +186,22 @@ public class Game
             
         }
 
-        Room getRandomSaboteurStartRoom (Room[] rooms)
+        Room getRandomSaboteurStartRoom (HashMap<String, Room> rooms)
         {
             Room randomRoom = null;
-            
+        
             Random random = new Random();
+            List<String> keys = new ArrayList<>(rooms.keySet());
+            Collections.shuffle(keys);
             
-            while(randomRoom != null)
+            while(randomRoom == null)
             {
-                int randomIndex = random.nextInt(rooms.length);
-                Room tempRandomRoom = rooms[randomIndex];
+                //String randomKey = keys.get(random.nextInt(keys.size()));
+                String randomKey = keys.remove(0);
+                Room tempRandomRoom = rooms.get(randomKey);
                 if (!tempRandomRoom.isControlRoom())
                     randomRoom = tempRandomRoom;
+                
             }
             
             return randomRoom;
