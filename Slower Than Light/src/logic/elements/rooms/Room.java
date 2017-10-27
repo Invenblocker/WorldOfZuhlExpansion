@@ -10,23 +10,31 @@ import logic.elements.characters.Tool;
 /**
  * @author  Michael Kolling and David J. Barnes
  * @version 2006.03.30
- */
-public class Room 
+ */public class Room 
 {
     private String name;
     private HashMap<String, Room> exits;
+    private ArrayList<Tool> repairTools;
     private boolean controlRoom;       //check if player is in CR
-    private boolean operating;          //is room damaged
-    private Tool repairTool;
+    private boolean operating;         //is room damaged
     
     /**
      * A constructor that creates a new room with no exits.
      * @param name The name of the room.
      */
+    
+    public Room(String name){
+         this.controlRoom = false;     //constructs value for controlroom 
+         this.name = name;
+         this.repairTools = new ArrayList<Tool>();
+         exits = new HashMap<String, Room>();    //Creates an empty HashMap  key/value
+    }
+    
     public Room(String name, boolean controlRoom) //constructor for  boolean CR
     {
         this.controlRoom = controlRoom;     //constructs value for controlroom 
         this.name = name;
+        this.repairTools = new ArrayList<Tool>();
         exits = new HashMap<String, Room>();    //Creates an empty HashMap  key/value
     }
 
@@ -110,8 +118,17 @@ public class Room
         return this.controlRoom;
     }
 
+<<<<<<< HEAD
     public Tool getRepairTool() {
         return repairTool;
+=======
+    public ArrayList<Tool> getRepairTools() {
+        return this.repairTools;
+    }
+
+    public void setRepairTools(Tool tool) {
+        this.repairTools.add(tool);
+>>>>>>> RoomsRepair
     }
 
     public void setRepairTool(Tool repairTool) {
@@ -121,4 +138,3 @@ public class Room
     
     
 }
-

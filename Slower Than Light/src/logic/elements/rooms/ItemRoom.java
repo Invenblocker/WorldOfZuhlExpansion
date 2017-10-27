@@ -14,16 +14,16 @@ import logic.elements.rooms.Room;
  * @author Erik
  */
 public class ItemRoom  extends Room{  //Itemroom inherits funnctionality from room
-    private Item item;   //Item from subclass player.
-    private Item specialItem;
+    private Item item;         //Item from subclass player.
+    private Item specialItem;  
    
 
     
     
     //Constructor for Itemroom, which extends/inherits functionality from room.
-    public ItemRoom(String name, Tool repairTool) {
+    public ItemRoom(String name) {
         super(name, false); //extends room, uses name, and false for cr, as itemroom can't be controlroom
-        
+        this.specialItem = null;
         
     }
     
@@ -32,6 +32,10 @@ public class ItemRoom  extends Room{  //Itemroom inherits funnctionality from ro
     public void setItem(Item item) {      //Sets item in room class
         this.item = item; 
     }
+    
+     public void setItem(String item) {  
+         this.item = new Item(item, this);
+     }
     
     public void setSpecialItem(Item specialItem) {  //Sets special item in room class
         this.specialItem = specialItem;
