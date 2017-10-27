@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.Set;
 import java.util.HashMap;
 import java.util.Iterator;
+import logic.elements.characters.Item;
 import logic.elements.characters.Tool;
 
 
@@ -121,6 +122,10 @@ public class Room
 
     public void setRepairTools(Tool tool) {
         this.repairTools.add(tool);
+    }
+
+    public void addItem(Item itemDropped) {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
     
     

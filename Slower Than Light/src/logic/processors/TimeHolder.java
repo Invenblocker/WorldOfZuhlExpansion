@@ -32,6 +32,11 @@ public class TimeHolder extends TimerTask{
             
                 if (saboteurCountdown == 0) {
                     int newCountdown = game.getSaboteur().performAction();
+                        if(game.getSaboteur().getCurrentRoom() == game.getPlayer().getCurrentRoom())
+                        {
+                            game.isGameFinished(true);
+                            System.out.println("Game over!! ");   
+                        }
 
                     saboteurCountdown = newCountdown;
                     
