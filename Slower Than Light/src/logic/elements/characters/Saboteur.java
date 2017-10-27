@@ -94,6 +94,10 @@ public class Saboteur extends RoomHopper
      */
     public int chasePlayer(Room room)
     {
+        if(getCurrentRoom().equals(Game.getInstance().getPlayer().getCurrentRoom()))
+        {
+            return(5 + (int) Math.floor(Math.random() * 6));
+        }
         if(chasingPlayer)
         {
             setRoom(room);
