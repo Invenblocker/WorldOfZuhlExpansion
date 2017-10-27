@@ -33,9 +33,7 @@ public class GameCommand {
         CommandWord commandWord = command.getCommandWord();
 
         if (null != commandWord) switch (commandWord) {
-            case HELP:
-                printHelp();
-                break;
+            
             case GO:
                 goRoom(command);
                 break;
@@ -50,6 +48,12 @@ public class GameCommand {
                 break;
             case INVESTIGATE:
                 investigate();
+                break;
+            case INVENTORY:
+                 printInventory();
+                 break;
+            case HELP:
+                printHelp();
                 break;
             case QUIT:
                 wantToQuit = quit(command);
@@ -84,9 +88,22 @@ public class GameCommand {
         Room exitRoom = currentRoom.getExit(command.getSecondWord());
         
         if (exitRoom != null)
-            game.getPlayer().setRoom(exitRoom);
+        {
+          Room pastRoom = game.getPlayer().setRoom(exitRoom);
+          if (game.getSaboteur().getCurrentRoom() == exitRoom)
+          {
+              game.setGameFinished(true);
+              System.out.println("You went into the same room as the saboteur. ");
+              System.out.println("Game over !! ");
+          }
+          int saboteurCountdown = game.getSaboteur().chasePlayer(pastRoom);
+            if (saboteurCountdown != -1)
+                game.getTimeHolder().setSaboteurCountdown(saboteurCountdown);   
+        }
         else
             System.out.println("There is no way here !");
+        
+        
     }
 /**
  * Checks if the player types a second word and if it's valid. It checks if the 
@@ -135,23 +152,31 @@ public class GameCommand {
     }
     private ArrayList<Item> roomItemList ()
     {
-       ItemRoom currenRoomAsItemRoom = (ItemRoom) game.getPlayer().getCurrentRoom();
-        ArrayList<Item>roomInventory = new ArrayList<>();
-        if (currenRoomAsItemRoom != null) 
+       ArrayList<Item>roomInventory = new ArrayList<>();
+       Room currenRoom = game.getPlayer().getCurrentRoom();
+       
+       
+        if (currenRoom instanceof ItemRoom)
         {
+            ItemRoom currenRoomAsItemRoom =(ItemRoom) currenRoom ;
             if (currenRoomAsItemRoom.getItem()!= null)
                 roomInventory.add(currenRoomAsItemRoom.getItem());
             if (currenRoomAsItemRoom.getSpecialItem()!= null)
                 roomInventory.add(currenRoomAsItemRoom.getSpecialItem());
             
-            WorkshopRoom currentRoomAsWorkshopRoom = (WorkshopRoom) game.getPlayer().getCurrentRoom();
-            if (currentRoomAsWorkshopRoom != null) 
-                roomInventory.addAll(currentRoomAsWorkshopRoom.getItems());
             return roomInventory;
         }
-        else  
-            return null;
+         else if (currenRoom instanceof WorkshopRoom) 
+        {
+            WorkshopRoom currentRoomAsWorkshopRoom  = (WorkshopRoom) currenRoom;
+                roomInventory.addAll(currentRoomAsWorkshopRoom.getItems());
+            return roomInventory;  
+            
+        }
+            
+            return null; 
     }
+     
     private void dropItem (Command command) 
     {
         if (!command.hasSecondWord()) 
@@ -160,15 +185,20 @@ public class GameCommand {
             return;
         }
         Item[] inventory = game.getPlayer().getInventory();
-             try {
+             try 
+             {
                 int itemIndex = Integer.parseInt(command.getSecondWord());
                 Item itemDropped;
                 itemDropped = inventory[itemIndex];
                 if(game.getPlayer().removeItem(itemDropped)) 
                 {
-                   WorkshopRoom currentRoom = (WorkshopRoom) game.getPlayer().getCurrentRoom();
-                    if (currentRoom != null)
-                        currentRoom.addItem(itemDropped);
+                   Room currentRoom = game.getPlayer().getCurrentRoom();
+                  
+                    if (currentRoom instanceof WorkshopRoom) 
+                    {
+                         WorkshopRoom currentRoomAsWorkshopRoom = (WorkshopRoom) currentRoom;
+                         currentRoomAsWorkshopRoom.addItem(itemDropped);
+                    }
                     else
                         setItemToDefault(itemDropped);
                 }
@@ -181,18 +211,24 @@ public class GameCommand {
         
     }
 
-    private void repairRoom (Command command) {
+    private void repairRoom (Command command) 
+    {
         Item[] inventory = game.getPlayer().getInventory();
         Room roomCheck = game.getPlayer().getCurrentRoom();
         
-        if (!roomCheck.isOperating()) {
-            for (Item item : inventory) {
-                if (item == roomCheck.getRepairTool()) {
+        if (!roomCheck.isOperating()) 
+        {
+            for (Item item : inventory) 
+            {
+                if (item == roomCheck.getRepairTool()) 
+                {
                     System.out.println("You have used the item" + roomCheck.getRepairTool() + " from your inventory.");
                 }
             }
-            for (Item item : inventory) {
-                if (item == ) {
+            for (Item item : inventory) 
+            {
+                if (item == ) 
+                {
                     
                 }
                 
@@ -215,9 +251,7 @@ public class GameCommand {
             System.out.println("This room is broken, if you want to repair this room, you'll need a " + roomCheck.getRepairTool() + ".");
         return;
         }
-        System.out.println("This room is functioning properly.");
         
-        Item[] inventory = game.getPlayer().getInventory();
         ArrayList<Item>roomInventory = roomItemList();
         if (roomInventory != null) {
             System.out.println("These items are in this room :");
@@ -255,6 +289,7 @@ public class GameCommand {
         System.out.println("Your command words are:");
         game.getParser().showCommands();
     }
+    
     private void setItemToDefault(Item item)
     {
         if (item.getDefaultRoom() != null) 
@@ -263,5 +298,13 @@ public class GameCommand {
             defultRoom.setItem(item);
         }
     }
-
+    
+    private void printInventory()
+    {
+        Item[] playerInventory = game.getPlayer().getInventory();
+        for (int i = 0; i < playerInventory.length; i++)
+        {
+            System.out.println(i + playerInventory[i].getName());   
+        }
+    }
 }

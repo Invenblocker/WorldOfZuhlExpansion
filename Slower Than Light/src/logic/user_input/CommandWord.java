@@ -6,7 +6,7 @@ package logic.user_input;
  */
 public enum CommandWord
 {
-    GO("go"),TAKE("take"), DROP("drop"), REPAIR("repair"), INVESTIGATE("investigate"), QUIT("quit"), HELP("help"), UNKNOWN("?");
+    GO("go"), TAKE("take"), DROP("drop"), REPAIR("repair"), INVESTIGATE("investigate"), INVENTORY("inventory"), HELP("help"), QUIT("quit"), UNKNOWN("?");
     
     private String commandString;
     
