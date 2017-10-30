@@ -7,17 +7,18 @@ package logic.elements.rooms;
 
 import java.util.ArrayList;
 import logic.elements.characters.Item;
+import logic.elements.characters.Tool;
 
 /**
  *
  * @author Peter
  */
-public class WorkshopRoom  extends ItemRoom{
+public class WorkshopRoom  extends Room{
     private ArrayList<Item> items = new ArrayList<Item>();
     
     
-    public WorkshopRoom(String name, String repairItem){ //constructs workshoproom
-        super(name, repairItem); 
+    public WorkshopRoom(String name){ //constructs workshoproom
+        super(name); 
         
     }
     

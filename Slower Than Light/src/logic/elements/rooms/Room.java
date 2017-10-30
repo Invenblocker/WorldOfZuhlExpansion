@@ -4,28 +4,35 @@ import java.util.ArrayList;
 import java.util.Set;
 import java.util.HashMap;
 import java.util.Iterator;
+import logic.elements.characters.Item;
+import logic.elements.characters.Tool;
 
 
-/**
- * @author  Michael Kolling and David J. Barnes
- * @version 2006.03.30
- */
 public class Room 
 {
     private String name;
     private HashMap<String, Room> exits;
+    private ArrayList<Tool> repairTools;
     private boolean controlRoom;       //check if player is in CR
-    private boolean operating;          //is room damaged
+    private boolean operating;         //is room damaged
     
     /**
      * A constructor that creates a new room with no exits.
      * @param name The name of the room.
      */
+    
+    public Room(String name){
+         this.controlRoom = false;     //constructs value for controlroom 
+         this.name = name;
+         this.repairTools = new ArrayList<Tool>();
+         this.operating = true;
+         exits = new HashMap<String, Room>();    //Creates an empty HashMap  key/value
+    }
+    
     public Room(String name, boolean controlRoom) //constructor for  boolean CR
     {
-        this.controlRoom = controlRoom;     //constructs value for controlroom 
-        this.name = name;
-        exits = new HashMap<String, Room>();    //Creates an empty HashMap  key/value
+        this(name);
+        this.controlRoom = controlRoom;
     }
 
     /**
@@ -107,8 +114,19 @@ public class Room
     public boolean isControlRoom() {    //returns boolean value, is player in CR
         return this.controlRoom;
     }
+
+    public ArrayList<Tool> getRepairTools() {
+        return this.repairTools;
+    }
+
+    public void setRepairTools(Tool tool) {
+        this.repairTools.add(tool);
+    }
+
+    public void addItem(Item itemDropped) {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
     
     
     
 }
-

@@ -54,6 +54,7 @@ public class Saboteur extends RoomHopper
         {
             if(getCurrentRoom().isOperating() && Math.random() < chanceOfSabotage)
             {
+                System.out.println("Sabotaging");
                 getCurrentRoom().setOperating(false);
                 chanceOfSabotage = DEFAULT_CHANCE_OF_SABOTAGE;
             }
@@ -68,10 +69,13 @@ public class Saboteur extends RoomHopper
                         neighbors.remove(i);
                     }
                 }
+                int exitIndex = (int) (Math.floor(Math.random() * neighbors.size()));
                 
-                setRoom(getCurrentRoom().getExit(neighbors.get((int) Math.floor(Math.random() * neighbors.size()))));
+                setRoom(getCurrentRoom().getExit(neighbors.get(exitIndex)));
                 
                 chanceOfSabotage += CHANCE_OF_SABOTAGE_GROWTH;
+                
+                System.out.println("Saboteur moved to " + getCurrentRoom().getName());
                 
                 checkChasingPlayer();
             }

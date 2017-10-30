@@ -4,6 +4,7 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.TimerTask;
 import logic.Game;
+import logic.GameInfo;
 import logic.elements.rooms.Room;
 
 public class TimeHolder extends TimerTask{
@@ -11,27 +12,34 @@ public class TimeHolder extends TimerTask{
     private int saboteurCountdown;
     private double timeLeft;
     private Game game;
+    private GameInfo gameInfo;
     /**
      * Creates an object of the type Timeholder
      * @param gameTime The amount of time in seconds which the game takes
      */
     public TimeHolder(int gameTime)
     {
-        saboteurCountdown = 0;
+        saboteurCountdown = 5;
         timeLeft = gameTime;
         game = Game.getInstance();
+        gameInfo = game.getGameInfo();
     }
 
     @Override
     public void run() {
-        if (!game.isGameFinished()) {    
-            if (game.getRoomsDestroyedPercentage() > game.getALLOWED_ROOMS_DESTROYED_PERCENTAGE() || timeLeft <= 0) {
-                game.setGameFinished(true);
+        if (!gameInfo.isGameFinished()) {    
+            if (gameInfo.getRoomsDestroyedPercentage() > gameInfo.getALLOWED_ROOMS_DESTROYED_PERCENTAGE() || timeLeft <= 0) {
+                gameInfo.setGameFinished(true);
                 return;
             }
             
                 if (saboteurCountdown == 0) {
                     int newCountdown = game.getSaboteur().performAction();
+                        if(game.getSaboteur().getCurrentRoom() == game.getPlayer().getCurrentRoom())
+                        {
+                            gameInfo.setGameFinished(true);
+                            System.out.println("Game over!! ");   
+                        }
 
                     saboteurCountdown = newCountdown;
                     
@@ -45,7 +53,7 @@ public class TimeHolder extends TimerTask{
                 else {
                     saboteurCountdown--;
                 }
-        timeLeft -= (1 - game.getRoomsDestroyedPercentage()); 
+        timeLeft -= (1 - gameInfo.getRoomsDestroyedPercentage()); 
         }
          
     }
@@ -68,8 +76,9 @@ public class TimeHolder extends TimerTask{
                 destroyedRooms++;
             }
         }
+        
         double destroyedRoomsPercentage = destroyedRooms / totalRooms;
-        game.setRoomsDestroyedPercentage(destroyedRoomsPercentage);
+        gameInfo.setRoomsDestroyedPercentage(destroyedRoomsPercentage);
     }
     
 }
