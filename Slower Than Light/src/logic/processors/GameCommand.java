@@ -6,6 +6,7 @@ import javafx.scene.input.KeyCode;
 import logic.Game;
 import logic.elements.characters.Item;
 import logic.elements.characters.Player;
+import logic.elements.characters.Tool;
 import logic.elements.rooms.ItemRoom;
 import logic.elements.rooms.Room;
 import logic.elements.rooms.WorkshopRoom;
@@ -213,33 +214,36 @@ public class GameCommand {
 
     private void repairRoom (Command command) 
     {
-        /*
+        ArrayList<Tool> roomRepairTool = game.getPlayer().getCurrentRoom().getRepairTools();
         Item[] inventory = game.getPlayer().getInventory();
         Room roomCheck = game.getPlayer().getCurrentRoom();
         
-        if (!roomCheck.isOperating()) 
-        {
-            for (Item item : inventory) 
-            {
-                if (item == roomCheck.getRepairTool()) 
-                {
-                    System.out.println("You have used the item" + roomCheck.getRepairTool() + " from your inventory.");
-                }
-            }
-            for (Item item : inventory) 
-            {
-                if (item == ) 
-                {
+        if (!roomCheck.isOperating()) {
+            
+            for (Tool tool : roomRepairTool) {
+                
+                for (Item item : inventory) {
                     
+                    if (tool == item) {
+                        
+                        System.out.println("You had the necessary tool to repair this room. " + roomRepairTool + " was used. ");  
+                        game.getPlayer().getCurrentRoom().setOperating(true);
+                        game.getPlayer().removeItem(item);
+                        setItemToDefault(item);
+                        
+                    }
+                    else {
+                        System.out.println("You didn't have the " + roomRepairTool + ". You can't repair this room!");
+                    }
                 }
                 
             }
                 
         
-            
         }
-        */
+        System.out.println("The room was repaired, item was removed from inventory.");
     }
+    
 
     /**
      * Investigate the room.
@@ -254,8 +258,8 @@ public class GameCommand {
         }
         
         ArrayList<Item>roomInventory = roomItemList();
-        if (roomInventory != null) {
-            System.out.println("These items are in this room :");
+        if (roomInventory != null && roomInventory.size() != 0) {
+            System.out.println("These items are in this room: ");
             for (int i = 0; i < roomInventory.size(); i++) {
                 System.out.println(i + roomInventory.get(i).getName());
             } 
@@ -295,8 +299,8 @@ public class GameCommand {
     {
         if (item.getDefaultRoom() != null) 
         {
-            ItemRoom defultRoom = (ItemRoom)item.getDefaultRoom();
-            defultRoom.setItem(item);
+            ItemRoom defaultRoom = (ItemRoom)item.getDefaultRoom();
+            defaultRoom.setItem(item);
         }
     }
     
