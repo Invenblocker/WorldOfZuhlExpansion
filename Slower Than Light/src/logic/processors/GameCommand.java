@@ -220,7 +220,7 @@ public class GameCommand {
                         game.getPlayer().getCurrentRoom().setOperating(true);
                         game.getPlayer().removeItem(item);
                         setItemToDefault(item);
-                        
+                        game.getGameInfo().updateRoomsDestroyed();
                     }
                     else {
                         System.out.println("You didn't have the " + roomRepairTool + ". You can't repair this room!");

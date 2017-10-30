@@ -7,7 +7,6 @@ package logic;
 
 import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.Map;
 import logic.elements.rooms.Room;
 
 /**

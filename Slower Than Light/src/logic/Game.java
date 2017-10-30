@@ -98,7 +98,7 @@ public class Game
         gui = new GUI();
         
         // Print welcome message
-        //printWelcome();
+        printWelcome();
         
         // Setup Timer
         timeholder = new TimeHolder(300);
