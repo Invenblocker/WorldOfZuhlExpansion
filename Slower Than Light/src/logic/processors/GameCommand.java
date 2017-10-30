@@ -30,8 +30,8 @@ public class GameCommand {
 
         CommandWord commandWord = command.getCommandWord();
 
-        if (null != commandWord) switch (commandWord) {
-            
+        if (null != commandWord) switch (commandWord)
+        {
             case GO:
                 goRoom(command);
                 game.getGUI().updateRoom(game.getPlayer().getCurrentRoom());
@@ -63,9 +63,8 @@ public class GameCommand {
                 return false;
         }
         else
-        {
             System.out.println("Please write in a command before hitting enter.");
-        }
+        
         return wantToQuit;
     }
     
@@ -220,29 +219,25 @@ public class GameCommand {
         Item[] inventory = game.getPlayer().getInventory();
         Room roomCheck = game.getPlayer().getCurrentRoom();
         
-        if (!roomCheck.isOperating()) {
-            
-            for (Tool tool : roomRepairTool) {
-                
-                for (Item item : inventory) {
-                    
-                    if (tool == item) {
-                        
-                        System.out.println("You had the necessary tool to repair this room. " + roomRepairTool + " was used. ");  
+        if (!roomCheck.isOperating())
+        {
+            for (Tool tool : roomRepairTool)
+            {
+                for (Item item : inventory)
+                {
+                    if (tool == item)
+                    {
+                        System.out.println("You had the necessary tool to repair the room. " + roomRepairTool + " was used and removed from the inventory");  
                         game.getPlayer().getCurrentRoom().setOperating(true);
                         game.getPlayer().removeItem(item);
                         setItemToDefault(item);
                         game.getGameInfo().updateRoomsDestroyed();
                     }
-                    else {
+                    else
                         System.out.println("You didn't have the " + roomRepairTool + ". You can't repair this room!");
-                    }
                 }
-                
             }
-        
         }
-        System.out.println("The room was repaired, item was removed from inventory.");
     }
     
     /**
@@ -253,17 +248,19 @@ public class GameCommand {
     {
         Room roomCheck  = game.getPlayer().getCurrentRoom();
 
-        if (!roomCheck.isOperating()) {
+        if (!roomCheck.isOperating())
+        {
             System.out.println("This room is broken, if you want to repair this room, you'll need a " + roomCheck.getRepairTools().get(0) + ".");
-        return;
+            return;
         }
 
         ArrayList<Item> roomInventory = roomItemList();
-        if (roomInventory != null && !roomInventory.isEmpty()) {
+        if (roomInventory != null && !roomInventory.isEmpty())
+        {
             System.out.println("These items are in this room: ");
-            for (int i = 0; i < roomInventory.size(); i++) {
+            
+            for (int i = 0; i < roomInventory.size(); i++)
                 System.out.println("[" +i + "] "+ roomInventory.get(i).getName());
-            } 
         }
         else
             System.out.println("There is no item !");
@@ -306,9 +303,8 @@ public class GameCommand {
     private void printInventory()
     {
         Item[] playerInventory = game.getPlayer().getInventory();
+        
         for (int i = 0; i < playerInventory.length; i++)
-        {
-            System.out.println("[" + i + "] "+ playerInventory[i].getName());  
-        }
+            System.out.println("[" + i + "] "+ playerInventory[i].getName());
     }
 }
