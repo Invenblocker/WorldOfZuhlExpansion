@@ -28,7 +28,7 @@ public class TimeHolder extends TimerTask{
     @Override
     public void run() {
         if (!gameInfo.isGameFinished()) {    
-            if (gameInfo.getRoomsDestroyedPercentage() > gameInfo.getALLOWED_ROOMS_DESTROYED_PERCENTAGE() || timeLeft <= 0) {
+            if (gameInfo.getDestroyedRoomsPercentage() > gameInfo.getALLOWED_ROOMS_DESTROYED_PERCENTAGE() || timeLeft <= 0) {
                 gameInfo.setGameFinished(true);
                 return;
             }
@@ -43,17 +43,20 @@ public class TimeHolder extends TimerTask{
 
                     saboteurCountdown = newCountdown;
                     
-                    updateRoomsDestroyedPercentage();
+                    //updateRoomsDestroyedPercentage();
+                    gameInfo.updateRoomsDestroyed();
 
                     if (game.getPlayer().getCurrentRoom().isControlRoom()) {
-                        game.getGUI().updateMinimap();
+                        Room saboteurRoom = game.getSaboteur().getCurrentRoom();
+                        Room[] destroyedRooms = gameInfo.getDestroyedRooms();
+                        game.getGUI().updateMinimap(saboteurRoom, destroyedRooms);
                     }
                     
                 }    
                 else {
                     saboteurCountdown--;
                 }
-        timeLeft -= (1 - gameInfo.getRoomsDestroyedPercentage()); 
+        timeLeft -= (1 - gameInfo.getDestroyedRoomsPercentage()); 
         }
          
     }
@@ -78,7 +81,7 @@ public class TimeHolder extends TimerTask{
         }
         
         double destroyedRoomsPercentage = destroyedRooms / totalRooms;
-        gameInfo.setRoomsDestroyedPercentage(destroyedRoomsPercentage);
+        //gameInfo.setRoomsDestroyedPercentage(destroyedRoomsPercentage);
     }
     
 }
