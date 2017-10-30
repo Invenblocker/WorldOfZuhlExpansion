@@ -12,6 +12,6 @@ leftThruster up lab right loadingBay
 loadingBay left leftThruster right rightThruster
 rightThruster left loadingBay up office
 
-Player controlRoom 2
+Player: controlRoom 2
 
 Item: Tool pc office Tool lab acid Tool kitchen knife Tool workshop saw Tool oxygenContainer screwdriver Tool shieldGenerator wrench Tool LivingQuarters blowtorch Tool loadingBay jack Tool leftThruster crowbar Tool rightThruster welder Tool entryRamp thermitePaste
