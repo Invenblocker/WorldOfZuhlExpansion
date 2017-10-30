@@ -66,4 +66,9 @@ public class Item
     {
         return defaultRoom;
     }
+    
+    public String toString()
+    {
+        return this.getName();
+    }
 }
