@@ -177,7 +177,13 @@ public class GameCommand {
             
             return null; 
     }
-     
+     /**
+      * Gets the players inventory. After that it make you choose a item that you want to drop.
+      * It will take the item that you choose and drop it into the room. 
+      * It checks what kind of room you are in and what to do with the item.
+      * If the room isen't a workshop room the item that was dropped will be set to default.
+      * @param command 
+      */
     private void dropItem (Command command) 
     {
         if (!command.hasSecondWord()) 
@@ -211,7 +217,13 @@ public class GameCommand {
             }
         
     }
-
+/**
+ * This class starts by checking if the room is broken. If the room is broken 
+ * it will compare the repair tool to the player's inventory. If the player have the
+ * item needed to repair the room it will do so, and remove the item fra player's inventory
+ * and set it to default. Else it says what you need to fix the room.
+ * @param command 
+ */
     private void repairRoom (Command command) 
     {
         ArrayList<Tool> roomRepairTool = game.getPlayer().getCurrentRoom().getRepairTools();
@@ -294,7 +306,10 @@ public class GameCommand {
         System.out.println("Your command words are:");
         game.getParser().showCommands();
     }
-    
+    /**
+     * Finds the item's default room and sets the item to that room. 
+     * @param item 
+     */
     private void setItemToDefault(Item item)
     {
         if (item.getDefaultRoom() != null) 
@@ -303,7 +318,9 @@ public class GameCommand {
             defaultRoom.setItem(item);
         }
     }
-    
+    /**
+     * Prints out players inventory.
+     */
     private void printInventory()
     {
         Item[] playerInventory = game.getPlayer().getInventory();
