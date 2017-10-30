@@ -111,8 +111,7 @@ public class GameCommand {
  * it colleges the item that the user picked. 
  * @param command 
  */
-    private void takeItem (Command command) 
-            
+    private void takeItem (Command command)
     {
         if (!command.hasSecondWord())
         {
@@ -120,28 +119,20 @@ public class GameCommand {
             return;
         }
         Item[] inventory = game.getPlayer().getInventory();
-        int ItemCount = 0;
-        if (inventory != null) 
+        int itemCount = game.getPlayer().getItemCount();
+        System.out.println("Lenght " + inventory.length + " itemCOunt " + itemCount);
+        if (itemCount == inventory.length)
         {
-            for (Item item : inventory) 
-            { 
-                if (item != null)
-                    ItemCount++;
-            }
-            if (ItemCount != inventory.length)
-            {
-                System.out.println("Your inventory is full ! ");
-                System.out.println("You need to drop a item to be able to pike up a new item ");
-                return;
-            }
+            System.out.println("Your inventory is full ! ");
+            System.out.println("You need to drop a item to be able to pike up a new item ");
+            return;
         }
         else
         {
-        ArrayList<Item> roomInventory = roomItemList();
+            ArrayList<Item> roomInventory = roomItemList();
             try {
-                int itemRefrence = Integer.parseInt(command.getSecondWord());
-                Item itemTaken;
-                itemTaken = roomInventory.get(itemRefrence);
+                int itemReference = Integer.parseInt(command.getSecondWord());
+                Item itemTaken = roomInventory.get(itemReference);
                 game.getPlayer().addItem(itemTaken); 
             } 
             catch (Exception e) 
@@ -259,7 +250,7 @@ public class GameCommand {
         if (roomInventory != null && roomInventory.size() != 0) {
             System.out.println("These items are in this room: ");
             for (int i = 0; i < roomInventory.size(); i++) {
-                System.out.println(i + roomInventory.get(i).getName());
+                System.out.println("[" +i + "] "+ roomInventory.get(i).getName());
             } 
         }
         else
@@ -284,10 +275,12 @@ public class GameCommand {
     
     private void setItemToDefault(Item item)
     {
-        if (item.getDefaultRoom() != null) 
+        Room defaultRoom = item.getDefaultRoom();
+        
+        if (defaultRoom != null && defaultRoom instanceof ItemRoom) 
         {
-            ItemRoom defaultRoom = (ItemRoom)item.getDefaultRoom();
-            defaultRoom.setItem(item);
+            ItemRoom defaultRoomAsItemRoom = (ItemRoom)item.getDefaultRoom();
+            defaultRoomAsItemRoom.setItem(item);
         }
     }
     
@@ -297,7 +290,7 @@ public class GameCommand {
         for (int i = 0; i < playerInventory.length; i++)
         {
             if (playerInventory[i] != null)
-                System.out.println(i + playerInventory[i].getName());
+                System.out.println("[" + i + "] "+ playerInventory[i].getName());
         }
     }
 }

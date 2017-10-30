@@ -86,12 +86,9 @@ public class Game
         }
         
         // Setup Game elements
-        Item[] itemsAsArray = items.values().toArray(new Item[0]);
-        Room[] roomsAsArray = rooms.values().toArray(new Room[0]);
-        
         Game.GameSetup gameSetup = new GameSetup();
-        gameSetup.addItemsToDefaultRooms(itemsAsArray);
-        gameSetup.addRepairItemsToRooms(itemsAsArray, roomsAsArray);
+        gameSetup.addItemsToDefaultRooms(items);
+        gameSetup.addRepairItemsToRooms(items, rooms);
         
         this.gameInfo = new GameInfo();
         
@@ -101,7 +98,7 @@ public class Game
         gui = new GUI();
         
         // Print welcome message
-        printWelcome();
+        //printWelcome();
         
         // Setup Timer
         timeholder = new TimeHolder(300);
@@ -176,12 +173,20 @@ public class Game
     
     static class GameSetup
     {
-        void addItemsToDefaultRooms(Item[] items)
+        void addItemsToDefaultRooms(HashMap<String, Item> items)
         {
-            
+            for (Item item : items.values()) {
+                Room defaultRoom = item.getDefaultRoom();
+                
+                if (defaultRoom != null && defaultRoom instanceof ItemRoom) 
+                {
+                    ItemRoom defaultRoomAsItemRoom = (ItemRoom)item.getDefaultRoom();
+                    defaultRoomAsItemRoom.setItem(item);
+                }
+            }
         }
     
-        void addRepairItemsToRooms(Item[] items, Room[] rooms)
+        void addRepairItemsToRooms(HashMap<String, Item> items, HashMap<String, Room> rooms)
         {
             
         }
@@ -196,12 +201,10 @@ public class Game
             
             while(randomRoom == null)
             {
-                //String randomKey = keys.get(random.nextInt(keys.size()));
                 String randomKey = keys.remove(0);
                 Room tempRandomRoom = rooms.get(randomKey);
                 if (!tempRandomRoom.isControlRoom())
                     randomRoom = tempRandomRoom;
-                
             }
             
             return randomRoom;

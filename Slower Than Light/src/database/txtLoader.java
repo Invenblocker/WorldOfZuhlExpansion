@@ -149,6 +149,8 @@ private void itemToHashMap(String[] words){
     for (String key : items.keySet()){
         System.out.println(key);
     }
+    
+    System.out.println("Items: " + items.size());
 }
 
 
