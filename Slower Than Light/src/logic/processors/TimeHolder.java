@@ -43,7 +43,8 @@ public class TimeHolder extends TimerTask{
 
                     saboteurCountdown = newCountdown;
                     
-                    updateRoomsDestroyedPercentage();
+                    //updateRoomsDestroyedPercentage();
+                    game.getGameInfo().updateRoomsDestroyed();
 
                     if (game.getPlayer().getCurrentRoom().isControlRoom()) {
                         game.getGUI().updateMinimap();

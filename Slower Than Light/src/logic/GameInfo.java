@@ -5,6 +5,7 @@
  */
 package logic;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 import logic.elements.rooms.Room;
@@ -17,21 +18,32 @@ public class GameInfo {
     
     private final double ALLOWED_ROOMS_DESTROYED_PERCENTAGE = 0.7;
     private double roomsDestroyedPercentage;
+    private ArrayList<Room> destroyedRooms;
     
     private boolean gameFinished;
     
     public GameInfo()
     {
         roomsDestroyedPercentage = 0;
+        destroyedRooms = new ArrayList<>();
         gameFinished = false;
+    }
+    
+    public void updateRoomsDestroyed ()
+    {
+        HashMap <String, Room> rooms = Game.getInstance().getRooms();
+        destroyedRooms = new ArrayList<>();
+        
+        for (Room room : rooms.values())
+            if (room.isOperating())
+                destroyedRooms.add(room);
+        
+        updateRoomsDestroyedPercentage();
     }
     
     public double getALLOWED_ROOMS_DESTROYED_PERCENTAGE() {return ALLOWED_ROOMS_DESTROYED_PERCENTAGE;}
 
     public double getRoomsDestroyedPercentage() {return roomsDestroyedPercentage;}
-    /*public void setRoomsDestroyedPercentage(double roomsDestroyedPercentage) {
-        this.roomsDestroyedPercentage = roomsDestroyedPercentage;
-    }*/
     
     public boolean isGameFinished () {return gameFinished;}
     public void setGameFinished(boolean value)
@@ -39,29 +51,9 @@ public class GameInfo {
         gameFinished = value;
     }
     
-    public void updateRoomsDestroyed ()
-    {
-        
-    }
-    
     private void updateRoomsDestroyedPercentage ()
     {
-        
-        HashMap <String, Room> rooms = Game.getInstance().getRooms();
-
-        int destroyedRooms = 0;
-        int totalRooms = rooms.size();
-          
-        for (Map.Entry<String, Room> entry : rooms.entrySet()) {
-            String key = entry.getKey();
-            Room room = entry.getValue();
-            if (!room.isOperating()) {
-                destroyedRooms++;
-            }
-        }
-        
-        double destroyedRoomsPercentage = destroyedRooms / totalRooms;
-        //gameInfo.setRoomsDestroyedPercentage(destroyedRoomsPercentage);
-        roomsDestroyedPercentage = destroyedRoomsPercentage;
+        int totalRooms = Game.getInstance().getRooms().size();
+        roomsDestroyedPercentage = destroyedRooms.size() / totalRooms;
     }
 }
