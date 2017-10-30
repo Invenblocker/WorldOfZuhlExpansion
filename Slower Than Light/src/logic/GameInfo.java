@@ -17,14 +17,14 @@ import logic.elements.rooms.Room;
 public class GameInfo {
     
     private final double ALLOWED_ROOMS_DESTROYED_PERCENTAGE = 0.7;
-    private double roomsDestroyedPercentage;
+    private double destroyedRoomsPercentage;
     private ArrayList<Room> destroyedRooms;
     
     private boolean gameFinished;
     
     public GameInfo()
     {
-        roomsDestroyedPercentage = 0;
+        destroyedRoomsPercentage = 0;
         destroyedRooms = new ArrayList<>();
         gameFinished = false;
     }
@@ -38,12 +38,14 @@ public class GameInfo {
             if (room.isOperating())
                 destroyedRooms.add(room);
         
-        updateRoomsDestroyedPercentage();
+        updateDestroyedRoomsPercentage();
     }
     
     public double getALLOWED_ROOMS_DESTROYED_PERCENTAGE() {return ALLOWED_ROOMS_DESTROYED_PERCENTAGE;}
 
-    public double getRoomsDestroyedPercentage() {return roomsDestroyedPercentage;}
+    public double getDestroyedRoomsPercentage() {return destroyedRoomsPercentage;}
+
+    public Room[] getDestroyedRooms() {return destroyedRooms.toArray(new Room[0]);}
     
     public boolean isGameFinished () {return gameFinished;}
     public void setGameFinished(boolean value)
@@ -51,9 +53,9 @@ public class GameInfo {
         gameFinished = value;
     }
     
-    private void updateRoomsDestroyedPercentage ()
+    private void updateDestroyedRoomsPercentage ()
     {
         int totalRooms = Game.getInstance().getRooms().size();
-        roomsDestroyedPercentage = destroyedRooms.size() / totalRooms;
+        destroyedRoomsPercentage = destroyedRooms.size() / totalRooms;
     }
 }
