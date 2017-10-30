@@ -305,6 +305,7 @@ public class GameCommand {
         Item[] playerInventory = game.getPlayer().getInventory();
         
         for (int i = 0; i < playerInventory.length; i++)
-            System.out.println("[" + i + "] "+ playerInventory[i].getName());
+            if (playerInventory[i] != null) 
+                System.out.println("[" + i + "] "+ playerInventory[i].getName());
     }
 }
