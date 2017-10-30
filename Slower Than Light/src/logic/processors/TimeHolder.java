@@ -78,7 +78,7 @@ public class TimeHolder extends TimerTask{
         }
         
         double destroyedRoomsPercentage = destroyedRooms / totalRooms;
-        gameInfo.setRoomsDestroyedPercentage(destroyedRoomsPercentage);
+        //gameInfo.setRoomsDestroyedPercentage(destroyedRoomsPercentage);
     }
     
 }

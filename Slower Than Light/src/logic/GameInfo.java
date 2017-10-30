@@ -5,6 +5,10 @@
  */
 package logic;
 
+import java.util.HashMap;
+import java.util.Map;
+import logic.elements.rooms.Room;
+
 /**
  *
  * @author Erik
@@ -25,13 +29,39 @@ public class GameInfo {
     public double getALLOWED_ROOMS_DESTROYED_PERCENTAGE() {return ALLOWED_ROOMS_DESTROYED_PERCENTAGE;}
 
     public double getRoomsDestroyedPercentage() {return roomsDestroyedPercentage;}
-    public void setRoomsDestroyedPercentage(double roomsDestroyedPercentage) {
+    /*public void setRoomsDestroyedPercentage(double roomsDestroyedPercentage) {
         this.roomsDestroyedPercentage = roomsDestroyedPercentage;
-    }
+    }*/
     
     public boolean isGameFinished () {return gameFinished;}
     public void setGameFinished(boolean value)
     {
         gameFinished = value;
+    }
+    
+    public void updateRoomsDestroyed ()
+    {
+        
+    }
+    
+    private void updateRoomsDestroyedPercentage ()
+    {
+        
+        HashMap <String, Room> rooms = Game.getInstance().getRooms();
+
+        int destroyedRooms = 0;
+        int totalRooms = rooms.size();
+          
+        for (Map.Entry<String, Room> entry : rooms.entrySet()) {
+            String key = entry.getKey();
+            Room room = entry.getValue();
+            if (!room.isOperating()) {
+                destroyedRooms++;
+            }
+        }
+        
+        double destroyedRoomsPercentage = destroyedRooms / totalRooms;
+        //gameInfo.setRoomsDestroyedPercentage(destroyedRoomsPercentage);
+        roomsDestroyedPercentage = destroyedRoomsPercentage;
     }
 }
