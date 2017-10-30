@@ -1,11 +1,8 @@
 package logic.processors;
 
-import com.sun.media.jfxmedia.MediaManager;
 import java.util.ArrayList;
-import javafx.scene.input.KeyCode;
 import logic.Game;
 import logic.elements.characters.Item;
-import logic.elements.characters.Player;
 import logic.elements.characters.Tool;
 import logic.elements.rooms.ItemRoom;
 import logic.elements.rooms.Room;
@@ -37,6 +34,8 @@ public class GameCommand {
             
             case GO:
                 goRoom(command);
+                game.getGUI().updateRoom(game.getPlayer().getCurrentRoom());
+                printInventory();
                 break;
             case TAKE:
                 takeItem(command);
@@ -51,10 +50,10 @@ public class GameCommand {
                 investigate();
                 break;
             case INVENTORY:
-                 printInventory();
-                 break;
+                printInventory();
+                break;
             case HELP:
-                printHelp();
+                game.getGUI().printHelp();
                 break;
             case QUIT:
                 wantToQuit = quit(command);
@@ -90,73 +89,65 @@ public class GameCommand {
         
         if (exitRoom != null)
         {
-          Room pastRoom = game.getPlayer().setRoom(exitRoom);
-          if (game.getSaboteur().getCurrentRoom() == exitRoom)
-          {
-              game.getGameInfo().setGameFinished(true);
-              System.out.println("You went into the same room as the saboteur. ");
-              System.out.println("Game over !! ");
-          }
-          int saboteurCountdown = game.getSaboteur().chasePlayer(pastRoom);
+            Room pastRoom = game.getPlayer().setRoom(exitRoom);
+            
+            if (game.getSaboteur().getCurrentRoom() == exitRoom)
+            {
+                game.getGameInfo().setGameFinished(true);
+                System.out.println("You went into the same room as the saboteur. ");
+                System.out.println("Game over !! ");
+            }
+            
+            int saboteurCountdown = game.getSaboteur().chasePlayer(pastRoom);
             if (saboteurCountdown != -1)
                 game.getTimeHolder().setSaboteurCountdown(saboteurCountdown);   
         }
         else
             System.out.println("There is no way here !");
         
-        
     }
-/**
- * Checks if the player types a second word and if it's valid. It checks if the 
- * player have space in his inventory and if that's the case
- * it colleges the item that the user picked. 
- * @param command 
- */
-    private void takeItem (Command command) 
-            
+    
+    /**
+     * Checks if the player types a second word and if it's valid. It checks if the 
+     * player have space in his inventory and if that's the case
+     * it colleges the item that the user picked. 
+     * @param command 
+     */
+    private void takeItem (Command command)
     {
         if (!command.hasSecondWord())
         {
             System.out.println("Take what ? ");
             return;
         }
+        
         Item[] inventory = game.getPlayer().getInventory();
-        int ItemCount = 0;
-        if (inventory != null) 
+        int itemCount = game.getPlayer().getItemCount();
+        
+        if (itemCount == inventory.length)
         {
-            for (Item item : inventory) 
-            { 
-                if (item != null)
-                    ItemCount++;
-            }
-            if (ItemCount != inventory.length)
-            {
-                System.out.println("Your inventory is full ! ");
-                System.out.println("You need to drop a item to be able to pike up a new item ");
-                return;
-            }
+            System.out.println("Your inventory is full ! ");
+            System.out.println("You need to drop a item to be able to pike up a new item ");
+            return;
         }
-        else
-        {
+        
         ArrayList<Item> roomInventory = roomItemList();
-            try {
-                int itemRefrence = Integer.parseInt(command.getSecondWord());
-                Item itemTaken;
-                itemTaken = roomInventory.get(itemRefrence);
-                game.getPlayer().addItem(itemTaken); 
-            } 
-            catch (Exception e) 
-            {
-                System.out.println("This is not a valid item ! ");
-            }
+        try {
+            int itemReference = Integer.parseInt(command.getSecondWord());
+            Item itemTaken = roomInventory.get(itemReference);
+            game.getPlayer().addItem(itemTaken); 
         } 
+        catch (Exception e) 
+        {
+            System.out.println("This is not a valid item ! ");
+        }
     }
+    
     private ArrayList<Item> roomItemList ()
     {
-       ArrayList<Item>roomInventory = new ArrayList<>();
-       Room currenRoom = game.getPlayer().getCurrentRoom();
-       
-       
+        ArrayList<Item>roomInventory = new ArrayList<>();
+        Room currenRoom = game.getPlayer().getCurrentRoom();
+        
         if (currenRoom instanceof ItemRoom)
         {
             ItemRoom currenRoomAsItemRoom =(ItemRoom) currenRoom ;
@@ -167,15 +158,14 @@ public class GameCommand {
             
             return roomInventory;
         }
-         else if (currenRoom instanceof WorkshopRoom) 
+        else if (currenRoom instanceof WorkshopRoom) 
         {
             WorkshopRoom currentRoomAsWorkshopRoom  = (WorkshopRoom) currenRoom;
                 roomInventory.addAll(currentRoomAsWorkshopRoom.getItems());
-            return roomInventory;  
-            
+            return roomInventory;
         }
-            
-            return null; 
+        
+        return null;
     }
      /**
       * Gets the players inventory. After that it make you choose a item that you want to drop.
@@ -192,38 +182,38 @@ public class GameCommand {
             return;
         }
         Item[] inventory = game.getPlayer().getInventory();
-             try 
-             {
-                int itemIndex = Integer.parseInt(command.getSecondWord());
-                Item itemDropped;
-                itemDropped = inventory[itemIndex];
-                if(game.getPlayer().removeItem(itemDropped)) 
-                {
-                   Room currentRoom = game.getPlayer().getCurrentRoom();
-                  
-                    if (currentRoom instanceof WorkshopRoom) 
-                    {
-                         WorkshopRoom currentRoomAsWorkshopRoom = (WorkshopRoom) currentRoom;
-                         currentRoomAsWorkshopRoom.addItem(itemDropped);
-                    }
-                    else
-                        setItemToDefault(itemDropped);
-                }
-                
-            } 
-            catch (Exception e) 
-            {
-                System.out.println("This is not a valid item ! ");
-            }
-        
+        try 
+        {
+           int itemIndex = Integer.parseInt(command.getSecondWord());
+           Item itemDropped;
+           itemDropped = inventory[itemIndex];
+           if(game.getPlayer().removeItem(itemDropped)) 
+           {
+              Room currentRoom = game.getPlayer().getCurrentRoom();
+
+               if (currentRoom instanceof WorkshopRoom) 
+               {
+                    WorkshopRoom currentRoomAsWorkshopRoom = (WorkshopRoom) currentRoom;
+                    currentRoomAsWorkshopRoom.addItem(itemDropped);
+               }
+               else
+                   setItemToDefault(itemDropped);
+           }
+
+       } 
+       catch (Exception e) 
+       {
+           System.out.println("This is not a valid item ! ");
+       }
     }
-/**
- * This class starts by checking if the room is broken. If the room is broken 
- * it will compare the repair tool to the player's inventory. If the player have the
- * item needed to repair the room it will do so, and remove the item fra player's inventory
- * and set it to default. Else it says what you need to fix the room.
- * @param command 
- */
+    
+    /**
+     * This class starts by checking if the room is broken. If the room is broken 
+     * it will compare the repair tool to the player's inventory. If the player have the
+     * item needed to repair the room it will do so, and remove the item fra player's inventory
+     * and set it to default. Else it says what you need to fix the room.
+     * @param command 
+     */
     private void repairRoom (Command command) 
     {
         ArrayList<Tool> roomRepairTool = game.getPlayer().getCurrentRoom().getRepairTools();
@@ -242,7 +232,7 @@ public class GameCommand {
                         game.getPlayer().getCurrentRoom().setOperating(true);
                         game.getPlayer().removeItem(item);
                         setItemToDefault(item);
-                        
+                        game.getGameInfo().updateRoomsDestroyed();
                     }
                     else {
                         System.out.println("You didn't have the " + roomRepairTool + ". You can't repair this room!");
@@ -250,35 +240,34 @@ public class GameCommand {
                 }
                 
             }
-                
         
         }
         System.out.println("The room was repaired, item was removed from inventory.");
     }
     
-
     /**
      * Investigate the room.
      * Prints all the items in the room in which the player is currently located 
      */
-    private void investigate () {
+    private void investigate ()
+    {
         Room roomCheck  = game.getPlayer().getCurrentRoom();
-        
+
         if (!roomCheck.isOperating()) {
             System.out.println("This room is broken, if you want to repair this room, you'll need a " + roomCheck.getRepairTools().get(0) + ".");
         return;
         }
-        
-        ArrayList<Item>roomInventory = roomItemList();
-        if (roomInventory != null && roomInventory.size() != 0) {
+
+        ArrayList<Item> roomInventory = roomItemList();
+        if (roomInventory != null && !roomInventory.isEmpty()) {
             System.out.println("These items are in this room: ");
             for (int i = 0; i < roomInventory.size(); i++) {
-                System.out.println(i + roomInventory.get(i).getName());
+                System.out.println("[" +i + "] "+ roomInventory.get(i).getName());
             } 
         }
         else
             System.out.println("There is no item !");
-        }
+    }
     
     /**
      * Quits the game if no second word has been entered by the player.
@@ -295,29 +284,22 @@ public class GameCommand {
         else
             return true;
     }
-
-    /**
-     * Prints a short description of the game and then a list of commands.
-     */
-    private void printHelp()
-    {
-        System.out.println("YOU BE FUCKED");
-        System.out.println();
-        System.out.println("Your command words are:");
-        game.getParser().showCommands();
-    }
+    
     /**
      * Finds the item's default room and sets the item to that room. 
      * @param item 
      */
     private void setItemToDefault(Item item)
     {
-        if (item.getDefaultRoom() != null) 
+        Room defaultRoom = item.getDefaultRoom();
+        
+        if (defaultRoom != null && defaultRoom instanceof ItemRoom) 
         {
-            ItemRoom defaultRoom = (ItemRoom)item.getDefaultRoom();
-            defaultRoom.setItem(item);
+            ItemRoom defaultRoomAsItemRoom = (ItemRoom)item.getDefaultRoom();
+            defaultRoomAsItemRoom.setItem(item);
         }
     }
+    
     /**
      * Prints out players inventory.
      */
@@ -326,7 +308,7 @@ public class GameCommand {
         Item[] playerInventory = game.getPlayer().getInventory();
         for (int i = 0; i < playerInventory.length; i++)
         {
-            System.out.println(i + playerInventory[i].getName());   
+            System.out.println("[" + i + "] "+ playerInventory[i].getName());  
         }
     }
 }
