@@ -5,6 +5,10 @@
  */
 package logic;
 
+import java.util.ArrayList;
+import java.util.HashMap;
+import logic.elements.rooms.Room;
+
 /**
  *
  * @author Erik
@@ -12,26 +16,45 @@ package logic;
 public class GameInfo {
     
     private final double ALLOWED_ROOMS_DESTROYED_PERCENTAGE = 0.7;
-    private double roomsDestroyedPercentage;
+    private double destroyedRoomsPercentage;
+    private ArrayList<Room> destroyedRooms;
     
     private boolean gameFinished;
     
     public GameInfo()
     {
-        roomsDestroyedPercentage = 0;
+        destroyedRoomsPercentage = 0;
+        destroyedRooms = new ArrayList<>();
         gameFinished = false;
+    }
+    
+    public void updateRoomsDestroyed ()
+    {
+        HashMap <String, Room> rooms = Game.getInstance().getRooms();
+        destroyedRooms = new ArrayList<>();
+        
+        for (Room room : rooms.values())
+            if (!room.isOperating())
+                destroyedRooms.add(room);
+        
+        updateDestroyedRoomsPercentage();
     }
     
     public double getALLOWED_ROOMS_DESTROYED_PERCENTAGE() {return ALLOWED_ROOMS_DESTROYED_PERCENTAGE;}
 
-    public double getRoomsDestroyedPercentage() {return roomsDestroyedPercentage;}
-    public void setRoomsDestroyedPercentage(double roomsDestroyedPercentage) {
-        this.roomsDestroyedPercentage = roomsDestroyedPercentage;
-    }
+    public double getDestroyedRoomsPercentage() {return destroyedRoomsPercentage;}
+
+    public Room[] getDestroyedRooms() {return destroyedRooms.toArray(new Room[0]);}
     
     public boolean isGameFinished () {return gameFinished;}
     public void setGameFinished(boolean value)
     {
         gameFinished = value;
+    }
+    
+    private void updateDestroyedRoomsPercentage ()
+    {
+        int totalRooms = Game.getInstance().getRooms().size();
+        destroyedRoomsPercentage = destroyedRooms.size() / totalRooms;
     }
 }

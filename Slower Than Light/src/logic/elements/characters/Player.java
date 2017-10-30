@@ -117,4 +117,17 @@ public class Player extends RoomHopper
         
         return(copy);
     }
+    
+    public int getItemCount()
+    {
+        int count = 0;
+        for(Item current : inventory)
+        {
+            if(current != null)
+            {
+                count++;
+            }
+        }
+        return(count);
+    }
 }
