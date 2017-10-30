@@ -35,7 +35,7 @@ public class GameInfo {
         destroyedRooms = new ArrayList<>();
         
         for (Room room : rooms.values())
-            if (room.isOperating())
+            if (!room.isOperating())
                 destroyedRooms.add(room);
         
         updateDestroyedRoomsPercentage();

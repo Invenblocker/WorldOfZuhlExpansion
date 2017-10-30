@@ -13,44 +13,47 @@ import logic.elements.rooms.Room;
  *
  * @author Peter
  */
-public class MiniMap {
-   private ArrayList<Room> DestroyedRoomsInMiniMap;  //Creates arrayList that stores destroyed rooms  
-   public MiniMap(){
-       
-   }
+public class MiniMap
+{
+    private ArrayList<Room> destroyedRoomsInMiniMap;  //Creates arrayList that stores destroyed rooms  
+    
+    public MiniMap()
+    {
+        destroyedRoomsInMiniMap = new ArrayList<>();
+    }
  
-public void update(Room saboteurRoom, Room[] destroyedRoomsIngame){                               
-    System.out.print("Updated saboteur position: ");      //updates saboteur position to minimap
-    System.out.println(saboteurRoom); 
-    updateDestroyedRooms(destroyedRoomsIngame);           //calls method, updates destroyedrooms in Game
-    System.out.println("Destroyed rooms in game: ");
-}
-public void updatePlayerPosition(Room room){
-    System.out.print("Current player position: ");        //updates player position to minimap
-    System.out.println(Game.getInstance().getPlayer().getCurrentRoom());
-}
+    public void update(Room saboteurRoom, Room[] destroyedRoomsIngame){                               
+        System.out.print("Updated saboteur position: ");      //updates saboteur position to minimap
+        System.out.println(saboteurRoom.getName()); 
+        updateDestroyedRooms(destroyedRoomsIngame);           //calls method, updates destroyedrooms in Game
+        System.out.println("Destroyed rooms in game: " + roomArrayToString());
+    }
+    
+    public void updatePlayerPosition(Room playerRoom){
+        System.out.print("Current player position: ");        //updates player position to minimap
+        System.out.println(playerRoom.getName());
+    }
 
-private void updateDestroyedRooms(Room[] destroyedRoomsInGame) {   //Sets param destroydRoomsInGame
-    for (Room destroyedRoom : destroyedRoomsInGame) 
-        if(!DestroyedRoomsInMiniMap.contains(destroyedRoom)) {      //only unique elements, only add if !not already
-            DestroyedRoomsInMiniMap.add(destroyedRoom);             //contains room DestroyedRoomsInMiniMap 
-            
-            
-   }
-    
+    private void updateDestroyedRooms(Room[] destroyedRoomsInGame) {    //Sets param destroydRoomsInGame
+        for (Room destroyedRoom : destroyedRoomsInGame) 
+            if(!destroyedRoomsInMiniMap.contains(destroyedRoom))        //only unique elements, only add if !not already
+                destroyedRoomsInMiniMap.add(destroyedRoom);             //contains room DestroyedRoomsInMiniMap 
+    }    
 
-    
-}    
-    
-    
-            
+    private String roomArrayToString ()
+    {
+        if (destroyedRoomsInMiniMap.isEmpty())
+            return "";
         
-    
-    
-    
-    
+        String roomsAsString = "";
 
+        for (Room room : destroyedRoomsInMiniMap)
+            roomsAsString = roomsAsString + room.getName() + ", ";
+
+        roomsAsString = roomsAsString.substring(0, roomsAsString.length() - 2);
+
+        return roomsAsString;
         
-
+    }
     
 }

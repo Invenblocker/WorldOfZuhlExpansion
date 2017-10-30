@@ -1,11 +1,8 @@
 package logic.processors;
 
-import com.sun.media.jfxmedia.MediaManager;
 import java.util.ArrayList;
-import javafx.scene.input.KeyCode;
 import logic.Game;
 import logic.elements.characters.Item;
-import logic.elements.characters.Player;
 import logic.elements.characters.Tool;
 import logic.elements.rooms.ItemRoom;
 import logic.elements.rooms.Room;
@@ -37,6 +34,8 @@ public class GameCommand {
             
             case GO:
                 goRoom(command);
+                game.getGUI().updateRoom(game.getPlayer().getCurrentRoom());
+                printInventory();
                 break;
             case TAKE:
                 takeItem(command);
@@ -51,10 +50,10 @@ public class GameCommand {
                 investigate();
                 break;
             case INVENTORY:
-                 printInventory();
-                 break;
+                printInventory();
+                break;
             case HELP:
-                printHelp();
+                game.getGUI().printHelp();
                 break;
             case QUIT:
                 wantToQuit = quit(command);
@@ -238,8 +237,7 @@ public class GameCommand {
                 }
                 
             }
-                
-        
+            
         }
         System.out.println("The room was repaired, item was removed from inventory.");
     }
@@ -283,17 +281,6 @@ public class GameCommand {
         else
             return true;
     }
-
-    /**
-     * Prints a short description of the game and then a list of commands.
-     */
-    private void printHelp()
-    {
-        System.out.println("YOU BE FUCKED");
-        System.out.println();
-        System.out.println("Your command words are:");
-        game.getParser().showCommands();
-    }
     
     private void setItemToDefault(Item item)
     {
@@ -309,7 +296,8 @@ public class GameCommand {
         Item[] playerInventory = game.getPlayer().getInventory();
         for (int i = 0; i < playerInventory.length; i++)
         {
-            System.out.println(i + playerInventory[i].getName());   
+            if (playerInventory[i] != null)
+                System.out.println(i + playerInventory[i].getName());
         }
     }
 }
