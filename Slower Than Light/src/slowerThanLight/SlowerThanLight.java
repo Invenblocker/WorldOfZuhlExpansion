@@ -22,7 +22,7 @@ public class SlowerThanLight {
         // TODO code application logic here
         Game game = Game.getInstance();
         txtLoader loader = new txtLoader();
-        loader.loadGame("D:\\Users\\Erik\\OneDrive - Syddansk Universitet\\Slower Than Light\\testmap.txt");
+        loader.loadGame("assets/maps/bigRectangle.txt");
         game.addGameLoader(loader);
         game.play();
     }
