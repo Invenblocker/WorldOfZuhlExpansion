@@ -1,17 +1,17 @@
-Room: controlRoom ControlRoom workshop WorkshopRoom kitchen ItemRoom entryRamp ItemRoom lab ItemRoom leftThruster ItemRoom loadingBay ItemRoom rightThruster ItemRoom office ItemRoom oxygenContainer ItemRoom livingQuarters ItemRoom shieldGenerator ItemRoom
-kitchen down entryRamp right shieldGenerator
-shieldGenerator left kitchen down controlRoom right livingQuarters
-livingQuarters left shieldGenerator down oxygenContainer
-entryRamp up kitchen right controlRoom down lab
-controlRoom left entryRamp up shieldGenerator right oxygenContainer
-oxygenContainer up livingQuarters left controlRoom down office
-lab up entryRamp right workshop down leftThruster
-workshop left lab right office
-office up oxygenContainer left workshop down rightThruster
-leftThruster up lab right loadingBay
-loadingBay left leftThruster right rightThruster
-rightThruster left loadingBay up office
+Room: controlRoom ControlRoom Workshop WorkshopRoom Kitchen ItemRoom EntryRamp ItemRoom Lab ItemRoom LeftThruster ItemRoom LoadingBay ItemRoom RightThruster ItemRoom Office ItemRoom OxygenContainer ItemRoom LivingQuarters ItemRoom ShieldGenerator ItemRoom
+Kitchen down EntryRamp right ShieldGenerator
+ShieldGenerator left Kitchen down controlRoom right LivingQuarters
+LivingQuarters left ShieldGenerator down OxygenContainer
+EntryRamp up Kitchen right controlRoom down Lab
+controlRoom left EntryRamp up ShieldGenerator right OxygenContainer
+OxygenContainer up LivingQuarters left controlRoom down Office
+Lab up EntryRamp right Workshop down LeftThruster
+Workshop left Lab right Office
+Office up OxygenContainer left Workshop down RightThruster
+LeftThruster up Lab right LoadingBay
+LoadingBay left LeftThruster right RightThruster
+RightThruster left LoadingBay up Office
 
 Player: controlRoom 2
 
-Item: Tool pc office Tool lab acid Tool kitchen knife Tool workshop saw Tool oxygenContainer screwdriver Tool shieldGenerator wrench Tool LivingQuarters blowtorch Tool loadingBay jack Tool leftThruster crowbar Tool rightThruster welder Tool entryRamp thermitePaste
+Item: Tool PC Office Tool Acid Lab Tool Knife Kitchen Tool Saw Workshop Tool Screwdriver OxygenContainer Tool Wrench ShieldGenerator Tool Blowtorch LivingQuarters Tool Jack LoadingBay Tool Crowbar LeftThruster Tool Welder RightThruster Tool ThermitePaste EntryRamp
