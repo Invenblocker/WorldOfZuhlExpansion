@@ -43,7 +43,7 @@ public class Player extends RoomHopper
     {
         for(int i = 0; i < inventory.length; i++)
         {
-            if(inventory[i] == null)
+            if(inventory[i].equals(null))
             {
                 inventory[i] = item;
                 
