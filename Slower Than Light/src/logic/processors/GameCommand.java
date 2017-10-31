@@ -130,14 +130,21 @@ public class GameCommand {
             return;
         }
         
+        Room currentRoom = game.getPlayer().getCurrentRoom();
+        if (!(currentRoom instanceof ItemRoom))
+        {
+            System.out.println("No items can spawn in this room");
+            return;
+        }
+        ItemRoom currentRoomAsItemRoom = (ItemRoom)currentRoom;
+                
         ArrayList<Item> roomInventory = roomItemList();
         try
         {
             int itemReference = Integer.parseInt(command.getSecondWord());
             Item itemTaken = roomInventory.get(itemReference);
-            System.out.println("Reference: " + itemReference + " inventory: " + roomInventory.get(0) + " player: " + game.getPlayer().getInventory()[1]);
             game.getPlayer().addItem(itemTaken);
-            System.out.println("Det virker");
+            currentRoomAsItemRoom.takeItem(itemTaken);
         } 
         catch (Exception e) 
         {
