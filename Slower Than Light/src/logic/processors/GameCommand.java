@@ -131,10 +131,13 @@ public class GameCommand {
         }
         
         ArrayList<Item> roomInventory = roomItemList();
-        try {
+        try
+        {
             int itemReference = Integer.parseInt(command.getSecondWord());
             Item itemTaken = roomInventory.get(itemReference);
-            game.getPlayer().addItem(itemTaken); 
+            System.out.println("Reference: " + itemReference + " inventory: " + roomInventory.get(0) + " player: " + game.getPlayer().getInventory()[1]);
+            game.getPlayer().addItem(itemTaken);
+            System.out.println("Det virker");
         } 
         catch (Exception e) 
         {
@@ -145,11 +148,11 @@ public class GameCommand {
     private ArrayList<Item> roomItemList ()
     {
         ArrayList<Item>roomInventory = new ArrayList<>();
-        Room currenRoom = game.getPlayer().getCurrentRoom();
+        Room currentRoom = game.getPlayer().getCurrentRoom();
         
-        if (currenRoom instanceof ItemRoom)
+        if (currentRoom instanceof ItemRoom)
         {
-            ItemRoom currenRoomAsItemRoom =(ItemRoom) currenRoom ;
+            ItemRoom currenRoomAsItemRoom = (ItemRoom)currentRoom;
             if (currenRoomAsItemRoom.getItem()!= null)
                 roomInventory.add(currenRoomAsItemRoom.getItem());
             if (currenRoomAsItemRoom.getSpecialItem()!= null)
@@ -157,9 +160,9 @@ public class GameCommand {
             
             return roomInventory;
         }
-        else if (currenRoom instanceof WorkshopRoom) 
+        else if (currentRoom instanceof WorkshopRoom) 
         {
-            WorkshopRoom currentRoomAsWorkshopRoom  = (WorkshopRoom) currenRoom;
+            WorkshopRoom currentRoomAsWorkshopRoom  = (WorkshopRoom) currentRoom;
                 roomInventory.addAll(currentRoomAsWorkshopRoom.getItems());
             return roomInventory;
         }
