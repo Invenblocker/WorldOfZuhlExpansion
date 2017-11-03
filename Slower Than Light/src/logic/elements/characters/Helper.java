@@ -46,6 +46,11 @@ public class Helper extends RoomHopper
                 System.out.println("No task has been defined for the helper.");
                 return(-1);
         }
+        else
+        {
+            System.out.println("The task is null???");
+            return(-1);
+        }
     }
     
     
@@ -55,7 +60,7 @@ public class Helper extends RoomHopper
         
         if(!getCurrentRoom().isControlRoom() && Math.random() < chanceOfDiscovery - CHANCE_OF_DISCOVERY_GROWTH)
         {
-            
+            foundItemRoom = getCurrentRoom();
         }
         else
         {
@@ -76,8 +81,6 @@ public class Helper extends RoomHopper
             }
         }
         
-        
-        
         return(5 + (int) Math.floor(6 * Math.random()));
     }
     
@@ -87,6 +90,10 @@ public class Helper extends RoomHopper
         if(getCurrentRoom().isControlRoom())
         {
             return(-1);
+        }
+        else
+        {
+            return(5 + (int) Math.floor(6 * Math.random()));
         }
     }
 }
