@@ -63,6 +63,65 @@ public class txtLoader
         }
     }
     
+     public HashMap<String, Room> getRooms()
+    {
+        return this.rooms;
+    }
+    
+    public HashMap<String, Item> getItems()
+    {
+        return this.items;
+    }
+    
+    public Player getPlayer() {
+        return player;
+    }
+    
+     //Method inserts room to our hasmap rooms
+    //Private as the method is only used and accessed in the txtLoader class
+    private void roomToHashMap(String[] words)
+    {
+        int i = 1;                 //index for room in our txt file            
+        int j = 2;                 //index for boolean in our txt file    
+        while (j < words.length) {                                                       //As long j is less than array lenght put room
+
+            if (words[j].equals("ItemRoom")){
+            rooms.put(words[i], new ItemRoom(words[i]));   
+            }
+            else if(words[j].equals("WorkshopRoom")){
+            rooms.put(words[i], new WorkshopRoom(words[i]));         
+            }
+            else{
+            rooms.put(words[i], new ControlRoom(words[i]));        
+            }
+            i += 2;                                                                     //Jumps to room index in our txt
+            j += 2;                                                                     //jumps to next boolean in txt
+        }
+    }
+    
+      private void itemToHashMap(String[] words){
+        int x = 1;
+        int i = 2;
+        int j = 3;
+        
+        while (j < words.length)
+        {
+            if(words[i].equals("ducttape") && words[j].equals("null"))
+            {
+                items.put(words[i], new Tool(words[i], null));
+            }
+
+            for (String key : rooms.keySet())
+                if (key.equals(words[j]))
+                    if(words[x].equals("Tool"))
+                        items.put(words[i], new Tool(words[i],rooms.get(key)));
+            
+            x += 3;    
+            i += 3;
+            j += 3;
+        }
+    }
+    
     private void loadPlayer(String[] words)
     {
         Room room = rooms.get(words[1]);
@@ -94,65 +153,5 @@ public class txtLoader
             i = i + 2;
             j = j + 2;
         }
-    }
-  
-    private void itemToHashMap(String[] words){
-        int x = 1;
-        int i = 2;
-        int j = 3;
-        
-        while (j < words.length)
-        {
-            if(words[i].equals("ducttape") && words[j].equals("null"))
-            {
-                items.put(words[i], new Tool(words[i], null));
-            }
-
-            for (String key : rooms.keySet())
-                if (key.equals(words[j]))
-                    if(words[x].equals("Tool"))
-                        items.put(words[i], new Tool(words[i],rooms.get(key)));
-            
-            x += 3;    
-            i += 3;
-            j += 3;
-        }
-    }
-
-    //Method inserts room to our hasmap rooms
-    //Private as the method is only used and accessed in the txtLoader class
-    private void roomToHashMap(String[] words)
-    {
-        int i = 1;                 //index for room in our txt file            
-        int j = 2;                 //index for boolean in our txt file    
-        while (j < words.length) {                                                       //As long j is less than array lenght put room
-
-            if (words[j].equals("ItemRoom")){
-            rooms.put(words[i], new ItemRoom(words[i]));   
-            }
-            else if(words[j].equals("WorkshopRoom")){
-            rooms.put(words[i], new WorkshopRoom(words[i]));         
-            }
-            else{
-            rooms.put(words[i], new ControlRoom(words[i]));        
-            }
-            i += 2;                                                                     //Jumps to room index in our txt
-            j += 2;                                                                     //jumps to next boolean in txt
-        }
-    }
- 
-
-    public HashMap<String, Room> getRooms()
-    {
-        return this.rooms;
-    }
-    
-    public HashMap<String, Item> getItems()
-    {
-        return this.items;
-    }
-    
-    public Player getPlayer() {
-        return player;
     }
 }

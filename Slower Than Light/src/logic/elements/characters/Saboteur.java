@@ -15,8 +15,8 @@ import java.util.*;
  */
 public class Saboteur extends RoomHopper
 {
+     private final double DEFAULT_CHANCE_OF_SABOTAGE, CHANCE_OF_SABOTAGE_GROWTH;
     private double chanceOfSabotage;
-    private final double DEFAULT_CHANCE_OF_SABOTAGE, CHANCE_OF_SABOTAGE_GROWTH;
     private boolean chasingPlayer;
     
     /**
@@ -120,6 +120,18 @@ public class Saboteur extends RoomHopper
         }
     }
     
+    /**
+     * @author Invenblocker
+     * 
+     * Checks to see if the saboteur is chasing the player.
+     * 
+     * @return true if chasing, false if not.
+     */
+    public boolean isChasingPlayer()
+    {
+        return(chasingPlayer);
+    }
+    
     private int checkChasingPlayer()
     {
         if(Game.getInstance().getPlayer().getCurrentRoom().isControlRoom())
@@ -143,15 +155,5 @@ public class Saboteur extends RoomHopper
         }
     }
     
-    /**
-     * @author Invenblocker
-     * 
-     * Checks to see if the saboteur is chasing the player.
-     * 
-     * @return true if chasing, false if not.
-     */
-    public boolean isChasingPlayer()
-    {
-        return(chasingPlayer);
-    }
+    
 }

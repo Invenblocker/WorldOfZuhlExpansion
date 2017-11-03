@@ -1,4 +1,4 @@
-package logic.elements.rooms;
+   package logic.elements.rooms;
 
 import java.util.ArrayList;
 import java.util.Set;
@@ -11,10 +11,10 @@ import logic.elements.characters.Tool;
 public class Room 
 {
     private String name;
-    private HashMap<String, Room> exits;
-    private ArrayList<Tool> repairTools;
-    private boolean controlRoom;       //check if player is in CR
     private boolean operating;         //is room damaged
+    private boolean controlRoom;       //check if player is in CR
+    private ArrayList<Tool> repairTools;
+    private HashMap<String, Room> exits;
     
     /**
      * A constructor that creates a new room with no exits.
@@ -35,36 +35,38 @@ public class Room
         this.controlRoom = controlRoom;
     }
 
-    /**
-     * Adds an exit to the room defining where the player can go from said room.
-     * @param name The second word of the go command required to use this exit.
-     * @param neighbor The room that the exit added to the current leads to.
-     */
-    public void setExit(String direction, Room neighbor) 
-    {
-        
-        exits.put(direction, neighbor);
-    }
+    
 
-    
-    public void setOperating(boolean value) {     //Sets value  damged or not.
-        this.operating = value;
-        
-        }
-    
-    public boolean isOperating(){   //checks boolean value for room
-        
-        return this.operating;       //returns setOperatinge - dameged room or not
-    }
-    
-    
-    /**
+     /**
      * Returns the name of the room.
      * @return The room's name.
      */
     public String getName()
     {
         return this.name;
+    }
+    
+      public boolean isOperating(){   //checks boolean value for room
+        
+        return this.operating;       //returns setOperatinge - dameged room or not
+    }
+    
+    
+    public void setOperating(boolean value) {     //Sets value  damged or not.
+        this.operating = value;
+        
+        }
+
+    public boolean isControlRoom() {    //returns boolean value, is player in CR
+        return this.controlRoom;
+    }
+
+     public ArrayList<Tool> getRepairTools() {
+        return this.repairTools;
+    }
+     
+      public void addRepairTools(Tool tool) {
+        this.repairTools.add(tool);
     }
 
     /**
@@ -87,8 +89,8 @@ public class Room
         }
         return returnString;
     }
-    
-    
+
+     
     public ArrayList<String> getCollectionOfExits(){
         ArrayList<String> list = new ArrayList<String>();  // creates an arraylist
           
@@ -100,7 +102,6 @@ public class Room
         
         return list;                                       // returns the list.
     }
-
     /**
      * Returns the room accessible from the specified exit.
      * @param direction The second word of the go command required to use this exit.
@@ -111,22 +112,14 @@ public class Room
         return exits.get(direction);
     }
     
-    public boolean isControlRoom() {    //returns boolean value, is player in CR
-        return this.controlRoom;
+   /**
+     * Adds an exit to the room defining where the player can go from said room.
+     * @param name The second word of the go command required to use this exit.
+     * @param neighbor The room that the exit added to the current leads to.
+     */
+    public void setExit(String direction, Room neighbor) 
+    {
+        
+        exits.put(direction, neighbor);
     }
-
-    public ArrayList<Tool> getRepairTools() {
-        return this.repairTools;
-    }
-
-    public void addRepairTool(Tool tool) {
-        this.repairTools.add(tool);
-    }
-
-    public void addItem(Item itemDropped) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-    }
-    
-    
-    
 }

@@ -29,6 +29,14 @@ public class ItemRoom  extends Room{  //Itemroom inherits funnctionality from ro
     
     //functionality
     
+      public Item getItem() {                 //returns item from datatype Item
+        return item;
+    }
+
+    public Item getSpecialItem() {   //returns specialitem from datatype Item
+        return specialItem;
+    }
+    
     public void setItem(Item item) {      //Sets item in room class
         this.item = item; 
     }
@@ -41,23 +49,16 @@ public class ItemRoom  extends Room{  //Itemroom inherits funnctionality from ro
         this.specialItem = specialItem;
     }
     
-    public void takeItem(Item item) {  //removes item when user takes it from the room
+    public void removeItem() {  //removes item when user takes it from the room
         this.item = null;
     }
             
-    public void takeSpecialItem(Item item) {  //removes Specialitem when user takes it from the room
+    public void removeSpecialItem() {  //removes Specialitem when user takes it from the room
         this.specialItem = null;
     
 }
 
-    public Item getItem() {                 //returns item from datatype Item
-        return item;
-    }
- 
-    
-    public Item getSpecialItem() {   //returns specialitem from datatype Item
-        return specialItem;
-    }
+  
     
 
     

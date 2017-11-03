@@ -11,7 +11,7 @@ import logic.user_input.Command;
 import logic.user_input.CommandWord;
 
 public class GameCommand {
-    private final Game game;
+    private Game game;
 
     public GameCommand(){
         game = Game.getInstance();
@@ -130,21 +130,11 @@ public class GameCommand {
             return;
         }
         
-        Room currentRoom = game.getPlayer().getCurrentRoom();
-        if (!(currentRoom instanceof ItemRoom))
-        {
-            System.out.println("No items can spawn in this room");
-            return;
-        }
-        ItemRoom currentRoomAsItemRoom = (ItemRoom)currentRoom;
-                
         ArrayList<Item> roomInventory = roomItemList();
-        try
-        {
+        try {
             int itemReference = Integer.parseInt(command.getSecondWord());
             Item itemTaken = roomInventory.get(itemReference);
-            game.getPlayer().addItem(itemTaken);
-            currentRoomAsItemRoom.takeItem(itemTaken);
+            game.getPlayer().addItem(itemTaken); 
         } 
         catch (Exception e) 
         {
@@ -155,11 +145,11 @@ public class GameCommand {
     private ArrayList<Item> roomItemList ()
     {
         ArrayList<Item>roomInventory = new ArrayList<>();
-        Room currentRoom = game.getPlayer().getCurrentRoom();
+        Room currenRoom = game.getPlayer().getCurrentRoom();
         
-        if (currentRoom instanceof ItemRoom)
+        if (currenRoom instanceof ItemRoom)
         {
-            ItemRoom currenRoomAsItemRoom = (ItemRoom)currentRoom;
+            ItemRoom currenRoomAsItemRoom =(ItemRoom) currenRoom ;
             if (currenRoomAsItemRoom.getItem()!= null)
                 roomInventory.add(currenRoomAsItemRoom.getItem());
             if (currenRoomAsItemRoom.getSpecialItem()!= null)
@@ -167,9 +157,9 @@ public class GameCommand {
             
             return roomInventory;
         }
-        else if (currentRoom instanceof WorkshopRoom) 
+        else if (currenRoom instanceof WorkshopRoom) 
         {
-            WorkshopRoom currentRoomAsWorkshopRoom  = (WorkshopRoom) currentRoom;
+            WorkshopRoom currentRoomAsWorkshopRoom  = (WorkshopRoom) currenRoom;
                 roomInventory.addAll(currentRoomAsWorkshopRoom.getItems());
             return roomInventory;
         }
