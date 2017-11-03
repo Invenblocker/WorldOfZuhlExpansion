@@ -11,5 +11,5 @@ package logic.elements.characters;
  */
 public enum HelperTask
 {
-    
+    SEARCH, BODYGUARD, RETURN_TO_DEFAULT;
 }
