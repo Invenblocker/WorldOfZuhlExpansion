@@ -119,7 +119,7 @@ public class Room
         return this.repairTools;
     }
 
-    public void setRepairTools(Tool tool) {
+    public void addRepairTool(Tool tool) {
         this.repairTools.add(tool);
     }
 

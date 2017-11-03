@@ -137,24 +137,6 @@ public class Game
     
     public GUI getGUI() {return gui;}
     
-    /*private Room getRandomRoom()
-    {
-        Room randomRoom = null;
-        
-        Random random = new Random();
-        List<String> keys = new ArrayList<>(rooms.keySet());
-        
-        while(randomRoom != null)
-        {
-            String randomKey = keys.get(random.nextInt(keys.size()));
-            Room tempRandomRoom = rooms.get(randomKey);
-            if (!tempRandomRoom.isControlRoom())
-                randomRoom = tempRandomRoom;
-        }
-        
-        return randomRoom;
-    }*/
-    
     /**
     * Prints a welcome message to the player when the game starts.
     */
@@ -188,7 +170,24 @@ public class Game
     
         void addRepairItemsToRooms(HashMap<String, Item> items, HashMap<String, Room> rooms)
         {
+            Room room = null;
+            Item item = null;
+            List itemKeys = new ArrayList(items.keySet());
+            itemKeys.remove("ducttape");
+            Collections.shuffle(itemKeys);                 // shuffler keys
             
+            for (String roomKey : rooms.keySet())
+            {
+                if(rooms.get(roomKey) instanceof ItemRoom )
+                {
+                    room = rooms.get(roomKey);
+                    
+                    item = items.get(itemKeys.get(0));
+                    
+                    room.addRepairTool((Tool) item);
+                    itemKeys.remove(item.getName());
+                }
+            }
         }
 
         Room getRandomSaboteurStartRoom (HashMap<String, Room> rooms)

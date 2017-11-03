@@ -61,8 +61,6 @@ public class txtLoader
                 addRoomExits(words);
             }
         }
-        
-        addRoomRepairTools();
     }
     
     private void loadPlayer(String[] words)
@@ -75,28 +73,6 @@ public class txtLoader
             throw new Error("Error in loading player starting room");
     }
     
-    private void addRoomRepairTools()
-    {
-        Room room = null;
-        Item item = null;
-        List keys = new ArrayList(items.keySet());
-        keys.remove("ducttape");
-        Collections.shuffle(keys);                 // shuffler keys
-
-        for (String key : rooms.keySet())
-        {
-            if(rooms.get(key) instanceof ItemRoom )
-            {
-                room = rooms.get(key);
-                for (Object ob : keys)
-                    item = items.get(ob);
-                
-                room.setRepairTools((Tool) item);
-                keys.remove(item.getName());
-            }
-        }
-    }
-
     private void addRoomExits(String[] words){
         int i = 1;
         int j = 2;
