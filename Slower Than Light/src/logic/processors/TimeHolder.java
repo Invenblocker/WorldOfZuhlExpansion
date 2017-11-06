@@ -8,16 +8,19 @@ import logic.GameInfo;
 import logic.elements.rooms.Room;
 
 public class TimeHolder extends TimerTask{
-
+    
+    private int DEFAULT_HELPER_COUNTDOWN;
     private int saboteurCountdown;
+    private int helperCountdown;
     private double timeLeft;
+    private double oxygenLeft;
     private Game game;
     private GameInfo gameInfo;
     /**
      * Creates an object of the type Timeholder
      * @param gameTime The amount of time in seconds which the game takes
      */
-    public TimeHolder(int gameTime)
+    public TimeHolder(int gameTime, int oxygenTime)
     {
         saboteurCountdown = 5;
         timeLeft = gameTime;
@@ -63,4 +66,16 @@ public class TimeHolder extends TimerTask{
     public void setSaboteurCountdown(int value) {
         this.saboteurCountdown = value;    
     }
+
+    public void setHelperCountdown(int value) {
+        this.helperCountdown = helperCountdown;
+    }
+
+    public double getOxygenLeft() {
+        return oxygenLeft;
+    }
+
+    
+
 }
+
