@@ -192,4 +192,14 @@ public class Helper extends RoomHopper
         
         return(routes.get((int) Math.floor(Math.random() * routes.size())));
     }
+    
+    public HelperTask getHelperTask()
+    {
+        return(task);
+    }
+    
+    public void setTask(HelperTask task)
+    {
+        this.task = task;
+    }
 }
