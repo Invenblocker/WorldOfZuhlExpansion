@@ -22,6 +22,7 @@ public class Helper extends RoomHopper
     private double chanceOfDiscovery;
     private Room foundItemRoom;
     private Item foundSpecialItem;
+    private ArrayList<Room> returnRoute;
     
     
     public Helper(Room room, String name, double chanceOfDiscovery, double chanceOfDiscoveryGrowth)
@@ -30,6 +31,10 @@ public class Helper extends RoomHopper
         this.name = name;
         this.chanceOfDiscovery = DEFAULT_CHANCE_OF_DISCOVERY = chanceOfDiscovery;
         CHANCE_OF_DISCOVERY_GROWTH = chanceOfDiscoveryGrowth;
+        task = HelperTask.RETURN_TO_DEFAULT;
+        returnRoute = new ArrayList();
+        foundItemRoom = null;
+        foundSpecialItem = null;
     }
     
     
@@ -70,12 +75,18 @@ public class Helper extends RoomHopper
             {
                 specialItems.add(specialItem);
             }
+            
+            foundSpecialItem = specialItems.get((int) Math.floor(Math.random() * specialItems.size()));
+            
+            chanceOfDiscovery = DEFAULT_CHANCE_OF_DISCOVERY;
+            
+            task = HelperTask.RETURN_TO_DEFAULT;
         }
         else
         {
             for(int i = exits.size() - 1; i >= 0; i--)
             {
-                if(getCurrentRoom().getExit(exits.get(i)).isControlRoom())
+                if(!(getCurrentRoom().getExit(exits.get(i)) instanceof ItemRoom))
                 {
                     exits.remove(i);
                 }
@@ -102,7 +113,83 @@ public class Helper extends RoomHopper
         }
         else
         {
+            if(returnRoute.size() == 0)
+            {
+                returnRoute = findReturnRoute();
+            }
+            
+            setRoom(returnRoute.get(0));
+            returnRoute.remove(0);
+            
             return(5 + (int) Math.floor(6 * Math.random()));
         }
+    }
+    
+    ArrayList<Room> findReturnRoute()
+    {
+        ArrayList<ArrayList<Room>> routes = new ArrayList();
+        boolean foundControlRoom = false;
+        int routeLength = 0;
+        routes.add(new ArrayList());
+        routes.get(0).add(getCurrentRoom());
+        
+        while(!foundControlRoom)
+        {
+            for(int a = routes.size() - 1; a >= 0; a--)
+            {
+                ArrayList<Room> exits = new ArrayList();
+                Room checkRoom = routes.get(a).get(routeLength);
+                for(String exit : checkRoom.getCollectionOfExits())
+                {
+                    if(checkRoom.getExit(exit).isControlRoom())
+                    {
+                        foundControlRoom = true;
+                    }
+                    
+                    if(!routes.get(a).contains(checkRoom.getExit(exit)))
+                    {
+                        exits.add(checkRoom.getExit(exit));
+                    }
+                }
+                
+                switch(exits.size())
+                {
+                    case 0:
+                        routes.remove(a);
+                        break;
+                    case 1:
+                        routes.get(a).add(exits.get(0));
+                        break;
+                    default:
+                        for(int b = 1; b < exits.size(); b++)
+                        {
+                            ArrayList routeCopy = new ArrayList();
+                            for(int c = 0; c < routes.get(a).size(); c++)
+                            {
+                                routeCopy.add(routes.get(a).get(c));
+                            }
+                            routeCopy.add(exits.get(b));
+                            routes.add(routeCopy);
+                        }
+                        routes.get(a).add(exits.get(0));
+                        break;
+                }
+            }
+            routeLength++;
+        }
+        
+        for(int i = routes.size() - 1; i >= 0; i--)
+        {
+            if(!routes.get(i).get(routeLength).isControlRoom())
+            {
+                routes.remove(i);
+            }
+            else
+            {
+                routes.get(i).remove(0);
+            }
+        }
+        
+        return(routes.get((int) Math.floor(Math.random() * routes.size())));
     }
 }
