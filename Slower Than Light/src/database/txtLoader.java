@@ -17,6 +17,7 @@ import logic.elements.characters.Item;
 import logic.elements.characters.Player;
 import logic.elements.characters.Tool;
 import logic.elements.rooms.ControlRoom;
+import logic.elements.rooms.Exit;
 import logic.elements.rooms.ItemRoom;
 import logic.elements.rooms.Room;
 import logic.elements.rooms.WorkshopRoom;
@@ -27,10 +28,13 @@ public class txtLoader
     
     private HashMap<String, Room> rooms;
     private HashMap<String, Item> items;
+    private HashMap<String, Item> specialItems;
     private Player player;
+    private String gameName;
     
-    public txtLoader()
+    public txtLoader(String gameName)
     {
+        this.gameName = gameName;
         this.rooms = new HashMap<String, Room>();
         this.items = new HashMap<String, Item>();
     }
@@ -41,6 +45,18 @@ public class txtLoader
      * @param gameName
      * @throws FileNotFoundException 
      */
+    
+    public void newGame() 
+    {
+        
+    }
+    
+    public void loadGame() 
+    {
+        
+    }
+    
+    
     public void loadGame (String gameName) throws FileNotFoundException
     {
         Scanner sc = new Scanner(new File(gameName));
@@ -73,9 +89,41 @@ public class txtLoader
         return this.items;
     }
     
+    
+    public HashMap<String, Item> getSpecialItems() {
+        return this.specialItems;
+    }
+    
+    
+    
     public Player getPlayer() {
         return player;
     }
+    
+    public HashMap<String, Integer> getHighscore() throws FileNotFoundException { 
+        HashMap<String, Integer> highScore = new HashMap<String, Integer> ();
+        String name;
+        int score;
+        
+        Scanner sc = new Scanner (new File("highScore"));
+        while (sc.hasNext()) {
+            String line = sc.nextLine();
+            String[] words = line.split (" ");
+            
+            name = words[0];
+            score = Integer.parseInt(words[1]);
+            highScore.put(name, score);
+            
+         
+            
+        }
+        
+        return highScore;
+        
+        
+    }
+    
+    
     
      //Method inserts room to our hasmap rooms
     //Private as the method is only used and accessed in the txtLoader class
@@ -136,7 +184,8 @@ public class txtLoader
         int i = 1;
         int j = 2;
         Room room = null;
-        Room room2 = null;
+      
+        Exit exit = null;
         
         while (j < words.length)
         {                                           // tjekker at vi ikke overskrider arrayet
@@ -146,8 +195,8 @@ public class txtLoader
             
             for (String key : rooms.keySet()){      // tjekker alle rum i hashmappet room
                 if (key.equals(words[j])){          // finder det andet rum som skal sættes som exit til room.
-                    room2=rooms.get(key);           // sætter rummet til room2.
-                    room.setExit(words[i], room2);  // sætter exit med plads i (en direction) og et room.
+                 //   exit = rooms.get(key).getExit(words[i]);           // sætter rummet til room2.
+                 //   room.setExit(words[i], exit);  // sætter exit med plads i (en direction) og et room.
                 }
             }
             i = i + 2;
