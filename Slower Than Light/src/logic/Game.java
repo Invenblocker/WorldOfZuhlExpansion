@@ -39,11 +39,13 @@ public class Game
     
     private HashMap<String, Room>rooms;
     private HashMap<String, Item>items;
+    private HashMap<String, Item>specialItems;
     
     private GameInfo gameInfo;
     private Parser parser;
     private Player player;
     private Saboteur saboteur;
+    private Helper helper;
     private TimeHolder timeholder;
     private GUI gui;
     
@@ -125,6 +127,8 @@ public class Game
     
     public HashMap<String, Item> getItems() {return items;}
 
+    public HashMap<String, Item> getSpecialItems() {return specialItems;}
+    
     public GameInfo getGameInfo() {return gameInfo;}
     
     public Parser getParser () {return parser;}
@@ -133,25 +137,12 @@ public class Game
     
     public Saboteur getSaboteur() {return saboteur;}
     
+    public Helper getHelper() {return helper;}
+    
     public TimeHolder getTimeHolder() {return timeholder;}
     
     public GUI getGUI() {return gui;}
     
-    /**
-    * Prints a welcome message to the player when the game starts.
-    */
-    private void printWelcome()
-    {
-        System.out.println("Welcome to the Slower Than Light!");
-        System.out.println("You have finally gotten a job as a spaceship pilot.");
-        System.out.println("Your first assignment is to fly a cargo ship filled");
-        System.out.println("with important supplies to Earth's base on the moon.");
-        System.out.println("However a saboteur has infiltrated the spaceship, and");
-        System.out.println("does not plan to let you reach the moon.");
-        System.out.println("You have to move around the spaceship to fix his havoc");
-        System.out.println("But do not let him run into you, or he will kill you.");
-        System.out.println("Type '" + CommandWord.HELP + "' if you need help.");
-    }
     
     static class GameSetup
     {
