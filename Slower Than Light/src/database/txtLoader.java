@@ -184,7 +184,7 @@ public class txtLoader
         int i = 1;
         int j = 2;
         Room room = null;
-      
+        Room room2 = null;
         Exit exit = null;
         
         while (j < words.length)
@@ -195,8 +195,9 @@ public class txtLoader
             
             for (String key : rooms.keySet()){      // tjekker alle rum i hashmappet room
                 if (key.equals(words[j])){          // finder det andet rum som skal sættes som exit til room.
-                 //   exit = rooms.get(key).getExit(words[i]);           // sætter rummet til room2.
-                 //   room.setExit(words[i], exit);  // sætter exit med plads i (en direction) og et room.
+                 room2 = rooms.get(key);           // sætter rummet til room2.
+                 exit = new Exit(room, room2);
+                 room.setExit(words[i], exit);  // sætter exit med plads i (en direction) og et room.
                 }
             }
             i = i + 2;

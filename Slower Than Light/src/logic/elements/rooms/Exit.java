@@ -15,7 +15,7 @@ public class Exit {
     private Room exitRoom2;
     private boolean operating;
     
-  Exit(Room exitRoom1, Room exitRoom2)
+  public Exit(Room exitRoom1, Room exitRoom2)
   {
       this.exitRoom1 = exitRoom1;       //first exit that a room can have
       this.exitRoom2 = exitRoom2;       //second exit that a room can have
