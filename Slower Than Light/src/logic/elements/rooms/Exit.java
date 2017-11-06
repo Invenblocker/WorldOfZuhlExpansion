@@ -33,6 +33,16 @@ public class Exit {
       this.operating = value;
       
   }
+
+    public Room getExitRoom1() {
+        return exitRoom1;
+    }
+
+    public Room getExitRoom2() {
+        return exitRoom2;
+    }
+  
+ 
   
 }
 

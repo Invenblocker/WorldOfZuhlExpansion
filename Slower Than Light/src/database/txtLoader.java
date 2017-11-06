@@ -27,10 +27,13 @@ public class txtLoader
     
     private HashMap<String, Room> rooms;
     private HashMap<String, Item> items;
+    private HashMap<String, Item> specialItems;
     private Player player;
+    private String gameName;
     
-    public txtLoader()
+    public txtLoader(String gameName)
     {
+        this.gameName = gameName;
         this.rooms = new HashMap<String, Room>();
         this.items = new HashMap<String, Item>();
     }
@@ -41,6 +44,12 @@ public class txtLoader
      * @param gameName
      * @throws FileNotFoundException 
      */
+    
+    public void newGame() {
+        
+    }
+    
+    
     public void loadGame (String gameName) throws FileNotFoundException
     {
         Scanner sc = new Scanner(new File(gameName));

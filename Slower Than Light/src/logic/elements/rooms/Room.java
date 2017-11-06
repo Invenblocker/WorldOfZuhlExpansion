@@ -110,7 +110,13 @@ public class Room
      */
     public Room getExit(String direction) 
     {
-        return exits.get(direction);
+        if(exits.get(direction).getExitRoom1().name.equals(this.name)){
+            return exits.get(direction).getExitRoom2(); 
+        }
+        else{
+           return exits.get(direction).getExitRoom1(); 
+        }
+        
     }
     
    /**
