@@ -6,7 +6,9 @@
 package logic.elements.characters;
 
 import java.util.ArrayList;
+import logic.Game;
 import logic.elements.rooms.Room;
+import logic.elements.rooms.ItemRoom;
 
 /**
  *
@@ -58,9 +60,16 @@ public class Helper extends RoomHopper
     {
         ArrayList<String> exits = getCurrentRoom().getCollectionOfExits();
         
-        if(!getCurrentRoom().isControlRoom() && Math.random() < chanceOfDiscovery - CHANCE_OF_DISCOVERY_GROWTH)
+        if((getCurrentRoom() instanceof ItemRoom) && Math.random() < chanceOfDiscovery - CHANCE_OF_DISCOVERY_GROWTH)
         {
             foundItemRoom = getCurrentRoom();
+            
+            ArrayList<Item> specialItems = new ArrayList();
+            
+            for(Item specialItem : Game.getInstance().getSpecialItems().values())
+            {
+                specialItems.add(specialItem);
+            }
         }
         else
         {
