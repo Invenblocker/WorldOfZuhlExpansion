@@ -14,7 +14,7 @@ import logic.elements.rooms.*;
 public class Item
 {
     private String name;
-    private Room defaultRoom;
+    private ItemRoom defaultRoom;
     
     /**
      * @author Invenblocker
@@ -37,7 +37,7 @@ public class Item
      * @param name The name of the item.
      * @param defaultRoom The default room for the item.
      */
-  public Item(String name, Room defaultRoom)
+  public Item(String name, ItemRoom defaultRoom)
     {
         this.name = name;
         this.defaultRoom = defaultRoom;
@@ -62,7 +62,7 @@ public class Item
      *
      * @return The item's default room.
      */
-    public Room getDefaultRoom()
+    public ItemRoom getDefaultRoom()
     {
         return defaultRoom;
     }
@@ -70,5 +70,10 @@ public class Item
     public String toString()
     {
         return this.getName();
+    }
+    
+    public void returnToDefaultRoom()
+    {
+        defaultRoom.setItem(this);
     }
 }

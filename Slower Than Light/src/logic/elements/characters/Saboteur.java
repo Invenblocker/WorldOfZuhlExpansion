@@ -15,9 +15,10 @@ import java.util.*;
  */
 public class Saboteur extends RoomHopper
 {
-     private final double DEFAULT_CHANCE_OF_SABOTAGE, CHANCE_OF_SABOTAGE_GROWTH;
+    private final double DEFAULT_CHANCE_OF_SABOTAGE, CHANCE_OF_SABOTAGE_GROWTH, CHANCE_OF_DOOR_SABOTAGE;
     private double chanceOfSabotage;
     private boolean chasingPlayer;
+    private int stunCountdown;
     
     /**
      * @author Invenblocker
@@ -28,13 +29,14 @@ public class Saboteur extends RoomHopper
      * @param chanceOfSabotage The starting chance that the saboteur will sabotage its current room.
      * @param chanceOfSabotageGrowth How much the chance of sabotaging the current room should grow when moving instead of sabotaging.
      */
-    public Saboteur(Room room, double chanceOfSabotage, double chanceOfSabotageGrowth)
+    public Saboteur(Room room, double chanceOfSabotage, double chanceOfSabotageGrowth, double chanceOfDoorSabotage)
     {
         super(room);
         
         chasingPlayer = false;
         this.chanceOfSabotage = DEFAULT_CHANCE_OF_SABOTAGE = chanceOfSabotage;
         CHANCE_OF_SABOTAGE_GROWTH = chanceOfSabotageGrowth;
+        CHANCE_OF_DOOR_SABOTAGE = chanceOfDoorSabotage;
     }
     
     /**
@@ -155,5 +157,13 @@ public class Saboteur extends RoomHopper
         }
     }
     
+    public int getStunCountdown()
+    {
+        return(stunCountdown);
+    }
     
+    public void setStunCountdown(int value)
+    {
+        stunCountdown = value;
+    }
 }
