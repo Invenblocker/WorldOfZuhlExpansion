@@ -184,7 +184,7 @@ public class Game
                     
                     item = items.get(itemKeys.get(0));
                     
-                    room.addRepairTool((Tool) item);
+                    room.addRepairTools((Tool) item);
                     itemKeys.remove(item.getName());
                 }
             }
