@@ -5,6 +5,7 @@
  */
 package GUI;
 
+import java.util.HashMap;
 import logic.Game;
 import logic.elements.characters.Item;
 import logic.elements.rooms.Room;
@@ -52,10 +53,17 @@ public class GUI
         Game.getInstance().getParser().showCommands();
     }
   
+    public void printWelcome() {
+        
+    }
     public void prinInventory(Item[]inventory)
     {
         System.out.println(inventory);
     }
+    
+    public void showHighScore(HashMap <String, Integer> highScore) {
+        
+    } 
     
 }
 
