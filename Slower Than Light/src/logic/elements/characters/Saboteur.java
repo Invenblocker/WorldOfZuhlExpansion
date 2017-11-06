@@ -15,9 +15,10 @@ import java.util.*;
  */
 public class Saboteur extends RoomHopper
 {
-     private final double DEFAULT_CHANCE_OF_SABOTAGE, CHANCE_OF_SABOTAGE_GROWTH;
+    private final double DEFAULT_CHANCE_OF_SABOTAGE, CHANCE_OF_SABOTAGE_GROWTH;
     private double chanceOfSabotage;
     private boolean chasingPlayer;
+    private int stunCountdown;
     
     /**
      * @author Invenblocker
@@ -155,5 +156,13 @@ public class Saboteur extends RoomHopper
         }
     }
     
+    public int getStunCountdown()
+    {
+        return(stunCountdown);
+    }
     
+    public void setStunCountdown(int value)
+    {
+        stunCountdown = value;
+    }
 }
