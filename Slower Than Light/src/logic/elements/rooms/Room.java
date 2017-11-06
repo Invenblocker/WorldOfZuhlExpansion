@@ -14,7 +14,7 @@ public class Room
     private boolean operating;         //is room damaged
     private boolean controlRoom;       //check if player is in CR
     private ArrayList<Tool> repairTools;
-    private HashMap<String, Room> exits;
+    private HashMap<String, Exit> exits;
     
     /**
      * A constructor that creates a new room with no exits.
@@ -26,7 +26,7 @@ public class Room
          this.name = name;
          this.repairTools = new ArrayList<Tool>();
          this.operating = true;
-         exits = new HashMap<String, Room>();    //Creates an empty HashMap  key/value
+         exits = new HashMap<String, Exit>();    //Creates an empty HashMap  key/value
     }
     
     public Room(String name, boolean controlRoom) //constructor for  boolean CR
@@ -91,12 +91,13 @@ public class Room
     }
 
      
-    public ArrayList<String> getCollectionOfExits(){
-        ArrayList<String> list = new ArrayList<String>();  // creates an arraylist
+    public ArrayList<Exit> getCollectionOfExits(){
+        ArrayList<Exit> list = new ArrayList<Exit>();  // creates an arraylist
           
         Set<String> keys = exits.keySet();                 // creates a set of keys from the hashmap exits.
         for(String exit : keys) {                          // loops through the keys (from the set of keys)
-            list.add(exit);                                // adds the exit to the arraylist
+            list.add(exits.get(exit));                                // adds the exit to the arraylist via. exit(value)
+            System.out.println("Virker: " + exits.get(exit));
         }
         
         
@@ -117,9 +118,9 @@ public class Room
      * @param name The second word of the go command required to use this exit.
      * @param neighbor The room that the exit added to the current leads to.
      */
-    public void setExit(String direction, Room neighbor) 
+    public void setExit(String direction, Exit neighbor) 
     {
         
-        exits.put(direction, neighbor);
+        exits.put(direction, neighbor);    
     }
 }
