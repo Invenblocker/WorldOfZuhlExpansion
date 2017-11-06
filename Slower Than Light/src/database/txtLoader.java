@@ -17,6 +17,7 @@ import logic.elements.characters.Item;
 import logic.elements.characters.Player;
 import logic.elements.characters.Tool;
 import logic.elements.rooms.ControlRoom;
+import logic.elements.rooms.Exit;
 import logic.elements.rooms.ItemRoom;
 import logic.elements.rooms.Room;
 import logic.elements.rooms.WorkshopRoom;
@@ -183,7 +184,8 @@ public class txtLoader
         int i = 1;
         int j = 2;
         Room room = null;
-        Room room2 = null;
+      
+        Exit exit = null;
         
         while (j < words.length)
         {                                           // tjekker at vi ikke overskrider arrayet
@@ -193,8 +195,8 @@ public class txtLoader
             
             for (String key : rooms.keySet()){      // tjekker alle rum i hashmappet room
                 if (key.equals(words[j])){          // finder det andet rum som skal sættes som exit til room.
-                    room2=rooms.get(key);           // sætter rummet til room2.
-                    room.setExit(words[i], room2);  // sætter exit med plads i (en direction) og et room.
+                 //   exit = rooms.get(key).getExit(words[i]);           // sætter rummet til room2.
+                 //   room.setExit(words[i], exit);  // sætter exit med plads i (en direction) og et room.
                 }
             }
             i = i + 2;
