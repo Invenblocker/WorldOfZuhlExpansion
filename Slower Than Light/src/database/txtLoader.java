@@ -45,7 +45,13 @@ public class txtLoader
      * @throws FileNotFoundException 
      */
     
-    public void newGame() {
+    public void newGame() 
+    {
+        
+    }
+    
+    public void loadGame() 
+    {
         
     }
     
@@ -82,9 +88,41 @@ public class txtLoader
         return this.items;
     }
     
+    
+    public HashMap<String, Item> getSpecialItems() {
+        return this.specialItems;
+    }
+    
+    
+    
     public Player getPlayer() {
         return player;
     }
+    
+    public HashMap<String, Integer> getHighscore() throws FileNotFoundException { 
+        HashMap<String, Integer> highScore = new HashMap<String, Integer> ();
+        String name;
+        int score;
+        
+        Scanner sc = new Scanner (new File("highScore"));
+        while (sc.hasNext()) {
+            String line = sc.nextLine();
+            String[] words = line.split (" ");
+            
+            name = words[0];
+            score = Integer.parseInt(words[1]);
+            highScore.put(name, score);
+            
+         
+            
+        }
+        
+        return highScore;
+        
+        
+    }
+    
+    
     
      //Method inserts room to our hasmap rooms
     //Private as the method is only used and accessed in the txtLoader class
