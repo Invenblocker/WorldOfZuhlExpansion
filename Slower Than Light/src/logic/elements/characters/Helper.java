@@ -50,14 +50,14 @@ public class Helper extends RoomHopper
                 SystemLog.getErrorLog().writeToLog("Helper.performAction() was called while the Helper \"" + name + "\" is set to bodyguard.");
                 return(-1);
             default:
-                task = HelperTask.RETURN_TO_DEFAULT;
+                setTask(HelperTask.RETURN_TO_DEFAULT);
                 SystemLog.getErrorLog().writeToLog("Helper.performAction() was called while the Helper \"" + name + "\" had a task that was not recognized by the method.",
                         "As a failsafe, The Helper \"" + name + "\" had its task set to RETURN_TO_DEFAULT.");
                 return((int) Math.floor(Math.random() * 6) + 5);
         }
         else
         {
-            task = HelperTask.RETURN_TO_DEFAULT;
+            setTask(HelperTask.RETURN_TO_DEFAULT);
             SystemLog.getErrorLog().writeToLog("Helper.performAction() was called while the Helper \"" + name + "\" did not have a defined task.",
                         "As a failsafe, The Helper \"" + name + "\" had its task set to RETURN_TO_DEFAULT.");
             return((int) Math.floor(Math.random() * 6) + 5);
@@ -88,7 +88,7 @@ public class Helper extends RoomHopper
             
             chanceOfDiscovery = DEFAULT_CHANCE_OF_DISCOVERY;
             
-            task = HelperTask.RETURN_TO_DEFAULT;
+            setTask(HelperTask.RETURN_TO_DEFAULT);
         }
         else
         {
@@ -218,7 +218,22 @@ public class Helper extends RoomHopper
             }
         }
         
-        return(routes.get((int) Math.floor(Math.random() * routes.size())));
+        ArrayList<Room> route = routes.get((int) Math.floor(Math.random() * routes.size()));
+        
+        String returnRoute = "";
+        
+        for(int i = 0; i < route.size(); i++)
+        {
+            returnRoute += "goto \"the " + route.get(i).getName() + '"';
+            if(i < routes.size() - 1)
+            {
+                returnRoute += ", then ";
+            }
+        }
+        
+        SystemLog.getActionLog().writeToLog("The Helper \"" + name + "\" plotted the following route to the controlRoom: First " + returnRoute + '.');
+        
+        return(route);
     }
     
     public HelperTask getHelperTask()
@@ -248,6 +263,7 @@ public class Helper extends RoomHopper
     public void setTask(HelperTask task)
     {
         this.task = task;
+        SystemLog.getActionLog().writeToLog("The helper \"" + name + "\" had its task set to \"" + task.toString() + "\".");
     }
     
     public Room SetRoom(Room newRoom)
