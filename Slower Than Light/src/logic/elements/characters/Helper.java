@@ -7,6 +7,7 @@ package logic.elements.characters;
 
 import java.util.ArrayList;
 import logic.Game;
+import logic.elements.rooms.Exit;
 import logic.elements.rooms.Room;
 import logic.elements.rooms.ItemRoom;
 
@@ -61,7 +62,7 @@ public class Helper extends RoomHopper
     
     private int search()
     {
-        ArrayList<String> exits = getCurrentRoom().getCollectionOfExits();
+        ArrayList<Exit> exits = getCurrentRoom().getCollectionOfExits();
         
         if((getCurrentRoom() instanceof ItemRoom) && Math.random() < chanceOfDiscovery - CHANCE_OF_DISCOVERY_GROWTH && ((ItemRoom) getCurrentRoom()).getSpecialItem().equals(null))
         {
@@ -86,7 +87,7 @@ public class Helper extends RoomHopper
         {
             for(int i = exits.size() - 1; i >= 0; i--)
             {
-                if(!(getCurrentRoom().getExit(exits.get(i)) instanceof ItemRoom))
+                if(!(getCurrentRoom().getExit(exits.get(i)) instanceof ItemRoom) || !exits.get(i).isOperating())
                 {
                     exits.remove(i);
                 }
