@@ -139,8 +139,15 @@ public class txtWriter {
      
   }
      
-   public static void writeHighScore(HashMap<String, Integer> highScore) {
+   public static void writeHighScore(HashMap<String, Integer> highScore, String highscoreName) throws FileNotFoundException {
        // hashmappet må kun være en vis størrelse
+     File newSave = new File(highscoreName);
+     PrintWriter txtWriter = new PrintWriter(highscoreName);
+     for (String key : highScore.keySet()){
+         txtWriter.println(key + highScore.get(key + " "));
+         
+     }
+       
    }
     
     
