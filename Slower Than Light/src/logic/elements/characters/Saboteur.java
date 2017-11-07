@@ -70,7 +70,7 @@ public class Saboteur extends RoomHopper
                 if(!getCurrentRoom().isOperating())
                 {
                     int sabotageExit = (int) Math.floor(Math.random() * getCurrentRoom().getCollectionOfExits().size());
-                    getCurrentRoom().getCollectionOfExits().get(sabotageExit).setOpreating(false);
+                    getCurrentRoom().getCollectionOfExits().get(sabotageExit).setOperating(false);
                     Game.getInstance().getGameInfo().setHackedExit(getCurrentRoom().getCollectionOfExits().get(sabotageExit));
                 }
                 else if(!Game.getInstance().getGameInfo().getHackedExit().equals(null))
@@ -80,7 +80,7 @@ public class Saboteur extends RoomHopper
                 else if(Math.random() < CHANCE_OF_DOOR_SABOTAGE)
                 {
                     int sabotageExit = (int) Math.floor(Math.random() * getCurrentRoom().getCollectionOfExits().size());
-                    getCurrentRoom().getCollectionOfExits().get(sabotageExit).setOpreating(false);
+                    getCurrentRoom().getCollectionOfExits().get(sabotageExit).setOperating(false);
                     Game.getInstance().getGameInfo().setHackedExit(getCurrentRoom().getCollectionOfExits().get(sabotageExit));
                 }
                 else
