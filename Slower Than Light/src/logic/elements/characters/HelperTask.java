@@ -11,9 +11,17 @@ package logic.elements.characters;
  */
 public enum HelperTask
 {
-    SEARCH, BODYGUARD, RETURN_TO_DEFAULT;
+    SEARCH("search"), BODYGUARD("bodyuard"), RETURN_TO_DEFAULT("return");
     
-    String commandName;
+    private final String COMMAND_STRING;
     
-    HelperTask() {}
+    HelperTask(String commandString)
+    {
+        this.COMMAND_STRING = commandString;
+    }
+    
+    public String toString()
+    {
+        return(COMMAND_STRING);
+    }
 }
