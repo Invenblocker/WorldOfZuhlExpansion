@@ -74,6 +74,9 @@ public class txtLoader
             else if(words[0].equals("Player:")){
                 initializePlayer(words);
             }
+            else if(words[0].equals("SpecialItem:")){
+                specialItemToHashMap(words);
+            }
             else{
                 addRoomExits(words);
             }
@@ -170,7 +173,18 @@ public class txtLoader
             j += 3;
         }
     }
+    private void specialItemToHashMap(String[] words)   //Adds specialItem to HashMap specialItems
+    {
+    int i = 1;      //index for specialItems in txtfile
     
+    while (i < words.length)        //As long as i is less then the length of do ->  speicialItems.put
+        
+        specialItems.put(words[i],new Item(words[i]));
+    
+   i++;
+    }
+      
+      
     private void initializePlayer(String[] words)
     {
         Room room = rooms.get(words[1]);
