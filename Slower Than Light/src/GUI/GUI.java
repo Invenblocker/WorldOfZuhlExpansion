@@ -17,10 +17,12 @@ import logic.elements.rooms.Room;
 public class GUI
 {
     private MiniMap minimap;
+    private Log log;
     
     public GUI()
     {
         this.minimap = new MiniMap();       //Creates new minimap object
+        this.log = new Log(5);
     }
   
     public void updateMinimap(Room saboteurRoom, Room[] destroyedRooms) { //updates saboteur position, calls update in MiniMap class.
@@ -63,7 +65,12 @@ public class GUI
     
     public void showHighScore(HashMap <String, Integer> highScore) {
         
-    } 
+    }
+    
+    public void writeToLog (String text)
+    {
+        log.write(text);
+    }
     
 }
 
