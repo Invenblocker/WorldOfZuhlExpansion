@@ -60,9 +60,9 @@ public class TimeHolder extends TimerTask{
                 else {
                     saboteurCountdown--;
                 }
-                if (helperCountdown == 0 && (game.getHelper().getHelperTask() == HelperTask.SEARCH || game.getHelper().getHelperTask() == HelperTask.RETURN_TO_DEFAULT))
+                if (helperCountdown == 0 && (gameInfo.getHelper().getHelperTask() == HelperTask.SEARCH || gameInfo.getHelper().getHelperTask() == HelperTask.RETURN_TO_DEFAULT))
                 {
-                    int newCountdown = game.getHelper().performAction();
+                    int newCountdown = gameInfo.getHelper().performAction();
                         helperCountdown = newCountdown;
                 }
                 

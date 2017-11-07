@@ -2,6 +2,8 @@ package logic.processors;
 
 import java.util.ArrayList;
 import logic.Game;
+import logic.GameInfo;
+import logic.elements.characters.HelperTask;
 import logic.elements.characters.Item;
 import logic.elements.characters.Tool;
 import logic.elements.rooms.ItemRoom;
@@ -92,9 +94,18 @@ public class GameCommand {
             
             if (game.getSaboteur().getCurrentRoom() == exitRoom)
             {
-                game.getGameInfo().setGameFinished(true);
-                System.out.println("You went into the same room as the saboteur. ");
-                System.out.println("Game over !! ");
+                if(game.getGameInfo().getHelper().getHelperTask() == HelperTask.BODYGUARD)
+                {
+                   game.getGameInfo().killHepler();
+                   game.getSaboteur().setStunCountdown(15);
+                }
+                else
+                {
+                    game.getGameInfo().setGameFinished(true);
+                    System.out.println("You went into the same room as the saboteur. ");
+                    System.out.println("Game over !! ");
+                    return;
+                }
             }
             
             int saboteurCountdown = game.getSaboteur().chasePlayer(pastRoom);
