@@ -48,6 +48,15 @@ public class Saboteur extends RoomHopper
      */
     public int performAction()
     {
+        if(stunCountdown > 0) 
+        {
+            System.out.println("You are not supposed to call performAction while stunned");
+            System.out.println("Remaining time stunned: " + stunCountdown);
+            
+            chasingPlayer = false;
+            return stunCountdown;
+        }
+        
         if(chasingPlayer)
         {
             setRoom(Game.getInstance().getPlayer().getCurrentRoom());
@@ -57,7 +66,14 @@ public class Saboteur extends RoomHopper
             if(getCurrentRoom().isOperating() && Math.random() < chanceOfSabotage)
             {
                 System.out.println("Sabotaging");
-                getCurrentRoom().setOperating(false);
+                if(Math.random() < CHANCE_OF_DOOR_SABOTAGE)
+                {
+                    //When the Exit class is added sabotage an exit.
+                }
+                else
+                {
+                    getCurrentRoom().setOperating(false);
+                }
                 chanceOfSabotage = DEFAULT_CHANCE_OF_SABOTAGE;
             }
             else
@@ -100,6 +116,8 @@ public class Saboteur extends RoomHopper
      */
     public int chasePlayer(Room room)
     {
+        if(stunCountdown > 0) 
+            return stunCountdown;
         if(getCurrentRoom().equals(Game.getInstance().getPlayer().getCurrentRoom()))
         {
             return(5 + (int) Math.floor(Math.random() * 6));
@@ -136,6 +154,11 @@ public class Saboteur extends RoomHopper
     
     private int checkChasingPlayer()
     {
+        if(stunCountdown > 0)
+        {
+            chasingPlayer = false;
+            return stunCountdown;
+        }
         if(Game.getInstance().getPlayer().getCurrentRoom().isControlRoom())
         {
             chasingPlayer = false;
