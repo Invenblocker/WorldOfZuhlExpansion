@@ -13,6 +13,7 @@ import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
+import logic.elements.characters.Helper;
 import logic.elements.rooms.Exit;
 import logic.elements.rooms.Room;
 import sun.security.krb5.internal.KDCOptions;
@@ -27,10 +28,10 @@ public class GameInfo {
     private double destroyedRoomsPercentage;
     private ArrayList<Room> destroyedRooms;
     private Exit hackedExit;
+    private Helper helper;
     private int roomsRepaired;
     private int highScore;
     private boolean gameFinished;
-    
     public GameInfo()
     {
         destroyedRoomsPercentage = 0;
@@ -98,6 +99,13 @@ public class GameInfo {
     public void repairHackedExit() 
     {
         hackedExit = null;
+    }
+    
+    public Helper getHelper() {return helper;}
+    
+    public void killHepler()
+    {
+        helper = null;
     }
     
     public boolean isGameFinished () {return gameFinished;}

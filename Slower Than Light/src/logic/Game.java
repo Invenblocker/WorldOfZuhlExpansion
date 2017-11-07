@@ -48,7 +48,6 @@ public class Game
     private Parser parser;
     private Player player;
     private Saboteur saboteur;
-    private Helper helper;
     private TimeHolder timeholder;
     private GUI gui;
     
@@ -143,8 +142,6 @@ public class Game
     public Player getPlayer() {return player;}
     
     public Saboteur getSaboteur() {return saboteur;}
-    
-    public Helper getHelper() {return helper;}
     
     public TimeHolder getTimeHolder() {return timeholder;}
     
