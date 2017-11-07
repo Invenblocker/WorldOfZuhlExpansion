@@ -13,34 +13,46 @@ import java.util.ArrayList;
  */
 public class SystemLog
 {
-    private static ArrayList<String> globalLog = new ArrayList();
-    private ArrayList<String> log;
-    private String name;
+    private final static ArrayList<String> GLOBAL_LOG = new ArrayList();
+    private final static SystemLog ERROR_LOG = new SystemLog("Error Log");
+    private final static SystemLog ACTION_LOG = new SystemLog("Action Log");
     
-    private static SystemLog errorLog = new SystemLog("Error Log");
-    private static SystemLog actionLog = new SystemLog("Action Log");
-
+    private final ArrayList<String> LOG;
+    private final String NAME;
+    private final SystemLog PARENT_LOG;
+    
     public SystemLog(String name)
     {
-        this.name = name;
-        log = new ArrayList();
+        this.NAME = name;
+        this.LOG = new ArrayList();
+        this.PARENT_LOG = null;
+    }
+    
+    public SystemLog(String name, SystemLog parentLog)
+    {
+        this.NAME = name;
+        this.LOG = new ArrayList();
+        this.PARENT_LOG = parentLog;
     }
     
     public void writeToLog(String... message)
     {
         for(int i = 0; i < message.length; i++)
         {
-            log.add(message[i]);
+            LOG.add(message[i]);
+            writeToParentLog(message[i]);
         }
-        
-        writeToGlobalLog(message);
     }
     
-    private void writeToGlobalLog(String... message)
+    private void writeToParentLog(String message)
     {
-        for(int i = 0; i < message.length; i++)
+        if(PARENT_LOG != null)
         {
-            globalLog.add(getName() + ": " + message[i]);
+            PARENT_LOG.writeToLog(getName() + ": " + message);
+        }
+        else
+        {
+            writeToGlobalLog(this.getName(), message);
         }
     }
     
@@ -49,11 +61,11 @@ public class SystemLog
         switch(logName)
         {
             case "Error Log":
-                return(errorLog);
+                return(ERROR_LOG);
             case "Action Log":
-                return(actionLog);
+                return(ACTION_LOG);
             default:
-                errorLog.writeToLog("The log \"" + logName + "\" is not a static log in the SystemLog class.");
+                ERROR_LOG.writeToLog("The log \"" + logName + "\" is not a static log in the SystemLog class.");
                 return(null);
         }
     }
@@ -62,68 +74,68 @@ public class SystemLog
     {
         for(int i = 0; i < message.length; i++)
         {
-            globalLog.add(caller + ": " + message[i]);
+            GLOBAL_LOG.add(caller + ": " + message[i]);
         }
     }
     
     public String getName()
     {
-        return(name);
+        return(NAME);
     }
     
     public String[] getLog()
     {
-        String[] copy = new String[log.size()];
+        String[] copy = new String[LOG.size()];
         for(int i = 0; i < copy.length; i++)
         {
-            copy[i] = log.get(i);
+            copy[i] = LOG.get(i);
         }
         return(copy);
     }
     
     public String getLogEntry(int index)
     {
-        if(index >= 0 && index < log.size())
+        if(index >= 0 && index < LOG.size())
         {
-            return(log.get(index));
+            return(LOG.get(index));
         }
         else
         {
-            errorLog.writeToLog("The index " + index + " is out of bounds in the log " + getName() + '.');
+            ERROR_LOG.writeToLog("The index " + index + " is out of bounds in the log " + getName() + '.');
             return("");
         }
     }
     
     public static String[] getGlobalLog()
     {
-        String[] log = new String[globalLog.size()];
-        for(int i = 0; i < globalLog.size(); i++)
+        String[] log = new String[GLOBAL_LOG.size()];
+        for(int i = 0; i < GLOBAL_LOG.size(); i++)
         {
-            log[i] = globalLog.get(i);
+            log[i] = GLOBAL_LOG.get(i);
         }
         return(log);
     }
     
     public static String getGlobalLogEntry(int index)
     {
-        if(index >= 0 && index < globalLog.size())
+        if(index >= 0 && index < GLOBAL_LOG.size())
         {
-            return(globalLog.get(index));
+            return(GLOBAL_LOG.get(index));
         }
         else
         {
-            errorLog.writeToLog("The index " + index + " is out of bounds in the global log.");
+            ERROR_LOG.writeToLog("The index " + index + " is out of bounds in the global log.");
             return("");
         }
     }
     
     public static SystemLog getErrorLog()
     {
-        return(errorLog);
+        return(ERROR_LOG);
     }
     
     public static SystemLog getActionLog()
     {
-        return(actionLog);
+        return(ACTION_LOG);
     }
 }
