@@ -11,6 +11,7 @@ import java.io.FileNotFoundException;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashMap;
+import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Scanner;
 import logic.elements.characters.Item;
@@ -29,6 +30,7 @@ public class txtLoader
     private HashMap<String, Room> rooms;
     private HashMap<String, Item> items;
     private HashMap<String, Item> specialItems;
+    private LinkedHashMap<String, Integer> highScore;
     private Player player;
     private String gameName;
     
@@ -104,11 +106,10 @@ public class txtLoader
         return player;
     }
     
-    public HashMap<String, Integer> getHighscore() throws FileNotFoundException { 
-        HashMap<String, Integer> highScore = new HashMap<String, Integer> ();
+    public LinkedHashMap<String, Integer> getHighscore() throws FileNotFoundException { 
+        this.highScore = new LinkedHashMap<String, Integer> ();
         String name;
         int score;
-        
         Scanner sc = new Scanner (new File("highScore"));
         while (sc.hasNext()) {
             String line = sc.nextLine();
@@ -122,7 +123,7 @@ public class txtLoader
             
         }
         
-        return highScore;
+        return  highScore;
         
         
     }
@@ -161,7 +162,7 @@ public class txtLoader
             for (String key : rooms.keySet())
                 if (key.equals(words[j]))
                     if(words[x].equals("Tool"))
-                        items.put(words[i], new Tool(words[i],rooms.get(key)));
+                        items.put(words[i], new Tool(words[i], (ItemRoom) rooms.get(key)));
             
             x += 3;    
             i += 3;
@@ -214,7 +215,7 @@ public class txtLoader
                 if (key.equals(words[k])){          // finder det andet rum som skal sættes som exit til room.
                  room2 = rooms.get(key);           // sætter rummet til room2.
                  exit = new Exit(room, room2);
-                 exit.setOpreating(Boolean.parseBoolean(words[j]));
+                 exit.setOperating(Boolean.parseBoolean(words[j]));
                  room.setExit(words[i], exit);  // sætter exit med plads i (en direction) og et room.
                 }
             }
