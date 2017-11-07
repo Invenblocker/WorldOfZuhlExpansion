@@ -20,8 +20,7 @@ public class Helper extends RoomHopper
     private HelperTask task;
     private String name;
     private double chanceOfDiscovery;
-    private Room foundItemRoom;
-    private Item foundSpecialItem;
+    private String foundItemString;
     private ArrayList<Room> returnRoute;
     
     
@@ -33,8 +32,7 @@ public class Helper extends RoomHopper
         CHANCE_OF_DISCOVERY_GROWTH = chanceOfDiscoveryGrowth;
         task = HelperTask.RETURN_TO_DEFAULT;
         returnRoute = new ArrayList();
-        foundItemRoom = null;
-        foundSpecialItem = null;
+        foundItemString = "";
     }
     
     
@@ -65,10 +63,8 @@ public class Helper extends RoomHopper
     {
         ArrayList<String> exits = getCurrentRoom().getCollectionOfExits();
         
-        if((getCurrentRoom() instanceof ItemRoom) && Math.random() < chanceOfDiscovery - CHANCE_OF_DISCOVERY_GROWTH)
+        if((getCurrentRoom() instanceof ItemRoom) && Math.random() < chanceOfDiscovery - CHANCE_OF_DISCOVERY_GROWTH && ((ItemRoom) getCurrentRoom()).getSpecialItem().equals(null))
         {
-            foundItemRoom = getCurrentRoom();
-            
             ArrayList<Item> specialItems = new ArrayList();
             
             for(Item specialItem : Game.getInstance().getSpecialItems().values())
@@ -76,7 +72,11 @@ public class Helper extends RoomHopper
                 specialItems.add(specialItem);
             }
             
-            foundSpecialItem = specialItems.get((int) Math.floor(Math.random() * specialItems.size()));
+            Item specialItem = specialItems.get((int) Math.floor(Math.random() * specialItems.size()));
+            
+            ((ItemRoom) getCurrentRoom()).setSpecialItem(specialItem);
+            
+            foundItemString = "I found " + specialItem.getName() + " in the " + getCurrentRoom().getName();
             
             chanceOfDiscovery = DEFAULT_CHANCE_OF_DISCOVERY;
             
@@ -196,6 +196,25 @@ public class Helper extends RoomHopper
     public HelperTask getHelperTask()
     {
         return(task);
+    }
+    
+    public String getFoundItemString(boolean remove)
+    {
+        if(remove)
+        {
+            String output = foundItemString;
+            foundItemString = "";
+            return(output);
+        }
+        else
+        {
+            return(foundItemString);
+        }
+    }
+    
+    public String getFoundItemString()
+    {
+        return(getFoundItemString(true));
     }
     
     public void setTask(HelperTask task)
