@@ -138,6 +138,18 @@ public class Room
         }
     }
     
+    public Exit getExit(Room room)
+    {
+        for(Exit exit : exits.values())
+        {
+            if(getExit(exit).equals(room))
+            {
+                return(exit);
+            }
+        }
+        return(null);
+    }
+    
    /**
      * Adds an exit to the room defining where the player can go from said room.
      * @param name The second word of the go command required to use this exit.
