@@ -26,7 +26,7 @@ import logic.elements.rooms.WorkshopRoom;
  */
 public class txtWriter {
     
-  public void saveGame (HashMap<String, Room> rooms, HashMap<String, Item> items, Player player, Saboteur saboteur, 
+  public static void saveGame (HashMap<String, Room> rooms, HashMap<String, Item> items, Player player, Saboteur saboteur, 
             Helper helper, int roomsRepaired, String saveName) throws FileNotFoundException
   {
      Exit exit = null;
@@ -84,7 +84,7 @@ public class txtWriter {
         
   }
      
-   public void writeHighScore(HashMap<String, Integer> highScore) {
+   public static void writeHighScore(HashMap<String, Integer> highScore) {
        // hashmappet må kun være en vis størrelse
    }
     
