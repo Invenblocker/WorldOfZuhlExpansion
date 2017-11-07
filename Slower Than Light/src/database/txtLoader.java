@@ -158,11 +158,6 @@ public class txtLoader
         
         while (j < words.length)
         {
-            if(words[i].equals("ducttape") && words[j].equals("null"))
-            {
-                items.put(words[i], new Tool(words[i], null));
-            }
-
             for (String key : rooms.keySet())
                 if (key.equals(words[j]))
                     if(words[x].equals("Tool"))
@@ -173,13 +168,19 @@ public class txtLoader
             j += 3;
         }
     }
+      
+      
     private void specialItemToHashMap(String[] words)   //Adds specialItem to HashMap specialItems
     {
     int i = 1;      //index for specialItems in txtfile
+    int j = 2;
     
-    while (i < words.length)        //As long as i is less then the length of do ->  speicialItems.put
-        
-        specialItems.put(words[i],new Item(words[i]));
+    while (j < words.length)        //As long as i is less then the length of do ->  speicialItems.put
+        if (words[i].equals("Tool"))
+        specialItems.put(words[j],new Tool(words[j]));
+        else if (words[i].equals("Item")){
+        specialItems.put(words[j],new Item(words[j])); 
+        }
     
    i++;
     }
