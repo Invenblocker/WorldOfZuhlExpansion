@@ -52,6 +52,7 @@ public class Saboteur extends RoomHopper
         {
             System.out.println("You are not supposed to call performAction while stunned");
             System.out.println("Remaining time stunned: " + stunCountdown);
+            
             chasingPlayer = false;
             return stunCountdown;
         }
