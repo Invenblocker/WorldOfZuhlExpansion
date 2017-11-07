@@ -9,6 +9,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Random;
 import java.util.Timer;
+import logic.elements.characters.Helper;
 import logic.elements.characters.Player;
 import logic.elements.characters.Saboteur;
 import logic.elements.characters.Item;
