@@ -67,23 +67,25 @@ public class TimeHolder extends TimerTask{
                 }
                 
             timeLeft -= (1 - gameInfo.getDestroyedRoomsPercentage()); 
+            oxygenLeft -= 1;
         }
          
     }
 
-    public void setSaboteurCountdown(int value) {
+    public void setSaboteurCountdown(int value) 
+    {
         this.saboteurCountdown = value;    
     }
 
-    public void setHelperCountdown(int value) {
+    public void setHelperCountdown(int value) 
+    {
         this.helperCountdown = value;
     }
 
-    public double getOxygenLeft() {
+    public double getOxygenLeft() 
+    {
         return oxygenLeft;
     }
-
-    
 
 }
 

@@ -6,6 +6,7 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.HashMap;
+import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Random;
 import java.util.Timer;
@@ -41,6 +42,7 @@ public class Game
     private HashMap<String, Room>rooms;
     private HashMap<String, Item>items;
     private HashMap<String, Item>specialItems;
+    private LinkedHashMap<String, Integer>highScore;
     
     private GameInfo gameInfo;
     private Parser parser;
@@ -97,14 +99,16 @@ public class Game
         
         // Setup GUI
         Room randomRoom = gameSetup.getRandomSaboteurStartRoom(rooms);
-        saboteur = new Saboteur(randomRoom, 0.5, 0.1);
+        saboteur = new Saboteur(randomRoom, 0.5, 0.1, 0.15);
         gui = new GUI();
         
+        
         // Print welcome message
-        printWelcome();
+        gui.printWelcome();
+        
         
         // Setup Timer
-        timeholder = new TimeHolder(300);
+        timeholder = new TimeHolder(300, 350);
         Timer timer = new Timer();
         timer.schedule(timeholder, 0, 1000);
         
@@ -129,6 +133,8 @@ public class Game
     public HashMap<String, Item> getItems() {return items;}
 
     public HashMap<String, Item> getSpecialItems() {return specialItems;}
+
+    public LinkedHashMap<String, Integer> getHighScore() {return highScore;}
     
     public GameInfo getGameInfo() {return gameInfo;}
     
