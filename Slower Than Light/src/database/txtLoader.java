@@ -46,8 +46,9 @@ public class txtLoader
      * @throws FileNotFoundException 
      */
     
-    public void newGame() 
+    public void newGame() throws FileNotFoundException 
     {
+        initializeGame(gameName);
         
     }
     
@@ -57,7 +58,7 @@ public class txtLoader
     }
     
     
-    public void loadGame (String gameName) throws FileNotFoundException
+    public void initializeGame (String gameName) throws FileNotFoundException
     {
         Scanner sc = new Scanner(new File(gameName));
         while(sc.hasNext())
@@ -71,7 +72,7 @@ public class txtLoader
                 itemToHashMap(words);
             }
             else if(words[0].equals("Player:")){
-                loadPlayer(words);
+                initializePlayer(words);
             }
             else{
                 addRoomExits(words);
@@ -170,7 +171,7 @@ public class txtLoader
         }
     }
     
-    private void loadPlayer(String[] words)
+    private void initializePlayer(String[] words)
     {
         Room room = rooms.get(words[1]);
 
