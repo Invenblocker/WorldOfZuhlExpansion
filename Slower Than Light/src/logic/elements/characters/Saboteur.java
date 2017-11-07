@@ -9,6 +9,7 @@ import logic.*;
 import logic.elements.*;
 import logic.elements.rooms.*;
 import java.util.*;
+import database.SystemLog;
 /**
  *
  * @author Invenblocker & JN97
@@ -50,8 +51,7 @@ public class Saboteur extends RoomHopper
     {
         if(stunCountdown > 0) 
         {
-            System.out.println("You are not supposed to call performAction while stunned");
-            System.out.println("Remaining time stunned: " + stunCountdown);
+            SystemLog.getLog("Error Log").writeToLog("The saboteur is not supposed to call performAction() while stuunned. Remaining time stunned: " + stunCountdown + '.');
             
             chasingPlayer = false;
             return stunCountdown;
@@ -65,27 +65,29 @@ public class Saboteur extends RoomHopper
         {
             if((getCurrentRoom().isOperating() || Game.getInstance().getGameInfo().getHackedExit().equals(null)) && Math.random() < chanceOfSabotage)
             {
-                System.out.println("Sabotaging");
-                
                 if(!getCurrentRoom().isOperating())
                 {
                     int sabotageExit = (int) Math.floor(Math.random() * getCurrentRoom().getCollectionOfExits().size());
                     getCurrentRoom().getCollectionOfExits().get(sabotageExit).setOperating(false);
                     Game.getInstance().getGameInfo().setHackedExit(getCurrentRoom().getCollectionOfExits().get(sabotageExit));
+                    SystemLog.getLog("Action Log").writeToLog("Saboteur: Sabotaged the exit between \"the " + getCurrentRoom().getName() + "\" and \"the " + getCurrentRoom().getExit(getCurrentRoom().getCollectionOfExits().get(sabotageExit)).getName() + "\".");
                 }
                 else if(!Game.getInstance().getGameInfo().getHackedExit().equals(null))
                 {
                     getCurrentRoom().setOperating(false);
+                    SystemLog.getLog("Action Log").writeToLog("Saboteur: Sabotaged the room: \"" + getCurrentRoom().getName() + "\".");
                 }
                 else if(Math.random() < CHANCE_OF_DOOR_SABOTAGE)
                 {
                     int sabotageExit = (int) Math.floor(Math.random() * getCurrentRoom().getCollectionOfExits().size());
                     getCurrentRoom().getCollectionOfExits().get(sabotageExit).setOperating(false);
                     Game.getInstance().getGameInfo().setHackedExit(getCurrentRoom().getCollectionOfExits().get(sabotageExit));
+                    SystemLog.getLog("Action Log").writeToLog("Saboteur: Sabotaged the exit between \"the " + getCurrentRoom().getName() + "\" and \"the " + getCurrentRoom().getExit(getCurrentRoom().getCollectionOfExits().get(sabotageExit)).getName() + "\".");
                 }
                 else
                 {
                     getCurrentRoom().setOperating(false);
+                    SystemLog.getLog("Action Log").writeToLog("Saboteur: Sabotaged the room: \"" + getCurrentRoom().getName() + "\".");
                 }
                 
                 chanceOfSabotage = DEFAULT_CHANCE_OF_SABOTAGE;
@@ -107,7 +109,7 @@ public class Saboteur extends RoomHopper
                 
                 chanceOfSabotage += CHANCE_OF_SABOTAGE_GROWTH;
                 
-                System.out.println("Saboteur moved to " + getCurrentRoom().getName());
+                SystemLog.getLog("Action Log").writeToLog("Saboteur: moved to \"the " + getCurrentRoom().getName() + "\".");
                 
                 checkChasingPlayer();
             }
