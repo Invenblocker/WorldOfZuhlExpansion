@@ -5,11 +5,12 @@ import java.util.Map;
 import java.util.TimerTask;
 import logic.Game;
 import logic.GameInfo;
+import logic.elements.characters.HelperTask;
 import logic.elements.rooms.Room;
 
 public class TimeHolder extends TimerTask{
     
-    private int DEFAULT_HELPER_COUNTDOWN;
+    private final int DEFAULT_HELPER_COUNTDOWN = 5;
     private int saboteurCountdown;
     private int helperCountdown;
     private double timeLeft;
@@ -24,6 +25,7 @@ public class TimeHolder extends TimerTask{
     {
         saboteurCountdown = 5;
         timeLeft = gameTime;
+        oxygenLeft = oxygenTime;
         game = Game.getInstance();
         gameInfo = game.getGameInfo();
     }
@@ -31,7 +33,7 @@ public class TimeHolder extends TimerTask{
     @Override
     public void run() {
         if (!gameInfo.isGameFinished()) {    
-            if (gameInfo.getDestroyedRoomsPercentage() > gameInfo.getALLOWED_ROOMS_DESTROYED_PERCENTAGE() || timeLeft <= 0) {
+            if (gameInfo.getDestroyedRoomsPercentage() > gameInfo.getALLOWED_ROOMS_DESTROYED_PERCENTAGE() || timeLeft <= 0 || oxygenLeft <= 0) {
                 gameInfo.setGameFinished(true);
                 return;
             }
@@ -58,24 +60,32 @@ public class TimeHolder extends TimerTask{
                 else {
                     saboteurCountdown--;
                 }
-        timeLeft -= (1 - gameInfo.getDestroyedRoomsPercentage()); 
+                if (helperCountdown == 0 && (game.getHelper().getHelperTask() == HelperTask.SEARCH || game.getHelper().getHelperTask() == HelperTask.RETURN_TO_DEFAULT))
+                {
+                    int newCountdown = game.getHelper().performAction();
+                        helperCountdown = newCountdown;
+                }
+                
+            timeLeft -= (1 - gameInfo.getDestroyedRoomsPercentage()); 
+            oxygenLeft -= 1;
         }
          
     }
 
-    public void setSaboteurCountdown(int value) {
+    public void setSaboteurCountdown(int value) 
+    {
         this.saboteurCountdown = value;    
     }
 
-    public void setHelperCountdown(int value) {
-        this.helperCountdown = helperCountdown;
+    public void setHelperCountdown(int value) 
+    {
+        this.helperCountdown = value;
     }
 
-    public double getOxygenLeft() {
+    public double getOxygenLeft() 
+    {
         return oxygenLeft;
     }
-
-    
 
 }
 
