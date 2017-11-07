@@ -24,6 +24,7 @@ public class Helper extends RoomHopper
     private double chanceOfDiscovery;
     private String foundItemString;
     private ArrayList<Room> returnRoute;
+    private SystemLog ACTION_LOG, ERROR_LOG;
     
     
     public Helper(Room room, String name, double chanceOfDiscovery, double chanceOfDiscoveryGrowth)
@@ -35,6 +36,8 @@ public class Helper extends RoomHopper
         task = HelperTask.RETURN_TO_DEFAULT;
         returnRoute = new ArrayList();
         foundItemString = "";
+        ACTION_LOG = new SystemLog("Helper (" + this.name + ')', SystemLog.getActionLog());
+        ERROR_LOG = new SystemLog("Helper (" + this.name + ')', SystemLog.getErrorLog());
     }
     
     
@@ -47,18 +50,18 @@ public class Helper extends RoomHopper
             case RETURN_TO_DEFAULT:
                 return(returnToDefault());
             case BODYGUARD:
-                SystemLog.getErrorLog().writeToLog("Helper.performAction() was called while the Helper \"" + name + "\" is set to bodyguard.");
+                ERROR_LOG.writeToLog("Helper.performAction() was called while the Helper \"" + name + "\" is set to bodyguard.");
                 return(-1);
             default:
                 setTask(HelperTask.RETURN_TO_DEFAULT);
-                SystemLog.getErrorLog().writeToLog("Helper.performAction() was called while the Helper \"" + name + "\" had a task that was not recognized by the method.",
+                ERROR_LOG.writeToLog("Helper.performAction() was called while the Helper \"" + name + "\" had a task that was not recognized by the method.",
                         "As a failsafe, The Helper \"" + name + "\" had its task set to RETURN_TO_DEFAULT.");
                 return((int) Math.floor(Math.random() * 6) + 5);
         }
         else
         {
             setTask(HelperTask.RETURN_TO_DEFAULT);
-            SystemLog.getErrorLog().writeToLog("Helper.performAction() was called while the Helper \"" + name + "\" did not have a defined task.",
+            ERROR_LOG.writeToLog("Helper.performAction() was called while the Helper \"" + name + "\" did not have a defined task.",
                         "As a failsafe, The Helper \"" + name + "\" had its task set to RETURN_TO_DEFAULT.");
             return((int) Math.floor(Math.random() * 6) + 5);
         }
@@ -69,7 +72,7 @@ public class Helper extends RoomHopper
     {
         ArrayList<Exit> exits = getCurrentRoom().getCollectionOfExits();
         
-        if((getCurrentRoom() instanceof ItemRoom) && Math.random() < chanceOfDiscovery - CHANCE_OF_DISCOVERY_GROWTH && ((ItemRoom) getCurrentRoom()).getSpecialItem().equals(null))
+        if((getCurrentRoom() instanceof ItemRoom) && Math.random() < chanceOfDiscovery - CHANCE_OF_DISCOVERY_GROWTH && ((ItemRoom) getCurrentRoom()).getSpecialItem() == null)
         {
             ArrayList<Item> specialItems = new ArrayList();
             
@@ -84,7 +87,7 @@ public class Helper extends RoomHopper
             
             foundItemString = "I found " + specialItem.getName() + " in the " + getCurrentRoom().getName();
             
-            SystemLog.getActionLog().writeToLog("The Helper \"" + name + "\" found a \"" + specialItem.getName() + "\" in \"the " + getCurrentRoom().getName() + "\".");
+            ACTION_LOG.writeToLog("The Helper \"" + name + "\" found a \"" + specialItem.getName() + "\" in \"the " + getCurrentRoom().getName() + "\".");
             
             chanceOfDiscovery = DEFAULT_CHANCE_OF_DISCOVERY;
             
@@ -119,7 +122,7 @@ public class Helper extends RoomHopper
                 }
                 else
                 {
-                    SystemLog.getErrorLog().writeToLog("The Helper \"" + name + "\" could not find a valid exit from its current room which is \"the " + getCurrentRoom().getName() + "\".");
+                    ERROR_LOG.writeToLog("The Helper \"" + name + "\" could not find a valid exit from its current room which is \"the " + getCurrentRoom().getName() + "\".");
                 }
             }
         }
@@ -231,7 +234,7 @@ public class Helper extends RoomHopper
             }
         }
         
-        SystemLog.getActionLog().writeToLog("The Helper \"" + name + "\" plotted the following route to the controlRoom: First " + returnRoute + '.');
+        ACTION_LOG.writeToLog("The Helper \"" + name + "\" plotted the following route to the controlRoom: First " + returnRoute + '.');
         
         return(route);
     }
@@ -263,13 +266,23 @@ public class Helper extends RoomHopper
     public void setTask(HelperTask task)
     {
         this.task = task;
-        SystemLog.getActionLog().writeToLog("The helper \"" + name + "\" had its task set to \"" + task.toString() + "\".");
+        ACTION_LOG.writeToLog("The helper \"" + name + "\" had its task set to \"" + task.toString() + "\".");
     }
     
     public Room SetRoom(Room newRoom)
     {
         Room oldRoom = super.setRoom(newRoom);
-        SystemLog.getActionLog().writeToLog("The helper \"" + name + "\" moved from \"the " + oldRoom.getName() + "\" to \"the " + newRoom.getName() + "\".");
+        ACTION_LOG.writeToLog("The helper \"" + name + "\" moved from \"the " + oldRoom.getName() + "\" to \"the " + newRoom.getName() + "\".");
         return(oldRoom);
+    }
+    
+    public String[] getActionLog()
+    {
+        return(ACTION_LOG.getLog());
+    }
+    
+    public String[] getErrorLog()
+    {
+        return(ERROR_LOG.getLog());
     }
 }
