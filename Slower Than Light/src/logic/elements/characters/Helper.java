@@ -114,7 +114,7 @@ public class Helper extends RoomHopper
         }
         else
         {
-            if(returnRoute.size() == 0)
+            if(returnRoute.size() == 0 || getCurrentRoom().getExit(returnRoute.get(0)).isOperating())
             {
                 returnRoute = findReturnRoute();
             }
@@ -140,8 +140,13 @@ public class Helper extends RoomHopper
             {
                 ArrayList<Room> exits = new ArrayList();
                 Room checkRoom = routes.get(a).get(routeLength);
-                for(String exit : checkRoom.getCollectionOfExits())
+                for(Exit exit : checkRoom.getCollectionOfExits())
                 {
+                    if(!exit.isOperating())
+                    {
+                        break;
+                    }
+                    
                     if(checkRoom.getExit(exit).isControlRoom())
                     {
                         foundControlRoom = true;
