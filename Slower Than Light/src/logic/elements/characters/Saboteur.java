@@ -48,25 +48,55 @@ public class Saboteur extends RoomHopper
      */
     public int performAction()
     {
+        if(stunCountdown > 0) 
+        {
+            System.out.println("You are not supposed to call performAction while stunned");
+            System.out.println("Remaining time stunned: " + stunCountdown);
+            
+            chasingPlayer = false;
+            return stunCountdown;
+        }
+        
         if(chasingPlayer)
         {
             setRoom(Game.getInstance().getPlayer().getCurrentRoom());
         }
         else
         {
-            if(getCurrentRoom().isOperating() && Math.random() < chanceOfSabotage)
+            if((getCurrentRoom().isOperating() || Game.getInstance().getGameInfo().getHackedExit().equals(null)) && Math.random() < chanceOfSabotage)
             {
                 System.out.println("Sabotaging");
-                getCurrentRoom().setOperating(false);
+                
+                if(!getCurrentRoom().isOperating())
+                {
+                    int sabotageExit = (int) Math.floor(Math.random() * getCurrentRoom().getCollectionOfExits().size());
+                    getCurrentRoom().getCollectionOfExits().get(sabotageExit).setOperating(false);
+                    Game.getInstance().getGameInfo().setHackedExit(getCurrentRoom().getCollectionOfExits().get(sabotageExit));
+                }
+                else if(!Game.getInstance().getGameInfo().getHackedExit().equals(null))
+                {
+                    getCurrentRoom().setOperating(false);
+                }
+                else if(Math.random() < CHANCE_OF_DOOR_SABOTAGE)
+                {
+                    int sabotageExit = (int) Math.floor(Math.random() * getCurrentRoom().getCollectionOfExits().size());
+                    getCurrentRoom().getCollectionOfExits().get(sabotageExit).setOperating(false);
+                    Game.getInstance().getGameInfo().setHackedExit(getCurrentRoom().getCollectionOfExits().get(sabotageExit));
+                }
+                else
+                {
+                    getCurrentRoom().setOperating(false);
+                }
+                
                 chanceOfSabotage = DEFAULT_CHANCE_OF_SABOTAGE;
             }
             else
             {
-                ArrayList<String> neighbors = getCurrentRoom().getCollectionOfExits();
+                ArrayList<Exit> neighbors = getCurrentRoom().getCollectionOfExits();
                 
                 for(int i = neighbors.size() - 1; i >= 0; i--)
                 {
-                    if(getCurrentRoom().getExit(neighbors.get(i)).isControlRoom())
+                    if(getCurrentRoom().getExit(neighbors.get(i)).isControlRoom() || neighbors.get(i).isOperating())
                     {
                         neighbors.remove(i);
                     }
@@ -100,6 +130,8 @@ public class Saboteur extends RoomHopper
      */
     public int chasePlayer(Room room)
     {
+        if(stunCountdown > 0) 
+            return stunCountdown;
         if(getCurrentRoom().equals(Game.getInstance().getPlayer().getCurrentRoom()))
         {
             return(5 + (int) Math.floor(Math.random() * 6));
@@ -136,6 +168,11 @@ public class Saboteur extends RoomHopper
     
     private int checkChasingPlayer()
     {
+        if(stunCountdown > 0)
+        {
+            chasingPlayer = false;
+            return stunCountdown;
+        }
         if(Game.getInstance().getPlayer().getCurrentRoom().isControlRoom())
         {
             chasingPlayer = false;
@@ -143,10 +180,10 @@ public class Saboteur extends RoomHopper
         }
         else
         {
-            ArrayList<String> neighbors = getCurrentRoom().getCollectionOfExits();
-            for(String neighbor : neighbors)
+            ArrayList<Exit> neighbors = getCurrentRoom().getCollectionOfExits();
+            for(Exit neighbor : neighbors)
             {
-                if(getCurrentRoom().getExit(neighbor).equals(Game.getInstance().getPlayer().getCurrentRoom()))
+                if(getCurrentRoom().getExit(neighbor).equals(Game.getInstance().getPlayer().getCurrentRoom()) && neighbor.isOperating())
                 {
                     chasingPlayer = true;
                     return(5 + (int) Math.floor(Math.random() * 6));

@@ -28,7 +28,7 @@ public class Exit {
       return operating;
   }
   
-  public void setOpreating(boolean value)  //Sets whether door is functional or not
+  public void setOperating(boolean value)  //Sets whether door is functional or not
   {
       this.operating = value;
       

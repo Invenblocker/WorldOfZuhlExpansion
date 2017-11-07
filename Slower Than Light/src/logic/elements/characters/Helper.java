@@ -7,6 +7,7 @@ package logic.elements.characters;
 
 import java.util.ArrayList;
 import logic.Game;
+import logic.elements.rooms.Exit;
 import logic.elements.rooms.Room;
 import logic.elements.rooms.ItemRoom;
 
@@ -20,8 +21,7 @@ public class Helper extends RoomHopper
     private HelperTask task;
     private String name;
     private double chanceOfDiscovery;
-    private Room foundItemRoom;
-    private Item foundSpecialItem;
+    private String foundItemString;
     private ArrayList<Room> returnRoute;
     
     
@@ -33,8 +33,7 @@ public class Helper extends RoomHopper
         CHANCE_OF_DISCOVERY_GROWTH = chanceOfDiscoveryGrowth;
         task = HelperTask.RETURN_TO_DEFAULT;
         returnRoute = new ArrayList();
-        foundItemRoom = null;
-        foundSpecialItem = null;
+        foundItemString = "";
     }
     
     
@@ -63,12 +62,10 @@ public class Helper extends RoomHopper
     
     private int search()
     {
-        ArrayList<String> exits = getCurrentRoom().getCollectionOfExits();
+        ArrayList<Exit> exits = getCurrentRoom().getCollectionOfExits();
         
-        if((getCurrentRoom() instanceof ItemRoom) && Math.random() < chanceOfDiscovery - CHANCE_OF_DISCOVERY_GROWTH)
+        if((getCurrentRoom() instanceof ItemRoom) && Math.random() < chanceOfDiscovery - CHANCE_OF_DISCOVERY_GROWTH && ((ItemRoom) getCurrentRoom()).getSpecialItem().equals(null))
         {
-            foundItemRoom = getCurrentRoom();
-            
             ArrayList<Item> specialItems = new ArrayList();
             
             for(Item specialItem : Game.getInstance().getSpecialItems().values())
@@ -76,7 +73,11 @@ public class Helper extends RoomHopper
                 specialItems.add(specialItem);
             }
             
-            foundSpecialItem = specialItems.get((int) Math.floor(Math.random() * specialItems.size()));
+            Item specialItem = specialItems.get((int) Math.floor(Math.random() * specialItems.size()));
+            
+            ((ItemRoom) getCurrentRoom()).setSpecialItem(specialItem);
+            
+            foundItemString = "I found " + specialItem.getName() + " in the " + getCurrentRoom().getName();
             
             chanceOfDiscovery = DEFAULT_CHANCE_OF_DISCOVERY;
             
@@ -86,7 +87,7 @@ public class Helper extends RoomHopper
         {
             for(int i = exits.size() - 1; i >= 0; i--)
             {
-                if(!(getCurrentRoom().getExit(exits.get(i)) instanceof ItemRoom))
+                if(!(getCurrentRoom().getExit(exits.get(i)) instanceof ItemRoom) || !exits.get(i).isOperating())
                 {
                     exits.remove(i);
                 }
@@ -113,7 +114,7 @@ public class Helper extends RoomHopper
         }
         else
         {
-            if(returnRoute.size() == 0)
+            if(returnRoute.size() == 0 || getCurrentRoom().getExit(returnRoute.get(0)).isOperating())
             {
                 returnRoute = findReturnRoute();
             }
@@ -139,8 +140,13 @@ public class Helper extends RoomHopper
             {
                 ArrayList<Room> exits = new ArrayList();
                 Room checkRoom = routes.get(a).get(routeLength);
-                for(String exit : checkRoom.getCollectionOfExits())
+                for(Exit exit : checkRoom.getCollectionOfExits())
                 {
+                    if(!exit.isOperating())
+                    {
+                        break;
+                    }
+                    
                     if(checkRoom.getExit(exit).isControlRoom())
                     {
                         foundControlRoom = true;
@@ -196,6 +202,25 @@ public class Helper extends RoomHopper
     public HelperTask getHelperTask()
     {
         return(task);
+    }
+    
+    public String getFoundItemString(boolean remove)
+    {
+        if(remove)
+        {
+            String output = foundItemString;
+            foundItemString = "";
+            return(output);
+        }
+        else
+        {
+            return(foundItemString);
+        }
+    }
+    
+    public String getFoundItemString()
+    {
+        return(getFoundItemString(true));
     }
     
     public void setTask(HelperTask task)
