@@ -210,4 +210,9 @@ public class Saboteur extends RoomHopper
     {
         return(chanceOfSabotage);
     }
+    
+    public double setChanceOfSabote(double value)
+    {
+        chanceOfSabotage = value;
+    }
 }
