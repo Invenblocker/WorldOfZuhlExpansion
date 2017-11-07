@@ -205,4 +205,9 @@ public class Saboteur extends RoomHopper
     {
         stunCountdown = value;
     }
+    
+    public double getChanceOfSabotage()
+    {
+        return(chanceOfSabotage);
+    }
 }

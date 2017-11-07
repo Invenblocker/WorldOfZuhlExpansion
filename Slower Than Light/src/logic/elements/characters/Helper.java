@@ -253,7 +253,7 @@ public class Helper extends RoomHopper
     public Room SetRoom(Room newRoom)
     {
         Room oldRoom = super.setRoom(newRoom);
-        SystemLog.getActionLog().writeToLog("The helper \"" + name + "\" went from \"the " + oldRoom.getName() + "\" to \"the " + newRoom.getName() + "\".");
+        SystemLog.getActionLog().writeToLog("The helper \"" + name + "\" moved from \"the " + oldRoom.getName() + "\" to \"the " + newRoom.getName() + "\".");
         return(oldRoom);
     }
 }
