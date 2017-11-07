@@ -116,7 +116,26 @@ public class Room
         else{
            return exits.get(direction).getExitRoom1(); 
         }
-        
+    }
+    
+    public Room getExit(Exit direction)
+    {
+        if(exits.values().contains(direction))
+        {
+            if(direction.getExitRoom1().equals(this))
+            {
+                return(direction.getExitRoom2());
+            }
+            else
+            {
+                return(direction.getExitRoom1());
+            }
+        }
+        else
+        {
+            System.out.println(direction.toString() + " is not an exit from " + getName());
+            return(null);
+        }
     }
     
    /**
