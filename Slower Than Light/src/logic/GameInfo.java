@@ -18,6 +18,8 @@ public class GameInfo {
     private final double ALLOWED_ROOMS_DESTROYED_PERCENTAGE = 0.7;
     private double destroyedRoomsPercentage;
     private ArrayList<Room> destroyedRooms;
+    private int roomsRepaired;
+    private Exit hackedExit;
     
     private boolean gameFinished;
     
@@ -26,6 +28,10 @@ public class GameInfo {
         destroyedRoomsPercentage = 0;
         destroyedRooms = new ArrayList<>();
         gameFinished = false;
+    }
+    
+    public GameInfo(int roomsRepaired) {
+        
     }
     
     public void updateRoomsDestroyed ()
@@ -40,11 +46,26 @@ public class GameInfo {
         updateDestroyedRoomsPercentage();
     }
     
+    public void saveHighScore() {
+        
+    }
     public double getALLOWED_ROOMS_DESTROYED_PERCENTAGE() {return ALLOWED_ROOMS_DESTROYED_PERCENTAGE;}
 
     public double getDestroyedRoomsPercentage() {return destroyedRoomsPercentage;}
 
     public Room[] getDestroyedRooms() {return destroyedRooms.toArray(new Room[0]);}
+    
+    public void incrementRoomsRepaired() {
+        
+    }
+    
+    public Exit getHackedExit() {
+        
+    }
+    
+    public void repairHackedExit() {
+        
+    }
     
     public boolean isGameFinished () {return gameFinished;}
     public void setGameFinished(boolean value)

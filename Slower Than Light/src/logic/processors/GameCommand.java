@@ -142,30 +142,7 @@ public class GameCommand {
         }
     }
     
-    private ArrayList<Item> roomItemList ()
-    {
-        ArrayList<Item>roomInventory = new ArrayList<>();
-        Room currenRoom = game.getPlayer().getCurrentRoom();
-        
-        if (currenRoom instanceof ItemRoom)
-        {
-            ItemRoom currenRoomAsItemRoom =(ItemRoom) currenRoom ;
-            if (currenRoomAsItemRoom.getItem()!= null)
-                roomInventory.add(currenRoomAsItemRoom.getItem());
-            if (currenRoomAsItemRoom.getSpecialItem()!= null)
-                roomInventory.add(currenRoomAsItemRoom.getSpecialItem());
-            
-            return roomInventory;
-        }
-        else if (currenRoom instanceof WorkshopRoom) 
-        {
-            WorkshopRoom currentRoomAsWorkshopRoom  = (WorkshopRoom) currenRoom;
-                roomInventory.addAll(currentRoomAsWorkshopRoom.getItems());
-            return roomInventory;
-        }
-        
-        return null;
-    }
+    
      /**
       * Gets the players inventory. After that it make you choose a item that you want to drop.
       * It will take the item that you choose and drop it into the room. 
@@ -266,6 +243,15 @@ public class GameCommand {
             System.out.println("There is no item !");
     }
     
+    
+    private void helperAction() {
+        
+    }
+    
+    
+    private void saveGame() {
+        
+    }
     /**
      * Quits the game if no second word has been entered by the player.
      * @param command The command entered by the player
@@ -308,4 +294,29 @@ public class GameCommand {
             if (playerInventory[i] != null) 
                 System.out.println("[" + i + "] "+ playerInventory[i].getName());
     }
+
+    private ArrayList<Item> roomItemList ()
+        {
+            ArrayList<Item>roomInventory = new ArrayList<>();
+            Room currenRoom = game.getPlayer().getCurrentRoom();
+
+            if (currenRoom instanceof ItemRoom)
+            {
+                ItemRoom currenRoomAsItemRoom =(ItemRoom) currenRoom ;
+                if (currenRoomAsItemRoom.getItem()!= null)
+                    roomInventory.add(currenRoomAsItemRoom.getItem());
+                if (currenRoomAsItemRoom.getSpecialItem()!= null)
+                    roomInventory.add(currenRoomAsItemRoom.getSpecialItem());
+
+                return roomInventory;
+            }
+            else if (currenRoom instanceof WorkshopRoom) 
+            {
+                WorkshopRoom currentRoomAsWorkshopRoom  = (WorkshopRoom) currenRoom;
+                    roomInventory.addAll(currentRoomAsWorkshopRoom.getItems());
+                return roomInventory;
+            }
+
+            return null;
+        }
 }

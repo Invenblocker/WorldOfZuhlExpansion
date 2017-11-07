@@ -33,7 +33,7 @@ public class Tool extends Item
      * @param name The name of the tool.
      * @param defaultRoom The default room of the tool.
      */
-    public Tool(String name, Room defaultRoom)
+    public Tool(String name, ItemRoom defaultRoom)
     {
         super(name, defaultRoom);
     }

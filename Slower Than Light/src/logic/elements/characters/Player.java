@@ -53,6 +53,15 @@ public class Player extends RoomHopper
         return false;
     }
     
+    public boolean hasItem(Item item)
+    {
+        for(Item slot : inventory)
+        {
+            if(item.equals(slot)) return(true);
+        }
+        return(false);
+    }
+    
     /**
      * @author JN97
      * 
