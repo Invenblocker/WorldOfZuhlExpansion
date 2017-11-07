@@ -5,9 +5,17 @@
  */
 package logic;
 
+import database.txtWriter;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.LinkedHashMap;
+import java.util.LinkedList;
+import java.util.List;
+import java.util.Map;
+import java.util.Set;
+import logic.elements.rooms.Exit;
 import logic.elements.rooms.Room;
+import sun.security.krb5.internal.KDCOptions;
 
 /**
  *
@@ -18,9 +26,9 @@ public class GameInfo {
     private final double ALLOWED_ROOMS_DESTROYED_PERCENTAGE = 0.7;
     private double destroyedRoomsPercentage;
     private ArrayList<Room> destroyedRooms;
-    private int roomsRepaired;
     private Exit hackedExit;
-    
+    private int roomsRepaired;
+    private int highScore;
     private boolean gameFinished;
     
     public GameInfo()
@@ -28,10 +36,14 @@ public class GameInfo {
         destroyedRoomsPercentage = 0;
         destroyedRooms = new ArrayList<>();
         gameFinished = false;
+        roomsRepaired = 0;
+        highScore = 0;
     }
     
-    public GameInfo(int roomsRepaired) {
-        
+    public GameInfo(int roomsRepaired) 
+    {
+        this();
+        this.roomsRepaired = roomsRepaired;
     }
     
     public void updateRoomsDestroyed ()
@@ -46,25 +58,46 @@ public class GameInfo {
         updateDestroyedRoomsPercentage();
     }
     
-    public void saveHighScore() {
-        
+    public void calculateHighScore()
+    {
+        int destroyedRoomsCount = destroyedRooms.size();
+        double oxygenLeft = Game.getInstance().getTimeHolder().getOxygenLeft();
+        highScore = (int) ((roomsRepaired * 5) + (oxygenLeft * 5) - (destroyedRoomsCount * 2)); 
     }
+    
+    public LinkedHashMap<String, Integer> saveHighScore(String name) 
+    {
+        LinkedHashMap<String, Integer> highScoreHashMap = Game.getInstance().getHighScore();
+        highScoreHashMap.put(name, highScore);
+        sortHighScore(highScoreHashMap);
+        txtWriter.writeHighScore(highScoreHashMap);
+        
+        return highScoreHashMap;
+    }
+    
     public double getALLOWED_ROOMS_DESTROYED_PERCENTAGE() {return ALLOWED_ROOMS_DESTROYED_PERCENTAGE;}
 
     public double getDestroyedRoomsPercentage() {return destroyedRoomsPercentage;}
 
     public Room[] getDestroyedRooms() {return destroyedRooms.toArray(new Room[0]);}
     
-    public void incrementRoomsRepaired() {
-        
+    public void incrementRoomsRepaired() 
+    {
+        roomsRepaired++;
     }
     
-    public Exit getHackedExit() {
-        
+    public Exit getHackedExit() 
+    {
+        return hackedExit;
+    }
+    public void setHackedExit(Exit value)
+    {
+        hackedExit = value;
     }
     
-    public void repairHackedExit() {
-        
+    public void repairHackedExit() 
+    {
+        hackedExit = null;
     }
     
     public boolean isGameFinished () {return gameFinished;}
@@ -78,4 +111,33 @@ public class GameInfo {
         int totalRooms = Game.getInstance().getRooms().size();
         destroyedRoomsPercentage = destroyedRooms.size() / totalRooms;
     }
+    
+    private LinkedHashMap<String, Integer>sortHighScore (LinkedHashMap<String, Integer>highScoreMap)
+    {
+        List<Map.Entry<String, Integer>>listToSort = new LinkedList<Map.Entry<String, Integer>>(highScoreMap.entrySet());
+        
+        Map.Entry<String, Integer> temp;
+        for (int i = 1; i < listToSort.size(); i++) 
+        {
+            for (int j = i; j > 0; j--) 
+            {
+                if (listToSort.get(j).getValue() > listToSort.get(j-1).getValue())
+                {
+                    temp = listToSort.get(j);
+                    listToSort.set(j,listToSort.get(j-1));
+                    listToSort.set(j-1,temp);
+                    
+                }
+                
+            }
+        }
+        LinkedHashMap<String, Integer>returnHashMap = new LinkedHashMap<>();
+            for (Map.Entry<String, Integer> entry : listToSort) 
+            {
+                returnHashMap.put(entry.getKey(), entry.getValue());
+            }
+        
+        return returnHashMap;
+    }
+    
 }
