@@ -80,8 +80,45 @@ public class txtWriter {
          
      }
      
+    txtWriter.print("Item: ");
+     for(String key : items.keySet())
+     {
+     txtWriter.print("Tool: ");
+     txtWriter.print(key + " ");
+     }
+     
+    txtWriter.println();
+      
+    txtWriter.print("SpecialItem: ");
+     for(String key : items.keySet())
+     {
+     txtWriter.print("Tool: ");
+     txtWriter.print(key + " ");
+     }
+     
+     txtWriter.println();
       
         
+     
+     txtWriter.print("Player: ");
+     txtWriter.print(player.getCurrentRoom().getName() + " "); //players current room name
+     txtWriter.print(2);                                       //Inventory size
+     
+     Item[] itemArray = player.getInventory();              //Item array that holds players current inventory
+     int i = player.getItemCount();                         //itemcount of how many items player current holds
+     int j = 0;
+     while (j < i){
+      txtWriter.print(itemArray[j].getName() + " ");       //writes the current items into the txtfile
+      txtWriter.print(itemArray[j].getDefaultRoom().getName() + " "); //writes name of current rooms items are stored in
+      j++;
+     }
+     txtWriter.println();
+     
+    txtWriter.print("Saboteur: ");
+    txtWriter.print(saboteur.getCurrentRoom().getName() + " ");
+    txtWriter.print();
+     
+     
   }
      
    public static void writeHighScore(HashMap<String, Integer> highScore) {
