@@ -5,6 +5,7 @@
  */
 package logic.elements.characters;
 
+import database.SystemLog;
 import java.util.ArrayList;
 import logic.Game;
 import logic.elements.rooms.Exit;
@@ -17,7 +18,7 @@ import logic.elements.rooms.ItemRoom;
  */
 public class Helper extends RoomHopper
 {
-    private final double DEFAULT_CHANCE_OF_DISCOVERY, CHANCE_OF_DISCOVERY_GROWTH;
+    public final double DEFAULT_CHANCE_OF_DISCOVERY, CHANCE_OF_DISCOVERY_GROWTH;
     private HelperTask task;
     private String name;
     private double chanceOfDiscovery;
@@ -46,16 +47,20 @@ public class Helper extends RoomHopper
             case RETURN_TO_DEFAULT:
                 return(returnToDefault());
             case BODYGUARD:
-                System.out.println("performAction() should not be called while the helper is set to bodyguard.");
+                SystemLog.getErrorLog().writeToLog("Helper.performAction() was called while the Helper \"" + name + "\" is set to bodyguard.");
                 return(-1);
             default:
-                System.out.println("No task has been defined for the helper.");
-                return(-1);
+                task = HelperTask.RETURN_TO_DEFAULT;
+                SystemLog.getErrorLog().writeToLog("Helper.performAction() was called while the Helper \"" + name + "\" had a task that was not recognized by the method.",
+                        "As a failsafe, The Helper \"" + name + "\" had its task set to RETURN_TO_DEFAULT.");
+                return((int) Math.floor(Math.random() * 6) + 5);
         }
         else
         {
-            System.out.println("The task is null???");
-            return(-1);
+            task = HelperTask.RETURN_TO_DEFAULT;
+            SystemLog.getErrorLog().writeToLog("Helper.performAction() was called while the Helper \"" + name + "\" did not have a defined task.",
+                        "As a failsafe, The Helper \"" + name + "\" had its task set to RETURN_TO_DEFAULT.");
+            return((int) Math.floor(Math.random() * 6) + 5);
         }
     }
     
@@ -79,6 +84,8 @@ public class Helper extends RoomHopper
             
             foundItemString = "I found " + specialItem.getName() + " in the " + getCurrentRoom().getName();
             
+            SystemLog.getActionLog().writeToLog("The Helper \"" + name + "\" found a \"" + specialItem.getName() + "\" in \"the " + getCurrentRoom().getName() + "\".");
+            
             chanceOfDiscovery = DEFAULT_CHANCE_OF_DISCOVERY;
             
             task = HelperTask.RETURN_TO_DEFAULT;
@@ -98,7 +105,22 @@ public class Helper extends RoomHopper
             }
             else
             {
-                System.out.println("No valid exits found");
+                exits = getCurrentRoom().getCollectionOfExits();
+                for(int i = exits.size() - 1; i >= 0; i--)
+                {
+                    if(!exits.get(i).isOperating())
+                    {
+                        exits.remove(i);
+                    }
+                }
+                if(exits.size() != 0)
+                {
+                    setRoom(getCurrentRoom().getExit(exits.get((int) Math.floor(exits.size() * Math.random()))));
+                }
+                else
+                {
+                    SystemLog.getErrorLog().writeToLog("The Helper \"" + name + "\" could not find a valid exit from its current room which is \"the " + getCurrentRoom().getName() + "\".");
+                }
             }
         }
         
@@ -226,5 +248,12 @@ public class Helper extends RoomHopper
     public void setTask(HelperTask task)
     {
         this.task = task;
+    }
+    
+    public Room SetRoom(Room newRoom)
+    {
+        Room oldRoom = super.setRoom(newRoom);
+        SystemLog.getActionLog().writeToLog("The helper \"" + name + "\" went from \"the " + oldRoom.getName() + "\" to \"the " + newRoom.getName() + "\".");
+        return(oldRoom);
     }
 }

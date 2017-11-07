@@ -16,7 +16,7 @@ import database.SystemLog;
  */
 public class Saboteur extends RoomHopper
 {
-    private final double DEFAULT_CHANCE_OF_SABOTAGE, CHANCE_OF_SABOTAGE_GROWTH, CHANCE_OF_DOOR_SABOTAGE;
+    public final double DEFAULT_CHANCE_OF_SABOTAGE, CHANCE_OF_SABOTAGE_GROWTH, CHANCE_OF_DOOR_SABOTAGE;
     private double chanceOfSabotage;
     private boolean chasingPlayer;
     private int stunCountdown;
