@@ -199,25 +199,28 @@ public class txtLoader
     private void addRoomExits(String[] words){
         int i = 1;
         int j = 2;
+        int k = 3;
         Room room = null;
         Room room2 = null;
         Exit exit = null;
         
-        while (j < words.length)
+        while (k < words.length)
         {                                           // tjekker at vi ikke overskrider arrayet
             for (String key : rooms.keySet())       // tjekker alle keys i vores hashmap rooms (workshop, controlroom, pub, lab)
                 if (key.equals(words[0]))           // tjekker om plads 0 (et rum) er det rum vi kigger på.
                     room = rooms.get(key);          // sætter rum = det rum vi vil arbejde med.
             
             for (String key : rooms.keySet()){      // tjekker alle rum i hashmappet room
-                if (key.equals(words[j])){          // finder det andet rum som skal sættes som exit til room.
+                if (key.equals(words[k])){          // finder det andet rum som skal sættes som exit til room.
                  room2 = rooms.get(key);           // sætter rummet til room2.
                  exit = new Exit(room, room2);
+                 exit.setOpreating(Boolean.parseBoolean(words[j]));
                  room.setExit(words[i], exit);  // sætter exit med plads i (en direction) og et room.
                 }
             }
-            i = i + 2;
-            j = j + 2;
+            i += 3;
+            j += 3;
+            k += 3;
         }
     }
 }

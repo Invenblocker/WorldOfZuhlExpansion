@@ -5,6 +5,10 @@
  */
 package database;
 
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.PrintWriter;
+import java.nio.file.Files;
 import java.util.HashMap;
 import logic.elements.characters.Item;
 import logic.elements.characters.Player;
@@ -18,9 +22,20 @@ import logic.elements.rooms.Room;
 public class txtWriter {
     
   public void saveGame (HashMap<String, Room> rooms, HashMap<String, Item> items, Player player, Saboteur saboteur, 
-            Helper helper, int roomsRepaired) {
+            Helper helper, int roomsRepaired, String saveName) throws FileNotFoundException
+  {
+     
+     File newSave = new File(saveName);
+     PrintWriter txtWriter = new PrintWriter(newSave);   // overrides the txt file if the name already exits. Otherwise it creates a new file with the name.
+     txtWriter.print("Room: ");
+     for(String key : rooms.keySet()){
+         txtWriter.print(key);
+         
+     }
+     
+      
         
-    }
+  }
      
    public void writeHighScore(HashMap<String, Integer> highScore) {
        
