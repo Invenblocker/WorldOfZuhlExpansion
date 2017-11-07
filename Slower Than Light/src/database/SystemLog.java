@@ -116,4 +116,14 @@ public class SystemLog
             return("");
         }
     }
+    
+    public static SystemLog getErrorLog()
+    {
+        return(errorLog);
+    }
+    
+    public static SystemLog getActionLog()
+    {
+        return(actionLog);
+    }
 }
