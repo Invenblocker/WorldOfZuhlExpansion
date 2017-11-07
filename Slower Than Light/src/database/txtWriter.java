@@ -116,7 +116,25 @@ public class txtWriter {
      
     txtWriter.print("Saboteur: ");
     txtWriter.print(saboteur.getCurrentRoom().getName() + " ");
-    txtWriter.print();
+    txtWriter.print(saboteur.DEFAULT_CHANCE_OF_SABOTAGE + " ");
+    txtWriter.print(saboteur.CHANCE_OF_SABOTAGE_GROWTH + " ");
+    txtWriter.print(saboteur.DEFAULT_CHANCE_OF_SABOTAGE + " ");
+    txtWriter.print(saboteur.getChanceOfSabotage() + " ");
+    txtWriter.println();
+    
+    txtWriter.print("Helper: ");
+    txtWriter.print(helper.getCurrentRoom().getName() + " ");
+    txtWriter.print(helper.getHelperTask().name());
+    txtWriter.print(helper.getHelperTask());
+    txtWriter.print(helper.CHANCE_OF_DISCOVERY_GROWTH);
+    txtWriter.print(helper.DEFAULT_CHANCE_OF_DISCOVERY);
+    txtWriter.println();
+    
+    txtWriter.print("RoomsRepaired: " + roomsRepaired);
+    
+    
+    
+    
      
      
   }
