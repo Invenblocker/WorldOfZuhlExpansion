@@ -54,9 +54,9 @@ public class txtWriter {
          txtWriter.print(key + " ");
          if(rooms.get(key).getExit("north") != null){
              txtWriter.print("north ");
-             exit = rooms.get(key).getExit(rooms.get(key));
-             txtWriter.print(exit.isOperating());
-             txtWriter.print(rooms.get(key).getExit(exit));
+             exit = rooms.get(key).getExit(rooms.get(key)); 
+             txtWriter.print(exit.isOperating());               // prints the boolean value to the txt file
+             txtWriter.print(rooms.get(key).getExit(exit));     // prints the room on the opposing side of the exit to the txt file.
          } 
          if(rooms.get(key).getExit("south") != null) {
              txtWriter.print("south ");
@@ -85,6 +85,7 @@ public class txtWriter {
      {
      txtWriter.print("Tool: ");
      txtWriter.print(key + " ");
+     txtWriter.print(items.get(key).getDefaultRoom().toString() + " ");
      }
      
     txtWriter.println();

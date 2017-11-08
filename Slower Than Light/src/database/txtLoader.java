@@ -54,9 +54,9 @@ public class txtLoader
         
     }
     
-    public void loadGame() 
+    public void loadGame() throws FileNotFoundException 
     {
-        
+      initializeGame(gameName);  
     }
     
     
