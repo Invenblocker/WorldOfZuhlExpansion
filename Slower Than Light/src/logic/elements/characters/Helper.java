@@ -161,6 +161,14 @@ public class Helper extends RoomHopper
         
         while(!foundControlRoom)
         {
+            if(routeLength > Game.getInstance().getRooms().values().size())
+            {
+                ERROR_LOG.writeToLog("No valid route to a control room was found.",
+                        "As a failsafe, the Helper will move from its current room to its current room");
+                ArrayList<Room> route = new ArrayList();
+                route.add(getCurrentRoom());
+                return(route);
+            }
             for(int a = routes.size() - 1; a >= 0; a--)
             {
                 ArrayList<Room> exits = new ArrayList();
