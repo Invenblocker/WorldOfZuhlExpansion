@@ -277,7 +277,7 @@ public class Helper extends RoomHopper
         ACTION_LOG.writeToLog("The helper \"" + name + "\" had its task set to \"" + task.toString() + "\".");
     }
     
-    public Room SetRoom(Room newRoom)
+    public Room setRoom(Room newRoom)
     {
         Room oldRoom = super.setRoom(newRoom);
         ACTION_LOG.writeToLog("The helper \"" + name + "\" moved from \"the " + oldRoom.getName() + "\" to \"the " + newRoom.getName() + "\".");
