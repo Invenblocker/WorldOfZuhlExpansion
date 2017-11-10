@@ -128,14 +128,7 @@ public class txtWriter {
     txtWriter.print(saboteur.CHANCE_OF_SABOTAGE_GROWTH + " ");
     txtWriter.print(saboteur.DEFAULT_CHANCE_OF_SABOTAGE + " ");
     txtWriter.print(saboteur.getChanceOfSabotage() + " ");
-    txtWriter.println();
-    
-    txtWriter.print("Saboteur stunCountDown: ");
     txtWriter.print(saboteur.getStunCountdown());
-    txtWriter.println();
-    
-    txtWriter.print("Saboteur chasing: ");
-    txtWriter.print(saboteur.isChasingPlayer());
     txtWriter.println();
     
     txtWriter.print("Helper: ");
@@ -146,7 +139,10 @@ public class txtWriter {
     txtWriter.print(helper.DEFAULT_CHANCE_OF_DISCOVERY);
     txtWriter.println();
     
-    txtWriter.print("RoomsRepaired: " + roomsRepaired);
+    txtWriter.print("RoomsRepaired: " + roomsRepaired);   // roomsrepaired kommer fra gameinfo.increment 
+    txtWriter.println();
+    
+    txtWriter.print("HelperCountDown: " + time.getHelperCountdown());
     txtWriter.println();
     
     txtWriter.print("Time: " + time.getTimeLeft());
@@ -154,10 +150,8 @@ public class txtWriter {
     
     txtWriter.print("OxygenLeft: " + time.getOxygenLeft());
     txtWriter.println();
-   
-    
-    
-    
+
+    txtWriter.close();
      
      
   }
@@ -170,6 +164,7 @@ public class txtWriter {
          txtWriter.println(key + highScore.get(key + " "));
          
      }
+     txtWriter.close();
        
    }
     
