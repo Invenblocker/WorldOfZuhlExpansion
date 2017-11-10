@@ -78,10 +78,16 @@ public class Player extends RoomHopper
      */
     public boolean removeItem(Item item)
     {
+        if(item == null)
+        {
+            ERROR_LOG.writeToLog("Attempting to remove null from inventory");
+            return(false);
+        }
         for(int i = inventory.length - 1; i >= 0; i--)
         {
             if(inventory[i] != null && inventory[i].equals(item))
             {
+                ACTION_LOG.writeToLog("Removed \"" + item.getName() + "From the inventory.");
                 inventory[i] = null;
                 return true;                
             }
@@ -101,13 +107,19 @@ public class Player extends RoomHopper
      */
     public boolean removeItem(int index)
     {
-        if(index < 0 || index >= inventory.length) return(false);
+        if(index < 0 || index >= inventory.length)
+        {
+            ERROR_LOG.writeToLog("Attempted to remove an item that is out of bounds to the inventory.");
+            return(false);
+        }
         if(inventory[index] == null)
         {
+            ERROR_LOG.writeToLog("Attempted to remove the item at an empty slot.");
             return(false);
         }
         else
         {
+            ACTION_LOG.writeToLog("Removed \"" + inventory[index].getName() + "\" from the inventory.");
             inventory[index] = null;
             return(true);
         }

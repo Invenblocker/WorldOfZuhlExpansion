@@ -14,6 +14,7 @@ import logic.elements.rooms.Room;
 import logic.elements.rooms.WorkshopRoom;
 import logic.user_input.Command;
 import logic.user_input.CommandWord;
+import database.SystemLog;
 
 public class GameCommand {
     private Game game;
@@ -62,6 +63,9 @@ public class GameCommand {
                 break;
             case QUIT:
                 wantToQuit = quit(command);
+                break;
+            case PRINT:
+                SystemLog.printGlobalLog();
                 break;
             default:
                 System.out.println("I don't know what you mean...\nType \"help\" for a list of commands.");

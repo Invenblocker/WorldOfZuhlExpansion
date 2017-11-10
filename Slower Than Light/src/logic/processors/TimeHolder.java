@@ -76,12 +76,23 @@ public class TimeHolder extends TimerTask{
     {
         this.saboteurCountdown = value;    
     }
-
     public void setHelperCountdown(int value) 
     {
         this.helperCountdown = value;
     }
-
+    public void setTimeLeft(double timeLeft)
+    {
+        this.timeLeft = timeLeft;
+    }
+    
+    public void setOxygenLeft(double oxygenlLeft)
+    {
+        this.oxygenLeft = oxygenlLeft; 
+    }
+    public int getHelperCountdown()
+    {
+        return helperCountdown;
+    }
     public double getOxygenLeft() 
     {
         return oxygenLeft;
