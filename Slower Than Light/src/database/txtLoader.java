@@ -16,6 +16,7 @@ import java.util.List;
 import java.util.Scanner;
 import logic.elements.characters.Item;
 import logic.elements.characters.Player;
+import logic.elements.characters.Saboteur;
 import logic.elements.characters.Tool;
 import logic.elements.rooms.ControlRoom;
 import logic.elements.rooms.Exit;
@@ -54,9 +55,9 @@ public class txtLoader
         
     }
     
-    public void loadGame() 
+    public void loadGame() throws FileNotFoundException 
     {
-        
+      initializeGame(gameName);  
     }
     
     
@@ -74,7 +75,10 @@ public class txtLoader
                 itemToHashMap(words);
             }
             else if(words[0].equals("Player:")){
-                initializePlayer(words);
+                initializePlayer(words);     // mangler noget, special item og item? defaultRoom
+            }
+            else if(words[0].equals("Saboteur:")){
+                initializeSaboteur(words);
             }
             else if(words[0].equals("SpecialItem:")){
                 specialItemToHashMap(words);
@@ -136,37 +140,43 @@ public class txtLoader
     {
         int i = 1;                 //index for room in our txt file            
         int j = 2;                 //index for boolean in our txt file    
+        int k = 3;
+        Room room;
         while (j < words.length) {                                                       //As long j is less than array lenght put room
 
             if (words[j].equals("ItemRoom")){
-            rooms.put(words[i], new ItemRoom(words[i]));   
+                room = rooms.put(words[i], new ItemRoom(words[i])); 
+                room.setOperating(Boolean.parseBoolean(words[k]));
             }
             else if(words[j].equals("WorkshopRoom")){
-            rooms.put(words[i], new WorkshopRoom(words[i]));         
+                room = rooms.put(words[i], new WorkshopRoom(words[i])); 
+                room.setOperating(Boolean.parseBoolean(words[k]));
             }
             else{
-            rooms.put(words[i], new ControlRoom(words[i]));        
+                room = rooms.put(words[i], new ControlRoom(words[i])); 
+                room.setOperating(Boolean.parseBoolean(words[k]));
             }
-            i += 2;                                                                     //Jumps to room index in our txt
-            j += 2;                                                                     //jumps to next boolean in txt
+            i += 3;                                                                     //Jumps to room index in our txt
+            j += 3;                                                                     //jumps to next boolean in txt
+            k += 3;
         }
     }
     
       private void itemToHashMap(String[] words){
-        int x = 1;
-        int i = 2;
-        int j = 3;
+        int i = 1;
+        int j = 2;
+        int k = 3;
         
-        while (j < words.length)
+        while (k < words.length)
         {
             for (String key : rooms.keySet())
-                if (key.equals(words[j]))
-                    if(words[x].equals("Tool"))
-                        items.put(words[i], new Tool(words[i], (ItemRoom) rooms.get(key)));
+                if (key.equals(words[k]))
+                    if(words[i].equals("Tool"))
+                        items.put(words[j], new Tool(words[j], (ItemRoom) rooms.get(key)));
             
-            x += 3;    
-            i += 3;
+            i += 3;    
             j += 3;
+            k += 3;
         }
     }
       
@@ -186,16 +196,37 @@ public class txtLoader
    i++;
     }
       
+    private void initializeSaboteur(String[] words){
+    Room room;
+    room = rooms.get(words[1]);
+    Saboteur saboteur = new Saboteur(room, Double.parseDouble(words[2]), Double.parseDouble(words[3]), Double.parseDouble(words[4]));
+    saboteur.setChanceOfSabotage(Double.parseDouble(words[5]));
+    }
       
     private void initializePlayer(String[] words)
     {
-        Room room = rooms.get(words[1]);
-
-        if (room != null)
-            this.player = new Player(room, Integer.parseInt(words[2]));
-        else
-            throw new Error("Error in loading player starting room");
-    }
+     Room room;                     //Create reference to room
+     Player player;                 //Reference to player
+     room = rooms.get(words[1]);    //Sets room reference equal to index 1 in our hashmap, which is a room.
+     
+     player= new Player(room, Integer.parseInt(words[2]));
+     int i = 3;         //index for item in txtfile
+   
+     
+     if(items.containsKey(i))           //checks if txtfile contains same key in items hashmap
+     {
+      player.addItem(items.get(words[i])); //adds item to player inventory
+     }
+     else if (specialItems.containsKey(i))  //checks if txtfile contains same key in specialItems hashmap
+     {
+         player.addItem(specialItems.get(words[i]));    //adds specialItem to player inventory
+        
+     }
+     i++;
+    
+        }
+    
+    
     
     private void addRoomExits(String[] words){
         int i = 1;
