@@ -10,6 +10,7 @@ import java.io.FileNotFoundException;
 import java.io.PrintWriter;
 import java.nio.file.Files;
 import java.util.HashMap;
+import java.util.LinkedHashMap;
 import logic.elements.characters.Helper;
 import logic.elements.characters.Item;
 import logic.elements.characters.Player;
@@ -161,7 +162,7 @@ public class txtWriter {
      
   }
      
-   public static void writeHighScore(HashMap<String, Integer> highScore, String highscoreName) throws FileNotFoundException {
+   public static void writeHighScore(LinkedHashMap<String, Integer> highScore, String highscoreName) throws FileNotFoundException {
        // hashmappet må kun være en vis størrelse
      File newSave = new File(highscoreName);
      PrintWriter txtWriter = new PrintWriter(highscoreName);
