@@ -20,6 +20,7 @@ public class SystemLog
     private final static SystemLog ERROR_LOG = new SystemLog("Error Log");
     private final static SystemLog ACTION_LOG = new SystemLog("Action Log");
     private final static String logPath = "Logs\\";
+    private final static ArrayList<SystemLog> SYSTEM_LOGS = new ArrayList();
     
     private final ArrayList<String> LOG;
     private final String NAME;
@@ -30,6 +31,7 @@ public class SystemLog
         this.NAME = name;
         this.LOG = new ArrayList();
         this.PARENT_LOG = null;
+        SYSTEM_LOGS.add(this);
     }
     
     public SystemLog(String name, SystemLog parentLog)
@@ -37,6 +39,7 @@ public class SystemLog
         this.NAME = name;
         this.LOG = new ArrayList();
         this.PARENT_LOG = parentLog;
+        SYSTEM_LOGS.add(this);
     }
     
     public void writeToLog(String... message)
@@ -256,7 +259,7 @@ public class SystemLog
     
     public void saveLog() throws FileNotFoundException
     {
-        File currentLog = new File(logPath + NAME);
+        File currentLog = new File(logPath + getLongName());
         PrintWriter logWriter = new PrintWriter(currentLog);
         
         String[] log = getLog();
@@ -267,5 +270,26 @@ public class SystemLog
         }
         
         logWriter.close();
+    }
+    
+    private void saveAllLogs() throws FileNotFoundException
+    {
+        saveGlobalLog("GlobalLog.txt");
+        for(SystemLog log : SYSTEM_LOGS)
+        {
+            log.saveLog();
+        }
+    }
+    
+    public String getLongName()
+    {
+        if(PARENT_LOG != null)
+        {
+            return(PARENT_LOG.getLongName() + ": " + getName());
+        }
+        else
+        {
+            return(getName());
+        }
     }
 }
