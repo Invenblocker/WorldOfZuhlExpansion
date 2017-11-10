@@ -6,6 +6,7 @@
 package logic;
 
 import database.txtWriter;
+import java.io.FileNotFoundException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.LinkedHashMap;
@@ -66,12 +67,12 @@ public class GameInfo {
         highScore = (int) ((roomsRepaired * 5) + (oxygenLeft * 5) - (destroyedRoomsCount * 2)); 
     }
     
-    public LinkedHashMap<String, Integer> saveHighScore(String name) 
+    public LinkedHashMap<String, Integer> saveHighScore(String name) throws FileNotFoundException 
     {
         LinkedHashMap<String, Integer> highScoreHashMap = Game.getInstance().getHighScore();
         highScoreHashMap.put(name, highScore);
         sortHighScore(highScoreHashMap);
-        txtWriter.writeHighScore(highScoreHashMap);
+        txtWriter.writeHighScore(highScoreHashMap, name);
         
         return highScoreHashMap;
     }
