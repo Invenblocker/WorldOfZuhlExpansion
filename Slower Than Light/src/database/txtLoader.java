@@ -16,6 +16,7 @@ import java.util.List;
 import java.util.Scanner;
 import logic.elements.characters.Item;
 import logic.elements.characters.Player;
+import logic.elements.characters.Saboteur;
 import logic.elements.characters.Tool;
 import logic.elements.rooms.ControlRoom;
 import logic.elements.rooms.Exit;
@@ -74,7 +75,10 @@ public class txtLoader
                 itemToHashMap(words);
             }
             else if(words[0].equals("Player:")){
-                initializePlayer(words);
+                initializePlayer(words);     // mangler noget, special item og item? defaultRoom
+            }
+            else if(words[0].equals("Saboteur:")){
+                initializeSaboteur(words);
             }
             else if(words[0].equals("SpecialItem:")){
                 specialItemToHashMap(words);
@@ -186,6 +190,9 @@ public class txtLoader
    i++;
     }
       
+    private void initializeSaboteur(String[] words){
+   
+    }
       
     private void initializePlayer(String[] words)
     {
@@ -193,9 +200,12 @@ public class txtLoader
 
         if (room != null)
             this.player = new Player(room, Integer.parseInt(words[2]));
+        
         else
             throw new Error("Error in loading player starting room");
     }
+    
+    
     
     private void addRoomExits(String[] words){
         int i = 1;

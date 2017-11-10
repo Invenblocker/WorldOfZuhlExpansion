@@ -39,6 +39,10 @@ public class Saboteur extends RoomHopper
         CHANCE_OF_SABOTAGE_GROWTH = chanceOfSabotageGrowth;
         CHANCE_OF_DOOR_SABOTAGE = chanceOfDoorSabotage;
     }
+
+    public Saboteur() {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
     
     /**
      * @author Invenblocker
