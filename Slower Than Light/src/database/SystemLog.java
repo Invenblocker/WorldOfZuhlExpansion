@@ -19,6 +19,7 @@ public class SystemLog
     private final static ArrayList<String> GLOBAL_LOG = new ArrayList();
     private final static SystemLog ERROR_LOG = new SystemLog("Error Log");
     private final static SystemLog ACTION_LOG = new SystemLog("Action Log");
+    private final static String logPath = "Logs\\";
     
     private final ArrayList<String> LOG;
     private final String NAME;
@@ -240,10 +241,25 @@ public class SystemLog
     
     public static void saveGlobalLog(String name) throws FileNotFoundException
     {
-        File globalLog = new File(name);
+        File globalLog = new File(logPath + name);
         PrintWriter logWriter = new PrintWriter(globalLog);
         
         String[] log = getGlobalLog();
+        
+        for(int i = 0; i < log.length; i++)
+        {
+            logWriter.println(log[i]);
+        }
+        
+        logWriter.close();
+    }
+    
+    public void saveLog() throws FileNotFoundException
+    {
+        File currentLog = new File(logPath + NAME);
+        PrintWriter logWriter = new PrintWriter(currentLog);
+        
+        String[] log = getLog();
         
         for(int i = 0; i < log.length; i++)
         {
