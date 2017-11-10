@@ -14,6 +14,8 @@ import java.util.HashMap;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Scanner;
+import logic.Game;
+import logic.GameInfo;
 import logic.elements.characters.Helper;
 import logic.elements.characters.Item;
 import logic.elements.characters.Player;
@@ -24,6 +26,7 @@ import logic.elements.rooms.Exit;
 import logic.elements.rooms.ItemRoom;
 import logic.elements.rooms.Room;
 import logic.elements.rooms.WorkshopRoom;
+import logic.processors.TimeHolder;
 
 
 public class txtLoader
@@ -82,12 +85,21 @@ public class txtLoader
                 initializeSaboteur(words);
             }
             else if(words[0].equals("Helper:")) {
-                ini
-                
+                initializeHelper(words); 
             }
-            
             else if(words[0].equals("SpecialItem:")){
                 specialItemToHashMap(words);
+            }
+            else if(words[0].equals("RoomsRepaired: ")){
+                int i = Integer.parseInt(words[2]);
+                while(i > 0){
+                Game.getInstance().getGameInfo().incrementRoomsRepaired();
+                i--;
+                }
+            }
+            else if(words[0].equals("TimeHolder: ")){
+                TimeHolder time = new TimeHolder(Double.parseDouble(words[1]), Double.parseDouble(words[2]));
+                time.setHelperCountdown(Integer.parseInt(words[3]));
             }
             else{
                 addRoomExits(words);

@@ -142,7 +142,7 @@ public class txtWriter {
     txtWriter.print("RoomsRepaired: " + roomsRepaired);   // roomsrepaired kommer fra gameinfo.increment 
     txtWriter.println();
     
-    txtWriter.print("HelperCountDown: " + time.helperCountDown());
+    txtWriter.print("HelperCountDown: " + time.getHelperCountdown());
     txtWriter.println();
     
     txtWriter.print("Time: " + time.getTimeLeft());
@@ -151,7 +151,7 @@ public class txtWriter {
     txtWriter.print("OxygenLeft: " + time.getOxygenLeft());
     txtWriter.println();
 
-    
+    txtWriter.close();
      
      
   }
@@ -164,6 +164,7 @@ public class txtWriter {
          txtWriter.println(key + highScore.get(key + " "));
          
      }
+     txtWriter.close();
        
    }
     
