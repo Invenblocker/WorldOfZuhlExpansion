@@ -202,11 +202,26 @@ public class txtLoader
       
     private void initializePlayer(String[] words)
     {
-     Room room;
-     Player player= new Player(words[1], Integer.parseInt(words[2]));
-    
+     Room room;                     //Create reference to room
+     Player player;                 //Reference to player
+     room = rooms.get(words[1]);    //Sets room reference equal to index 1 in our hashmap, which is a room.
+     
+     player= new Player(room, Integer.parseInt(words[2]));
+     int i = 3;         //index for item in txtfile
+   
+     
+     if(items.containsKey(i))           //checks if txtfile contains same key in items hashmap
+     {
+      player.addItem(items.get(words[i])); //adds item to player inventory
+     }
+     else if (specialItems.containsKey(i))  //checks if txtfile contains same key in specialItems hashmap
+     {
+         player.addItem(specialItems.get(words[i]));    //adds specialItem to player inventory
         
-    }
+     }
+     i++;
+    
+        }
     
     
     
