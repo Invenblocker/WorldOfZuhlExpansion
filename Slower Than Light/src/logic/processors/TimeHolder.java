@@ -86,6 +86,9 @@ public class TimeHolder extends TimerTask{
     {
         return oxygenLeft;
     }
-
+    public double getTimeLeft()
+    {
+        return timeLeft;
+    }
 }
 

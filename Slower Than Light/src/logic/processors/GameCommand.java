@@ -1,8 +1,11 @@
 package logic.processors;
 
+import GUI.GUI;
+import database.txtWriter;
 import java.util.ArrayList;
 import logic.Game;
 import logic.GameInfo;
+import logic.elements.characters.Helper;
 import logic.elements.characters.HelperTask;
 import logic.elements.characters.Item;
 import logic.elements.characters.Tool;
@@ -254,14 +257,41 @@ public class GameCommand {
             System.out.println("There is no item !");
     }
     
-    
-    private void helperAction() {
-        
+    /**
+     * This method uses a switch-statement, to determine what action the object of class Helper, should perform.
+     * The cases are enums, obtained from the class HelperTask.
+     */
+    private void helperAction(Command command) 
+    {
+       HelperTask helperTask = game.getGameInfo().getHelper().getHelperTask();
+       Helper performTask = game.getGameInfo().getHelper();
+       if (!command.hasSecondWord()) switch (helperTask)   
+           {
+                case BODYGUARD:
+                   performTask.setTask(helperTask);
+                   break;
+                case SEARCH:
+                    performTask.setTask(helperTask);
+                    break;
+                case RETURN_TO_DEFAULT:
+                    performTask.setTask(helperTask);
+                    break;
+                default:
+                    System.out.println("What task did you mean ? ");
+           }
+        else
+            System.out.println("Please type in a task for helper before hitting enter ! ");
     }
     
-    
-    private void saveGame() {
-        
+    /**
+     * This method saves the game, including the game's current status,
+     * for example the operating status of the rooms and the time and oxygen left.
+     */
+    private void saveGame() 
+    {
+        txtWriter.saveGame(game.getRooms(), game.getItems(), game.getPlayer(),
+        game.getSaboteur(), game.getGameInfo().getHelper(),0,
+        game.getTimeHolder().getTimeLeft(),GUI.saveName());
     }
     /**
      * Quits the game if no second word has been entered by the player.
@@ -306,24 +336,32 @@ public class GameCommand {
                 System.out.println("[" + i + "] "+ playerInventory[i].getName());
     }
 
+    
+    
+    /**
+     * ArrayList, which holds information about the items in the player's current room.
+     * Checks are made, to see if the currentRoom is an instance of the class ItemRoom or a WorkShopRoom.
+     * In both cases the currentRoom's inventory is returned.
+     * However, if the currentRoom is not an instance of either of these classes, it returns null.
+     */
     private ArrayList<Item> roomItemList ()
         {
             ArrayList<Item>roomInventory = new ArrayList<>();
-            Room currenRoom = game.getPlayer().getCurrentRoom();
+            Room currentRoom = game.getPlayer().getCurrentRoom();
 
-            if (currenRoom instanceof ItemRoom)
+            if (currentRoom instanceof ItemRoom)
             {
-                ItemRoom currenRoomAsItemRoom =(ItemRoom) currenRoom ;
-                if (currenRoomAsItemRoom.getItem()!= null)
-                    roomInventory.add(currenRoomAsItemRoom.getItem());
-                if (currenRoomAsItemRoom.getSpecialItem()!= null)
-                    roomInventory.add(currenRoomAsItemRoom.getSpecialItem());
+                ItemRoom currentRoomAsItemRoom =(ItemRoom) currentRoom ;
+                if (currentRoomAsItemRoom.getItem()!= null)
+                    roomInventory.add(currentRoomAsItemRoom.getItem());
+                if (currentRoomAsItemRoom.getSpecialItem()!= null)
+                    roomInventory.add(currentRoomAsItemRoom.getSpecialItem());
 
                 return roomInventory;
             }
-            else if (currenRoom instanceof WorkshopRoom) 
+            else if (currentRoom instanceof WorkshopRoom) 
             {
-                WorkshopRoom currentRoomAsWorkshopRoom  = (WorkshopRoom) currenRoom;
+                WorkshopRoom currentRoomAsWorkshopRoom  = (WorkshopRoom) currentRoom;
                     roomInventory.addAll(currentRoomAsWorkshopRoom.getItems());
                 return roomInventory;
             }

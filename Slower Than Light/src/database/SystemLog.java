@@ -138,4 +138,100 @@ public class SystemLog
     {
         return(ACTION_LOG);
     }
+    
+    public static void printGlobalLog()
+    {
+        String[] log = getGlobalLog();
+        for(int i = 0; i < log.length; i++)
+        {
+            System.out.println(log[i]);
+        }
+    }
+    
+    public static void printGlobalLogIndex(int... index)
+    {
+        String[] log = getGlobalLog();
+        for(int i = 0; i < index.length; i++)
+        {
+            if(index[i] < log.length && index[i] >= 0)
+            {
+                System.out.println(log[i]);
+            }
+        }
+    }
+    
+    public static void printGlobalLogFrom(int index)
+    {
+        String[] log = getGlobalLog();
+        for(int i = Math.max(0, index); i < log.length; i++)
+        {
+            System.out.println(log[i]);
+        }
+    }
+    
+    public static void printGlobalLogTo(int index)
+    {
+        String[] log = getGlobalLog();
+        for(int i = 0; i < index && i < log.length; i++)
+        {
+            System.out.println(log[i]);
+        }
+    }
+    
+    public static void printGlobalLogRange(int a, int b)
+    {
+        String[] log = getGlobalLog();
+        for(int i = Math.max(a, 0); i < b && i < log.length; i++)
+        {
+            System.out.println(log[i]);
+        }
+    }
+    
+    public void printLog()
+    {
+        String[] log = getLog();
+        for(int i = 0; i < log.length; i++)
+        {
+            System.out.println(log[i]);
+        }
+    }
+    
+    public void printLogIndex(int... index)
+    {
+        String[] log = getLog();
+        for(int i = 0; i < index.length; i++)
+        {
+            if(index[i] < log.length && index[i] >= 0)
+            {
+                System.out.println(log[i]);
+            }
+        }
+    }
+    
+    public void printLogFrom(int index)
+    {
+        String[] log = getLog();
+        for(int i = Math.max(0, index); i < log.length; i++)
+        {
+            System.out.println(log[i]);
+        }
+    }
+    
+    public void printLogTo(int index)
+    {
+        String[] log = getLog();
+        for(int i = 0; i < index && i < log.length; i++)
+        {
+            System.out.println(log[i]);
+        }
+    }
+    
+    public void printLogRange(int a, int b)
+    {
+        String[] log = getLog();
+        for(int i = Math.max(0, a); i < b && i < log.length; i++)
+        {
+            System.out.println(log[i]);
+        }
+    }
 }
