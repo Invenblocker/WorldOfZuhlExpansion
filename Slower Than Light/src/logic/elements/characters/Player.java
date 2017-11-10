@@ -5,6 +5,7 @@
  */
 package logic.elements.characters;
 
+import database.SystemLog;
 import logic.elements.rooms.*;
 
 /**
@@ -14,6 +15,7 @@ import logic.elements.rooms.*;
 public class Player extends RoomHopper
 {
     private Item[] inventory;
+    private final SystemLog ACTION_LOG, ERROR_LOG;
     
     /**
      * @author JN97
@@ -28,6 +30,9 @@ public class Player extends RoomHopper
         super(room);
         
         inventory = new Item[inventorySize];
+        
+        ACTION_LOG = new SystemLog("Player", SystemLog.getActionLog());
+        ERROR_LOG = new SystemLog("Player", SystemLog.getErrorLog());
     }
     
     /**
@@ -138,5 +143,15 @@ public class Player extends RoomHopper
             }
         }
         return(count);
+    }
+    
+    public SystemLog getActionLog()
+    {
+        return(ACTION_LOG);
+    }
+    
+    public SystemLog getErrorLog()
+    {
+        return(ERROR_LOG);
     }
 }

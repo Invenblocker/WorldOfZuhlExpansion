@@ -5,13 +5,14 @@
  */
 package logic.elements.characters;
 
+import database.SystemLog;
 import logic.elements.rooms.*;
 
 /**
  *
  * @author Invenblocer & JN97
  */
-public class RoomHopper
+public abstract class RoomHopper
 {
     private Room currentRoom;
     
@@ -39,6 +40,7 @@ public class RoomHopper
     {
         Room oldRoom = currentRoom;
         currentRoom = newRoom;
+        getActionLog().writeToLog("Moved from \"" + oldRoom + "\" to \"" + newRoom + "\".");
         return(oldRoom);
     }
     
@@ -53,4 +55,7 @@ public class RoomHopper
     {
         return(currentRoom);
     }
+    
+    public abstract SystemLog getActionLog();
+    public abstract SystemLog getErrorLog();
 }
