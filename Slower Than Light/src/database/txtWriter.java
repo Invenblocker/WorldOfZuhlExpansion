@@ -139,7 +139,10 @@ public class txtWriter {
     txtWriter.print(helper.DEFAULT_CHANCE_OF_DISCOVERY);
     txtWriter.println();
     
-    txtWriter.print("RoomsRepaired: " + roomsRepaired);
+    txtWriter.print("RoomsRepaired: " + roomsRepaired);   // roomsrepaired kommer fra gameinfo.increment 
+    txtWriter.println();
+    
+    txtWriter.print("HelperCountDown: " + time.helperCountDown());
     txtWriter.println();
     
     txtWriter.print("Time: " + time.getTimeLeft());
@@ -147,9 +150,7 @@ public class txtWriter {
     
     txtWriter.print("OxygenLeft: " + time.getOxygenLeft());
     txtWriter.println();
-   
-    
-    
+
     
      
      
