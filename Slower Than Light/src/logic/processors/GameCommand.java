@@ -1,8 +1,11 @@
 package logic.processors;
 
+import GUI.GUI;
+import database.txtWriter;
 import java.util.ArrayList;
 import logic.Game;
 import logic.GameInfo;
+import logic.elements.characters.Helper;
 import logic.elements.characters.HelperTask;
 import logic.elements.characters.Item;
 import logic.elements.characters.Tool;
@@ -255,13 +258,34 @@ public class GameCommand {
     }
     
     
-    private void helperAction() {
-        
+    private void helperAction(Command command) 
+    {
+       HelperTask helperTask = game.getGameInfo().getHelper().getHelperTask();
+       Helper performTask = game.getGameInfo().getHelper();
+       if (!command.hasSecondWord()) switch (helperTask)   
+           {
+                case BODYGUARD:
+                   performTask.setTask(helperTask);
+                   break;
+                case SEARCH:
+                    performTask.setTask(helperTask);
+                    break;
+                case RETURN_TO_DEFAULT:
+                    performTask.setTask(helperTask);
+                    break;
+                default:
+                    System.out.println("What task did you mean ? ");
+           }
+        else
+            System.out.println("Please type in a task for helper before hitting enter ! ");
     }
     
     
-    private void saveGame() {
-        
+    private void saveGame() 
+    {
+        txtWriter.saveGame(game.getRooms(), game.getItems(), game.getPlayer(),
+        game.getSaboteur(), game.getGameInfo().getHelper(),0,
+        game.getTimeHolder().getTimeLeft(),GUI.saveName());
     }
     /**
      * Quits the game if no second word has been entered by the player.
