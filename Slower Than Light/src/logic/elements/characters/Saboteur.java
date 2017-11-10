@@ -171,7 +171,7 @@ public class Saboteur extends RoomHopper
         return(chasingPlayer);
     }
     
-    private int checkChasingPlayer()
+    public int checkChasingPlayer()
     {
         if(stunCountdown > 0)
         {
