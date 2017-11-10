@@ -14,6 +14,7 @@ import java.util.HashMap;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Scanner;
+import logic.elements.characters.Helper;
 import logic.elements.characters.Item;
 import logic.elements.characters.Player;
 import logic.elements.characters.Saboteur;
@@ -80,6 +81,11 @@ public class txtLoader
             else if(words[0].equals("Saboteur:")){
                 initializeSaboteur(words);
             }
+            else if(words[0].equals("Helper:")) {
+                ini
+                
+            }
+            
             else if(words[0].equals("SpecialItem:")){
                 specialItemToHashMap(words);
             }
@@ -204,6 +210,16 @@ public class txtLoader
     saboteur.addStunCountdown(Integer.parseInt(words[6]));
     
     }
+    
+    private void initializeHelper(String[] words){
+    Room room;
+    room = rooms.get(words[1]);     //Helpers room in txt file
+        Helper helper = new Helper(room, words[2], Double.parseDouble(words[3]), Double.parseDouble(words[4])); //[3]chance of discovery growht og [4] er
+        
+        
+    }
+            
+    
       
     private void initializePlayer(String[] words)
     {
