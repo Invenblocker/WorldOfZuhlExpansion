@@ -9,7 +9,6 @@ import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.PrintWriter;
 import java.util.ArrayList;
-import java.util.Date;
 
 /**
  *
@@ -239,10 +238,9 @@ public class SystemLog
         }
     }
     
-    public void saveGlobalLog() throws FileNotFoundException
+    public static void saveGlobalLog(String name) throws FileNotFoundException
     {
-        Date now = new Date();
-        File globalLog = new File("logData\\globalLog" + now.toString() + ".txt");
+        File globalLog = new File(name);
         PrintWriter logWriter = new PrintWriter(globalLog);
         
         String[] log = getGlobalLog();
@@ -251,5 +249,7 @@ public class SystemLog
         {
             logWriter.println(log[i]);
         }
+        
+        logWriter.close();
     }
 }
