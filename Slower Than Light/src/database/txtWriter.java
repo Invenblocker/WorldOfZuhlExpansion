@@ -19,6 +19,7 @@ import logic.elements.rooms.Exit;
 import logic.elements.rooms.ItemRoom;
 import logic.elements.rooms.Room;
 import logic.elements.rooms.WorkshopRoom;
+import logic.processors.TimeHolder;
 
 /**
  *
@@ -27,22 +28,27 @@ import logic.elements.rooms.WorkshopRoom;
 public class txtWriter {
     
   public static void saveGame (HashMap<String, Room> rooms, HashMap<String, Item> items, Player player, Saboteur saboteur, 
-            Helper helper, int roomsRepaired, String saveName) throws FileNotFoundException
+            Helper helper, int roomsRepaired, TimeHolder time, String saveName) throws FileNotFoundException
   {
      Exit exit = null;
      File newSave = new File(saveName);
      PrintWriter txtWriter = new PrintWriter(newSave);   // overrides the txt file if the name already exits. Otherwise it creates a new file with the name.
+     
+     
      txtWriter.print("Room: ");
       for(String key : rooms.keySet()){
           txtWriter.print(key + " ");
           if(rooms.get(key) instanceof ItemRoom){
               txtWriter.print("ItemRoom ");
+              txtWriter.print(rooms.get(key).isOperating());
           }
           else if(rooms.get(key) instanceof ControlRoom){
               txtWriter.print("ControlRoom ");
+              txtWriter.print(rooms.get(key).isOperating());
           }
           else if(rooms.get(key) instanceof WorkshopRoom){
               txtWriter.print("WorkshopRoom ");
+              txtWriter.print(rooms.get(key).isOperating());
           }
       }
       txtWriter.println();
@@ -123,6 +129,14 @@ public class txtWriter {
     txtWriter.print(saboteur.getChanceOfSabotage() + " ");
     txtWriter.println();
     
+    txtWriter.print("Saboteur stunCountDown: ");
+    txtWriter.print(saboteur.getStunCountdown());
+    txtWriter.println();
+    
+    txtWriter.print("Saboteur chasing: ");
+    txtWriter.print(saboteur.isChasingPlayer());
+    txtWriter.println();
+    
     txtWriter.print("Helper: ");
     txtWriter.print(helper.getCurrentRoom().getName() + " ");
     txtWriter.print(helper.getHelperTask().name());
@@ -132,6 +146,13 @@ public class txtWriter {
     txtWriter.println();
     
     txtWriter.print("RoomsRepaired: " + roomsRepaired);
+    txtWriter.println();
+    
+    txtWriter.print("Time: " + time.getTimeLeft());
+    txtWriter.println();
+    
+    txtWriter.print("OxygenLeft: " + time.getOxygenLeft());
+    txtWriter.println();
    
     
     
