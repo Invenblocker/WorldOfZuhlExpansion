@@ -201,6 +201,8 @@ public class txtLoader
     room = rooms.get(words[1]);
     Saboteur saboteur = new Saboteur(room, Double.parseDouble(words[2]), Double.parseDouble(words[3]), Double.parseDouble(words[4]));
     saboteur.setChanceOfSabotage(Double.parseDouble(words[5]));
+    saboteur.addStunCountdown(Integer.parseInt(words[6]));
+    
     }
       
     private void initializePlayer(String[] words)

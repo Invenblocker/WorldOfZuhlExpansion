@@ -128,14 +128,7 @@ public class txtWriter {
     txtWriter.print(saboteur.CHANCE_OF_SABOTAGE_GROWTH + " ");
     txtWriter.print(saboteur.DEFAULT_CHANCE_OF_SABOTAGE + " ");
     txtWriter.print(saboteur.getChanceOfSabotage() + " ");
-    txtWriter.println();
-    
-    txtWriter.print("Saboteur stunCountDown: ");
     txtWriter.print(saboteur.getStunCountdown());
-    txtWriter.println();
-    
-    txtWriter.print("Saboteur chasing: ");
-    txtWriter.print(saboteur.isChasingPlayer());
     txtWriter.println();
     
     txtWriter.print("Helper: ");
