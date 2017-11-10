@@ -5,7 +5,11 @@
  */
 package database;
 
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.PrintWriter;
 import java.util.ArrayList;
+import java.util.Date;
 
 /**
  *
@@ -232,6 +236,20 @@ public class SystemLog
         for(int i = Math.max(0, a); i < b && i < log.length; i++)
         {
             System.out.println(log[i]);
+        }
+    }
+    
+    public void saveGlobalLog() throws FileNotFoundException
+    {
+        Date now = new Date();
+        File globalLog = new File("logData\\globalLog" + now.toString() + ".txt");
+        PrintWriter logWriter = new PrintWriter(globalLog);
+        
+        String[] log = getGlobalLog();
+        
+        for(int i = 0; i < log.length; i++)
+        {
+            logWriter.println(log[i]);
         }
     }
 }
