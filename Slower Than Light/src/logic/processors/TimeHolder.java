@@ -21,7 +21,7 @@ public class TimeHolder extends TimerTask{
      * Creates an object of the type Timeholder
      * @param gameTime The amount of time in seconds which the game takes
      */
-    public TimeHolder(int gameTime, int oxygenTime)
+    public TimeHolder(double gameTime, double oxygenTime)
     {
         saboteurCountdown = 5;
         timeLeft = gameTime;
@@ -92,14 +92,6 @@ public class TimeHolder extends TimerTask{
     public int getHelperCountdown()
     {
         return helperCountdown;
-    }
-    public double getOxygenLeft() 
-    {
-        return oxygenLeft;
-    }
-    public double getTimeLeft()
-    {
-        return timeLeft;
     }
 }
 
