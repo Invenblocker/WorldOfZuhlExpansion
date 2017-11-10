@@ -42,6 +42,10 @@ public class Saboteur extends RoomHopper
         ACTION_LOG = new SystemLog("Saboteur", SystemLog.getActionLog());
         ERROR_LOG = new SystemLog("Saboteur", SystemLog.getErrorLog());
     }
+
+    public Saboteur() {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
     
     /**
      * @author Invenblocker
