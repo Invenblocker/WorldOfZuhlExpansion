@@ -66,6 +66,7 @@ public class GameCommand {
                 break;
             case PRINT:
                 SystemLog.printGlobalLog();
+                break;
             default:
                 System.out.println("I don't know what you mean...\nType \"help\" for a list of commands.");
                 return false;
