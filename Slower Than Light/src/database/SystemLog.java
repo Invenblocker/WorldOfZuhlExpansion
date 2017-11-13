@@ -16,11 +16,11 @@ import java.util.ArrayList;
  */
 public class SystemLog
 {
+    private final static ArrayList<SystemLog> SYSTEM_LOGS = new ArrayList();
     private final static ArrayList<String> GLOBAL_LOG = new ArrayList();
     private final static SystemLog ERROR_LOG = new SystemLog("Error Log");
     private final static SystemLog ACTION_LOG = new SystemLog("Action Log");
     private final static String logPath = "Logs\\";
-    private final static ArrayList<SystemLog> SYSTEM_LOGS = new ArrayList();
     
     private final ArrayList<String> LOG;
     private final String NAME;

@@ -286,4 +286,9 @@ public class Helper extends RoomHopper
     {
         return(ERROR_LOG);
     }
+    
+    public String getName()
+    {
+        return(name);
+    }
 }
