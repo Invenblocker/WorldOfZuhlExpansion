@@ -2,7 +2,6 @@ package logic;
 
 import GUI.GUI;
 import database.txtLoader;
-import database.txtWriter;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashMap;
@@ -155,7 +154,7 @@ public class Game
 
     public LinkedHashMap<String, Integer> getHighScore() {return highScore;}
     
-    public GameInfo getGameInfo() {System.out.println("Game: " + gameInfo);return gameInfo;}
+    public GameInfo getGameInfo() {;return gameInfo;}
     
     public Parser getParser () {return parser;}
     

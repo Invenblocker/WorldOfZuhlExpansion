@@ -1,8 +1,6 @@
 package logic.processors;
 
 import database.SystemLog;
-import java.util.HashMap;
-import java.util.Map;
 import java.util.TimerTask;
 import logic.Game;
 import logic.GameInfo;
