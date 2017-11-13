@@ -111,7 +111,7 @@ public class GameInfo {
     }
     
     public boolean isGameFinished () {return gameFinished;}
-    public void setGameFinished(boolean value)
+    public void setGameFinished(boolean value) throws FileNotFoundException
     {
         if(value) SystemLog.saveAllLogs();
         gameFinished = value;
