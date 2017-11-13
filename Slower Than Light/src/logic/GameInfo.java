@@ -35,6 +35,7 @@ public class GameInfo {
     private int roomsRepaired;
     private int highScore;
     private boolean gameFinished;
+    
     public GameInfo(Helper helper)
     {
         this.helper = helper;

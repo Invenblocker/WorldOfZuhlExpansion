@@ -46,7 +46,6 @@ public class Game
     private Parser parser;
     private Player player;
     private Saboteur saboteur;
-    private Helper helper;
     private TimeHolder timeholder;
     private GUI gui;
     
@@ -67,12 +66,37 @@ public class Game
      * @param loader Supply the game with a loader which has loaded all of
      * the data for the game.
      */
-    public void addGameLoader(txtLoader loader)
+    public void setupGame(txtLoader loader)
     {
         rooms = loader.getRooms();
         items = loader.getItems();
         player = loader.getPlayer();
+        saboteur = loader.getSaboteur();
+        Helper helper = loader.getHelper();
         
+        // Setup Game elements
+        Game.GameSetup gameSetup = new GameSetup();
+        gameSetup.addItemsToDefaultRooms(items);
+        gameSetup.addRepairItemsToRooms(items, rooms);
+        
+        Room randomRoom = gameSetup.getRandomSaboteurStartRoom(rooms);
+        if (player == null)
+            player = new Player(randomRoom, 2);
+        if (saboteur == null)
+            saboteur = new Saboteur(randomRoom, 0.5, 0.1, 0.15);
+        if (helper == null)
+            helper = new Helper(randomRoom, "Krunk", 0.1, 0.1);
+        
+        // Setup GameInfo
+        gameInfo = new GameInfo(helper);
+        
+        // Setup GUI
+        gui = new GUI();
+        
+        // Setup Timer
+        timeholder = new TimeHolder(300, 350);
+        
+        // Game is loaded
         gameLoaded = true;
     }
     
@@ -88,29 +112,10 @@ public class Game
             return;
         }
         
-        // Setup Game elements
-        Game.GameSetup gameSetup = new GameSetup();
-        gameSetup.addItemsToDefaultRooms(items);
-        gameSetup.addRepairItemsToRooms(items, rooms);
-        
-        Room randomRoom = gameSetup.getRandomSaboteurStartRoom(rooms);
-        if (saboteur == null)
-            saboteur = new Saboteur(randomRoom, 0.5, 0.1, 0.15);
-        if (player == null)
-            player = new Player(randomRoom, 2);
-        
-        
-        //this.gameInfo = new GameInfo();
-        
-        // Setup GUI
-        gui = new GUI();
-        
         // Print welcome message
         gui.printWelcome();
         
-        
         // Setup Timer
-        timeholder = new TimeHolder(300, 350);
         Timer timer = new Timer();
         timer.schedule(timeholder, 0, 1000);
         
