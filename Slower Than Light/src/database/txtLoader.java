@@ -245,9 +245,7 @@ public class txtLoader
     Room room;
     room = rooms.get(words[1]);     //Helpers room in txt file
     Helper helper = new Helper(room, words[2], Double.parseDouble(words[4]), Double.parseDouble(words[5])); //[3]chance of discovery growht og [4] er
-   // helper.setTask(words[3]);       // SKAL LAVES!!!!!!           --------------------------------------------------------------------------------------------------------------------------------
-        
-        
+    helper.setTask(helper.getHelperTask(words[3])); 
     }
             
     

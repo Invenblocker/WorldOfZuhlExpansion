@@ -5,6 +5,7 @@
  */
 package slowerThanLight;
 
+import database.SystemLog;
 import database.txtLoader;
 import java.io.FileNotFoundException;
 import logic.Game;
