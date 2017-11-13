@@ -2,12 +2,8 @@ Room: pub ItemRoom true office ItemRoom true lab ItemRoom true controlroom Contr
 pub east true lab north true controlroom
 lab west true pub north true controlroom
 controlroom west true pub north true lab south true workshop
-
-
 Item: Tool computer office Tool hammer pub Tool
 SpecialItem: Tool ducttape Tool pc
-
-
 Player: pub 2 computer ducttape hammer
 Saboteur: pub 2.0 0.5 1.253 10.2 5
 Helper: pub Erik Bodyguard 2.5 2.0
