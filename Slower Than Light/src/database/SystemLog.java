@@ -242,37 +242,53 @@ public class SystemLog
         }
     }
     
-    public static void saveGlobalLog(String name) throws FileNotFoundException
+    public static void saveGlobalLog(String name)
     {
-        File globalLog = new File(logPath + name);
-        PrintWriter logWriter = new PrintWriter(globalLog);
-        
-        String[] log = getGlobalLog();
-        
-        for(int i = 0; i < log.length; i++)
+        try
         {
-            logWriter.println(log[i]);
+            File globalLog = new File(logPath + name);
+            PrintWriter logWriter = new PrintWriter(globalLog);
+
+            String[] log = getGlobalLog();
+
+            for(int i = 0; i < log.length; i++)
+            {
+                logWriter.println(log[i]);
+            }
+
+            logWriter.close();
         }
-        
-        logWriter.close();
+        catch(FileNotFoundException e)
+        {
+            ERROR_LOG.writeToLog("Could not save the global log.");
+            System.out.println("Could not save the global log." + e.getMessage());
+        }
     }
     
-    public void saveLog() throws FileNotFoundException
+    public void saveLog()
     {
-        File currentLog = new File(logPath + getLongName());
-        PrintWriter logWriter = new PrintWriter(currentLog);
-        
-        String[] log = getLog();
-        
-        for(int i = 0; i < log.length; i++)
+        try
         {
-            logWriter.println(log[i]);
+            File currentLog = new File(logPath + getLongName());
+            PrintWriter logWriter = new PrintWriter(currentLog);
+
+            String[] log = getLog();
+
+            for(int i = 0; i < log.length; i++)
+            {
+                logWriter.println(log[i]);
+            }
+
+            logWriter.close();
         }
-        
-        logWriter.close();
+        catch(FileNotFoundException e)
+        {
+            ERROR_LOG.writeToLog("Could not save the log" + getLongName() + '.');
+            System.out.println("Could not save the log" + getLongName() + '.' + e.getMessage());
+        }
     }
     
-    public static void saveAllLogs() throws FileNotFoundException
+    public static void saveAllLogs()
     {
         saveGlobalLog("GlobalLog.txt");
         for(SystemLog log : SYSTEM_LOGS)
