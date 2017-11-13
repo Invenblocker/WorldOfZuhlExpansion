@@ -46,7 +46,7 @@ public class Game
     private Parser parser;
     private Player player;
     private Saboteur saboteur;
-    private TimeHolder timeholder;
+    private TimeHolder timeHolder;
     private GUI gui;
     
     private boolean gameLoaded;
@@ -68,11 +68,13 @@ public class Game
      */
     public void setupGame(txtLoader loader)
     {
+        // Load elements
         rooms = loader.getRooms();
         items = loader.getItems();
         player = loader.getPlayer();
         saboteur = loader.getSaboteur();
         Helper helper = loader.getHelper();
+        timeHolder = loader.getTimeHolder();
         
         // Setup Game elements
         Game.GameSetup gameSetup = new GameSetup();
@@ -87,14 +89,15 @@ public class Game
         if (helper == null)
             helper = new Helper(randomRoom, "Krunk", 0.1, 0.1);
         
+        // Setup Timer
+        if (timeHolder == null)
+            timeHolder = new TimeHolder(300, 350);
+        
         // Setup GameInfo
         gameInfo = new GameInfo(helper);
         
         // Setup GUI
         gui = new GUI();
-        
-        // Setup Timer
-        timeholder = new TimeHolder(300, 350);
         
         // Game is loaded
         gameLoaded = true;
@@ -117,7 +120,7 @@ public class Game
         
         // Setup Timer
         Timer timer = new Timer();
-        timer.schedule(timeholder, 0, 1000);
+        timer.schedule(timeHolder, 0, 1000);
         
         // Setup user input
         GameCommand gameCommand = new GameCommand();
@@ -151,7 +154,7 @@ public class Game
     
     public Saboteur getSaboteur() {return saboteur;}
     
-    public TimeHolder getTimeHolder() {return timeholder;}
+    public TimeHolder getTimeHolder() {return timeHolder;}
     
     public GUI getGUI() {return gui;}
     
