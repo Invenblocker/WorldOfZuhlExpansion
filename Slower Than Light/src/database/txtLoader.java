@@ -44,6 +44,7 @@ public class txtLoader
         this.gameName = gameName;
         this.rooms = new HashMap<String, Room>();
         this.items = new HashMap<String, Item>();
+        this.specialItems = new HashMap<String, Item>();
     }
 
     /**
@@ -74,35 +75,44 @@ public class txtLoader
             String[] words = line.split(" ");
             if(words[0].equals("Room:")){      // adds all rooms to the hashmap rooms.
                 roomToHashMap(words);
+                System.out.println("Added rooms");
             }
             else if(words[0].equals("Item:")){
                 itemToHashMap(words);
+                System.out.println("added items");
             }
             else if(words[0].equals("Player:")){
                 initializePlayer(words);     // mangler noget, special item og item? defaultRoom
+                System.out.println("initialized player");
             }
             else if(words[0].equals("Saboteur:")){
                 initializeSaboteur(words);
+                System.out.println("initialized sab");
             }
             else if(words[0].equals("Helper:")) {
                 initializeHelper(words); 
+                System.out.println("initialized helper");
             }
             else if(words[0].equals("SpecialItem:")){
                 specialItemToHashMap(words);
+                System.out.println("added specialitems");
             }
             else if(words[0].equals("RoomsRepaired: ")){
                 int i = Integer.parseInt(words[2]);
                 while(i > 0){
                 Game.getInstance().getGameInfo().incrementRoomsRepaired();
+                    System.out.println(i);
                 i--;
                 }
             }
             else if(words[0].equals("TimeHolder: ")){
                 TimeHolder time = new TimeHolder(Double.parseDouble(words[1]), Double.parseDouble(words[2]));
                 time.setHelperCountdown(Integer.parseInt(words[3]));
+                System.out.println("added timeholder");
             }
             else{
                 addRoomExits(words);
+                System.out.println("added exits");
             }
         }
     }
@@ -163,15 +173,18 @@ public class txtLoader
         while (j < words.length) {                                                       //As long j is less than array lenght put room
 
             if (words[j].equals("ItemRoom")){
-                room = rooms.put(words[i], new ItemRoom(words[i])); 
+                rooms.put(words[i], new ItemRoom(words[i])); 
+                room = rooms.get(words[i]);
                 room.setOperating(Boolean.parseBoolean(words[k]));
             }
             else if(words[j].equals("WorkshopRoom")){
-                room = rooms.put(words[i], new WorkshopRoom(words[i])); 
+                rooms.put(words[i], new WorkshopRoom(words[i])); 
+                room = rooms.get(words[i]);
                 room.setOperating(Boolean.parseBoolean(words[k]));
             }
             else{
-                room = rooms.put(words[i], new ControlRoom(words[i])); 
+                rooms.put(words[i], new ControlRoom(words[i])); 
+                room = rooms.get(words[i]);
                 room.setOperating(Boolean.parseBoolean(words[k]));
             }
             i += 3;                                                                     //Jumps to room index in our txt
@@ -203,15 +216,20 @@ public class txtLoader
     {
     int i = 1;      //index for specialItems in txtfile
     int j = 2;
-    
-    while (j < words.length)        //As long as i is less then the length of do ->  speicialItems.put
-        if (words[i].equals("Tool"))
-        specialItems.put(words[j],new Tool(words[j]));
-        else if (words[i].equals("Item")){
-        specialItems.put(words[j],new Item(words[j])); 
+        
+    while (j < words.length){        //As long as i is less then the length of do ->  speicialItems.put
+        if (words[i].equals("Tool")){
+            System.out.println("trying specialitem with: " + words[j]);
+            specialItems.put(words[j],new Tool(words[j]));
+            
+        } else if (words[i].equals("Item")){
+            specialItems.put(words[j],new Item(words[j])); 
+            
         }
-    
-   i++;
+        i += 2;
+        j += 2;
+    }
+       
     }
       
     private void initializeSaboteur(String[] words){
@@ -226,7 +244,8 @@ public class txtLoader
     private void initializeHelper(String[] words){
     Room room;
     room = rooms.get(words[1]);     //Helpers room in txt file
-        Helper helper = new Helper(room, words[2], Double.parseDouble(words[3]), Double.parseDouble(words[4])); //[3]chance of discovery growht og [4] er
+    Helper helper = new Helper(room, words[2], Double.parseDouble(words[4]), Double.parseDouble(words[5])); //[3]chance of discovery growht og [4] er
+   // helper.setTask(words[3]);       // SKAL LAVES!!!!!!           --------------------------------------------------------------------------------------------------------------------------------
         
         
     }

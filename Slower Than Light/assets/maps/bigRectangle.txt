@@ -1,17 +1,15 @@
-Room: controlRoom ControlRoom Workshop WorkshopRoom Kitchen ItemRoom EntryRamp ItemRoom Lab ItemRoom LeftThruster ItemRoom LoadingBay ItemRoom RightThruster ItemRoom Office ItemRoom OxygenContainer ItemRoom LivingQuarters ItemRoom ShieldGenerator ItemRoom
-Kitchen down EntryRamp right ShieldGenerator
-ShieldGenerator left Kitchen down controlRoom right LivingQuarters
-LivingQuarters left ShieldGenerator down OxygenContainer
-EntryRamp up Kitchen right controlRoom down Lab
-controlRoom left EntryRamp up ShieldGenerator right OxygenContainer
-OxygenContainer up LivingQuarters left controlRoom down Office
-Lab up EntryRamp right Workshop down LeftThruster
-Workshop left Lab right Office
-Office up OxygenContainer left Workshop down RightThruster
-LeftThruster up Lab right LoadingBay
-LoadingBay left LeftThruster right RightThruster
-RightThruster left LoadingBay up Office
+Room: pub ItemRoom true office ItemRoom true lab ItemRoom true controlroom ControlRoom true workshop WorkshopRoom true
+pub east true lab north true controlroom
+lab west true pub north true controlroom
+controlroom west true pub north true lab south true workshop
 
-Player: controlRoom 2
 
-Item: Tool PC Office Tool Acid Lab Tool Knife Kitchen Tool Saw Workshop Tool Screwdriver OxygenContainer Tool Wrench ShieldGenerator Tool Blowtorch LivingQuarters Tool Jack LoadingBay Tool Crowbar LeftThruster Tool Welder RightThruster Tool ThermitePaste EntryRamp
+Item: Tool computer office Tool hammer pub Tool
+SpecialItem: Tool ducttape Tool pc
+
+
+Player: pub 2 computer ducttape hammer
+Saboteur: pub 2.0 0.5 1.253 10.2 5
+Helper: pub Erik Bodyguard 2.5 2.0
+RoomsRepaired: 2
+TimeHolder: 5 10.0 2.0
