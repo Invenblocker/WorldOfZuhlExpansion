@@ -5,6 +5,7 @@
  */
 package logic;
 
+import database.SystemLog;
 import database.txtWriter;
 import java.io.FileNotFoundException;
 import java.util.ArrayList;
@@ -112,6 +113,7 @@ public class GameInfo {
     public boolean isGameFinished () {return gameFinished;}
     public void setGameFinished(boolean value)
     {
+        if(value) SystemLog.saveAllLogs();
         gameFinished = value;
     }
     
