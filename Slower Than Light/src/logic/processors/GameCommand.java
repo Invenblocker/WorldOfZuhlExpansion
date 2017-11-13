@@ -15,6 +15,8 @@ import logic.elements.rooms.WorkshopRoom;
 import logic.user_input.Command;
 import logic.user_input.CommandWord;
 import database.SystemLog;
+import java.util.HashMap;
+import logic.elements.characters.Player;
 
 public class GameCommand {
     private Game game;
@@ -267,8 +269,14 @@ public class GameCommand {
      */
     private void helperAction(Command command) 
     {
+       
+       Room currentRoom = game.getPlayer().getCurrentRoom();
+       Room HelperCurrentRoom = game.getGameInfo().getHelper().getCurrentRoom();
        HelperTask helperTask = game.getGameInfo().getHelper().getHelperTask();
        Helper performTask = game.getGameInfo().getHelper();
+       String helperName = game.getGameInfo().getHelper().getName();
+       if (currentRoom == HelperCurrentRoom && currentRoom.isControlRoom())
+       {
        if (!command.hasSecondWord()) switch (helperTask)   
            {
                 case BODYGUARD:
@@ -285,6 +293,9 @@ public class GameCommand {
            }
         else
             System.out.println("Please type in a task for helper before hitting enter ! ");
+       }
+        System.out.println("You need to be in the control room to give" + helperName + "a control ! ");
+       return;
     }
     
     /**
