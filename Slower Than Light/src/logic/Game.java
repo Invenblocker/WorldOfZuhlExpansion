@@ -165,8 +165,9 @@ public class Game
     
         void addRepairItemsToRooms(HashMap<String, Item> items, HashMap<String, Room> rooms)
         {
-            Room room = null;
-            Item item = null;
+            if (items.isEmpty() || rooms.isEmpty())
+                return;
+            
             List itemKeys = new ArrayList(items.keySet());
             itemKeys.remove("ducttape");
             Collections.shuffle(itemKeys);                 // shuffler keys
@@ -175,13 +176,16 @@ public class Game
             {
                 if(rooms.get(roomKey) instanceof ItemRoom )
                 {
-                    room = rooms.get(roomKey);
-                    
-                    item = items.get(itemKeys.get(0));
+                    Room room = rooms.get(roomKey);
+                    Item item;
+                    item = items.get(itemKeys.remove(0));
                     
                     room.addRepairTools((Tool) item);
-                    itemKeys.remove(item.getName());
+                    //itemKeys.remove(item.getName());
                 }
+                
+                if (itemKeys.isEmpty()) //Stop assigning items if there is no more
+                    return;
             }
         }
 
