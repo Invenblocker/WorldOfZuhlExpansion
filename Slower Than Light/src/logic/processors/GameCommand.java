@@ -274,7 +274,7 @@ public class GameCommand {
        Room HelperCurrentRoom = game.getGameInfo().getHelper().getCurrentRoom();
        HelperTask helperTask = game.getGameInfo().getHelper().getHelperTask();
        Helper performTask = game.getGameInfo().getHelper();
-       Helper helperName = game.getGameInfo().getHelper().getName();
+       String helperName = game.getGameInfo().getHelper().getName();
        if (currentRoom == HelperCurrentRoom && currentRoom.isControlRoom())
        {
        if (!command.hasSecondWord()) switch (helperTask)   
