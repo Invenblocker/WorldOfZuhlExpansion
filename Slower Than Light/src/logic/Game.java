@@ -2,6 +2,7 @@ package logic;
 
 import GUI.GUI;
 import database.txtLoader;
+import database.txtWriter;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashMap;
@@ -19,6 +20,7 @@ import logic.elements.rooms.Room;
 import logic.processors.GameCommand;
 import logic.processors.TimeHolder;
 import logic.user_input.Command;
+import logic.user_input.CommandWord;
 import logic.user_input.Parser;
 
 /**
@@ -132,7 +134,7 @@ public class Game
         // Setup user input
         GameCommand gameCommand = new GameCommand();
         parser = new Parser();
-        
+        gameCommand.processCommand(new Command(CommandWord.SAVE, ""));
         // Game loop
         while (!gameInfo.isGameFinished()) {
             Command command = parser.getCommand();

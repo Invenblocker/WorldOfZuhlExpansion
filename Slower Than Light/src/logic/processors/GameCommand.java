@@ -60,6 +60,9 @@ public class GameCommand {
             case INVENTORY:
                 printInventory();
                 break;
+            case SAVE:
+                saveGame();
+                break;
             case HELP:
                 game.getGUI().printHelp();
                 break;
