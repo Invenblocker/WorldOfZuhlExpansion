@@ -5,13 +5,15 @@
  */
 package logic.elements.characters;
 
+import database.SystemLog;
+
 /**
  *
  * @author barth_000
  */
 public enum HelperTask
 {
-    SEARCH("search"), BODYGUARD("bodyuard"), RETURN_TO_DEFAULT("return");
+    SEARCH("search"), BODYGUARD("bodyguard"), RETURN_TO_DEFAULT("return");
     
     private final String COMMAND_STRING;
     
@@ -23,5 +25,21 @@ public enum HelperTask
     public String toString()
     {
         return(COMMAND_STRING);
+    }
+    
+    public static HelperTask getHelperTask(String task)
+    {
+        switch (task.toLowerCase())
+        {
+            case "search":
+                return SEARCH;
+            case "bodyguard":
+                return BODYGUARD;
+            case "return": case "stay":
+                return RETURN_TO_DEFAULT;
+            default:
+                SystemLog.getErrorLog().writeToLog("The specified command is not a HelperTask.");
+                return RETURN_TO_DEFAULT;
+        }
     }
 }
