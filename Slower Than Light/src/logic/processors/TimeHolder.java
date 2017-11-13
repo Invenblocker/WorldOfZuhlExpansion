@@ -24,6 +24,7 @@ public class TimeHolder extends TimerTask{
     public TimeHolder(double gameTime, double oxygenTime)
     {
         saboteurCountdown = 5;
+        helperCountdown = 0;
         timeLeft = gameTime;
         oxygenLeft = oxygenTime;
         game = Game.getInstance();
@@ -80,6 +81,9 @@ public class TimeHolder extends TimerTask{
     {
         this.helperCountdown = value;
     }
+    
+    public int getSaboteurCountdown () {return saboteurCountdown;}
+    
     public int getHelperCountdown()
     {
         return helperCountdown;

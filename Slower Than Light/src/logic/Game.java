@@ -3,7 +3,6 @@ package logic;
 import GUI.GUI;
 import database.txtLoader;
 import java.util.ArrayList;
-import java.util.Collection;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.LinkedHashMap;
@@ -20,7 +19,6 @@ import logic.elements.rooms.Room;
 import logic.processors.GameCommand;
 import logic.processors.TimeHolder;
 import logic.user_input.Command;
-import logic.user_input.CommandWord;
 import logic.user_input.Parser;
 
 /**
@@ -48,6 +46,7 @@ public class Game
     private Parser parser;
     private Player player;
     private Saboteur saboteur;
+    private Helper helper;
     private TimeHolder timeholder;
     private GUI gui;
     
@@ -94,13 +93,17 @@ public class Game
         gameSetup.addItemsToDefaultRooms(items);
         gameSetup.addRepairItemsToRooms(items, rooms);
         
-        this.gameInfo = new GameInfo();
+        Room randomRoom = gameSetup.getRandomSaboteurStartRoom(rooms);
+        if (saboteur == null)
+            saboteur = new Saboteur(randomRoom, 0.5, 0.1, 0.15);
+        if (player == null)
+            player = new Player(randomRoom, 2);
+        
+        
+        //this.gameInfo = new GameInfo();
         
         // Setup GUI
-        Room randomRoom = gameSetup.getRandomSaboteurStartRoom(rooms);
-        saboteur = new Saboteur(randomRoom, 0.5, 0.1, 0.15);
         gui = new GUI();
-        
         
         // Print welcome message
         gui.printWelcome();
@@ -148,7 +151,7 @@ public class Game
     public GUI getGUI() {return gui;}
     
     
-    static class GameSetup
+    private static class GameSetup
     {
         void addItemsToDefaultRooms(HashMap<String, Item> items)
         {
