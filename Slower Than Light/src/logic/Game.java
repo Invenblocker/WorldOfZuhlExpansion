@@ -74,7 +74,6 @@ public class Game
         player = loader.getPlayer();
         saboteur = loader.getSaboteur();
         Helper helper = loader.getHelper();
-        timeHolder = loader.getTimeHolder();
         
         // Setup Game elements
         Game.GameSetup gameSetup = new GameSetup();
@@ -89,12 +88,20 @@ public class Game
         if (helper == null)
             helper = new Helper(randomRoom, "Krunk", 0.1, 0.1);
         
-        // Setup Timer
-        if (timeHolder == null)
-            timeHolder = new TimeHolder(300, 350);
-        
         // Setup GameInfo
         gameInfo = new GameInfo(helper);
+        
+        // Setup Timer
+        if (loader.getTimeHolder() == null)
+        {
+            timeHolder = new TimeHolder(300, 350);
+            timeHolder.setupReferences();
+        }
+        else
+        {
+            timeHolder = loader.getTimeHolder();
+            timeHolder.setupReferences();
+        }
         
         // Setup GUI
         gui = new GUI();
@@ -146,7 +153,7 @@ public class Game
 
     public LinkedHashMap<String, Integer> getHighScore() {return highScore;}
     
-    public GameInfo getGameInfo() {return gameInfo;}
+    public GameInfo getGameInfo() {System.out.println("Game: " + gameInfo);return gameInfo;}
     
     public Parser getParser () {return parser;}
     

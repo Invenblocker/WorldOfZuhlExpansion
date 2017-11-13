@@ -1,5 +1,6 @@
 package logic.processors;
 
+import database.SystemLog;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.TimerTask;
@@ -27,12 +28,11 @@ public class TimeHolder extends TimerTask{
         helperCountdown = 0;
         timeLeft = gameTime;
         oxygenLeft = oxygenTime;
-        game = Game.getInstance();
-        gameInfo = game.getGameInfo();
     }
 
     @Override
-    public void run() {
+    public void run()
+    {
         if (!gameInfo.isGameFinished()) {    
             if (gameInfo.getDestroyedRoomsPercentage() > gameInfo.getALLOWED_ROOMS_DESTROYED_PERCENTAGE() || timeLeft <= 0 || oxygenLeft <= 0) {
                 gameInfo.setGameFinished(true);
@@ -71,6 +71,21 @@ public class TimeHolder extends TimerTask{
             oxygenLeft -= 1;
         }
          
+    }
+    
+    public void setupReferences ()
+    {
+        if (game == null)
+        {
+            game = Game.getInstance();
+            gameInfo = game.getGameInfo();
+        }
+        else
+        {
+            String msg = "Could not add a reference to Game in TimeHolder";
+            SystemLog.getErrorLog().writeToLog(msg);
+            System.out.println(msg);
+        }
     }
 
     public void setSaboteurCountdown(int value) 
