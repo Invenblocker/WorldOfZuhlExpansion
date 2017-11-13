@@ -294,9 +294,10 @@ public class GameCommand {
     private void saveGame() 
     {
         txtWriter.saveGame(game.getRooms(), game.getItems(), game.getPlayer(),
-        game.getSaboteur(), game.getGameInfo().getHelper(),0,
-        game.getTimeHolder().getTimeLeft(),GUI.saveName());
+                           game.getSaboteur(), game.getGameInfo().getHelper(),game.getGameInfo().getRoomsRepaired(),
+                           game.getTimeHolder(),"Player Name");
     }
+    
     /**
      * Quits the game if no second word has been entered by the player.
      * @param command The command entered by the player

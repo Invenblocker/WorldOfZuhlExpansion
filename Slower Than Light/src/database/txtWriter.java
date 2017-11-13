@@ -28,15 +28,25 @@ import logic.processors.TimeHolder;
  */
 public class txtWriter {
     
-  public static void saveGame (HashMap<String, Room> rooms, HashMap<String, Item> items, Player player, Saboteur saboteur, 
-            Helper helper, int roomsRepaired, TimeHolder time, String saveName) throws FileNotFoundException
-  {
-     Exit exit = null;
-     File newSave = new File(saveName);
-     PrintWriter txtWriter = new PrintWriter(newSave);   // overrides the txt file if the name already exits. Otherwise it creates a new file with the name.
-     
-     
-     txtWriter.print("Room: ");
+    public static void saveGame (HashMap<String, Room> rooms, HashMap<String, Item> items, Player player, Saboteur saboteur, 
+            Helper helper, int roomsRepaired, TimeHolder time, String saveName)
+    {
+        Exit exit = null;
+        File newSave = new File(saveName);
+        PrintWriter txtWriter = null;
+        try
+        {// overrides the txt file if the name already exits. Otherwise it creates a new file with the name.
+            txtWriter = new PrintWriter(newSave);
+        }
+        catch (FileNotFoundException e)
+        {
+            String msg = "Cannot setup the write file in txtWriter";
+            SystemLog.getErrorLog().writeToLog(msg);
+            System.out.println(msg + "\n" + e.getMessage());
+            return;
+        }
+        
+        txtWriter.print("Room: ");
       for(String key : rooms.keySet()){
           txtWriter.print(key + " ");
           if(rooms.get(key) instanceof ItemRoom){

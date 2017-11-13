@@ -84,6 +84,7 @@ public class GameInfo {
 
     public Room[] getDestroyedRooms() {return destroyedRooms.toArray(new Room[0]);}
     
+    public int getRoomsRepaired () {return roomsRepaired;}
     public void incrementRoomsRepaired() 
     {
         roomsRepaired++;
@@ -111,9 +112,12 @@ public class GameInfo {
     }
     
     public boolean isGameFinished () {return gameFinished;}
-    public void setGameFinished(boolean value) throws FileNotFoundException
+    public void setGameFinished(boolean value)
     {
-        if(value) SystemLog.saveAllLogs();
+        if(value == gameFinished)
+            return;
+        
+        SystemLog.saveAllLogs();
         gameFinished = value;
     }
     
