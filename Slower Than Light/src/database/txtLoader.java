@@ -312,4 +312,18 @@ public class txtLoader
             k += 3;
         }
     }
+
+    public Saboteur getSaboteur() {
+        return saboteur;
+    }
+
+    public Helper getHelper() {
+        return helper;
+    }
+
+    public TimeHolder getTimeHolder() {
+        return timeHolder;
+    }
+    
+    
 }
