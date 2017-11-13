@@ -21,8 +21,9 @@ public class SlowerThanLight {
     public static void main(String[] args) throws FileNotFoundException {
         // TODO code application logic here
         Game game = Game.getInstance();
-        txtLoader loader = new txtLoader();
-        loader.loadGame("assets/maps/bigRectangle.txt");
+        txtLoader loader = new txtLoader("assets/maps/bigRectangle.txt");
+        loader.newGame();
+        
         game.addGameLoader(loader);
         game.play();
     }
