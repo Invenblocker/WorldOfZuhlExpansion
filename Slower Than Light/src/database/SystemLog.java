@@ -272,7 +272,7 @@ public class SystemLog
         logWriter.close();
     }
     
-    public void saveAllLogs() throws FileNotFoundException
+    public static void saveAllLogs() throws FileNotFoundException
     {
         saveGlobalLog("GlobalLog.txt");
         for(SystemLog log : SYSTEM_LOGS)
