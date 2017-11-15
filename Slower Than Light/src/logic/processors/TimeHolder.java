@@ -1,6 +1,6 @@
 package logic.processors;
 
-import database.SystemLog;
+import logic.SystemLog;
 import java.util.TimerTask;
 import logic.Game;
 import logic.GameInfo;

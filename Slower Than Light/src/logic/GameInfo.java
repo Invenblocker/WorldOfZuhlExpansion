@@ -5,7 +5,6 @@
  */
 package logic;
 
-import database.SystemLog;
 import database.txtWriter;
 import java.io.FileNotFoundException;
 import java.util.ArrayList;

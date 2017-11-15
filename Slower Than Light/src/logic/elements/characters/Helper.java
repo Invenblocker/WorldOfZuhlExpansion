@@ -5,7 +5,7 @@
  */
 package logic.elements.characters;
 
-import database.SystemLog;
+import logic.SystemLog;
 import java.util.ArrayList;
 import logic.Game;
 import logic.elements.rooms.Exit;
