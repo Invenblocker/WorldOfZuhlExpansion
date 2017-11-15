@@ -269,7 +269,6 @@ public class SystemLog
     {
         try
         {
-            System.out.println(getLongName());
             File currentLog = new File(logPath + getLongName() + ".txt");
             PrintWriter logWriter = new PrintWriter(currentLog);
 
@@ -291,6 +290,7 @@ public class SystemLog
     
     public static void saveAllLogs()
     {
+        System.out.println("SAVING ALL LOGS");
         saveGlobalLog("GlobalLog.txt");
         for(SystemLog log : SYSTEM_LOGS)
         {

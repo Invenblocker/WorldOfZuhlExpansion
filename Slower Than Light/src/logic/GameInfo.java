@@ -118,7 +118,6 @@ public class GameInfo {
         if(value == gameFinished)
             return;
         
-        SystemLog.saveAllLogs();
         gameFinished = value;
     }
     
