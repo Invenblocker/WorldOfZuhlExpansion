@@ -269,7 +269,8 @@ public class SystemLog
     {
         try
         {
-            File currentLog = new File(logPath + getLongName());
+            System.out.println(getLongName());
+            File currentLog = new File(logPath + getLongName() + ".txt");
             PrintWriter logWriter = new PrintWriter(currentLog);
 
             String[] log = getLog();
@@ -301,7 +302,7 @@ public class SystemLog
     {
         if(PARENT_LOG != null)
         {
-            return(PARENT_LOG.getLongName() + ": " + getName());
+            return(PARENT_LOG.getLongName() + " - " + getName());
         }
         else
         {
