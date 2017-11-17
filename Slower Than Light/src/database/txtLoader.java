@@ -52,7 +52,7 @@ public class txtLoader
         this.player = new Player(null, 0);
         this.saboteur = new Saboteur(null, 0, 0, 0);
         this.helper = new Helper(null, null, 0, 0);
-        this.timeHolder = new TimeHolder(0, 0);
+        this.timeHolder = new TimeHolder();
     }
 
     /**
