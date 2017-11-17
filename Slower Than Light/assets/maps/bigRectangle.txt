@@ -1,7 +1,7 @@
 Room: pub ItemRoom true office ItemRoom true lab ItemRoom true controlroom ControlRoom true workshop WorkshopRoom true
-pub east true lab north true controlroom
-lab west true pub north true controlroom
-controlroom west true pub north true lab south true workshop
+pub right true lab up true controlroom
+lab down true pub up true controlroom
+controlroom left true pub up true lab down true workshop
 Item: Tool computer office Tool hammer pub Tool
 SpecialItem: Tool ducttape Tool pc
 Player: controlroom 2 computer ducttape hammer

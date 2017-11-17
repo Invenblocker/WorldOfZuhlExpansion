@@ -69,26 +69,26 @@ public class txtWriter {
         
         for(String key : rooms.keySet()){
             txtWriter.print(key + " ");
-            if(rooms.get(key).getExit("north") != null){
-                txtWriter.print("north ");
+            if(rooms.get(key).getExit("up") != null){
+                txtWriter.print("up ");
                 exit = rooms.get(key).getExit(rooms.get(key)); 
                 txtWriter.print(exit.isOperating());               // prints the boolean value to the txt file
                 txtWriter.print(rooms.get(key).getExit(exit));     // prints the room on the opposing side of the exit to the txt file.
             } 
-            if(rooms.get(key).getExit("south") != null) {
-                txtWriter.print("south ");
+            if(rooms.get(key).getExit("down") != null) {
+                txtWriter.print("down ");
                 exit = rooms.get(key).getExit(rooms.get(key));
                 txtWriter.print(exit.isOperating());
                 txtWriter.print(rooms.get(key).getExit(exit));
             }
-            if(rooms.get(key).getExit("west") != null) {
-                txtWriter.print("west ");
+            if(rooms.get(key).getExit("left") != null) {
+                txtWriter.print("left ");
                 exit = rooms.get(key).getExit(rooms.get(key));
                 txtWriter.print(exit.isOperating());
                 txtWriter.print(rooms.get(key).getExit(exit));
             }
-            if(rooms.get(key).getExit("east") != null) {
-                txtWriter.print("east "); // direction
+            if(rooms.get(key).getExit("right") != null) {
+                txtWriter.print("right "); // direction
                 exit = rooms.get(key).getExit(rooms.get(key)); 
                 txtWriter.print(exit.isOperating()); // isOperating
                 txtWriter.print(rooms.get(key).getExit(exit)); // Room connected
