@@ -100,12 +100,15 @@ public class Saboteur extends RoomHopper
                 ArrayList<Exit> neighbors = getCurrentRoom().getCollectionOfExits();
                 
                 for(int i = neighbors.size() - 1; i >= 0; i--)
-                {
                     if(getCurrentRoom().getExit(neighbors.get(i)).isControlRoom() || !neighbors.get(i).isOperating())
-                    {
                         neighbors.remove(i);
-                    }
+                
+                if (neighbors.isEmpty())
+                {
+                    ACTION_LOG.writeToLog("Saboteur tried to move, but all exits where removed. Current room: \"" + getCurrentRoom().getName() + "\".");
+                    return -1;
                 }
+                
                 int exitIndex = (int) (Math.floor(Math.random() * neighbors.size()));
                 
                 setRoom(getCurrentRoom().getExit(neighbors.get(exitIndex)));
