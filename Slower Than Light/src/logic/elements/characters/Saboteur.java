@@ -101,7 +101,7 @@ public class Saboteur extends RoomHopper
                 
                 for(int i = neighbors.size() - 1; i >= 0; i--)
                 {
-                    if(getCurrentRoom().getExit(neighbors.get(i)).isControlRoom() || neighbors.get(i).isOperating())
+                    if(getCurrentRoom().getExit(neighbors.get(i)).isControlRoom() || !neighbors.get(i).isOperating())
                     {
                         neighbors.remove(i);
                     }
