@@ -94,15 +94,11 @@ public class Game
         
         // Setup Timer
         if (loader.getTimeHolder() == null)
-        {
             timeHolder = new TimeHolder(300, 350);
-            timeHolder.setupReferences();
-        }
         else
-        {
             timeHolder = loader.getTimeHolder();
-            timeHolder.setupReferences();
-        }
+        
+        timeHolder.setupReferences();
         
         // Setup GUI
         gui = new GUI();
@@ -134,16 +130,22 @@ public class Game
         GameCommand gameCommand = new GameCommand();
         parser = new Parser();
         gameCommand.processCommand(new Command(CommandWord.SAVE, ""));
+        
         // Game loop
-        while (!gameInfo.isGameFinished()) {
-            Command command = parser.getCommand();
-            boolean gameFinished = gameCommand.processCommand(command);
-            gameInfo.setGameFinished(gameFinished);
-        }
+        try
+        {
+            while (!gameInfo.isGameFinished())
+            {
+                Command command = parser.getCommand();
+                boolean gameFinished = gameCommand.processCommand(command);
+                gameInfo.setGameFinished(gameFinished);
+            }
+        } 
+        finally {SystemLog.saveAllLogs(); /* Save logs no matter what*/}
         
         // Game end
         timer.cancel();
-        SystemLog.saveAllLogs();
+        
         System.out.println("Thank you for playing.  Goodbye.");
     }
     
