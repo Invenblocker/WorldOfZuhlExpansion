@@ -1,11 +1,20 @@
-Room: pub ItemRoom true office ItemRoom true lab ItemRoom true controlroom ControlRoom true workshop WorkshopRoom true
-pub right true lab up true controlroom
-lab down true pub up true controlroom
-controlroom left true pub up true lab down true workshop
-Item: Tool computer office Tool hammer pub Tool
+Room: controlRoom ControlRoom true Workshop WorkshopRoom true Kitchen ItemRoom true EntryRamp ItemRoom true Lab ItemRoom true LeftThruster ItemRoom true LoadingBay ItemRoom true RightThruster ItemRoom true Office ItemRoom true OxygenContainer ItemRoom true LivingQuarters ItemRoom true ShieldGenerator ItemRoom true
+Kitchen down true EntryRamp right true ShieldGenerator
+ShieldGenerator left true Kitchen down true controlRoom right true LivingQuarters
+LivingQuarters left true ShieldGenerator down true OxygenContainer
+EntryRamp up true Kitchen right true controlRoom down true Lab
+controlRoom left true EntryRamp up true ShieldGenerator right true OxygenContainer
+OxygenContainer up true LivingQuarters left true controlRoom down true Office
+Lab up true EntryRamp right true Workshop down true LeftThruster
+Workshop left true Lab right true Office
+Office up true OxygenContainer left true Workshop down true RightThruster
+LeftThruster up true Lab right true LoadingBay
+LoadingBay left true LeftThruster right true RightThruster
+RightThruster left true LoadingBay up true Office
 SpecialItem: Tool ducttape Tool pc
-Player: controlroom 2 computer ducttape hammer
+Item: Tool PC Office Tool Acid Lab Tool Knife Kitchen Tool Saw Workshop Tool Screwdriver OxygenContainer Tool Wrench ShieldGenerator Tool Blowtorch LivingQuarters Tool Jack LoadingBay Tool Crowbar LeftThruster Tool Welder RightThruster Tool ThermitePaste EntryRamp
+Player: controlRoom 2 computer ducttape
 Saboteur: pub 2.0 0.5 1.253 10.2 5
 Helper: pub Erik Bodyguard 2.5 2.0
 RoomsRepaired: 2
-TimeHolder: 5 10.0 2.0
+TimeHolder: 5.0 10.0 2 3
