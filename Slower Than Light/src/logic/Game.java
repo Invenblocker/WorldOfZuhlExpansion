@@ -129,7 +129,7 @@ public class Game
         // Setup user input
         GameCommand gameCommand = new GameCommand();
         parser = new Parser();
-        gameCommand.processCommand(new Command(CommandWord.SAVE, ""));
+        //gameCommand.processCommand(new Command(CommandWord.SAVE, ""));
         
         // Game loop
         try

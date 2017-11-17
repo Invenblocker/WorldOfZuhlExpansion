@@ -17,4 +17,4 @@ Player: controlRoom 2 computer ducttape
 Saboteur: pub 2.0 0.5 1.253 10.2 5
 Helper: pub Erik Bodyguard 2.5 2.0
 RoomsRepaired: 2
-TimeHolder: 5.0 10.0 2 3
+TimeHolder: 10 20 5.0 10.0
