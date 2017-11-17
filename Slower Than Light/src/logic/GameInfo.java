@@ -30,7 +30,8 @@ public class GameInfo {
     private Exit hackedExit;
     private Helper helper;
     private int roomsRepaired;
-    private int highScore;
+    private LinkedHashMap<String, Integer> highScoreMap;
+    private int score;
     private boolean gameFinished;
     
     public GameInfo(Helper helper)
@@ -39,7 +40,7 @@ public class GameInfo {
         destroyedRoomsPercentage = 0;
         destroyedRooms = new ArrayList<>();
         roomsRepaired = 0;
-        highScore = 0;
+        score = 0;
         gameFinished = false;
     }
     
@@ -65,17 +66,17 @@ public class GameInfo {
     {
         int destroyedRoomsCount = destroyedRooms.size();
         double oxygenLeft = Game.getInstance().getTimeHolder().getOxygenLeft();
-        highScore = (int) ((roomsRepaired * 5) + (oxygenLeft * 5) - (destroyedRoomsCount * 2)); 
+        int helperAlivePoints = getHelper() != null? 20 : 0;
+        score = (int) ((roomsRepaired * 5) + (oxygenLeft * 5) - (destroyedRoomsCount * 2) + helperAlivePoints); 
     }
     
-    public LinkedHashMap<String, Integer> saveHighScore(String name) throws FileNotFoundException 
+    public LinkedHashMap<String, Integer> saveHighScore(String playerName)
     {
-        LinkedHashMap<String, Integer> highScoreHashMap = Game.getInstance().getHighScore();
-        highScoreHashMap.put(name, highScore);
-        sortHighScore(highScoreHashMap);
-        txtWriter.writeHighScore(highScoreHashMap, name);
+        highScoreMap.put(playerName, score);
+        sortHighScore(highScoreMap);
+        txtWriter.writeHighScore(highScoreMap, playerName);
         
-        return highScoreHashMap;
+        return highScoreMap;
     }
     
     public double getALLOWED_ROOMS_DESTROYED_PERCENTAGE() {return ALLOWED_ROOMS_DESTROYED_PERCENTAGE;}
@@ -94,6 +95,7 @@ public class GameInfo {
     {
         return hackedExit;
     }
+    
     public void setHackedExit(Exit value)
     {
         if(value == hackedExit)
@@ -112,6 +114,10 @@ public class GameInfo {
     {
         helper = null;
     }
+
+    public LinkedHashMap<String, Integer> getHighScoreMap () {return highScoreMap;}
+    
+    public int getScore () {return score;}
     
     public boolean isGameFinished () {return gameFinished;}
     public void setGameFinished(boolean value)

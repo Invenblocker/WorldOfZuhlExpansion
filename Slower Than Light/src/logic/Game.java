@@ -40,7 +40,6 @@ public class Game
     private HashMap<String, Room>rooms;
     private HashMap<String, Item>items;
     private HashMap<String, Item>specialItems;
-    private LinkedHashMap<String, Integer>highScore;
     
     private GameInfo gameInfo;
     private Parser parser;
@@ -158,8 +157,6 @@ public class Game
     public HashMap<String, Item> getItems() {return items;}
 
     public HashMap<String, Item> getSpecialItems() {return specialItems;}
-
-    public LinkedHashMap<String, Integer> getHighScore() {return highScore;}
     
     public GameInfo getGameInfo() {;return gameInfo;}
     
