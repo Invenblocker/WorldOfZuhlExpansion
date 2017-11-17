@@ -36,7 +36,6 @@ public class TimeHolder extends TimerTask{
         this();
         timeLeft = gameTime;
         oxygenLeft = oxygenTime;
-        System.out.println("Con: " + getTimeLeft());
     }
 
     @Override
@@ -45,11 +44,15 @@ public class TimeHolder extends TimerTask{
         if (!gameInfo.isGameFinished()) {    
             if (gameInfo.getDestroyedRoomsPercentage() > gameInfo.getALLOWED_ROOMS_DESTROYED_PERCENTAGE() || timeLeft <= 0 || oxygenLeft <= 0) {
                 gameInfo.setGameFinished(true);
-                System.out.println("Game finished: " + getTimeLeft());
                 return;
             }
-            
-                if (saboteurCountdown == 0) {
+                if (game.getSaboteur().getStunCountdown() != 0)
+                {
+                    game.getSaboteur().decrementStunCountdown();
+                    System.out.println("Decrement stun countdown");
+                }
+                else if (saboteurCountdown == 0)
+                {
                     int newCountdown = game.getSaboteur().performAction();
                         if(game.getSaboteur().getCurrentRoom() == game.getPlayer().getCurrentRoom())
                         {

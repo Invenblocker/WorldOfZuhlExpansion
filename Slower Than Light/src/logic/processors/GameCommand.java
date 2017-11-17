@@ -1,10 +1,8 @@
 package logic.processors;
 
-import GUI.GUI;
 import database.txtWriter;
 import java.util.ArrayList;
 import logic.Game;
-import logic.GameInfo;
 import logic.elements.characters.Helper;
 import logic.elements.characters.HelperTask;
 import logic.elements.characters.Item;
@@ -15,8 +13,6 @@ import logic.elements.rooms.WorkshopRoom;
 import logic.user_input.Command;
 import logic.user_input.CommandWord;
 import logic.SystemLog;
-import java.util.HashMap;
-import logic.elements.characters.Player;
 
 public class GameCommand {
     private Game game;

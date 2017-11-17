@@ -118,7 +118,7 @@ public class GameInfo {
     {
         if(value == gameFinished)
             return;
-        
+        System.out.println("Game finished set to " + value);
         gameFinished = value;
     }
     

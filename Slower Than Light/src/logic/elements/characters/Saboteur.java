@@ -66,7 +66,7 @@ public class Saboteur extends RoomHopper
         }
         else
         {
-            if((getCurrentRoom().isOperating() || Game.getInstance().getGameInfo().getHackedExit().equals(null)) && Math.random() < chanceOfSabotage)
+            if((getCurrentRoom().isOperating() || Game.getInstance().getGameInfo().getHackedExit() == null) && Math.random() < chanceOfSabotage)
             {
                 if(!getCurrentRoom().isOperating())
                 {
@@ -75,7 +75,7 @@ public class Saboteur extends RoomHopper
                     Game.getInstance().getGameInfo().setHackedExit(getCurrentRoom().getCollectionOfExits().get(sabotageExit));
                     ACTION_LOG.writeToLog("Sabotaged the exit between \"the " + getCurrentRoom().getName() + "\" and \"the " + getCurrentRoom().getExit(getCurrentRoom().getCollectionOfExits().get(sabotageExit)).getName() + "\".");
                 }
-                else if(!Game.getInstance().getGameInfo().getHackedExit().equals(null))
+                else if(Game.getInstance().getGameInfo().getHackedExit() != null)
                 {
                     getCurrentRoom().setOperating(false);
                     ACTION_LOG.writeToLog("Sabotaged the room: \"" + getCurrentRoom().getName() + "\".");

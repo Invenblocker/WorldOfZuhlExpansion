@@ -33,7 +33,7 @@ public class txtWriter {
             Helper helper, int roomsRepaired, TimeHolder time, String saveName)
     {
         Exit exit = null;
-        File newSave = new File(saveName);
+        File newSave = new File("D:\\Users\\Erik\\Desktop\\" + saveName + ".txt");
         PrintWriter txtWriter = null;
         try
         {// overrides the txt file if the name already exits. Otherwise it creates a new file with the name.
