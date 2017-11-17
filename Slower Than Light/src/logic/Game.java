@@ -47,7 +47,7 @@ public class Game
     private Player player;
     private Saboteur saboteur;
     private TimeHolder timeHolder;
-    private GUIController gui;
+    private GUIController guiController;
     
     private boolean gameLoaded;
     
@@ -100,7 +100,7 @@ public class Game
         timeHolder.setupReferences();
         
         // Setup GUI
-        gui = new GUIController();
+        guiController = new GUIController();
         
         // Game is loaded
         gameLoaded = true;
@@ -119,7 +119,7 @@ public class Game
         }
         
         // Print welcome message
-        gui.printWelcome();
+        guiController.printWelcome();
         
         // Setup Timer
         Timer timer = new Timer();
@@ -171,7 +171,7 @@ public class Game
     
     public TimeHolder getTimeHolder() {return timeHolder;}
     
-    public GUIController getGUI() {return gui;}
+    public GUIController getGUI() {return guiController;}
     
     
     private static class GameSetup
