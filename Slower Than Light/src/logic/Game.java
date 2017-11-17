@@ -1,6 +1,6 @@
 package logic;
 
-import GUI.GUI;
+import GUI.GUIController;
 import database.txtLoader;
 import java.util.ArrayList;
 import java.util.Collections;
@@ -19,7 +19,6 @@ import logic.elements.rooms.Room;
 import logic.processors.GameCommand;
 import logic.processors.TimeHolder;
 import logic.user_input.Command;
-import logic.user_input.CommandWord;
 import logic.user_input.Parser;
 
 /**
@@ -48,7 +47,7 @@ public class Game
     private Player player;
     private Saboteur saboteur;
     private TimeHolder timeHolder;
-    private GUI gui;
+    private GUIController gui;
     
     private boolean gameLoaded;
     
@@ -101,7 +100,7 @@ public class Game
         timeHolder.setupReferences();
         
         // Setup GUI
-        gui = new GUI();
+        gui = new GUIController();
         
         // Game is loaded
         gameLoaded = true;
@@ -172,7 +171,7 @@ public class Game
     
     public TimeHolder getTimeHolder() {return timeHolder;}
     
-    public GUI getGUI() {return gui;}
+    public GUIController getGUI() {return gui;}
     
     
     private static class GameSetup

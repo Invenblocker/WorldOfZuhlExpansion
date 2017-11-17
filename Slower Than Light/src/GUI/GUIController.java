@@ -14,12 +14,12 @@ import logic.elements.rooms.Room;
  *
  * @author Erik
  */
-public class GUI
+public class GUIController
 {
     private MiniMap minimap;
     private Log log;
     
-    public GUI()
+    public GUIController()
     {
         this.minimap = new MiniMap();       //Creates new minimap object
         this.log = new Log(5);
