@@ -1,0 +1,21 @@
+Action Log: Helper (Erik): The helper "Erik" had its task set to "bodyguard".
+Error Log: The exit stored by the room "workshop" stores an empty exit in the direction "north".
+Error Log: The exit stored by the room "workshop" stores an empty exit in the direction "south".
+Error Log: The exit stored by the room "workshop" stores an empty exit in the direction "west".
+Error Log: The exit stored by the room "workshop" stores an empty exit in the direction "east".
+Error Log: The room "controlroom" does not have an exit in the direction "north".
+Error Log: The room "controlroom" does not have an exit in the direction "south".
+Error Log: The room "controlroom" does not have an exit in the direction "west".
+Error Log: The exit stored by the room "controlroom" stores an empty exit in the direction "east".
+Error Log: The exit stored by the room "office" stores an empty exit in the direction "north".
+Error Log: The exit stored by the room "office" stores an empty exit in the direction "south".
+Error Log: The exit stored by the room "office" stores an empty exit in the direction "west".
+Error Log: The exit stored by the room "office" stores an empty exit in the direction "east".
+Error Log: The room "pub" does not have an exit in the direction "north".
+Error Log: The exit stored by the room "pub" stores an empty exit in the direction "south".
+Error Log: The exit stored by the room "pub" stores an empty exit in the direction "west".
+Error Log: The room "pub" does not have an exit in the direction "east".
+Error Log: The room "lab" does not have an exit in the direction "north".
+Error Log: The exit stored by the room "lab" stores an empty exit in the direction "south".
+Error Log: The room "lab" does not have an exit in the direction "west".
+Error Log: The exit stored by the room "lab" stores an empty exit in the direction "east".

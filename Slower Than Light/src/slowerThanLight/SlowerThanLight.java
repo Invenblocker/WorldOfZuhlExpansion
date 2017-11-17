@@ -24,7 +24,7 @@ public class SlowerThanLight {
         txtLoader loader = new txtLoader("assets/maps/bigRectangle.txt");
         loader.newGame();
         
-        game.addGameLoader(loader);
+        game.setupGame(loader);
         game.play();
     }
     

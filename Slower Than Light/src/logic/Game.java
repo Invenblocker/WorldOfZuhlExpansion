@@ -3,7 +3,6 @@ package logic;
 import GUI.GUI;
 import database.txtLoader;
 import java.util.ArrayList;
-import java.util.Collection;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.LinkedHashMap;
@@ -48,7 +47,7 @@ public class Game
     private Parser parser;
     private Player player;
     private Saboteur saboteur;
-    private TimeHolder timeholder;
+    private TimeHolder timeHolder;
     private GUI gui;
     
     private boolean gameLoaded;
@@ -68,12 +67,47 @@ public class Game
      * @param loader Supply the game with a loader which has loaded all of
      * the data for the game.
      */
-    public void addGameLoader(txtLoader loader)
+    public void setupGame(txtLoader loader)
     {
+        // Load elements
         rooms = loader.getRooms();
         items = loader.getItems();
         player = loader.getPlayer();
+        saboteur = loader.getSaboteur();
+        Helper helper = loader.getHelper();
         
+        // Setup Game elements
+        Game.GameSetup gameSetup = new GameSetup();
+        gameSetup.addItemsToDefaultRooms(items);
+        gameSetup.addRepairItemsToRooms(items, rooms);
+        
+        Room randomRoom = gameSetup.getRandomSaboteurStartRoom(rooms);
+        if (player == null)
+            player = new Player(randomRoom, 2);
+        if (saboteur == null)
+            saboteur = new Saboteur(randomRoom, 0.5, 0.1, 0.15);
+        if (helper == null)
+            helper = new Helper(randomRoom, "Krunk", 0.1, 0.1);
+        
+        // Setup GameInfo
+        gameInfo = new GameInfo(helper);
+        
+        // Setup Timer
+        if (loader.getTimeHolder() == null)
+        {
+            timeHolder = new TimeHolder(300, 350);
+            timeHolder.setupReferences();
+        }
+        else
+        {
+            timeHolder = loader.getTimeHolder();
+            timeHolder.setupReferences();
+        }
+        
+        // Setup GUI
+        gui = new GUI();
+        
+        // Game is loaded
         gameLoaded = true;
     }
     
@@ -89,32 +123,17 @@ public class Game
             return;
         }
         
-        // Setup Game elements
-        Game.GameSetup gameSetup = new GameSetup();
-        gameSetup.addItemsToDefaultRooms(items);
-        gameSetup.addRepairItemsToRooms(items, rooms);
-        
-        this.gameInfo = new GameInfo();
-        
-        // Setup GUI
-        Room randomRoom = gameSetup.getRandomSaboteurStartRoom(rooms);
-        saboteur = new Saboteur(randomRoom, 0.5, 0.1, 0.15);
-        gui = new GUI();
-        
-        
         // Print welcome message
         gui.printWelcome();
         
-        
         // Setup Timer
-        timeholder = new TimeHolder(300, 350);
         Timer timer = new Timer();
-        timer.schedule(timeholder, 0, 1000);
+        timer.schedule(timeHolder, 0, 1000);
         
         // Setup user input
         GameCommand gameCommand = new GameCommand();
         parser = new Parser();
-        
+        gameCommand.processCommand(new Command(CommandWord.SAVE, ""));
         // Game loop
         while (!gameInfo.isGameFinished()) {
             Command command = parser.getCommand();
@@ -124,6 +143,7 @@ public class Game
         
         // Game end
         timer.cancel();
+        SystemLog.saveAllLogs();
         System.out.println("Thank you for playing.  Goodbye.");
     }
     
@@ -135,7 +155,7 @@ public class Game
 
     public LinkedHashMap<String, Integer> getHighScore() {return highScore;}
     
-    public GameInfo getGameInfo() {return gameInfo;}
+    public GameInfo getGameInfo() {;return gameInfo;}
     
     public Parser getParser () {return parser;}
     
@@ -143,12 +163,12 @@ public class Game
     
     public Saboteur getSaboteur() {return saboteur;}
     
-    public TimeHolder getTimeHolder() {return timeholder;}
+    public TimeHolder getTimeHolder() {return timeHolder;}
     
     public GUI getGUI() {return gui;}
     
     
-    static class GameSetup
+    private static class GameSetup
     {
         void addItemsToDefaultRooms(HashMap<String, Item> items)
         {

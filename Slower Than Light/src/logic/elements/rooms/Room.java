@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.Set;
 import java.util.HashMap;
 import java.util.Iterator;
+import logic.SystemLog;
 import logic.elements.characters.Item;
 import logic.elements.characters.Tool;
 
@@ -110,11 +111,29 @@ public class Room
      */
     public Room getExit(String direction) 
     {
-        if(exits.get(direction).getExitRoom1().name.equals(this.name)){
-            return exits.get(direction).getExitRoom2(); 
+        if(exits.keySet().contains(direction))
+        {
+            SystemLog.getErrorLog().writeToLog("The room \"" + this.getName() + "\" does not have an exit in the direction \"" + direction + "\".");
+            return(null);
         }
-        else{
-           return exits.get(direction).getExitRoom1(); 
+        else
+        {
+            if(exits.get(direction) != null)
+            {
+                if(exits.get(direction).getExitRoom1().name.equals(this.name))
+                {
+                    return exits.get(direction).getExitRoom2(); 
+                }
+                else
+                {
+                   return exits.get(direction).getExitRoom1(); 
+                }
+            }
+            else
+            {
+                SystemLog.getErrorLog().writeToLog("The exit stored by the room \"" + this.getName() + "\" stores an empty exit in the direction \"" + direction + "\".");
+                return(null);
+            }
         }
     }
     

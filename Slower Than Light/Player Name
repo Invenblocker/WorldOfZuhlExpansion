@@ -1,0 +1,13 @@
+Room: workshop WorkshopRoom truecontrolroom ControlRoom trueoffice ItemRoom truepub ItemRoom truelab ItemRoom true
+workshop 
+controlroom 
+office 
+pub 
+lab 
+Item: Tool: computer logic.elements.rooms.ItemRoom@28d93b30 Tool: hammer logic.elements.rooms.ItemRoom@1b6d3586 
+SpecialItem: Tool: computer Tool: hammer 
+Player: controlroom 2
+Saboteur: pub 2.0 0.5 2.0 10.2 5
+Helper: pub Erikbodyguard2.02.5
+RoomsRepaired: 0
+TimeHolder: 0.0 0.0 0 5

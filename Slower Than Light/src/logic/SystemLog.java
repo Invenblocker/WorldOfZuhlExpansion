@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package database;
+package logic;
 
 import java.io.File;
 import java.io.FileNotFoundException;
@@ -246,7 +246,7 @@ public class SystemLog
     {
         try
         {
-            File globalLog = new File(logPath + name);
+            File globalLog = new File(logPath + fileNamePurge(name) + ".txt");
             PrintWriter logWriter = new PrintWriter(globalLog);
 
             String[] log = getGlobalLog();
@@ -269,7 +269,7 @@ public class SystemLog
     {
         try
         {
-            File currentLog = new File(logPath + getLongName());
+            File currentLog = new File(logPath + fileNamePurge(getLongName()) + ".txt");
             PrintWriter logWriter = new PrintWriter(currentLog);
 
             String[] log = getLog();
@@ -290,11 +290,12 @@ public class SystemLog
     
     public static void saveAllLogs()
     {
-        saveGlobalLog("GlobalLog.txt");
+        System.out.println("SAVING ALL LOGS");
         for(SystemLog log : SYSTEM_LOGS)
         {
             log.saveLog();
         }
+        saveGlobalLog("GlobalLog");
     }
     
     public String getLongName()
@@ -307,5 +308,27 @@ public class SystemLog
         {
             return(getName());
         }
+    }
+    
+    private static String fileNamePurge(String text)
+    {
+        text.replace('~', '-');
+        text.replace("#", "no");
+        text.replace("&", "and");
+        text.replace("*", "star");
+        text.replace('{', '(');
+        text.replace('}', ')');
+        text.replace('\\', '-');
+        text.replace(":", " -");
+        text.replace('<', '[');
+        text.replace('>', ']');
+        text.replace("?", "QuestionMark");
+        text.replace('/', '-');
+        text.replace('+', ' ');
+        text.replace('|', 'I');
+        text.replace('"', '\'');
+        text.replace('.', ',');
+        
+        return(text);
     }
 }

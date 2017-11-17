@@ -14,7 +14,7 @@ import logic.elements.rooms.Room;
 import logic.elements.rooms.WorkshopRoom;
 import logic.user_input.Command;
 import logic.user_input.CommandWord;
-import database.SystemLog;
+import logic.SystemLog;
 import java.util.HashMap;
 import logic.elements.characters.Player;
 
@@ -59,6 +59,9 @@ public class GameCommand {
                 break;
             case INVENTORY:
                 printInventory();
+                break;
+            case SAVE:
+                saveGame();
                 break;
             case HELP:
                 game.getGUI().printHelp();

@@ -5,6 +5,7 @@
  */
 package database;
 
+import logic.SystemLog;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.PrintWriter;
@@ -150,13 +151,7 @@ public class txtWriter {
         txtWriter.print("RoomsRepaired: " + roomsRepaired);   // roomsrepaired kommer fra gameinfo.increment 
         txtWriter.println();
 
-        txtWriter.print("HelperCountDown: " + time.getHelperCountdown());
-        txtWriter.println();
-
-        txtWriter.print("Time: " + time.getTimeLeft());
-        txtWriter.println();
-
-        txtWriter.print("OxygenLeft: " + time.getOxygenLeft());
+        txtWriter.print("TimeHolder: " + time.getTimeLeft() + " " + time.getOxygenLeft() + " " + time.getHelperCountdown() + " " + time.getSaboteurCountdown());
         txtWriter.println();
 
         txtWriter.close();

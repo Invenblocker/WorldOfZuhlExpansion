@@ -38,6 +38,9 @@ public class txtLoader
     private HashMap<String, Item> specialItems;
     private LinkedHashMap<String, Integer> highScore;
     private Player player;
+    private Saboteur saboteur;
+    private Helper helper;
+    private TimeHolder timeHolder;
     private String gameName;
     
     public txtLoader(String gameName)
@@ -46,6 +49,10 @@ public class txtLoader
         this.rooms = new HashMap<String, Room>();
         this.items = new HashMap<String, Item>();
         this.specialItems = new HashMap<String, Item>();
+        this.player = new Player(null, 0);
+        this.saboteur = new Saboteur(null, 0, 0, 0);
+        this.helper = new Helper(null, null, 0, 0);
+        this.timeHolder = new TimeHolder(0, 0);
     }
 
     /**
@@ -107,8 +114,9 @@ public class txtLoader
                 }
             }
             else if(words[0].equals("TimeHolder: ")){
-                TimeHolder time = new TimeHolder(Double.parseDouble(words[1]), Double.parseDouble(words[2]));
-                time.setHelperCountdown(Integer.parseInt(words[3]));
+                this.timeHolder = new TimeHolder(Double.parseDouble(words[1]), Double.parseDouble(words[2]));
+                this.timeHolder.setHelperCountdown(Integer.parseInt(words[3]));
+                this.timeHolder.setSaboteurCountdown(Integer.parseInt(words[4]));
                 System.out.println("added timeholder");
             }
             else{
@@ -236,16 +244,16 @@ public class txtLoader
     private void initializeSaboteur(String[] words){
     Room room;
     room = rooms.get(words[1]);
-    Saboteur saboteur = new Saboteur(room, Double.parseDouble(words[2]), Double.parseDouble(words[3]), Double.parseDouble(words[4]));
-    saboteur.setChanceOfSabotage(Double.parseDouble(words[5]));
-    saboteur.addStunCountdown(Integer.parseInt(words[6]));
+    this.saboteur = new Saboteur(room, Double.parseDouble(words[2]), Double.parseDouble(words[3]), Double.parseDouble(words[4]));
+    this.saboteur.setChanceOfSabotage(Double.parseDouble(words[5]));
+    this.saboteur.addStunCountdown(Integer.parseInt(words[6]));
     
     }
     
     private void initializeHelper(String[] words){
     Room room;
     room = rooms.get(words[1]);     //Helpers room in txt file
-    Helper helper = new Helper(room, words[2], Double.parseDouble(words[4]), Double.parseDouble(words[5])); //[3]chance of discovery growht og [4] er
+    this.helper = new Helper(room, words[2], Double.parseDouble(words[4]), Double.parseDouble(words[5])); //[3]chance of discovery growht og [4] er
     helper.setTask(HelperTask.getHelperTask(words[3]));
    
         
@@ -256,20 +264,19 @@ public class txtLoader
     private void initializePlayer(String[] words)
     {
      Room room;                     //Create reference to room
-     Player player;                 //Reference to player
      room = rooms.get(words[1]);    //Sets room reference equal to index 1 in our hashmap, which is a room.
      
-     player= new Player(room, Integer.parseInt(words[2]));
+     this.player= new Player(room, Integer.parseInt(words[2]));
      int i = 3;         //index for item in txtfile
    
      
      if(items.containsKey(i))           //checks if txtfile contains same key in items hashmap
      {
-      player.addItem(items.get(words[i])); //adds item to player inventory
+      this.player.addItem(items.get(words[i])); //adds item to player inventory
      }
      else if (specialItems.containsKey(i))  //checks if txtfile contains same key in specialItems hashmap
      {
-         player.addItem(specialItems.get(words[i]));    //adds specialItem to player inventory
+         this.player.addItem(specialItems.get(words[i]));    //adds specialItem to player inventory
         
      }
      i++;
@@ -305,4 +312,18 @@ public class txtLoader
             k += 3;
         }
     }
+
+    public Saboteur getSaboteur() {
+        return saboteur;
+    }
+
+    public Helper getHelper() {
+        return helper;
+    }
+
+    public TimeHolder getTimeHolder() {
+        return timeHolder;
+    }
+    
+    
 }

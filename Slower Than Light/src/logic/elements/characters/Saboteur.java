@@ -9,7 +9,7 @@ import logic.*;
 import logic.elements.*;
 import logic.elements.rooms.*;
 import java.util.*;
-import database.SystemLog;
+import logic.SystemLog;
 /**
  *
  * @author Invenblocker & JN97

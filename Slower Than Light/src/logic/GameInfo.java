@@ -5,7 +5,6 @@
  */
 package logic;
 
-import database.SystemLog;
 import database.txtWriter;
 import java.io.FileNotFoundException;
 import java.util.ArrayList;
@@ -29,23 +28,26 @@ public class GameInfo {
     private final double ALLOWED_ROOMS_DESTROYED_PERCENTAGE = 0.7;
     private double destroyedRoomsPercentage;
     private ArrayList<Room> destroyedRooms;
+    
     private Exit hackedExit;
     private Helper helper;
     private int roomsRepaired;
     private int highScore;
     private boolean gameFinished;
-    public GameInfo()
+    
+    public GameInfo(Helper helper)
     {
+        this.helper = helper;
         destroyedRoomsPercentage = 0;
         destroyedRooms = new ArrayList<>();
-        gameFinished = false;
         roomsRepaired = 0;
         highScore = 0;
+        gameFinished = false;
     }
     
-    public GameInfo(int roomsRepaired) 
+    public GameInfo(Helper helper, int roomsRepaired) 
     {
-        this();
+        this(helper);
         this.roomsRepaired = roomsRepaired;
     }
     
@@ -105,7 +107,6 @@ public class GameInfo {
     }
     
     public Helper getHelper() {return helper;}
-    
     public void killHepler()
     {
         helper = null;
@@ -117,7 +118,6 @@ public class GameInfo {
         if(value == gameFinished)
             return;
         
-        SystemLog.saveAllLogs();
         gameFinished = value;
     }
     
@@ -129,7 +129,7 @@ public class GameInfo {
     
     private LinkedHashMap<String, Integer>sortHighScore (LinkedHashMap<String, Integer>highScoreMap)
     {
-        List<Map.Entry<String, Integer>>listToSort = new LinkedList<Map.Entry<String, Integer>>(highScoreMap.entrySet());
+        List<Map.Entry<String, Integer>>listToSort = new LinkedList<>(highScoreMap.entrySet());
         
         Map.Entry<String, Integer> temp;
         for (int i = 1; i < listToSort.size(); i++) 
@@ -147,10 +147,10 @@ public class GameInfo {
             }
         }
         LinkedHashMap<String, Integer>returnHashMap = new LinkedHashMap<>();
-            for (Map.Entry<String, Integer> entry : listToSort) 
-            {
-                returnHashMap.put(entry.getKey(), entry.getValue());
-            }
+        for (Map.Entry<String, Integer> entry : listToSort) 
+        {
+            returnHashMap.put(entry.getKey(), entry.getValue());
+        }
         
         return returnHashMap;
     }
