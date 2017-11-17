@@ -149,7 +149,7 @@ public class Game
         
         // Game end
         timer.cancel();
-        
+        SystemLog.saveAllLogs();
         System.out.println("Thank you for playing.  Goodbye.");
     }
     
