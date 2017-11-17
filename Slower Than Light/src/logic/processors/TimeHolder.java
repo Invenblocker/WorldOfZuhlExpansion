@@ -16,16 +16,27 @@ public class TimeHolder extends TimerTask{
     private double oxygenLeft;
     private Game game;
     private GameInfo gameInfo;
-    /**
-     * Creates an object of the type Timeholder
-     * @param gameTime The amount of time in seconds which the game takes
-     */
-    public TimeHolder(double gameTime, double oxygenTime)
+    
+    public TimeHolder ()
     {
         saboteurCountdown = 5;
         helperCountdown = 0;
+        timeLeft = 30;
+        oxygenLeft = 50;
+        game = Game.getInstance();
+    }
+    
+    /**
+     * Creates an object of the type Timeholder
+     * @param gameTime The amount of time in seconds which the game takes
+     * @param oxygenTime The amount of time in seconds before the player loses the game
+     */
+    public TimeHolder(double gameTime, double oxygenTime)
+    {
+        this();
         timeLeft = gameTime;
         oxygenLeft = oxygenTime;
+        game = Game.getInstance();
     }
 
     @Override
@@ -73,11 +84,8 @@ public class TimeHolder extends TimerTask{
     
     public void setupReferences ()
     {
-        if (game == null)
-        {
-            game = Game.getInstance();
+        if (game != null)
             gameInfo = game.getGameInfo();
-        }
         else
         {
             String msg = "Could not add a reference to Game in TimeHolder";

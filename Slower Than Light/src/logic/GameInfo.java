@@ -13,11 +13,9 @@ import java.util.LinkedHashMap;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
-import java.util.Set;
 import logic.elements.characters.Helper;
 import logic.elements.rooms.Exit;
 import logic.elements.rooms.Room;
-import sun.security.krb5.internal.KDCOptions;
 
 /**
  *
@@ -98,6 +96,9 @@ public class GameInfo {
     }
     public void setHackedExit(Exit value)
     {
+        if(value == hackedExit)
+            return;
+        
         hackedExit = value;
     }
     
