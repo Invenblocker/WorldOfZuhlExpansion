@@ -144,6 +144,7 @@ public class Game
         catch (RuntimeException e)
         {
             System.out.println("Caught RuntimeException");
+            e.printStackTrace();
             SystemLog.saveAllLogs(); /* Save logs no matter what*/
         }
         
