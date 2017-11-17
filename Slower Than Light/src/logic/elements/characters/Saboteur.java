@@ -66,7 +66,7 @@ public class Saboteur extends RoomHopper
         }
         else
         {
-            if((getCurrentRoom().isOperating() || Game.getInstance().getGameInfo().getHackedExit().equals(null)) && Math.random() < chanceOfSabotage)
+            if((getCurrentRoom().isOperating() || Game.getInstance().getGameInfo().getHackedExit() == null) && Math.random() < chanceOfSabotage)
             {
                 if(!getCurrentRoom().isOperating())
                 {
@@ -75,7 +75,7 @@ public class Saboteur extends RoomHopper
                     Game.getInstance().getGameInfo().setHackedExit(getCurrentRoom().getCollectionOfExits().get(sabotageExit));
                     ACTION_LOG.writeToLog("Sabotaged the exit between \"the " + getCurrentRoom().getName() + "\" and \"the " + getCurrentRoom().getExit(getCurrentRoom().getCollectionOfExits().get(sabotageExit)).getName() + "\".");
                 }
-                else if(!Game.getInstance().getGameInfo().getHackedExit().equals(null))
+                else if(Game.getInstance().getGameInfo().getHackedExit() != null)
                 {
                     getCurrentRoom().setOperating(false);
                     ACTION_LOG.writeToLog("Sabotaged the room: \"" + getCurrentRoom().getName() + "\".");
@@ -100,12 +100,15 @@ public class Saboteur extends RoomHopper
                 ArrayList<Exit> neighbors = getCurrentRoom().getCollectionOfExits();
                 
                 for(int i = neighbors.size() - 1; i >= 0; i--)
-                {
-                    if(getCurrentRoom().getExit(neighbors.get(i)).isControlRoom() || neighbors.get(i).isOperating())
-                    {
+                    if(getCurrentRoom().getExit(neighbors.get(i)).isControlRoom() || !neighbors.get(i).isOperating())
                         neighbors.remove(i);
-                    }
+                
+                if (neighbors.isEmpty())
+                {
+                    ACTION_LOG.writeToLog("Saboteur tried to move, but all exits where removed. Current room: \"" + getCurrentRoom().getName() + "\".");
+                    return -1;
                 }
+                
                 int exitIndex = (int) (Math.floor(Math.random() * neighbors.size()));
                 
                 setRoom(getCurrentRoom().getExit(neighbors.get(exitIndex)));
@@ -229,11 +232,13 @@ public class Saboteur extends RoomHopper
         chanceOfSabotage = value;
     }
     
+    @Override
     public SystemLog getActionLog()
     {
         return(ACTION_LOG);
     }
     
+    @Override
     public SystemLog getErrorLog()
     {
         return(ERROR_LOG);

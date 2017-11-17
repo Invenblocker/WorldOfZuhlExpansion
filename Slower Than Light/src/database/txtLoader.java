@@ -106,14 +106,14 @@ public class txtLoader
                 System.out.println("added specialitems");
             }
             else if(words[0].equals("RoomsRepaired: ")){
-                int i = Integer.parseInt(words[2]);
+                int i = Integer.parseInt(words[1]);
                 while(i > 0){
                 Game.getInstance().getGameInfo().incrementRoomsRepaired();
                     System.out.println(i);
                 i--;
                 }
             }
-            else if(words[0].equals("TimeHolder: ")){
+            else if(words[0].equals("TimeHolder:")){
                 this.timeHolder = new TimeHolder(Double.parseDouble(words[1]), Double.parseDouble(words[2]));
                 this.timeHolder.setHelperCountdown(Integer.parseInt(words[3]));
                 this.timeHolder.setSaboteurCountdown(Integer.parseInt(words[4]));

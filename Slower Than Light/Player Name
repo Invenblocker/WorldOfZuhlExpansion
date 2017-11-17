@@ -1,0 +1,20 @@
+Room: Office ItemRoom trueOxygenContainer ItemRoom trueShieldGenerator ItemRoom trueKitchen ItemRoom trueLivingQuarters ItemRoom truecontrolRoom ControlRoom trueEntryRamp ItemRoom trueRightThruster ItemRoom trueWorkshop WorkshopRoom trueLeftThruster ItemRoom trueLoadingBay ItemRoom trueLab ItemRoom true
+Office 
+OxygenContainer 
+ShieldGenerator 
+Kitchen 
+LivingQuarters 
+controlRoom 
+EntryRamp 
+RightThruster 
+Workshop 
+LeftThruster 
+LoadingBay 
+Lab 
+Item: Tool: Knife logic.elements.rooms.ItemRoom@28d93b30 Tool: Crowbar logic.elements.rooms.ItemRoom@1b6d3586 Tool: Acid logic.elements.rooms.ItemRoom@4554617c Tool: Screwdriver logic.elements.rooms.ItemRoom@74a14482 Tool: Wrench logic.elements.rooms.ItemRoom@1540e19d Tool: PC logic.elements.rooms.ItemRoom@677327b6 Tool: Blowtorch logic.elements.rooms.ItemRoom@14ae5a5 Tool: Welder logic.elements.rooms.ItemRoom@7f31245a Tool: Jack logic.elements.rooms.ItemRoom@6d6f6e28 Tool: ThermitePaste logic.elements.rooms.ItemRoom@135fbaa4 
+SpecialItem: Tool: Knife Tool: Crowbar Tool: Acid Tool: Screwdriver Tool: Wrench Tool: PC Tool: Blowtorch Tool: Welder Tool: Jack Tool: ThermitePaste 
+Player: controlRoom 2
+Saboteur: Office 0.5 0.1 0.5 0.9 0
+Helper: controlRoom Erikbodyguard2.02.5
+RoomsRepaired: 0
+TimeHolder: 297.0 357.0 5 0

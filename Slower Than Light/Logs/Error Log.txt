@@ -1,0 +1,48 @@
+The room "Office" does not have an exit in the direction "up".
+The room "Office" does not have an exit in the direction "down".
+The room "Office" does not have an exit in the direction "left".
+The exit stored by the room "Office" stores an empty exit in the direction "right".
+The room "OxygenContainer" does not have an exit in the direction "up".
+The room "OxygenContainer" does not have an exit in the direction "down".
+The room "OxygenContainer" does not have an exit in the direction "left".
+The exit stored by the room "OxygenContainer" stores an empty exit in the direction "right".
+The exit stored by the room "ShieldGenerator" stores an empty exit in the direction "up".
+The room "ShieldGenerator" does not have an exit in the direction "down".
+The room "ShieldGenerator" does not have an exit in the direction "left".
+The room "ShieldGenerator" does not have an exit in the direction "right".
+The exit stored by the room "Kitchen" stores an empty exit in the direction "up".
+The room "Kitchen" does not have an exit in the direction "down".
+The exit stored by the room "Kitchen" stores an empty exit in the direction "left".
+The room "Kitchen" does not have an exit in the direction "right".
+The exit stored by the room "LivingQuarters" stores an empty exit in the direction "up".
+The room "LivingQuarters" does not have an exit in the direction "down".
+The room "LivingQuarters" does not have an exit in the direction "left".
+The exit stored by the room "LivingQuarters" stores an empty exit in the direction "right".
+The room "controlRoom" does not have an exit in the direction "up".
+The exit stored by the room "controlRoom" stores an empty exit in the direction "down".
+The room "controlRoom" does not have an exit in the direction "left".
+The room "controlRoom" does not have an exit in the direction "right".
+The room "EntryRamp" does not have an exit in the direction "up".
+The room "EntryRamp" does not have an exit in the direction "down".
+The exit stored by the room "EntryRamp" stores an empty exit in the direction "left".
+The room "EntryRamp" does not have an exit in the direction "right".
+The room "RightThruster" does not have an exit in the direction "up".
+The exit stored by the room "RightThruster" stores an empty exit in the direction "down".
+The room "RightThruster" does not have an exit in the direction "left".
+The exit stored by the room "RightThruster" stores an empty exit in the direction "right".
+The exit stored by the room "Workshop" stores an empty exit in the direction "up".
+The exit stored by the room "Workshop" stores an empty exit in the direction "down".
+The room "Workshop" does not have an exit in the direction "left".
+The room "Workshop" does not have an exit in the direction "right".
+The room "LeftThruster" does not have an exit in the direction "up".
+The exit stored by the room "LeftThruster" stores an empty exit in the direction "down".
+The exit stored by the room "LeftThruster" stores an empty exit in the direction "left".
+The room "LeftThruster" does not have an exit in the direction "right".
+The exit stored by the room "LoadingBay" stores an empty exit in the direction "up".
+The exit stored by the room "LoadingBay" stores an empty exit in the direction "down".
+The room "LoadingBay" does not have an exit in the direction "left".
+The room "LoadingBay" does not have an exit in the direction "right".
+The room "Lab" does not have an exit in the direction "up".
+The room "Lab" does not have an exit in the direction "down".
+The exit stored by the room "Lab" stores an empty exit in the direction "left".
+The room "Lab" does not have an exit in the direction "right".

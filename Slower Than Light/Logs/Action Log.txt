@@ -1,1 +1,2 @@
 Helper (Erik): The helper "Erik" had its task set to "bodyguard".
+Saboteur: Sabotaged the room: "Office".

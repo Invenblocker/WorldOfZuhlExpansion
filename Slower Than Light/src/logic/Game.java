@@ -141,7 +141,11 @@ public class Game
                 gameInfo.setGameFinished(gameFinished);
             }
         } 
-        finally {SystemLog.saveAllLogs(); /* Save logs no matter what*/}
+        catch (RuntimeException e)
+        {
+            System.out.println("Caught RuntimeException");
+            SystemLog.saveAllLogs(); /* Save logs no matter what*/
+        }
         
         // Game end
         timer.cancel();
