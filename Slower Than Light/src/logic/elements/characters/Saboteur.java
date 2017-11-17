@@ -229,11 +229,13 @@ public class Saboteur extends RoomHopper
         chanceOfSabotage = value;
     }
     
+    @Override
     public SystemLog getActionLog()
     {
         return(ACTION_LOG);
     }
     
+    @Override
     public SystemLog getErrorLog()
     {
         return(ERROR_LOG);
