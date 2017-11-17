@@ -36,7 +36,6 @@ public class TimeHolder extends TimerTask{
         this();
         timeLeft = gameTime;
         oxygenLeft = oxygenTime;
-        game = Game.getInstance();
     }
 
     @Override
