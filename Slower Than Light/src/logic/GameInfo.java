@@ -76,7 +76,8 @@ public class GameInfo implements IGameInfo {
     {
         highScoreMap.put(playerName, score);
         sortHighScore(highScoreMap);
-        txtWriter.writeHighScore(highScoreMap, playerName);
+        txtWriter Writer = new txtWriter();
+        Writer.writeHighScore(highScoreMap, playerName);
         
         return highScoreMap;
     }

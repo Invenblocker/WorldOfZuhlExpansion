@@ -5,6 +5,7 @@
  */
 package database;
 
+import acq.IWriter;
 import logic.SystemLog;
 import java.io.File;
 import java.io.FileNotFoundException;
@@ -27,13 +28,14 @@ import logic.processors.TimeHolder;
  *
  * @author Loc
  */
-public class txtWriter {
+public class txtWriter implements IWriter {
 
     public txtWriter() {
     }
     
     
     
+    @Override
     public void saveGame (HashMap<String, Room> rooms, HashMap<String, Item> items, Player player, Saboteur saboteur, 
             Helper helper, int roomsRepaired, TimeHolder time, String saveName)
     {
@@ -184,6 +186,7 @@ public class txtWriter {
 
   }
      
+    @Override
    public void writeHighScore(LinkedHashMap<String, Integer> highScore, String highscoreName)
    {
         // hashmappet må kun være en vis størrelse
