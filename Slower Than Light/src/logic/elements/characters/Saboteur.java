@@ -5,6 +5,7 @@
  */
 package logic.elements.characters;
 
+import acq.ISaboteur;
 import logic.*;
 import logic.elements.*;
 import logic.elements.rooms.*;
@@ -14,7 +15,7 @@ import logic.SystemLog;
  *
  * @author Invenblocker & JN97
  */
-public class Saboteur extends RoomHopper
+public class Saboteur extends RoomHopper implements ISaboteur
 {
     public final double DEFAULT_CHANCE_OF_SABOTAGE, CHANCE_OF_SABOTAGE_GROWTH, CHANCE_OF_DOOR_SABOTAGE;
     private double chanceOfSabotage;
@@ -169,6 +170,7 @@ public class Saboteur extends RoomHopper
      * 
      * @return true if chasing, false if not.
      */
+    @Override
     public boolean isChasingPlayer()
     {
         return(chasingPlayer);

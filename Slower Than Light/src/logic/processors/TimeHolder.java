@@ -1,5 +1,6 @@
 package logic.processors;
 
+import acq.ITimeholder;
 import logic.SystemLog;
 import java.util.TimerTask;
 import logic.Game;
@@ -7,7 +8,7 @@ import logic.GameInfo;
 import logic.elements.characters.HelperTask;
 import logic.elements.rooms.Room;
 
-public class TimeHolder extends TimerTask{
+public class TimeHolder extends TimerTask implements ITimeholder{
     
     private final int DEFAULT_HELPER_COUNTDOWN = 5;
     private int saboteurCountdown;
@@ -86,6 +87,7 @@ public class TimeHolder extends TimerTask{
          
     }
     
+    @Override
     public void setupReferences ()
     {
         if (game != null)
@@ -98,25 +100,31 @@ public class TimeHolder extends TimerTask{
         }
     }
 
+    @Override
     public void setSaboteurCountdown(int value) 
     {
         this.saboteurCountdown = value;    
     }
+    @Override
     public void setHelperCountdown(int value) 
     {
         this.helperCountdown = value;
     }
     
+    @Override
     public int getSaboteurCountdown () {return saboteurCountdown;}
     
+    @Override
     public int getHelperCountdown()
     {
         return helperCountdown;
     }
+    @Override
     public double getOxygenLeft()
     {
         return oxygenLeft;
     }
+    @Override
     public double getTimeLeft()
     {
         return timeLeft;

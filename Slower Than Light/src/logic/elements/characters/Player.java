@@ -5,6 +5,7 @@
  */
 package logic.elements.characters;
 
+import acq.IPlayer;
 import logic.SystemLog;
 import logic.elements.rooms.*;
 
@@ -12,7 +13,7 @@ import logic.elements.rooms.*;
  *
  * @author Invenblocker & JN97
  */
-public class Player extends RoomHopper
+public class Player extends RoomHopper implements IPlayer
 {
     private Item[] inventory;
     private final SystemLog ACTION_LOG, ERROR_LOG;
@@ -132,6 +133,7 @@ public class Player extends RoomHopper
      * 
      * @return The inventory as an array passed by value.
      */
+    @Override
     public Item[] getInventory()
     {
         Item[] copy = new Item[inventory.length];
