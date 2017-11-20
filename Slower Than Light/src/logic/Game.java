@@ -3,8 +3,10 @@ package logic;
 import GUI.GUIController;
 import acq.IGameInfo;
 import acq.IHelper;
+import acq.IItem;
 import acq.ILoader;
 import acq.IPlayer;
+import acq.IRoom;
 import acq.ISaboteur;
 import acq.ITimeHolder;
 import java.util.ArrayList;
@@ -45,13 +47,14 @@ public class Game
     private HashMap<String, Item>items;
     private HashMap<String, Item>specialItems;
     
-    private IGameInfo gameInfo;
+    private GameInfo gameInfo;
     private Parser parser;
-    private IPlayer player;
-    private ISaboteur saboteur;
-    private ITimeHolder timeHolder;
-    private GUIController guiController;
+    private Player player;
+    private Saboteur saboteur;
     private IHelper helper;
+    private TimeHolder timeHolder;
+    private GameCommand gameCommand;
+    private GUIController guiController;
     private boolean gameLoaded;
     
         
@@ -83,7 +86,7 @@ public class Game
         gameSetup.addItemsToDefaultRooms(items);
         gameSetup.addRepairItemsToRooms(items, rooms);
         
-        Room randomRoom = gameSetup.getRandomSaboteurStartRoom(rooms);
+        IRoom randomRoom = gameSetup.getRandomSaboteurStartRoom(rooms);
         if (player == null)
             player = new Player(randomRoom, 2);
         if (saboteur == null)
@@ -101,6 +104,9 @@ public class Game
             timeHolder = loader.getTimeHolder();
         
         timeHolder.setupReferences();
+        
+        // Setup GameCommand
+        gameCommand = new GameCommand();
         
         // Setup GUI
         guiController = new GUIController();
@@ -129,7 +135,6 @@ public class Game
         timer.schedule(timeHolder, 0, 1000);
         
         // Setup user input
-        GameCommand gameCommand = new GameCommand();
         parser = new Parser();
         //gameCommand.processCommand(new Command(CommandWord.SAVE, ""));
         
@@ -162,15 +167,17 @@ public class Game
 
     public HashMap<String, Item> getSpecialItems() {return specialItems;}
     
-    public IGameInfo getGameInfo() {;return gameInfo;}
+    public GameInfo getGameInfo() {return gameInfo;}
     
     public Parser getParser () {return parser;}
     
-    public IPlayer getPlayer() {return player;}
+    public Player getPlayer() {return player;}
     
-    public ISaboteur getSaboteur() {return saboteur;}
+    public Saboteur getSaboteur() {return saboteur;}
     
-    public ITimeHolder getTimeHolder() {return timeHolder;}
+    public TimeHolder getTimeHolder() {return timeHolder;}
+    
+    public GameCommand getGameCommand() {return gameCommand;}
     
     public GUIController getGUI() {return guiController;}
     

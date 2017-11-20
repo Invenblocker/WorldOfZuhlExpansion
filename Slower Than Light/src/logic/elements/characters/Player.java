@@ -5,6 +5,7 @@
  */
 package logic.elements.characters;
 
+import ACQ.IPlayerInfo;
 import acq.IPlayer;
 import logic.SystemLog;
 import logic.elements.rooms.*;
@@ -35,6 +36,12 @@ public class Player extends RoomHopper implements IPlayer
         ACTION_LOG = new SystemLog("Player", SystemLog.getActionLog());
         ERROR_LOG = new SystemLog("Player", SystemLog.getErrorLog());
     }
+    
+    /*public Player (IPlayerInfo playerInfo)
+    {
+        this(playerInfo.currentRoom(), playerInfo.inventorySize());
+        
+    }*/
     
     /**
      * @author JN97
