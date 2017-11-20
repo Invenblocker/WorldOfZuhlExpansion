@@ -5,6 +5,7 @@
  */
 package logic.elements.characters;
 
+import ACQ.*;
 import logic.SystemLog;
 import java.util.ArrayList;
 import logic.Game;
@@ -16,7 +17,7 @@ import logic.elements.rooms.ItemRoom;
  *
  * @author barth_000
  */
-public class Helper extends RoomHopper
+public class Helper extends RoomHopper implements IHelper
 {
     public final double DEFAULT_CHANCE_OF_DISCOVERY, CHANCE_OF_DISCOVERY_GROWTH;
     private HelperTask task;
@@ -251,6 +252,12 @@ public class Helper extends RoomHopper
     {
         return(task);
     }
+    
+    @Override
+    public String getHelperTaskString()
+            {
+                return getHelperTask().toString();
+            }
     
     public String getFoundItemString(boolean remove)
     {
