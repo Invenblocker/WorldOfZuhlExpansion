@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Button?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.image.Image?>
 <?import javafx.scene.image.ImageView?>
@@ -23,12 +24,12 @@
          <children>
             <StackPane prefHeight="375.0" prefWidth="700.0">
                <children>
-                  <ImageView fitHeight="375.0" fitWidth="700.0" pickOnBounds="true" preserveRatio="true">
+                  <ImageView fx:id="currentRoomDisplay" fitHeight="375.0" fitWidth="700.0" pickOnBounds="true" preserveRatio="true">
                      <image>
                         <Image url="@../../../../../../Desktop/mario_and_sonic_fan_game_screen_shot_by_jakeroo123-d4y3gp8.png" />
                      </image>
                   </ImageView>
-                  <ImageView fitHeight="150.0" fitWidth="200.0" pickOnBounds="true" preserveRatio="true">
+                  <ImageView fx:id="currentRoomCharacter" fitHeight="150.0" fitWidth="200.0" pickOnBounds="true" preserveRatio="true">
                      <image>
                         <Image url="@../../../../../../Desktop/23772368_965734853565703_1150162290_n.png" />
                      </image>
@@ -37,8 +38,8 @@
                      <children>
                         <HBox prefHeight="75.0" prefWidth="700.0">
                            <children>
-                              <Circle fill="DODGERBLUE" radius="32.0" stroke="BLACK" strokeType="INSIDE" />
-                              <Text strokeType="OUTSIDE" strokeWidth="0.0" text="currentRoom" x="50.0" />
+                              <Circle fx:id="chaseAlert" fill="DODGERBLUE" radius="32.0" stroke="BLACK" strokeType="INSIDE" />
+                              <Text fx:id="currentRoomName" strokeType="OUTSIDE" strokeWidth="0.0" text="currentRoom" x="50.0" />
                            </children>
                         </HBox>
                         <Pane prefHeight="200.0" prefWidth="200.0" />
@@ -47,7 +48,7 @@
                               <StackPane prefHeight="150.0" prefWidth="200.0">
                                  <children>
                                     <Rectangle arcHeight="5.0" arcWidth="5.0" fill="DODGERBLUE" height="100.0" stroke="BLACK" strokeType="INSIDE" width="205.0" />
-                                    <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Log" />
+                                    <Text fx:id="playerLog" strokeType="OUTSIDE" strokeWidth="0.0" text="Log" />
                                  </children>
                               </StackPane>
                               <VBox prefHeight="100.0" prefWidth="167.0">
@@ -62,13 +63,13 @@
                                           <StackPane prefHeight="150.0" prefWidth="200.0">
                                              <children>
                                                 <Rectangle arcHeight="5.0" arcWidth="5.0" fill="DODGERBLUE" height="40.0" stroke="BLACK" strokeType="INSIDE" width="40.0" />
-                                                <Label text="Item1" />
+                                                <Label fx:id="playerItem1" text="Item1" />
                                              </children>
                                           </StackPane>
                                           <StackPane prefHeight="150.0" prefWidth="200.0">
                                              <children>
                                                 <Rectangle arcHeight="5.0" arcWidth="5.0" fill="DODGERBLUE" height="40.0" stroke="BLACK" strokeType="INSIDE" width="40.0" />
-                                                <Label text="Item2" />
+                                                <Label fx:id="playerItem2" text="Item2" />
                                              </children>
                                           </StackPane>
                                        </children>
@@ -88,13 +89,13 @@
                                           <StackPane prefHeight="150.0" prefWidth="200.0">
                                              <children>
                                                 <Rectangle arcHeight="5.0" arcWidth="5.0" fill="DODGERBLUE" height="40.0" stroke="BLACK" strokeType="INSIDE" width="40.0" />
-                                                <Label text="Item1" />
+                                                <Label fx:id="roomItem1" text="Item1" />
                                              </children>
                                           </StackPane>
                                           <StackPane prefHeight="150.0" prefWidth="200.0">
                                              <children>
                                                 <Rectangle arcHeight="5.0" arcWidth="5.0" fill="DODGERBLUE" height="40.0" stroke="BLACK" strokeType="INSIDE" width="40.0" />
-                                                <Label text="Item2" />
+                                                <Label fx:id="roomItem2" text="Item2" />
                                              </children>
                                           </StackPane>
                                        </children>
@@ -124,15 +125,15 @@
                             <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
                           </rowConstraints>
                            <children>
-                              <Label text="Com1" />
-                              <Label text="Com2" GridPane.columnIndex="1" />
-                              <Label text="Com3" GridPane.columnIndex="2" />
-                              <Label text="Com4" GridPane.rowIndex="1" />
-                              <Label text="Com5" GridPane.columnIndex="1" GridPane.rowIndex="1" />
-                              <Label text="Com6" GridPane.columnIndex="2" GridPane.rowIndex="1" />
+                              <Button fx:id="commandButton0" mnemonicParsing="false" text="Com0" />
+                              <Button fx:id="commandButton1" mnemonicParsing="false" text="Com1" GridPane.columnIndex="1" />
+                              <Button fx:id="commandButton2" mnemonicParsing="false" text="Com2" GridPane.columnIndex="2" />
+                              <Button fx:id="commandButton3" mnemonicParsing="false" text="Com3" GridPane.rowIndex="1" />
+                              <Button fx:id="commandButton4" mnemonicParsing="false" text="Com4" GridPane.columnIndex="1" GridPane.rowIndex="1" />
+                              <Button fx:id="commandButton5" mnemonicParsing="false" text="Com5" GridPane.columnIndex="2" GridPane.rowIndex="1" />
                            </children>
                         </GridPane>
-                        <Pane prefHeight="125.0" prefWidth="126.0" />
+                        <Pane prefHeight="125.0" prefWidth="106.0" />
                         <GridPane prefHeight="125.0" prefWidth="125.0">
                           <columnConstraints>
                             <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
@@ -145,10 +146,10 @@
                             <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
                           </rowConstraints>
                            <children>
-                              <Label text="Up" GridPane.columnIndex="1" />
-                              <Label text="Right" GridPane.columnIndex="2" GridPane.rowIndex="1" />
-                              <Label text="Left" GridPane.rowIndex="1" />
-                              <Label text="Down" GridPane.columnIndex="1" GridPane.rowIndex="2" />
+                              <Button fx:id="leftButton" mnemonicParsing="false" text="Left" GridPane.rowIndex="1" />
+                              <Button fx:id="upButton" mnemonicParsing="false" text="Up" GridPane.columnIndex="1" />
+                              <Button fx:id="rightButton" mnemonicParsing="false" text="Right" GridPane.columnIndex="2" GridPane.rowIndex="1" />
+                              <Button fx:id="downButton" mnemonicParsing="false" text="Down" GridPane.columnIndex="1" GridPane.rowIndex="2" />
                            </children>
                         </GridPane>
                      </children>

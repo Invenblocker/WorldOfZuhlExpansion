@@ -7,7 +7,13 @@ package GUI;
 
 import java.net.URL;
 import java.util.ResourceBundle;
+import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
+import javafx.scene.control.Button;
+import javafx.scene.control.Label;
+import javafx.scene.image.ImageView;
+import javafx.scene.shape.Circle;
+import javafx.scene.text.Text;
 
 /**
  * FXML Controller class
@@ -15,6 +21,45 @@ import javafx.fxml.Initializable;
  * @author sdown
  */
 public class GameGraphicsController implements Initializable {
+
+    @FXML
+    private ImageView currentRoomDisplay;
+    @FXML
+    private ImageView currentRoomCharacter;
+    @FXML
+    private Circle chaseAlert;
+    @FXML
+    private Text currentRoomName;
+    @FXML
+    private Text playerLog;
+    @FXML
+    private Label playerItem1;
+    @FXML
+    private Label playerItem2;
+    @FXML
+    private Label roomItem1;
+    @FXML
+    private Label roomItem2;
+    @FXML
+    private Button commandButton0;
+    @FXML
+    private Button commandButton1;
+    @FXML
+    private Button commandButton2;
+    @FXML
+    private Button commandButton3;
+    @FXML
+    private Button commandButton4;
+    @FXML
+    private Button commandButton5;
+    @FXML
+    private Button leftButton;
+    @FXML
+    private Button upButton;
+    @FXML
+    private Button rightButton;
+    @FXML
+    private Button downButton;
 
     /**
      * Initializes the controller class.
