@@ -34,7 +34,7 @@ public class txtWriter {
     
     
     
-    public static void saveGame (HashMap<String, Room> rooms, HashMap<String, Item> items, Player player, Saboteur saboteur, 
+    public void saveGame (HashMap<String, Room> rooms, HashMap<String, Item> items, Player player, Saboteur saboteur, 
             Helper helper, int roomsRepaired, TimeHolder time, String saveName)
     {
         Exit exit = null;
