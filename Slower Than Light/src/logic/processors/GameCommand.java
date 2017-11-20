@@ -303,7 +303,8 @@ public class GameCommand {
      */
     private void saveGame() 
     {
-        txtWriter.saveGame(game.getRooms(), game.getItems(), game.getPlayer(),
+        txtWriter _txtWriter = new txtWriter();
+        _txtWriter.saveGame(game.getRooms(), game.getItems(), game.getPlayer(),
                            game.getSaboteur(), game.getGameInfo().getHelper(),game.getGameInfo().getRoomsRepaired(),
                            game.getTimeHolder(),"Player Name");
     }
