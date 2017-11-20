@@ -174,10 +174,10 @@ public class txtWriter {
 
         txtWriter.print("Helper: ");
         txtWriter.print(helper.getCurrentRoom().getName() + " ");
-        txtWriter.print(helper.getName());
-        txtWriter.print(helper.getHelperTask());
-        txtWriter.print(helper.CHANCE_OF_DISCOVERY_GROWTH);
-        txtWriter.print(helper.DEFAULT_CHANCE_OF_DISCOVERY);
+        txtWriter.print(helper.getName()+ " ");
+        txtWriter.print(helper.getHelperTask()+ " ");
+        txtWriter.print(helper.CHANCE_OF_DISCOVERY_GROWTH+ " ");
+        txtWriter.print(helper.DEFAULT_CHANCE_OF_DISCOVERY+ " ");
         txtWriter.println();
 
         txtWriter.print("RoomsRepaired: " + roomsRepaired);   // roomsrepaired kommer fra gameinfo.increment 
