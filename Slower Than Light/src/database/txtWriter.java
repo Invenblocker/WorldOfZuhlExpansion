@@ -33,7 +33,7 @@ public class txtWriter {
             Helper helper, int roomsRepaired, TimeHolder time, String saveName)
     {
         Exit exit = null;
-        File newSave = new File("D:\\Users\\Erik\\Desktop\\" + saveName + ".txt");
+        File newSave = new File("assets/maps/saveGame.txt");
         PrintWriter txtWriter = null;
         try
         {// overrides the txt file if the name already exits. Otherwise it creates a new file with the name.
@@ -51,47 +51,79 @@ public class txtWriter {
         txtWriter.print("Room: ");
         for(String key : rooms.keySet()){
             txtWriter.print(key + " ");
+            
             if(rooms.get(key) instanceof ItemRoom){
                 txtWriter.print("ItemRoom ");
-                txtWriter.print(rooms.get(key).isOperating());
+                txtWriter.print(rooms.get(key).isOperating() + " ");
             }
             else if(rooms.get(key) instanceof ControlRoom){
                 txtWriter.print("ControlRoom ");
-                txtWriter.print(rooms.get(key).isOperating());
+                txtWriter.print(rooms.get(key).isOperating()+ " ");
             }
             else if(rooms.get(key) instanceof WorkshopRoom){
                 txtWriter.print("WorkshopRoom ");
-                txtWriter.print(rooms.get(key).isOperating());
+                txtWriter.print(rooms.get(key).isOperating() + " ");
             }
         }
         txtWriter.println();
         
         
         for(String key : rooms.keySet()){
-            txtWriter.print(key + " ");
+            txtWriter.print(key + " ");                 // Rummet der bliver arbejdet på's navn.
+            
             if(rooms.get(key).getExit("up") != null){
-                txtWriter.print("up ");
-                exit = rooms.get(key).getExit(rooms.get(key)); 
-                txtWriter.print(exit.isOperating());               // prints the boolean value to the txt file
-                txtWriter.print(rooms.get(key).getExit(exit));     // prints the room on the opposing side of the exit to the txt file.
+                System.out.println("ER I UP");
+                txtWriter.print("up ");                 // Hvis direction er up, bliver det skrevet ind i .txtfilen.
+             
+                Room room = rooms.get(key);             // får referencen af rummet vi arbejder på.
+                System.out.println("Kalder exit! -----------");
+                exit = room.getExit(rooms.get(key));    // Får fat i 
+                System.out.println("Exit1: " + exit);
+                System.out.println("The Room is: " + rooms.get(key).getExit(rooms.get(key)));
+               
+                txtWriter.print(exit.isOperating() + " ");               // prints the boolean value to the txt file
+                txtWriter.print(rooms.get(key).getExit(exit).getName() + " ");     // prints the room on the opposing side of the exit to the txt file.
+               
             } 
             if(rooms.get(key).getExit("down") != null) {
+                System.out.println("ER I DOWN");
                 txtWriter.print("down ");
-                exit = rooms.get(key).getExit(rooms.get(key));
-                txtWriter.print(exit.isOperating());
-                txtWriter.print(rooms.get(key).getExit(exit));
+            
+                Room room = rooms.get(key);
+                System.out.println("Kalder exit! -----------");
+                exit = room.getExit(rooms.get(key));
+                System.out.println("Exit1: " + exit);
+                System.out.println("The Room is: " + rooms.get(key).getExit(rooms.get(key)));
+               
+                txtWriter.print(exit.isOperating() + " ");               // prints the boolean value to the txt file
+                txtWriter.print(rooms.get(key).getExit(exit).getName() + " ");     // prints the room on the opposing side of the exit to the txt file.
+               
             }
             if(rooms.get(key).getExit("left") != null) {
                 txtWriter.print("left ");
-                exit = rooms.get(key).getExit(rooms.get(key));
-                txtWriter.print(exit.isOperating());
-                txtWriter.print(rooms.get(key).getExit(exit));
+              
+                Room room = rooms.get(key);
+                System.out.println("Kalder exit! -----------");
+                exit = room.getExit(rooms.get(key));
+                System.out.println("Exit1: " + exit);
+                System.out.println("The Room is: " + rooms.get(key).getExit(rooms.get(key)));
+               
+                txtWriter.print(exit.isOperating() + " ");               // prints the boolean value to the txt file
+                txtWriter.print(rooms.get(key).getExit(exit).getName() + " ");     // prints the room on the opposing side of the exit to the txt file.
+               
             }
             if(rooms.get(key).getExit("right") != null) {
                 txtWriter.print("right "); // direction
-                exit = rooms.get(key).getExit(rooms.get(key)); 
-                txtWriter.print(exit.isOperating()); // isOperating
-                txtWriter.print(rooms.get(key).getExit(exit)); // Room connected
+             
+                Room room = rooms.get(key);
+                System.out.println("Kalder exit! -----------");
+                exit = room.getExit(rooms.get(key));
+                System.out.println("Exit1: " + exit);
+                System.out.println("The Room is: " + rooms.get(key).getExit(rooms.get(key)));
+               
+                txtWriter.print(exit.isOperating() + " ");               // prints the boolean value to the txt file
+                txtWriter.print(rooms.get(key).getExit(exit).getName() + " ");     // prints the room on the opposing side of the exit to the txt file.
+               
             }
             txtWriter.println();
         }
