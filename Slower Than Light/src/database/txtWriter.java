@@ -133,7 +133,7 @@ public class txtWriter {
         {
         txtWriter.print("Tool ");
         txtWriter.print(key + " ");
-        txtWriter.print(items.get(key).getDefaultRoom().toString() + " ");
+        txtWriter.print(items.get(key).getDefaultRoom().getName() + " ");
         }
 
         txtWriter.println();
@@ -141,7 +141,7 @@ public class txtWriter {
         txtWriter.print("SpecialItem: ");
         for(String key : items.keySet())
         {
-        txtWriter.print("Tool: ");
+        txtWriter.print("Tool ");
         txtWriter.print(key + " ");
         }
 
