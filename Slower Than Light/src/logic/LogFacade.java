@@ -5,16 +5,14 @@
  */
 package logic;
 import ACQ.IDataFacade;
+import acq.IDataFacade;
 import acq.ILogFacade;
 import acq.IHelper;
 import acq.IPlayer;
 import acq.ISaboteur;
 import acq.ITimeholder;
-import database.DataFacade;
-import logic.elements.characters.Helper;
-import logic.Game.*;
-import logic.elements.characters.Saboteur;
-import logic.processors.TimeHolder;
+import logic.user_input.Command;
+import logic.user_input.Parser;
 
 /**
  *
@@ -44,12 +42,15 @@ public class LogFacade implements ILogFacade
     public void injectData (IDataFacade dataFacade)
     {
         dataFacade = data;
+        Game.getInstance().setupGame(dataFacade.getLoader());
     }
     
     @Override
     public void processCommand (String Command)
     {
-        
+        Parser process = Game.getInstance().getParser();
+        Command command = process.processInput(Command);
+        Game.getInstance().getGameCommand().processCommand(command);
     }
     
     @Override
