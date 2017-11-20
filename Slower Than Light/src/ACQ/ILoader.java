@@ -8,7 +8,6 @@ package acq;
 import java.util.HashMap;
 import java.util.LinkedHashMap;
 import logic.elements.characters.Item;
-import logic.elements.characters.Player;
 import logic.elements.rooms.Room;
 
 /**
@@ -27,13 +26,13 @@ public interface ILoader
 
     HashMap<String, Item> getSpecialItems();
 
-    IPlayer getPlayer();
+    IPlayerInfo getPlayer();
     
-    ISaboteur getSaboteur();
+    ISaboteurInfo getSaboteur();
 
-    IHelper getHelper();
+    IHelperInfo getHelper();
 
-    ITimeHolder getTimeHolder();
+    ITimeHolderInfo getTimeHolder();
 
     LinkedHashMap<String, Integer> getHighscore();
     

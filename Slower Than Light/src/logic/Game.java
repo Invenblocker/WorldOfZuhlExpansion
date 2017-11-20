@@ -1,6 +1,12 @@
 package logic;
 
 import GUI.GUIController;
+import acq.IGameInfo;
+import acq.IHelper;
+import acq.ILoader;
+import acq.IPlayer;
+import acq.ISaboteur;
+import acq.ITimeHolder;
 import database.txtLoader;
 import java.util.ArrayList;
 import java.util.Collections;
@@ -41,13 +47,13 @@ public class Game
     private HashMap<String, Item>items;
     private HashMap<String, Item>specialItems;
     
-    private GameInfo gameInfo;
+    private IGameInfo gameInfo;
     private Parser parser;
-    private Player player;
-    private Saboteur saboteur;
-    private TimeHolder timeHolder;
+    private IPlayer player;
+    private ISaboteur saboteur;
+    private ITimeHolder timeHolder;
     private GUIController guiController;
-    
+    private IHelper helper;
     private boolean gameLoaded;
     
         
@@ -65,14 +71,14 @@ public class Game
      * @param loader Supply the game with a loader which has loaded all of
      * the data for the game.
      */
-    public void setupGame(txtLoader loader)
+    public void setupGame(ILoader loader)
     {
         // Load elements
         rooms = loader.getRooms();
         items = loader.getItems();
         player = loader.getPlayer();
         saboteur = loader.getSaboteur();
-        Helper helper = loader.getHelper();
+        helper = loader.getHelper();
         
         // Setup Game elements
         Game.GameSetup gameSetup = new GameSetup();
@@ -158,15 +164,15 @@ public class Game
 
     public HashMap<String, Item> getSpecialItems() {return specialItems;}
     
-    public GameInfo getGameInfo() {;return gameInfo;}
+    public IGameInfo getGameInfo() {;return gameInfo;}
     
     public Parser getParser () {return parser;}
     
-    public Player getPlayer() {return player;}
+    public IPlayer getPlayer() {return player;}
     
-    public Saboteur getSaboteur() {return saboteur;}
+    public ISaboteur getSaboteur() {return saboteur;}
     
-    public TimeHolder getTimeHolder() {return timeHolder;}
+    public ITimeHolder getTimeHolder() {return timeHolder;}
     
     public GUIController getGUI() {return guiController;}
     
