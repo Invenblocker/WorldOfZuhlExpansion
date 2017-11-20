@@ -114,12 +114,15 @@ public class txtLoader
                 System.out.println("added specialitems");
             }
             else if(words[0].equals("RoomsRepaired: ")){
+                getRoomsRepaired(Integer.parseInt(words[1]));
+                /*
                 int i = Integer.parseInt(words[1]);
                 while(i > 0){
                 Game.getInstance().getGameInfo().incrementRoomsRepaired();
                     System.out.println(i);
                 i--;
                 }
+                */
             }
             else if(words[0].equals("TimeHolder:")){
                 this.timeHolder = new TimeHolder(Double.parseDouble(words[1]), Double.parseDouble(words[2]));
@@ -133,6 +136,11 @@ public class txtLoader
             }
         }
     }
+    
+    public int getRoomsRepaired(int i){
+       return i; 
+    }
+    
     
      public HashMap<String, Room> getRooms()
     {
