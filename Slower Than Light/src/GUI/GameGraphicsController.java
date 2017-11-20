@@ -9,6 +9,7 @@ import java.net.URL;
 import java.util.ResourceBundle;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
+import javafx.scene.canvas.Canvas;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.image.ImageView;
@@ -60,6 +61,8 @@ public class GameGraphicsController implements Initializable {
     private Button rightButton;
     @FXML
     private Button downButton;
+    @FXML
+    private Canvas minimapCanvas;
 
     /**
      * Initializes the controller class.
