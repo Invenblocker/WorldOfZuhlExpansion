@@ -5,23 +5,21 @@
  */
 package ACQ;
 
-import logic.elements.characters.Item;
+import logic.elements.rooms.Room;
 
 /**
  *
  * @author mortenskovgaard
  */
-public interface IPlayer extends IRoomHopper
-{
+public interface IRoomHopper {
+
     /**
      * @author Invenblocker
      *
-     * Returns a copy of the player's inventory.
+     * Checks which room the character is currently in.
      *
-     * @return The inventory as an array passed by value.
+     * @return The room in which the character is currently located.
      */
-    Item[] getInventory();
-
-}
+    Room getCurrentRoom();
     
-
+}

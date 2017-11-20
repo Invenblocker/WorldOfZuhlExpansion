@@ -5,23 +5,21 @@
  */
 package ACQ;
 
-import logic.elements.characters.Item;
+import ACQ.IRoomHopper;
 
 /**
  *
  * @author mortenskovgaard
  */
-public interface IPlayer extends IRoomHopper
-{
+public interface ISaboteur extends IRoomHopper {
+
     /**
      * @author Invenblocker
      *
-     * Returns a copy of the player's inventory.
+     * Checks to see if the saboteur is chasing the player.
      *
-     * @return The inventory as an array passed by value.
+     * @return true if chasing, false if not.
      */
-    Item[] getInventory();
-
-}
+    boolean isChasingPlayer();
     
-
+}
