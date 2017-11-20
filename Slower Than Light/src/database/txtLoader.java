@@ -45,7 +45,7 @@ public class txtLoader
     private TimeHolder timeHolder;
     private String gameName;
     
-    public txtLoader(String gameName)
+    public txtLoader()
     {
         this.gameName = gameName;
         this.rooms = new HashMap<String, Room>();
@@ -64,13 +64,13 @@ public class txtLoader
      * @throws FileNotFoundException 
      */
     
-    public void newGame() 
+    public void newGame(String gameName) 
     {
         initializeGame(gameName);
         
     }
     
-    public void loadGame()
+    public void loadGame(String gameName)
     {
       initializeGame(gameName);  
     }
@@ -91,27 +91,21 @@ public class txtLoader
             String[] words = line.split(" ");
             if(words[0].equals("Room:")){      // adds all rooms to the hashmap rooms.
                 roomToHashMap(words);
-                System.out.println("Added rooms");
             }
             else if(words[0].equals("Item:")){
                 itemToHashMap(words);
-                System.out.println("added items");
             }
             else if(words[0].equals("Player:")){
                 initializePlayer(words);     // mangler noget, special item og item? defaultRoom
-                System.out.println("initialized player");
             }
             else if(words[0].equals("Saboteur:")){
                 initializeSaboteur(words);
-                System.out.println("initialized sab");
             }
             else if(words[0].equals("Helper:")) {
                 initializeHelper(words); 
-                System.out.println("initialized helper");
             }
             else if(words[0].equals("SpecialItem:")){
                 specialItemToHashMap(words);
-                System.out.println("added specialitems");
             }
             else if(words[0].equals("RoomsRepaired: ")){
                 getRoomsRepaired(Integer.parseInt(words[1]));
@@ -128,11 +122,9 @@ public class txtLoader
                 this.timeHolder = new TimeHolder(Double.parseDouble(words[1]), Double.parseDouble(words[2]));
                 this.timeHolder.setHelperCountdown(Integer.parseInt(words[3]));
                 this.timeHolder.setSaboteurCountdown(Integer.parseInt(words[4]));
-                System.out.println("added timeholder");
             }
             else{
                 addRoomExits(words);
-                System.out.println("added exits");
             }
         }
     }

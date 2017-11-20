@@ -28,6 +28,11 @@ import logic.processors.TimeHolder;
  * @author Loc
  */
 public class txtWriter {
+
+    public txtWriter() {
+    }
+    
+    
     
     public static void saveGame (HashMap<String, Room> rooms, HashMap<String, Item> items, Player player, Saboteur saboteur, 
             Helper helper, int roomsRepaired, TimeHolder time, String saveName)
@@ -72,28 +77,20 @@ public class txtWriter {
             txtWriter.print(key + " ");                 // Rummet der bliver arbejdet på's navn.
             
             if(rooms.get(key).getExit("up") != null){
-                System.out.println("ER I UP");
                 txtWriter.print("up ");                 // Hvis direction er up, bliver det skrevet ind i .txtfilen.
              
                 Room room = rooms.get(key);             // får referencen af rummet vi arbejder på.
-                System.out.println("Kalder exit! -----------");
                 exit = room.getExit(rooms.get(key));    // Får fat i 
-                System.out.println("Exit1: " + exit);
-                System.out.println("The Room is: " + rooms.get(key).getExit(rooms.get(key)));
                
                 txtWriter.print(exit.isOperating() + " ");               // prints the boolean value to the txt file
                 txtWriter.print(rooms.get(key).getExit("up").getName() + " ");     // prints the room on the opposing side of the exit to the txt file.
                
             } 
             if(rooms.get(key).getExit("down") != null) {
-                System.out.println("ER I DOWN");
                 txtWriter.print("down ");
             
                 Room room = rooms.get(key);
-                System.out.println("Kalder exit! -----------");
                 exit = room.getExit(rooms.get(key));
-                System.out.println("Exit1: " + exit);
-                System.out.println("The Room is: " + rooms.get(key).getExit(rooms.get(key)));
                
                 txtWriter.print(exit.isOperating() + " ");               // prints the boolean value to the txt file
                 txtWriter.print(rooms.get(key).getExit("down").getName() + " ");     // prints the room on the opposing side of the exit to the txt file.
@@ -103,10 +100,7 @@ public class txtWriter {
                 txtWriter.print("left ");
               
                 Room room = rooms.get(key);
-                System.out.println("Kalder exit! -----------");
                 exit = room.getExit(rooms.get(key));
-                System.out.println("Exit1: " + exit);
-                System.out.println("The Room is: " + rooms.get(key).getExit(rooms.get(key)));
                
                 txtWriter.print(exit.isOperating() + " ");               // prints the boolean value to the txt file
                 txtWriter.print(rooms.get(key).getExit("left").getName() + " ");     // prints the room on the opposing side of the exit to the txt file.
@@ -116,10 +110,7 @@ public class txtWriter {
                 txtWriter.print("right "); // direction
              
                 Room room = rooms.get(key);
-                System.out.println("Kalder exit! -----------");
                 exit = room.getExit(rooms.get(key));
-                System.out.println("Exit1: " + exit);
-                System.out.println("The Room is: " + rooms.get(key).getExit(rooms.get(key)));
                
                 txtWriter.print(exit.isOperating() + " ");               // prints the boolean value to the txt file
                 txtWriter.print(rooms.get(key).getExit("right").getName() + " ");     // prints the room on the opposing side of the exit to the txt file.
@@ -187,8 +178,7 @@ public class txtWriter {
         txtWriter.println();
 
         
-        
-        System.out.println("DONE!!!!");
+     
         txtWriter.close();
 
 
