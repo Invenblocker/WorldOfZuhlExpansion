@@ -1,5 +1,6 @@
    package logic.elements.rooms;
 
+import ACQ.IRoom;
 import java.util.ArrayList;
 import java.util.Set;
 import java.util.HashMap;
@@ -9,7 +10,7 @@ import logic.elements.characters.Item;
 import logic.elements.characters.Tool;
 
 
-public class Room 
+public class Room implements IRoom 
 {
     private String name;
     private boolean operating;         //is room damaged
@@ -42,30 +43,36 @@ public class Room
      * Returns the name of the room.
      * @return The room's name.
      */
+    @Override
     public String getName()
     {
         return this.name;
     }
     
+    @Override
       public boolean isOperating(){   //checks boolean value for room
         
         return this.operating;       //returns setOperatinge - dameged room or not
     }
     
     
+    @Override
     public void setOperating(boolean value) {     //Sets value  damged or not.
         this.operating = value;
         
         }
 
+    @Override
     public boolean isControlRoom() {    //returns boolean value, is player in CR
         return this.controlRoom;
     }
 
+    @Override
      public ArrayList<Tool> getRepairTools() {
         return this.repairTools;
     }
      
+    @Override
       public void addRepairTools(Tool tool) {
         this.repairTools.add(tool);
     }
@@ -92,6 +99,7 @@ public class Room
     }
 
      
+    @Override
     public ArrayList<Exit> getCollectionOfExits(){
         ArrayList<Exit> list = new ArrayList<Exit>();   // creates an arraylist
           
@@ -106,6 +114,7 @@ public class Room
      * @param direction The second word of the go command required to use this exit.
      * @return The room tht is located in the direction of the specified exit.
      */
+    @Override
     public Room getExit(String direction) 
     {
         if(exits.keySet().contains(direction))
@@ -130,6 +139,7 @@ public class Room
         }
     }
     
+    @Override
     public Room getExit(Exit direction)
     {
         if(exits.values().contains(direction))
@@ -146,6 +156,7 @@ public class Room
         }
     }
     
+    @Override
     public Exit getExit(Room room)
     {
         for(Exit exit : exits.values())
@@ -160,6 +171,7 @@ public class Room
      * @param name The second word of the go command required to use this exit.
      * @param neighbor The room that the exit added to the current leads to.
      */
+    @Override
     public void setExit(String direction, Exit neighbor) 
     {
         exits.put(direction, neighbor);    
