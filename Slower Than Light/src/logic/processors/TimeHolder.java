@@ -1,6 +1,6 @@
 package logic.processors;
 
-import ACQ.ITimeholder;
+import acq.ITimeholder;
 import logic.SystemLog;
 import java.util.TimerTask;
 import logic.Game;
