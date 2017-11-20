@@ -20,19 +20,29 @@ public interface ILoader
 
     void newGame(String gameName);
 
-    HashMap<String, Room> getRooms();
+    //HashMap<String, Room> getRooms();
 
-    HashMap<String, Item> getItems();
+    //HashMap<String, Item> getItems();
 
-    HashMap<String, Item> getSpecialItems();
-
-    IPlayerInfo getPlayerInfo();
+    //HashMap<String, Item> getSpecialItems();
     
-    ISaboteurInfo getSaboteurInfo();
+    HashMap<String, String> getRoomsInfo();
+    
+    HashMap<String, String> getItemsInfo();
+    
+    HashMap<String, String> getSpecialItemsInfo();
+    
+    String getItems();
+    
+    String getSpecialItems();
+    
+    String getPlayerInfo();
+    
+    String getSaboteurInfo();
 
-    IHelperInfo getHelperInfo();
+    String getHelperInfo();
 
-    ITimeHolderInfo getTimeHolderInfo();
+    String getTimeHolderInfo();
 
     LinkedHashMap<String, Integer> getHighscore();
     

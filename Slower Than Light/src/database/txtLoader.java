@@ -130,42 +130,37 @@ public class txtLoader implements ILoader
         }
     }
     
-    @Override
     public HashMap<String, Room> getRooms()
     {
         return this.rooms;
     }
     
-    @Override
     public HashMap<String, Item> getItems()
     {
         return this.items;
     }
     
-    @Override
     public HashMap<String, Item> getSpecialItems() {
         return this.specialItems;
     }
     
-    @Override
     public Player getPlayer() {
         return player;
     }
     
-    @Override
     public ISaboteur getSaboteur() {
         return saboteur;
     }
 
-    @Override
     public IHelper getHelper() {
         return helper;
     }
 
-    @Override
     public ITimeHolder getTimeHolder() {
         return timeHolder;
     }
+    
+    
     
     @Override
     public LinkedHashMap<String, Integer> getHighscore() { 
