@@ -5,7 +5,7 @@
  */
 package logic.elements.characters;
 
-import ACQ.IRoomHopper;
+import acq.IRoomHopper;
 import logic.SystemLog;
 import logic.elements.rooms.*;
 

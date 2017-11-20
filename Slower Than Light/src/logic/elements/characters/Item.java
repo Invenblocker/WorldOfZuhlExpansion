@@ -5,7 +5,7 @@
  */
 package logic.elements.characters;
 
-import ACQ.IItem;
+import acq.IItem;
 import logic.elements.rooms.*;
 
 /**

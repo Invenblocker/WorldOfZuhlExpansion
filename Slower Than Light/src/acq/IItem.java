@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package ACQ;
+package acq;
 
 import logic.elements.rooms.ItemRoom;
 
@@ -11,7 +11,8 @@ import logic.elements.rooms.ItemRoom;
  *
  * @author mortenskovgaard
  */
-public interface IItem {
+public interface IItem 
+{
 
     /**
      * @author JN97

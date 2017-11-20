@@ -5,6 +5,7 @@
  */
 package logic;
 
+import acq.IGameInfo;
 import database.txtWriter;
 import java.io.FileNotFoundException;
 import java.util.ArrayList;
@@ -21,7 +22,7 @@ import logic.elements.rooms.Room;
  *
  * @author Erik
  */
-public class GameInfo {
+public class GameInfo implements IGameInfo {
     
     private final double ALLOWED_ROOMS_DESTROYED_PERCENTAGE = 0.7;
     private double destroyedRoomsPercentage;
@@ -70,6 +71,7 @@ public class GameInfo {
         score = (int) ((roomsRepaired * 5) + (oxygenLeft * 5) - (destroyedRoomsCount * 2) + helperAlivePoints); 
     }
     
+    @Override
     public LinkedHashMap<String, Integer> saveHighScore(String playerName)
     {
         highScoreMap.put(playerName, score);
@@ -83,6 +85,7 @@ public class GameInfo {
 
     public double getDestroyedRoomsPercentage() {return destroyedRoomsPercentage;}
 
+    @Override
     public Room[] getDestroyedRooms() {return destroyedRooms.toArray(new Room[0]);}
     
     public int getRoomsRepaired () {return roomsRepaired;}
@@ -115,10 +118,13 @@ public class GameInfo {
         helper = null;
     }
 
+    @Override
     public LinkedHashMap<String, Integer> getHighScoreMap () {return highScoreMap;}
     
+    @Override
     public int getScore () {return score;}
     
+    @Override
     public boolean isGameFinished () {return gameFinished;}
     public void setGameFinished(boolean value)
     {

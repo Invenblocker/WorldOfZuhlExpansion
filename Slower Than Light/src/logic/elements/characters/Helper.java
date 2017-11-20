@@ -5,7 +5,7 @@
  */
 package logic.elements.characters;
 
-import ACQ.*;
+import acq.IHelper;
 import logic.SystemLog;
 import java.util.ArrayList;
 import logic.Game;

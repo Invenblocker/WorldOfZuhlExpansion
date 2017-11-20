@@ -3,25 +3,23 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package ACQ;
+package acq;
 
-import logic.elements.characters.Item;
+import acq.IRoomHopper;
 
 /**
  *
  * @author mortenskovgaard
  */
-public interface IPlayer extends IRoomHopper
-{
+public interface ISaboteur extends IRoomHopper {
+
     /**
      * @author Invenblocker
      *
-     * Returns a copy of the player's inventory.
+     * Checks to see if the saboteur is chasing the player.
      *
-     * @return The inventory as an array passed by value.
+     * @return true if chasing, false if not.
      */
-    Item[] getInventory();
-
-}
+    boolean isChasingPlayer();
     
-
+}

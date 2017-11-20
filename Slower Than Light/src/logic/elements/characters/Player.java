@@ -5,7 +5,7 @@
  */
 package logic.elements.characters;
 
-import ACQ.IPlayer;
+import acq.IPlayer;
 import logic.SystemLog;
 import logic.elements.rooms.*;
 

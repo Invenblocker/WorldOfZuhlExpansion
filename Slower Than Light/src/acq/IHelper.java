@@ -3,13 +3,13 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package ACQ;
+package acq;
 
 /**
  *
  * @author mortenskovgaard
  */
-public interface IHelper 
+public interface IHelper extends IRoomHopper 
 {
 
     String getHelperTaskString(); 
