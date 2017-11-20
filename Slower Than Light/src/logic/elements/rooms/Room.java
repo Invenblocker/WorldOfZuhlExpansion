@@ -1,6 +1,6 @@
    package logic.elements.rooms;
 
-import ACQ.IRoom;
+import acq.IRoom;
 import java.util.ArrayList;
 import java.util.Set;
 import java.util.HashMap;
