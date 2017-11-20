@@ -28,7 +28,7 @@ public interface ILoader {
 
     HashMap<String, Item> getSpecialItems();
 
-    void loadGame();
+    void loadGame(String gameName);
 
     /**
      * Takes the name of a txt file containing rooms and their exits, and items and their room.
@@ -36,6 +36,6 @@ public interface ILoader {
      * @param gameName
      * @throws FileNotFoundException
      */
-    void newGame();
+    void newGame(String gameName);
     
 }

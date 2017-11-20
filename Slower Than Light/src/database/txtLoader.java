@@ -6,6 +6,7 @@ package database;
  * and open the template in the editor.
  */
 
+import acq.ILoader;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.util.ArrayList;
@@ -32,7 +33,7 @@ import logic.elements.rooms.WorkshopRoom;
 import logic.processors.TimeHolder;
 
 
-public class txtLoader
+public class txtLoader implements ILoader
 {
     
     private HashMap<String, Room> rooms;
