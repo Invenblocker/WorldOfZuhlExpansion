@@ -7,13 +7,9 @@ package acq;
 
 /**
  *
- * @author mortenskovgaard
+ * @author Erik
  */
-public interface IDataFacade
+public interface IGUIController
 {
-    
-    ILoader getLoader();
-    
-    IWriter getWriter();
-    
+    void injectLogic (ILogFacade logFacade);
 }

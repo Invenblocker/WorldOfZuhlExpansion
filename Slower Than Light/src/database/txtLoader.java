@@ -40,18 +40,19 @@ public class txtLoader implements ILoader
     private HashMap<String, Item> items;
     private HashMap<String, Item> specialItems;
     private LinkedHashMap<String, Integer> highScore;
+    private int roomsRepaired;
     private Player player;
     private Saboteur saboteur;
     private Helper helper;
     private TimeHolder timeHolder;
-    private String gameName;
     
     public txtLoader()
     {
-        this.gameName = gameName;
-        this.rooms = new HashMap<String, Room>();
-        this.items = new HashMap<String, Item>();
-        this.specialItems = new HashMap<String, Item>();
+        this.rooms = new HashMap<>();
+        this.items = new HashMap<>();
+        this.specialItems = new HashMap<>();
+        this.highScore = new LinkedHashMap<>();
+        this.roomsRepaired = 0;
         this.player = new Player(null, 0);
         this.saboteur = new Saboteur(null, 0, 0, 0);
         this.helper = new Helper(null, null, 0, 0);
@@ -61,21 +62,20 @@ public class txtLoader implements ILoader
     /**
      * Takes the name of a txt file containing rooms and their exits, and items and their room.
      * Then puts the rooms into the rooms HashMap with their exits, and puts the items into the items HashMap, with their respective rooms.
-     * @param gameName
-     * @throws FileNotFoundException 
+     * @param gameName 
      */
     
+    @Override
     public void newGame(String gameName) 
     {
         initializeGame(gameName);
-        
     }
     
+    @Override
     public void loadGame(String gameName)
     {
       initializeGame(gameName);  
     }
-    
     
     public void initializeGame (String gameName)
     {
@@ -108,8 +108,10 @@ public class txtLoader implements ILoader
             else if(words[0].equals("SpecialItem:")){
                 specialItemToHashMap(words);
             }
-            else if(words[0].equals("RoomsRepaired: ")){
-                getRoomsRepaired(Integer.parseInt(words[1]));
+            else if(words[0].equals("RoomsRepaired:")){
+                roomsRepaired = Integer.parseInt(words[1]);
+                
+                //getRoomsRepaired(Integer.parseInt(words[1]));
                 /*
                 int i = Integer.parseInt(words[1]);
                 while(i > 0){
@@ -130,32 +132,29 @@ public class txtLoader implements ILoader
         }
     }
     
-    public int getRoomsRepaired(int i){
-       return i; 
-    }
-    
-    
-     public HashMap<String, Room> getRooms()
+    @Override
+    public HashMap<String, Room> getRooms()
     {
         return this.rooms;
     }
     
+    @Override
     public HashMap<String, Item> getItems()
     {
         return this.items;
     }
     
-    
+    @Override
     public HashMap<String, Item> getSpecialItems() {
         return this.specialItems;
     }
     
-    
-    
+    @Override
     public Player getPlayer() {
         return player;
     }
     
+    @Override
     public LinkedHashMap<String, Integer> getHighscore() { 
         this.highScore = new LinkedHashMap<String, Integer> ();
         String name;
@@ -181,6 +180,12 @@ public class txtLoader implements ILoader
         return  highScore;
         
         
+    }
+    
+    @Override
+    public int getRoomsRepaired ()
+    {
+        return roomsRepaired;
     }
     
     

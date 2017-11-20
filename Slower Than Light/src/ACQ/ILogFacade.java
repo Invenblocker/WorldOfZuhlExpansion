@@ -18,7 +18,7 @@ public interface ILogFacade {
 
     ISaboteur getSaboteur();
 
-    ITimeholder getTimeholder();
+    ITimeHolder getTimeholder();
 
     void injectData(IDataFacade dataFacade);
 

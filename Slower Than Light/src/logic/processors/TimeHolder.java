@@ -1,14 +1,14 @@
 package logic.processors;
 
-import acq.ITimeholder;
 import logic.SystemLog;
 import java.util.TimerTask;
 import logic.Game;
 import logic.GameInfo;
 import logic.elements.characters.HelperTask;
 import logic.elements.rooms.Room;
+import acq.ITimeHolder;
 
-public class TimeHolder extends TimerTask implements ITimeholder{
+public class TimeHolder extends TimerTask implements ITimeHolder{
     
     private final int DEFAULT_HELPER_COUNTDOWN = 5;
     private int saboteurCountdown;

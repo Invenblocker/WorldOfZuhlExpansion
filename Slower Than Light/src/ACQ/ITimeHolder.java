@@ -9,7 +9,7 @@ package acq;
  *
  * @author Johnn
  */
-public interface ITimeholder {
+public interface ITimeHolder {
 
     int getHelperCountdown();
 
