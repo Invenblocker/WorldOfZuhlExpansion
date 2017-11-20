@@ -108,10 +108,7 @@ public class Room
      */
     public Room getExit(String direction) 
     {
-        System.out.println("getExit kaldt med: " + direction);
-        
-        System.out.println("direction bool:" + exits.keySet().contains(direction) + " direction: " + direction);
-        System.out.println("exits.keyset: " + exits.keySet());
+      
         
         if(!exits.keySet().contains(direction))
         {
@@ -124,13 +121,10 @@ public class Room
             {
                 if(exits.get(direction).getExitRoom1().name.equals(this.name)){
                     Room exit = exits.get(direction).getExitRoom2();
-                    System.out.println("if: getExitRoom2 " + exit.getName());
-                    System.out.println("The room returned is: " + exit);
                     
                     return exit;
                 }
                 else{
-                    System.out.println("else: getExitRoom2 " + exits.get(direction).getExitRoom2().getName());
                    return exits.get(direction).getExitRoom1();
                 }
             }
@@ -165,13 +159,8 @@ public class Room
         
         for(Exit exit : exits.values()){
             
-            System.out.println("Vi leder efter exit ..." + exit + " Er: ");
-            System.out.println("exitRoom1: " + exit.getExitRoom1());
-            System.out.println("exitRoom2: " + exit.getExitRoom2());
-            System.out.println("room: " + room);
-            System.out.println("Room:" + room + " Compared to: " + exit.getExitRoom1() + " Is: " + exit.getExitRoom1().equals(room));
+          
             if(exit.getExitRoom1().equals(room)){
-                System.out.println("Vi fandt den rigtige exit!");
                 return(exit);
             }
             
