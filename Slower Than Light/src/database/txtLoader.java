@@ -155,11 +155,16 @@ public class txtLoader
         return player;
     }
     
-    public LinkedHashMap<String, Integer> getHighscore() throws FileNotFoundException { 
+    public LinkedHashMap<String, Integer> getHighscore() { 
         this.highScore = new LinkedHashMap<String, Integer> ();
         String name;
         int score;
-        Scanner sc = new Scanner (new File("highScore"));
+        Scanner sc = null;
+        try {
+            sc = new Scanner (new File("highScore"));
+        } catch (FileNotFoundException ex) {
+            Logger.getLogger(txtLoader.class.getName()).log(Level.SEVERE, null, ex);
+        }
         while (sc.hasNext()) {
             String line = sc.nextLine();
             String[] words = line.split (" ");

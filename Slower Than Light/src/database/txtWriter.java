@@ -184,7 +184,7 @@ public class txtWriter {
 
   }
      
-   public static void writeHighScore(LinkedHashMap<String, Integer> highScore, String highscoreName)
+   public void writeHighScore(LinkedHashMap<String, Integer> highScore, String highscoreName)
    {
         // hashmappet må kun være en vis størrelse
         File newSave = new File(highscoreName);
