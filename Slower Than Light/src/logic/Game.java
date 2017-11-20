@@ -1,6 +1,6 @@
 package logic;
 
-import GUI.GUI;
+import GUI.GUIController;
 import database.txtLoader;
 import java.util.ArrayList;
 import java.util.Collections;
@@ -19,7 +19,6 @@ import logic.elements.rooms.Room;
 import logic.processors.GameCommand;
 import logic.processors.TimeHolder;
 import logic.user_input.Command;
-import logic.user_input.CommandWord;
 import logic.user_input.Parser;
 
 /**
@@ -41,14 +40,13 @@ public class Game
     private HashMap<String, Room>rooms;
     private HashMap<String, Item>items;
     private HashMap<String, Item>specialItems;
-    private LinkedHashMap<String, Integer>highScore;
     
     private GameInfo gameInfo;
     private Parser parser;
     private Player player;
     private Saboteur saboteur;
     private TimeHolder timeHolder;
-    private GUI gui;
+    private GUIController guiController;
     
     private boolean gameLoaded;
     
@@ -101,7 +99,7 @@ public class Game
         timeHolder.setupReferences();
         
         // Setup GUI
-        gui = new GUI();
+        guiController = new GUIController();
         
         // Game is loaded
         gameLoaded = true;
@@ -120,7 +118,7 @@ public class Game
         }
         
         // Print welcome message
-        gui.printWelcome();
+        guiController.printWelcome();
         
         // Setup Timer
         Timer timer = new Timer();
@@ -144,12 +142,13 @@ public class Game
         catch (RuntimeException e)
         {
             System.out.println("Caught RuntimeException");
+            e.printStackTrace();
             SystemLog.saveAllLogs(); /* Save logs no matter what*/
         }
         
         // Game end
         timer.cancel();
-        
+        SystemLog.saveAllLogs();
         System.out.println("Thank you for playing.  Goodbye.");
     }
     
@@ -158,8 +157,6 @@ public class Game
     public HashMap<String, Item> getItems() {return items;}
 
     public HashMap<String, Item> getSpecialItems() {return specialItems;}
-
-    public LinkedHashMap<String, Integer> getHighScore() {return highScore;}
     
     public GameInfo getGameInfo() {;return gameInfo;}
     
@@ -171,7 +168,7 @@ public class Game
     
     public TimeHolder getTimeHolder() {return timeHolder;}
     
-    public GUI getGUI() {return gui;}
+    public GUIController getGUI() {return guiController;}
     
     
     private static class GameSetup
