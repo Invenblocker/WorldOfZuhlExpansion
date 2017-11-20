@@ -76,28 +76,11 @@ public class Room implements IRoom
       public void addRepairTools(Tool tool) {
         this.repairTools.add(tool);
     }
-
-    /**
-     * Returns a String informing the player of the current room as well as all
-     * possible exits from the room.
-     * @return The current room as well as where the player can go from said room.
-     */
-
-    
+   
     /**
      * Returns a String containing a list of exits.
      * @return A String with a list of possible exits from the current room.
      */
-    private String getExits()
-    {
-        String returnString = "Exits:";
-        Set<String> keys = exits.keySet();
-        for(String exit : keys) {
-            returnString += " " + exit;
-        }
-        return returnString;
-    }
-
      
     @Override
     public ArrayList<Exit> getCollectionOfExits(){
