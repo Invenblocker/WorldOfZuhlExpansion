@@ -37,12 +37,21 @@ public class txtLoader implements ILoader
     private HashMap<String, Room> rooms;
     private HashMap<String, Item> items;
     private HashMap<String, Item> specialItems;
-    private LinkedHashMap<String, Integer> highScore;
-    private int roomsRepaired;
     private Player player;
     private Saboteur saboteur;
     private Helper helper;
     private TimeHolder timeHolder;
+    
+    private HashMap<String, String> RoomsInfo;
+    private HashMap<String, String> ItemsInfo;
+    private HashMap<String, String> SpecialItemsInfo;
+    private String PlayerInfo;
+    private String SaboteurInfo;
+    private String HelperInfo;
+    private String TimeHolderInfo;
+    
+    private LinkedHashMap<String, Integer> highScore;
+    private int roomsRepaired;
     
     public txtLoader()
     {
@@ -160,7 +169,26 @@ public class txtLoader implements ILoader
         return timeHolder;
     }
     
-    
+    @Override
+    public HashMap<String, String> getRoomsInfo() {return RoomsInfo;}
+
+    @Override
+    public HashMap<String, String> getItemsInfo() {return ItemsInfo;}
+
+    @Override
+    public HashMap<String, String> getSpecialItemsInfo() {return SpecialItemsInfo;}
+
+    @Override
+    public String getPlayerInfo() {return PlayerInfo;}
+
+    @Override
+    public String getSaboteurInfo() {return SaboteurInfo;}
+
+    @Override
+    public String getHelperInfo() {return HelperInfo;}
+
+    @Override
+    public String getTimeHolderInfo() {return TimeHolderInfo;}
     
     @Override
     public LinkedHashMap<String, Integer> getHighscore() { 
@@ -180,14 +208,9 @@ public class txtLoader implements ILoader
             name = words[0];
             score = Integer.parseInt(words[1]);
             highScore.put(name, score);
-            
-         
-            
         }
         
         return  highScore;
-        
-        
     }
     
     @Override

@@ -155,7 +155,7 @@ public class GameCommand {
             Item itemTaken = roomInventory.get(itemReference);
             game.getPlayer().addItem(itemTaken); 
         } 
-        catch (Exception e) 
+        catch (NumberFormatException | IndexOutOfBoundsException e) 
         {
             System.out.println("This is not a valid item ! ");
         }
@@ -196,7 +196,7 @@ public class GameCommand {
            }
 
        } 
-       catch (Exception e) 
+       catch (NumberFormatException | IndexOutOfBoundsException e) 
        {
            System.out.println("This is not a valid item ! ");
        }

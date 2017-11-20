@@ -32,10 +32,6 @@ public interface ILoader
     
     HashMap<String, String> getSpecialItemsInfo();
     
-    String getItems();
-    
-    String getSpecialItems();
-    
     String getPlayerInfo();
     
     String getSaboteurInfo();
