@@ -1,4 +1,5 @@
 Action Log: Helper (Erik): The helper "Erik" had its task set to "bodyguard".
+Action Log: Saboteur: Sabotaged the room: "Office".
 Error Log: The room "Office" does not have an exit in the direction "right".
 Error Log: The room "OxygenContainer" does not have an exit in the direction "right".
 Error Log: The room "ShieldGenerator" does not have an exit in the direction "up".
@@ -17,4 +18,3 @@ Error Log: The room "LeftThruster" does not have an exit in the direction "left"
 Error Log: The room "LoadingBay" does not have an exit in the direction "up".
 Error Log: The room "LoadingBay" does not have an exit in the direction "down".
 Error Log: The room "Lab" does not have an exit in the direction "left".
-Action Log: Saboteur: Sabotaged the room: "Office".

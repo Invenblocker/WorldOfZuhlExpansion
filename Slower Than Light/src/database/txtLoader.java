@@ -14,6 +14,8 @@ import java.util.HashMap;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Scanner;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import logic.Game;
 import logic.GameInfo;
 import logic.elements.characters.Helper;
@@ -62,21 +64,27 @@ public class txtLoader
      * @throws FileNotFoundException 
      */
     
-    public void newGame() throws FileNotFoundException 
+    public void newGame() 
     {
         initializeGame(gameName);
         
     }
     
-    public void loadGame() throws FileNotFoundException 
+    public void loadGame()
     {
       initializeGame(gameName);  
     }
     
     
-    public void initializeGame (String gameName) throws FileNotFoundException
+    public void initializeGame (String gameName)
     {
-        Scanner sc = new Scanner(new File(gameName));
+        Scanner sc = null;
+        
+        try {
+            sc = new Scanner(new File(gameName));
+        } catch (FileNotFoundException ex) {
+            Logger.getLogger(txtLoader.class.getName()).log(Level.SEVERE, null, ex);
+        }
         while(sc.hasNext())
         {
             String line = sc.nextLine();  
