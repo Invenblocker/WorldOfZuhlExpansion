@@ -6,7 +6,10 @@ package database;
  * and open the template in the editor.
  */
 
+import acq.IHelper;
 import acq.ILoader;
+import acq.ISaboteur;
+import acq.ITimeHolder;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.util.ArrayList;
@@ -155,6 +158,21 @@ public class txtLoader implements ILoader
     }
     
     @Override
+    public ISaboteur getSaboteur() {
+        return saboteur;
+    }
+
+    @Override
+    public IHelper getHelper() {
+        return helper;
+    }
+
+    @Override
+    public ITimeHolder getTimeHolder() {
+        return timeHolder;
+    }
+    
+    @Override
     public LinkedHashMap<String, Integer> getHighscore() { 
         this.highScore = new LinkedHashMap<String, Integer> ();
         String name;
@@ -273,7 +291,8 @@ public class txtLoader implements ILoader
     Room room;
     room = rooms.get(words[1]);     //Helpers room in txt file
     this.helper = new Helper(room, words[2], Double.parseDouble(words[4]), Double.parseDouble(words[5])); //[3]chance of discovery growht og [4] er
-    helper.setTask(HelperTask.getHelperTask(words[3]));
+    this.helper.setChanceOfDiscovery(Double.parseDouble(words[6]));
+    this.helper.setTask(HelperTask.getHelperTask(words[3]));
    
         
     }
@@ -330,18 +349,6 @@ public class txtLoader implements ILoader
             j += 3;
             k += 3;
         }
-    }
-
-    public Saboteur getSaboteur() {
-        return saboteur;
-    }
-
-    public Helper getHelper() {
-        return helper;
-    }
-
-    public TimeHolder getTimeHolder() {
-        return timeHolder;
     }
     
     
