@@ -9,7 +9,8 @@ package acq;
  *
  * @author Johnn
  */
-public interface ITimeholder {
+public interface ITimeHolder
+{
 
     int getHelperCountdown();
 
@@ -19,12 +20,11 @@ public interface ITimeholder {
 
     double getTimeLeft();
 
-    void run();
-
     void setHelperCountdown(int value);
 
     void setSaboteurCountdown(int value);
 
     void setupReferences();
+    
     
 }

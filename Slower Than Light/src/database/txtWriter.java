@@ -5,11 +5,11 @@
  */
 package database;
 
+import acq.IWriter;
 import logic.SystemLog;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.PrintWriter;
-import java.nio.file.Files;
 import java.util.HashMap;
 import java.util.LinkedHashMap;
 import logic.elements.characters.Helper;
@@ -27,13 +27,14 @@ import logic.processors.TimeHolder;
  *
  * @author Loc
  */
-public class txtWriter {
+public class txtWriter implements IWriter {
 
     public txtWriter() {
     }
     
     
     
+    @Override
     public void saveGame (HashMap<String, Room> rooms, HashMap<String, Item> items, Player player, Saboteur saboteur, 
             Helper helper, int roomsRepaired, TimeHolder time, String saveName)
     {
@@ -165,10 +166,11 @@ public class txtWriter {
 
         txtWriter.print("Helper: ");
         txtWriter.print(helper.getCurrentRoom().getName() + " ");
-        txtWriter.print(helper.getName()+ " ");
-        txtWriter.print(helper.getHelperTask()+ " ");
-        txtWriter.print(helper.CHANCE_OF_DISCOVERY_GROWTH+ " ");
-        txtWriter.print(helper.DEFAULT_CHANCE_OF_DISCOVERY+ " ");
+        txtWriter.print(helper.getName() + " ");
+        txtWriter.print(helper.getHelperTask() + " ");
+        txtWriter.print(helper.CHANCE_OF_DISCOVERY_GROWTH + " ");
+        txtWriter.print(helper.DEFAULT_CHANCE_OF_DISCOVERY + " ");
+        //txtWriter.print(helper.getChanceOfDiscovery + " ");
         txtWriter.println();
 
         txtWriter.print("RoomsRepaired: " + roomsRepaired);   // roomsrepaired kommer fra gameinfo.increment 
@@ -184,6 +186,7 @@ public class txtWriter {
 
   }
      
+    @Override
    public void writeHighScore(LinkedHashMap<String, Integer> highScore, String highscoreName)
    {
         // hashmappet må kun være en vis størrelse

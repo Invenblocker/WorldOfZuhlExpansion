@@ -1,11 +1,10 @@
 package logic;
 
 import GUI.GUIController;
-import database.txtLoader;
+import acq.ILoader;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashMap;
-import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Random;
 import java.util.Timer;
@@ -45,9 +44,10 @@ public class Game
     private Parser parser;
     private Player player;
     private Saboteur saboteur;
+    private Helper helper;
     private TimeHolder timeHolder;
+    private GameCommand gameCommand;
     private GUIController guiController;
-    
     private boolean gameLoaded;
     
         
@@ -65,14 +65,14 @@ public class Game
      * @param loader Supply the game with a loader which has loaded all of
      * the data for the game.
      */
-    public void setupGame(txtLoader loader)
+    public void setupGame(ILoader loader)
     {
         // Load elements
         rooms = loader.getRooms();
         items = loader.getItems();
-        player = loader.getPlayer();
+        /*player = loader.getPlayer();
         saboteur = loader.getSaboteur();
-        Helper helper = loader.getHelper();
+        helper = loader.getHelper();*/
         
         // Setup Game elements
         Game.GameSetup gameSetup = new GameSetup();
@@ -81,7 +81,7 @@ public class Game
         
         Room randomRoom = gameSetup.getRandomSaboteurStartRoom(rooms);
         if (player == null)
-            player = new Player(randomRoom, 2);
+            player = new Player(rooms.get("controlRoom"), 2);
         if (saboteur == null)
             saboteur = new Saboteur(randomRoom, 0.5, 0.1, 0.15);
         if (helper == null)
@@ -91,18 +91,22 @@ public class Game
         gameInfo = new GameInfo(helper);
         
         // Setup Timer
-        if (loader.getTimeHolder() == null)
+        /*if (loader.getTimeHolder() == null)
             timeHolder = new TimeHolder(300, 350);
         else
-            timeHolder = loader.getTimeHolder();
-        
+            timeHolder = loader.getTimeHolder();*/
+        timeHolder = new TimeHolder(300, 350);
         timeHolder.setupReferences();
+        
+        // Setup GameCommand
+        gameCommand = new GameCommand();
         
         // Setup GUI
         guiController = new GUIController();
         
         // Game is loaded
         gameLoaded = true;
+        
     }
     
      /**
@@ -125,7 +129,6 @@ public class Game
         timer.schedule(timeHolder, 0, 1000);
         
         // Setup user input
-        GameCommand gameCommand = new GameCommand();
         parser = new Parser();
         //gameCommand.processCommand(new Command(CommandWord.SAVE, ""));
         
@@ -158,7 +161,7 @@ public class Game
 
     public HashMap<String, Item> getSpecialItems() {return specialItems;}
     
-    public GameInfo getGameInfo() {;return gameInfo;}
+    public GameInfo getGameInfo() {return gameInfo;}
     
     public Parser getParser () {return parser;}
     
@@ -166,12 +169,16 @@ public class Game
     
     public Saboteur getSaboteur() {return saboteur;}
     
+    public Helper getHelper() {return helper;}
+    
     public TimeHolder getTimeHolder() {return timeHolder;}
+    
+    public GameCommand getGameCommand() {return gameCommand;}
     
     public GUIController getGUI() {return guiController;}
     
     
-    private static class GameSetup
+    private class GameSetup
     {
         void addItemsToDefaultRooms(HashMap<String, Item> items)
         {
@@ -192,7 +199,6 @@ public class Game
                 return;
             
             List itemKeys = new ArrayList(items.keySet());
-            itemKeys.remove("ducttape");
             Collections.shuffle(itemKeys);                 // shuffler keys
             
             for (String roomKey : rooms.keySet())
@@ -220,6 +226,9 @@ public class Game
             List<String> keys = new ArrayList<>(rooms.keySet());
             Collections.shuffle(keys);
             
+            if (keys.isEmpty())
+                return randomRoom; // Return null
+            
             while(randomRoom == null)
             {
                 String randomKey = keys.remove(0);
@@ -230,5 +239,10 @@ public class Game
             
             return randomRoom;
         }
+    }
+    
+    private class StringConverter
+    {
+        
     }
 }

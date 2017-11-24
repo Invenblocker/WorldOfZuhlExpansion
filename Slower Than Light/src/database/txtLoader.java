@@ -6,18 +6,17 @@ package database;
  * and open the template in the editor.
  */
 
+import acq.IHelper;
+import acq.ILoader;
+import acq.ISaboteur;
+import acq.ITimeHolder;
 import java.io.File;
 import java.io.FileNotFoundException;
-import java.util.ArrayList;
-import java.util.Collections;
 import java.util.HashMap;
 import java.util.LinkedHashMap;
-import java.util.List;
 import java.util.Scanner;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import logic.Game;
-import logic.GameInfo;
 import logic.elements.characters.Helper;
 import logic.elements.characters.HelperTask;
 import logic.elements.characters.Item;
@@ -32,25 +31,35 @@ import logic.elements.rooms.WorkshopRoom;
 import logic.processors.TimeHolder;
 
 
-public class txtLoader
+public class txtLoader implements ILoader
 {
     
     private HashMap<String, Room> rooms;
     private HashMap<String, Item> items;
     private HashMap<String, Item> specialItems;
-    private LinkedHashMap<String, Integer> highScore;
     private Player player;
     private Saboteur saboteur;
     private Helper helper;
     private TimeHolder timeHolder;
-    private String gameName;
+    
+    private HashMap<String, String> RoomsInfo;
+    private HashMap<String, String> ItemsInfo;
+    private HashMap<String, String> SpecialItemsInfo;
+    private String PlayerInfo;
+    private String SaboteurInfo;
+    private String HelperInfo;
+    private String TimeHolderInfo;
+    
+    private LinkedHashMap<String, Integer> highScore;
+    private int roomsRepaired;
     
     public txtLoader()
     {
-        this.gameName = gameName;
-        this.rooms = new HashMap<String, Room>();
-        this.items = new HashMap<String, Item>();
-        this.specialItems = new HashMap<String, Item>();
+        this.rooms = new HashMap<>();
+        this.items = new HashMap<>();
+        this.specialItems = new HashMap<>();
+        this.highScore = new LinkedHashMap<>();
+        this.roomsRepaired = 0;
         this.player = new Player(null, 0);
         this.saboteur = new Saboteur(null, 0, 0, 0);
         this.helper = new Helper(null, null, 0, 0);
@@ -60,21 +69,20 @@ public class txtLoader
     /**
      * Takes the name of a txt file containing rooms and their exits, and items and their room.
      * Then puts the rooms into the rooms HashMap with their exits, and puts the items into the items HashMap, with their respective rooms.
-     * @param gameName
-     * @throws FileNotFoundException 
+     * @param gameName 
      */
     
+    @Override
     public void newGame(String gameName) 
     {
         initializeGame(gameName);
-        
     }
     
+    @Override
     public void loadGame(String gameName)
     {
       initializeGame(gameName);  
     }
-    
     
     public void initializeGame (String gameName)
     {
@@ -107,8 +115,10 @@ public class txtLoader
             else if(words[0].equals("SpecialItem:")){
                 specialItemToHashMap(words);
             }
-            else if(words[0].equals("RoomsRepaired: ")){
-                getRoomsRepaired(Integer.parseInt(words[1]));
+            else if(words[0].equals("RoomsRepaired:")){
+                roomsRepaired = Integer.parseInt(words[1]);
+                
+                //getRoomsRepaired(Integer.parseInt(words[1]));
                 /*
                 int i = Integer.parseInt(words[1]);
                 while(i > 0){
@@ -129,12 +139,7 @@ public class txtLoader
         }
     }
     
-    public int getRoomsRepaired(int i){
-       return i; 
-    }
-    
-    
-     public HashMap<String, Room> getRooms()
+    public HashMap<String, Room> getRooms()
     {
         return this.rooms;
     }
@@ -144,17 +149,48 @@ public class txtLoader
         return this.items;
     }
     
-    
     public HashMap<String, Item> getSpecialItems() {
         return this.specialItems;
     }
-    
-    
     
     public Player getPlayer() {
         return player;
     }
     
+    public ISaboteur getSaboteur() {
+        return saboteur;
+    }
+
+    public IHelper getHelper() {
+        return helper;
+    }
+
+    public ITimeHolder getTimeHolder() {
+        return timeHolder;
+    }
+    
+    @Override
+    public HashMap<String, String> getRoomsInfo() {return RoomsInfo;}
+
+    @Override
+    public HashMap<String, String> getItemsInfo() {return ItemsInfo;}
+
+    @Override
+    public HashMap<String, String> getSpecialItemsInfo() {return SpecialItemsInfo;}
+
+    @Override
+    public String getPlayerInfo() {return PlayerInfo;}
+
+    @Override
+    public String getSaboteurInfo() {return SaboteurInfo;}
+
+    @Override
+    public String getHelperInfo() {return HelperInfo;}
+
+    @Override
+    public String getTimeHolderInfo() {return TimeHolderInfo;}
+    
+    @Override
     public LinkedHashMap<String, Integer> getHighscore() { 
         this.highScore = new LinkedHashMap<String, Integer> ();
         String name;
@@ -172,14 +208,15 @@ public class txtLoader
             name = words[0];
             score = Integer.parseInt(words[1]);
             highScore.put(name, score);
-            
-         
-            
         }
         
         return  highScore;
-        
-        
+    }
+    
+    @Override
+    public int getRoomsRepaired ()
+    {
+        return roomsRepaired;
     }
     
     
@@ -267,7 +304,8 @@ public class txtLoader
     Room room;
     room = rooms.get(words[1]);     //Helpers room in txt file
     this.helper = new Helper(room, words[2], Double.parseDouble(words[4]), Double.parseDouble(words[5])); //[3]chance of discovery growht og [4] er
-    helper.setTask(HelperTask.getHelperTask(words[3]));
+    //this.helper.setChanceOfDiscovery(Double.parseDouble(words[6]));
+    this.helper.setTask(HelperTask.getHelperTask(words[3]));
    
         
     }
@@ -324,18 +362,6 @@ public class txtLoader
             j += 3;
             k += 3;
         }
-    }
-
-    public Saboteur getSaboteur() {
-        return saboteur;
-    }
-
-    public Helper getHelper() {
-        return helper;
-    }
-
-    public TimeHolder getTimeHolder() {
-        return timeHolder;
     }
     
     
