@@ -26,13 +26,13 @@ public interface ILoader
 
     HashMap<String, Item> getSpecialItems();
     
-    String getPlayerInfo();
+    String[] getPlayerInfo();
     
-    String getSaboteurInfo();
+    String[] getSaboteurInfo();
 
-    String getHelperInfo();
+    String[] getHelperInfo();
 
-    String getTimeHolderInfo();
+    String[] getTimeHolderInfo();
 
     LinkedHashMap<String, Integer> getHighscore();
     

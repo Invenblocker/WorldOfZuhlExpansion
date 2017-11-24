@@ -75,18 +75,26 @@ public class Game
     public void setupGame(ILoader loader)
     {
         // Load elements
-        rooms = loader.getRooms();
-        items = loader.getItems();
-        /*player = loader.getPlayer();
-        saboteur = loader.getSaboteur();
-        helper = loader.getHelper();*/
         
         // Setup Game elements
+        rooms = loader.getRooms();
+        items = loader.getItems();
+        
+        Game.StringConverter sc = new StringConverter();
+        sc.initializePlayer(loader.getPlayerInfo(), rooms, items);
+        sc.initializeSaboteur(loader.getSaboteurInfo(), rooms);
+        sc.initializeHelper(loader.getHelperInfo(), rooms);
+        sc.initializeTimeHolder(loader.getTimeHolderInfo());
+        
+        player = sc.playerSC;
+        saboteur = sc.saboteurSC;
+        helper = sc.helperSC;
+        timeHolder = sc.timeHolderSC;
+        
+        
         Game.GameSetup gameSetup = new GameSetup();
         gameSetup.addItemsToDefaultRooms(items);
         gameSetup.addRepairItemsToRooms(items, rooms);
-        
-        Game.StringConverter sc = new StringConverter();
         
         
         Room randomRoom = gameSetup.getRandomSaboteurStartRoom(rooms);
@@ -105,7 +113,6 @@ public class Game
             timeHolder = new TimeHolder(300, 350);
         else
             timeHolder = loader.getTimeHolder();*/
-        timeHolder = new TimeHolder(300, 350);
         timeHolder.setupReferences();
         
         // Setup GameCommand
@@ -258,38 +265,34 @@ public class Game
         private Helper helperSC;
         private TimeHolder timeHolderSC;
         
-        private void initializePlayer(String[] words)
+        private void initializePlayer(String[] words, HashMap<String, Room> _rooms, HashMap<String, Item> _items)
         {
-            Room room;                     //Create reference to room
-            room = rooms.get(words[1]);    //Sets room reference equal to index 1 in our hashmap, which is a room.
+            Room room = _rooms.get(words[1]);    //Sets room reference equal to index 1 in our hashmap, which is a room.
 
             playerSC = new Player(room, Integer.parseInt(words[2]));
             int i = 3;         //index for item in txtfile
-
-
+            
             if(items.containsKey(i))           //checks if txtfile contains same key in items hashmap
-                playerSC.addItem(items.get(words[i])); //adds item to player inventory
+                playerSC.addItem(_items.get(words[i])); //adds item to player inventory
             else if (specialItems.containsKey(i))  //checks if txtfile contains same key in specialItems hashmap
                 playerSC.addItem(specialItems.get(words[i]));    //adds specialItem to player inventory
             
             i++;
         }
       
-        private void initializeSaboteur(String[] words)
+        private void initializeSaboteur(String[] words, HashMap<String, Room> _rooms)
         {
-            Room room;
-            room = rooms.get(words[1]);
+            Room room = _rooms.get(words[1]);
             saboteurSC = new Saboteur(room, Double.parseDouble(words[2]), Double.parseDouble(words[3]), Double.parseDouble(words[4]));
             saboteurSC.setChanceOfSabotage(Double.parseDouble(words[5]));
             saboteurSC.addStunCountdown(Integer.parseInt(words[6]));
         }
 
-        private void initializeHelper(String[] words)
+        private void initializeHelper(String[] words, HashMap<String, Room> _rooms)
         {
-            Room room;
-            room = rooms.get(words[1]);     //Helpers room in txt file
+            Room room = _rooms.get(words[1]);     //Helpers room in txt file
             helperSC = new Helper(room, words[2], Double.parseDouble(words[4]), Double.parseDouble(words[5])); //[3]chance of discovery growht og [4] er
-            //helperSC.setChanceOfDiscovery(Double.parseDouble(words[6]));
+            helperSC.setChanceOfDiscovery(Double.parseDouble(words[6]));
             helperSC.setTask(HelperTask.getHelperTask(words[3]));
         }
         
@@ -299,14 +302,5 @@ public class Game
             timeHolderSC.setHelperCountdown(Integer.parseInt(words[3]));
             timeHolderSC.setSaboteurCountdown(Integer.parseInt(words[4]));
         }
-        
-        
-        Player getPlayer() {return playerSC;}
-
-        Saboteur getSaboteur() {return saboteurSC;}
-
-        Helper getHelper() {return helperSC;}
-
-        TimeHolder getTimeHolder() {return timeHolderSC;}
     }
 }

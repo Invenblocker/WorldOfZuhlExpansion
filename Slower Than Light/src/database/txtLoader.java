@@ -45,10 +45,10 @@ public class txtLoader implements ILoader
     private HashMap<String, String> RoomsInfo;
     private HashMap<String, String> ItemsInfo;
     private HashMap<String, String> SpecialItemsInfo;
-    private String PlayerInfo;
-    private String SaboteurInfo;
-    private String HelperInfo;
-    private String TimeHolderInfo;
+    private String[] playerInfo;
+    private String[] saboteurInfo;
+    private String[] helperInfo;
+    private String[] timeHolderInfo;
     
     private LinkedHashMap<String, Integer> highScore;
     private int roomsRepaired;
@@ -105,33 +105,27 @@ public class txtLoader implements ILoader
             }
             else if(words[0].equals("Player:")){
                 initializePlayer(words);     // mangler noget, special item og item? defaultRoom
+                playerInfo = words;
             }
             else if(words[0].equals("Saboteur:")){
                 initializeSaboteur(words);
+                saboteurInfo = words;
             }
             else if(words[0].equals("Helper:")) {
-                initializeHelper(words); 
+                initializeHelper(words);
+                helperInfo = words;
             }
             else if(words[0].equals("SpecialItem:")){
                 specialItemToHashMap(words);
             }
             else if(words[0].equals("RoomsRepaired:")){
                 roomsRepaired = Integer.parseInt(words[1]);
-                
-                //getRoomsRepaired(Integer.parseInt(words[1]));
-                /*
-                int i = Integer.parseInt(words[1]);
-                while(i > 0){
-                Game.getInstance().getGameInfo().incrementRoomsRepaired();
-                    System.out.println(i);
-                i--;
-                }
-                */
             }
             else if(words[0].equals("TimeHolder:")){
                 this.timeHolder = new TimeHolder(Double.parseDouble(words[1]), Double.parseDouble(words[2]));
                 this.timeHolder.setHelperCountdown(Integer.parseInt(words[3]));
                 this.timeHolder.setSaboteurCountdown(Integer.parseInt(words[4]));
+                timeHolderInfo = words;
             }
             else{
                 addRoomExits(words);
@@ -170,16 +164,16 @@ public class txtLoader implements ILoader
     }
 
     @Override
-    public String getPlayerInfo() {return PlayerInfo;}
+    public String[] getPlayerInfo() {return playerInfo;}
 
     @Override
-    public String getSaboteurInfo() {return SaboteurInfo;}
+    public String[] getSaboteurInfo() {return saboteurInfo;}
 
     @Override
-    public String getHelperInfo() {return HelperInfo;}
+    public String[] getHelperInfo() {return helperInfo;}
 
     @Override
-    public String getTimeHolderInfo() {return TimeHolderInfo;}
+    public String[] getTimeHolderInfo() {return timeHolderInfo;}
     
     @Override
     public LinkedHashMap<String, Integer> getHighscore() { 
