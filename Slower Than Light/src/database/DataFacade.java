@@ -16,8 +16,8 @@ import acq.IWriter;
 public class DataFacade implements IDataFacade
 {
     
-    public ILoader loader;
-    public IWriter writer;
+    private ILoader loader;
+    private IWriter writer;
        
     public DataFacade ()
     {
@@ -26,16 +26,8 @@ public class DataFacade implements IDataFacade
     }
     
     @Override
-    public ILoader getLoader()
-    {
-        return loader;
-        
-    }
+    public ILoader getLoader() {return loader;}
     
     @Override
-    public IWriter getWriter()
-    {
-        return writer;
-        
-    }
+    public IWriter getWriter() {return writer;}
 }

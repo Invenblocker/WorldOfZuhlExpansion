@@ -4,13 +4,13 @@
  * and open the template in the editor.
  */
 package logic;
-import ACQ.IDataFacade;
+import acq.IDataFacade;
 import acq.IDataFacade;
 import acq.ILogFacade;
 import acq.IHelper;
 import acq.IPlayer;
 import acq.ISaboteur;
-import acq.ITimeholder;
+import acq.ITimeHolder;
 import logic.user_input.Command;
 import logic.user_input.Parser;
 
@@ -21,28 +21,27 @@ import logic.user_input.Parser;
 public class LogFacade implements ILogFacade 
 {
     private static ILogFacade instance;
-    
-    
     public static ILogFacade getInstance()
     {
         if (instance == null)
-        {
             instance = new LogFacade();
-        }
+        
         return instance;
     }
     
     private IDataFacade data;
+    private Game game;
     
     public LogFacade()
     {
-        
+        game = Game.getInstance();
     }   
+    
     @Override
     public void injectData (IDataFacade dataFacade)
     {
-        dataFacade = data;
-        Game.getInstance().setupGame(dataFacade.getLoader());
+        data = dataFacade;
+        game.setupGame(data.getLoader());
     }
     
     @Override
@@ -54,29 +53,15 @@ public class LogFacade implements ILogFacade
     }
     
     @Override
-    public ITimeholder getTimeholder()
-    {
-        return getTimeholder();
-    } 
+    public ITimeHolder getTimeholder() {return game.getTimeHolder();} 
     
     @Override
-    public IPlayer getPlayer()
-    {
-       return getPlayer();
-    }
+    public IPlayer getPlayer() {return game.getPlayer();}
     
     @Override
-    public ISaboteur getSaboteur()
-    {
-       return getSaboteur();
-    }
+    public ISaboteur getSaboteur() {return game.getSaboteur();}
     
     @Override
-    public IHelper getHelper()
-    {
-        return getHelper();
-    }
-
+    public IHelper getHelper() {return game.getHelper();}
     
-
 }

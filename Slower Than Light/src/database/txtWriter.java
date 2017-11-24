@@ -170,7 +170,7 @@ public class txtWriter implements IWriter {
         txtWriter.print(helper.getHelperTask() + " ");
         txtWriter.print(helper.CHANCE_OF_DISCOVERY_GROWTH + " ");
         txtWriter.print(helper.DEFAULT_CHANCE_OF_DISCOVERY + " ");
-        txtWriter.print(helper.getChanceOfDiscovery + " ");
+        //txtWriter.print(helper.getChanceOfDiscovery + " ");
         txtWriter.println();
 
         txtWriter.print("RoomsRepaired: " + roomsRepaired);   // roomsrepaired kommer fra gameinfo.increment 

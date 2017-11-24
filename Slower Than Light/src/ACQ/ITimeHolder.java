@@ -9,7 +9,7 @@ package acq;
  *
  * @author Johnn
  */
-public interface ITimeHolder extends Runnable
+public interface ITimeHolder
 {
 
     int getHelperCountdown();
@@ -19,8 +19,6 @@ public interface ITimeHolder extends Runnable
     int getSaboteurCountdown();
 
     double getTimeLeft();
-
-    void run();
 
     void setHelperCountdown(int value);
 

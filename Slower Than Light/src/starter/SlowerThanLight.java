@@ -5,9 +5,11 @@
  */
 package starter;
 
+import database.DataFacade;
 import database.txtLoader;
 import java.io.FileNotFoundException;
 import logic.Game;
+import logic.LogFacade;
 
 /**
  *
@@ -20,12 +22,18 @@ public class SlowerThanLight {
      */
     public static void main(String[] args) throws FileNotFoundException {
         // TODO code application logic here
-        Game game = Game.getInstance();
+        /*Game game = Game.getInstance();
         txtLoader loader = new txtLoader();
         loader.newGame("assets/maps/bigRectangle.txt");
         
         game.setupGame(loader);
-        game.play();
+        game.play();*/
+        
+        DataFacade data = new DataFacade();
+        data.getLoader().loadGame("assets/maps/bigRectangle.txt");
+        LogFacade logik = new LogFacade();
+        logik.injectData(data);
+        Game.getInstance().play();
     }
     
 }

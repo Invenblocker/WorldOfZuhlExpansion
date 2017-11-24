@@ -304,7 +304,7 @@ public class txtLoader implements ILoader
     Room room;
     room = rooms.get(words[1]);     //Helpers room in txt file
     this.helper = new Helper(room, words[2], Double.parseDouble(words[4]), Double.parseDouble(words[5])); //[3]chance of discovery growht og [4] er
-    this.helper.setChanceOfDiscovery(Double.parseDouble(words[6]));
+    //this.helper.setChanceOfDiscovery(Double.parseDouble(words[6]));
     this.helper.setTask(HelperTask.getHelperTask(words[3]));
    
         
