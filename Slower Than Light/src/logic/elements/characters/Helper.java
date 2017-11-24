@@ -298,4 +298,14 @@ public class Helper extends RoomHopper implements IHelper
     {
         return(name);
     }
+    
+    public double getChanceOfDiscovery()
+    {
+        return(chanceOfDiscovery);
+    }
+    
+    public void setChanceOfDiscovery(double value)
+    {
+        chanceOfDiscovery = value;
+    }
 }
