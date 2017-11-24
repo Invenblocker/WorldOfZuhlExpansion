@@ -168,15 +168,6 @@ public class txtLoader implements ILoader
     public ITimeHolder getTimeHolder() {
         return timeHolder;
     }
-    
-    @Override
-    public HashMap<String, String> getRoomsInfo() {return RoomsInfo;}
-
-    @Override
-    public HashMap<String, String> getItemsInfo() {return ItemsInfo;}
-
-    @Override
-    public HashMap<String, String> getSpecialItemsInfo() {return SpecialItemsInfo;}
 
     @Override
     public String getPlayerInfo() {return PlayerInfo;}

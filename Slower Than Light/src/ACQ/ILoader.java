@@ -26,14 +26,6 @@ public interface ILoader
 
     HashMap<String, Item> getSpecialItems();
     
-    ITimeHolder getTimeHolder();
-    
-    HashMap<String, String> getRoomsInfo();
-    
-    HashMap<String, String> getItemsInfo();
-    
-    HashMap<String, String> getSpecialItemsInfo();
-    
     String getPlayerInfo();
     
     String getSaboteurInfo();

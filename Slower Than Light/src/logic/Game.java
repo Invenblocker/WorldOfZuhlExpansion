@@ -2,13 +2,20 @@ package logic;
 
 import GUI.GUIController;
 import acq.ILoader;
+import database.txtLoader;
+import java.io.File;
+import java.io.FileNotFoundException;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Random;
+import java.util.Scanner;
 import java.util.Timer;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import logic.elements.characters.Helper;
+import logic.elements.characters.HelperTask;
 import logic.elements.characters.Player;
 import logic.elements.characters.Saboteur;
 import logic.elements.characters.Item;
@@ -78,6 +85,9 @@ public class Game
         Game.GameSetup gameSetup = new GameSetup();
         gameSetup.addItemsToDefaultRooms(items);
         gameSetup.addRepairItemsToRooms(items, rooms);
+        
+        Game.StringConverter sc = new StringConverter();
+        
         
         Room randomRoom = gameSetup.getRandomSaboteurStartRoom(rooms);
         if (player == null)
@@ -180,7 +190,7 @@ public class Game
     
     private class GameSetup
     {
-        void addItemsToDefaultRooms(HashMap<String, Item> items)
+        private void addItemsToDefaultRooms(HashMap<String, Item> items)
         {
             for (Item item : items.values()) {
                 Room defaultRoom = item.getDefaultRoom();
@@ -193,7 +203,7 @@ public class Game
             }
         }
     
-        void addRepairItemsToRooms(HashMap<String, Item> items, HashMap<String, Room> rooms)
+        private void addRepairItemsToRooms(HashMap<String, Item> items, HashMap<String, Room> rooms)
         {
             if (items.isEmpty() || rooms.isEmpty())
                 return;
@@ -218,7 +228,7 @@ public class Game
             }
         }
 
-        Room getRandomSaboteurStartRoom (HashMap<String, Room> rooms)
+        private Room getRandomSaboteurStartRoom (HashMap<String, Room> rooms)
         {
             Room randomRoom = null;
         
@@ -243,6 +253,60 @@ public class Game
     
     private class StringConverter
     {
+        private Player playerSC;
+        private Saboteur saboteurSC;
+        private Helper helperSC;
+        private TimeHolder timeHolderSC;
         
+        private void initializePlayer(String[] words)
+        {
+            Room room;                     //Create reference to room
+            room = rooms.get(words[1]);    //Sets room reference equal to index 1 in our hashmap, which is a room.
+
+            playerSC = new Player(room, Integer.parseInt(words[2]));
+            int i = 3;         //index for item in txtfile
+
+
+            if(items.containsKey(i))           //checks if txtfile contains same key in items hashmap
+                playerSC.addItem(items.get(words[i])); //adds item to player inventory
+            else if (specialItems.containsKey(i))  //checks if txtfile contains same key in specialItems hashmap
+                playerSC.addItem(specialItems.get(words[i]));    //adds specialItem to player inventory
+            
+            i++;
+        }
+      
+        private void initializeSaboteur(String[] words)
+        {
+            Room room;
+            room = rooms.get(words[1]);
+            saboteurSC = new Saboteur(room, Double.parseDouble(words[2]), Double.parseDouble(words[3]), Double.parseDouble(words[4]));
+            saboteurSC.setChanceOfSabotage(Double.parseDouble(words[5]));
+            saboteurSC.addStunCountdown(Integer.parseInt(words[6]));
+        }
+
+        private void initializeHelper(String[] words)
+        {
+            Room room;
+            room = rooms.get(words[1]);     //Helpers room in txt file
+            helperSC = new Helper(room, words[2], Double.parseDouble(words[4]), Double.parseDouble(words[5])); //[3]chance of discovery growht og [4] er
+            //helperSC.setChanceOfDiscovery(Double.parseDouble(words[6]));
+            helperSC.setTask(HelperTask.getHelperTask(words[3]));
+        }
+        
+        private void initializeTimeHolder(String[] words)
+        {
+            timeHolderSC = new TimeHolder(Double.parseDouble(words[1]), Double.parseDouble(words[2]));
+            timeHolderSC.setHelperCountdown(Integer.parseInt(words[3]));
+            timeHolderSC.setSaboteurCountdown(Integer.parseInt(words[4]));
+        }
+        
+        
+        Player getPlayer() {return playerSC;}
+
+        Saboteur getSaboteur() {return saboteurSC;}
+
+        Helper getHelper() {return helperSC;}
+
+        TimeHolder getTimeHolder() {return timeHolderSC;}
     }
 }
