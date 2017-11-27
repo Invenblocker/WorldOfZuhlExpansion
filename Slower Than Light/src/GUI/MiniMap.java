@@ -9,6 +9,7 @@ import acq.IRoom;
 import java.awt.Point;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.Map;
 import javafx.application.Application;
 import static javafx.application.Application.launch;
 import javafx.event.ActionEvent;
@@ -26,11 +27,15 @@ import javafx.stage.Stage;
  */
 public class MiniMap extends Application {
     
-     HashMap<String, Point> rooms = new HashMap<>();
+     Map<String, Point> rooms = new HashMap<>();
        ArrayList<IRoom> dr = new ArrayList<>();
        String playerRoom;
        String saboteurRoom;
     
+       public MiniMap(Map<String, Point> rooms){
+           this.rooms = rooms;
+       }
+       
     @Override
     public void start(Stage primaryStage) {
         
@@ -51,7 +56,7 @@ public class MiniMap extends Application {
        this.playerRoom = "Room1";
        this.saboteurRoom = "Room2";
         
-        update(rooms, dr, ls, gc, playerRoom, saboteurRoom);
+        update( dr, ls, gc, playerRoom, saboteurRoom);
         
        
         primaryStage.setScene(scene);
@@ -63,7 +68,7 @@ public class MiniMap extends Application {
      */
     
     
-    private void updateRoom(HashMap<String, Point> rooms, ArrayList<IRoom> destroyedRooms, LayeredSprite ls, GraphicsContext gc){ // Hashmappet er alle vores rum og koordinater, arraylisten består af de rum som er ødelagt.
+    private void updateRoom( ArrayList<IRoom> destroyedRooms, LayeredSprite ls, GraphicsContext gc){ // Hashmappet er alle vores rum og koordinater, arraylisten består af de rum som er ødelagt.
         for (int i = 0; i < destroyedRooms.size(); i++){        // kører gennem arraylisten med ødelagte rum
             for (String key : rooms.keySet()){                  //kører gennem vores hashmap
                 if (destroyedRooms.get(i).getName().equals(key)){         // tjekker om rummet i hashmappet er det samme som det ødelagte rum
@@ -76,7 +81,7 @@ public class MiniMap extends Application {
         }      
     }
     
-    private void updatePlayer(LayeredSprite ls, GraphicsContext gc, String playerRoom, HashMap<String, Point> rooms){
+    private void updatePlayer(LayeredSprite ls, GraphicsContext gc, String playerRoom){
         for (String key : rooms.keySet()){
             if (key.equals(playerRoom)){
                  ls.addSprite(3, new PlayerDraw(rooms.get(key)));
@@ -86,7 +91,7 @@ public class MiniMap extends Application {
     
     
     
-        private void updateSaboteur(LayeredSprite ls, GraphicsContext gc, String saboteurRoom, HashMap<String, Point> rooms){
+        private void updateSaboteur(LayeredSprite ls, GraphicsContext gc, String saboteurRoom){
         for (String key : rooms.keySet()){
             if (key.equals(saboteurRoom)){
                  ls.addSprite(3, new SaboteurDraw(rooms.get(key)));
@@ -96,25 +101,25 @@ public class MiniMap extends Application {
     
  
     
-    public void update(HashMap<String, Point> rooms, ArrayList<IRoom> destroyedRooms, LayeredSprite ls, GraphicsContext gc, String playerRoom, String saboteurRoom){
+    public void update( ArrayList<IRoom> destroyedRooms, LayeredSprite ls, GraphicsContext gc, String playerRoom, String saboteurRoom){
         ls = new LayeredSprite(); // laver nyt layeredSprite så de gamle data er fjernet.
         this.dr = destroyedRooms;
         this.playerRoom = playerRoom;
         this.saboteurRoom = saboteurRoom;
-        updateRoom(rooms, destroyedRooms, ls, gc);
-        updatePlayer(ls, gc, playerRoom, rooms);
-        updateSaboteur(ls, gc, saboteurRoom, rooms);
+        updateRoom(destroyedRooms, ls, gc);
+        updatePlayer(ls, gc, playerRoom);
+        updateSaboteur(ls, gc, saboteurRoom);
         ls.render(gc);
     }
     
     public void updatePlayerPosition(String playerRoom, LayeredSprite ls, GraphicsContext gc){
         this.playerRoom = playerRoom;
-        update(rooms, dr, ls, gc, playerRoom, saboteurRoom);
+        update( dr, ls, gc, playerRoom, saboteurRoom);
     }
     
     public void updateDestroyedRooms(ArrayList<IRoom> destroyedRooms, LayeredSprite ls, GraphicsContext gc){
         this.dr = destroyedRooms;
-        update(rooms, destroyedRooms, ls, gc, playerRoom, saboteurRoom);
+        update(destroyedRooms, ls, gc, playerRoom, saboteurRoom);
     }
     
     
