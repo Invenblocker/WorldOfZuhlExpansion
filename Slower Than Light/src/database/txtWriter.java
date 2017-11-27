@@ -5,7 +5,8 @@
  */
 package database;
 
-import acq.IWriter;
+import ACQ.IWriter;
+import java.awt.Point;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.PrintWriter;
@@ -23,7 +24,7 @@ public class txtWriter implements IWriter {
     @Override
     public void saveGame(String roomsInfo, String itemsInfo,String specialItemsInfo,
             List<String> exitInfo, String playerInfo, String saboteurInfo,
-            String helperInfo, String timeHolderInfo, int roomsRepaired)
+            String helperInfo, String timeHolderInfo, int roomsRepaired, Map<String, Point> roomPosition)
     {
         File newSave = new File("assets/maps/saveGame.txt");
         PrintWriter txtWriter = null;
@@ -66,6 +67,9 @@ public class txtWriter implements IWriter {
         txtWriter.println();
 
         txtWriter.print("RoomsRepaired: " + roomsRepaired);   // roomsrepaired kommer fra gameinfo.increment 
+        txtWriter.println();
+        
+        txtWriter.print(roomPosition);
         txtWriter.println();
         
         txtWriter.close();

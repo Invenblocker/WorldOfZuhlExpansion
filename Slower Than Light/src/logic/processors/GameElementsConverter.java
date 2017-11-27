@@ -5,6 +5,7 @@
  */
 package logic.processors;
 
+import java.awt.Point;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
@@ -32,6 +33,7 @@ public class GameElementsConverter
     private String saboteurInfo;
     private String helperInfo;
     private String timeHolderInfo;
+    private String roomPosition;
     
     public GameElementsConverter ()
     {
@@ -59,6 +61,15 @@ public class GameElementsConverter
         // convert exits
         for(String key : rooms.keySet())
             convertExit(rooms, rooms.get(key));
+        
+    }
+    
+    public void convertRoomPosition (Map<String, Point> roomPosition){
+        this.roomPosition = "RoomPos: ";
+        
+        for (String key : roomPosition.keySet()) {
+            this.roomPosition = this.roomPosition + key + " " + roomPosition.get(key).x + " " + roomPosition.get(key).y + " ";
+        }
         
     }
     
