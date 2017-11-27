@@ -5,14 +5,18 @@
  */
 package logic.processors;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 import logic.elements.characters.Helper;
 import logic.elements.characters.Item;
 import logic.elements.characters.Player;
 import logic.elements.characters.Saboteur;
+import logic.elements.rooms.ControlRoom;
 import logic.elements.rooms.Exit;
+import logic.elements.rooms.ItemRoom;
 import logic.elements.rooms.Room;
+import logic.elements.rooms.WorkshopRoom;
 
 /**
  *
@@ -29,13 +33,33 @@ public class GameElementsConverter
     private String helperInfo;
     private String timeHolderInfo;
     
+    public GameElementsConverter ()
+    {
+        exitInfo = new ArrayList<>();
+    }
+    
     public void convertRooms (Map<String, Room> rooms)
     {
-        
-        
-        for(String key : rooms.keySet()){
+        roomsInfo = "Room: ";
+        for (String roomName : rooms.keySet())
+        {
+            roomsInfo += roomName + " ";
             
+            Room room = rooms.get(roomName);
+            if (room instanceof ItemRoom)
+                roomsInfo += "ItemRoom ";
+            else if (room instanceof ControlRoom)
+                roomsInfo += "ControlRoom ";
+            else if (room instanceof WorkshopRoom)
+                roomsInfo += "WorkshopRoom ";
+            
+            roomsInfo += room.isOperating() + " ";
         }
+        
+        // convert exits
+        for(String key : rooms.keySet())
+            convertExit(rooms, rooms.get(key));
+        
     }
     
     private void convertExit (Map<String, Room> rooms, Room room)

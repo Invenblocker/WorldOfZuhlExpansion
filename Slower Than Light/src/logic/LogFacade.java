@@ -22,8 +22,8 @@ import logic.user_input.Parser;
  */
 public class LogFacade implements ILogFacade 
 {
-    private static ILogFacade instance;
-    public static ILogFacade getInstance()
+    private static LogFacade instance;
+    public static LogFacade getInstance()
     {
         if (instance == null)
             instance = new LogFacade();
@@ -74,5 +74,7 @@ public class LogFacade implements ILogFacade
     
     @Override
     public IGameInfo getGameInfo() {return game.getGameInfo();}
+    
+    public IDataFacade getDataFacade() {return data;}
     
 }

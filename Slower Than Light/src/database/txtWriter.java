@@ -206,8 +206,10 @@ public class txtWriter implements IWriter {
         txtWriter.println();
         
         for (String string : exitInfo)
+        {
             txtWriter.print(string);
-        txtWriter.println();
+            txtWriter.println();
+        }
         
         txtWriter.print(itemsInfo);
         txtWriter.println();
