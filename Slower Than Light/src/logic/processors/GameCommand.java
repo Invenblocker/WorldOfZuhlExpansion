@@ -1,9 +1,11 @@
 package logic.processors;
 
+import acq.IWriter;
 import database.txtWriter;
 import java.util.ArrayList;
 import java.util.List;
 import logic.Game;
+import logic.LogFacade;
 import logic.elements.characters.Helper;
 import logic.elements.characters.HelperTask;
 import logic.elements.characters.Item;
@@ -313,10 +315,21 @@ public class GameCommand {
      */
     private void saveGame() 
     {
-        txtWriter _txtWriter = new txtWriter();
-        _txtWriter.saveGameFromObjects(game.getRooms(), game.getItems(), game.getPlayer(),
-                           game.getSaboteur(), game.getGameInfo().getHelper(),game.getGameInfo().getRoomsRepaired(),
-                           game.getTimeHolder(),"Player Name");
+        // convert elements
+        GameElementsConverter gec = new GameElementsConverter();
+        gec.convertRooms(game.getRooms());
+        gec.convertItems(game.getItems());
+        gec.convertSpecialItems(game.getSpecialItems());
+        gec.convertPlayer(game.getPlayer());
+        gec.convertSaboteur(game.getSaboteur());
+        gec.convertHelper(game.getHelper());
+        gec.convertTimeHolder(game.getTimeHolder());
+        
+        // save game to file
+        IWriter writer = LogFacade.getInstance().getDataFacade().getWriter();
+        writer.saveGame(gec.getRoomsInfo(), gec.getItemsInfo(), gec.getSpecialItemsInfo(),
+                gec.getExitInfo(), gec.getPlayerInfo(), gec.getSaboteurInfo(),
+                gec.getHelperInfo(), gec.getTimeHolderInfo(), game.getGameInfo().getRoomsRepaired());
     }
     
     /**
@@ -361,8 +374,6 @@ public class GameCommand {
             if (playerInventory[i] != null) 
                 System.out.println("[" + i + "] "+ playerInventory[i].getName());
     }
-
-    
     
     /**
      * ArrayList, which holds information about the items in the player's current room.

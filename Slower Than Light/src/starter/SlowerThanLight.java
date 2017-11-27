@@ -32,7 +32,7 @@ public class SlowerThanLight {
         
         DataFacade data = new DataFacade();
         data.getLoader().loadGame("assets/maps/bigRectangle.txt");
-        LogFacade logik = new LogFacade();
+        LogFacade logik = LogFacade.getInstance();
         logik.injectData(data);
         Game.getInstance().play();
     }
