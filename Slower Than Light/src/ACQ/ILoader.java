@@ -21,6 +21,8 @@ public interface ILoader
     String[] getRoomsInfo();
 
     String[] getItemsInfo();
+    
+    String[] getRoomPositionInfo();
 
     String[] getSpecialItemsInfo();
     
