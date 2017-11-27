@@ -6,11 +6,9 @@
 package database;
 
 import acq.IWriter;
-import logic.SystemLog;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.PrintWriter;
-import java.util.LinkedHashMap;
 import java.util.Map;
 import logic.elements.characters.Helper;
 import logic.elements.characters.Item;
@@ -48,7 +46,6 @@ public class txtWriter implements IWriter {
         catch (FileNotFoundException e)
         {
             String msg = "Cannot setup the write file in txtWriter";
-            SystemLog.getErrorLog().writeToLog(msg);
             System.out.println(msg + "\n" + e.getMessage());
             return;
         }
@@ -200,7 +197,6 @@ public class txtWriter implements IWriter {
         catch (FileNotFoundException e)
         {
             String msg = "Cannot setup the write file in txtWriter";
-            SystemLog.getErrorLog().writeToLog(msg);
             System.out.println(msg + "\n" + e.getMessage());
             return;
         }

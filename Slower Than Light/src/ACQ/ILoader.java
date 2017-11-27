@@ -21,12 +21,6 @@ public interface ILoader
 
     void newGame(String gameName);
 
-    HashMap<String, Room> getRooms();
-
-    HashMap<String, Item> getItems();
-
-    HashMap<String, Item> getSpecialItems();
-
     String[] getRoomsInfo();
 
     String[] getItemsInfo();
