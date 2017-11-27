@@ -1,15 +1,14 @@
    package logic.elements.rooms;
 
+import acq.IRoom;
 import java.util.ArrayList;
 import java.util.Set;
 import java.util.HashMap;
-import java.util.Iterator;
 import logic.SystemLog;
-import logic.elements.characters.Item;
 import logic.elements.characters.Tool;
 
 
-public class Room 
+public class Room implements IRoom 
 {
     private String name;
     private boolean operating;         //is room damaged
@@ -25,9 +24,9 @@ public class Room
     public Room(String name){
          this.controlRoom = false;     //constructs value for controlroom 
          this.name = name;
-         this.repairTools = new ArrayList<Tool>();
+         this.repairTools = new ArrayList<>();
          this.operating = true;
-         exits = new HashMap<String, Exit>();    //Creates an empty HashMap  key/value
+         exits = new HashMap<>();    //Creates an empty HashMap  key/value
     }
     
     public Room(String name, boolean controlRoom) //constructor for  boolean CR
@@ -35,18 +34,18 @@ public class Room
         this(name);
         this.controlRoom = controlRoom;
     }
-
     
-
-     /**
+    /**
      * Returns the name of the room.
      * @return The room's name.
      */
+    @Override
     public String getName()
     {
         return this.name;
     }
     
+    @Override
       public boolean isOperating(){   //checks boolean value for room
         
         return this.operating;       //returns setOperatinge - dameged room or not

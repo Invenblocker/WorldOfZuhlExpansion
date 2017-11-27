@@ -4,10 +4,12 @@
  * and open the template in the editor.
  */
 package logic;
+
 import acq.IDataFacade;
-import acq.IDataFacade;
+import acq.IGameInfo;
 import acq.ILogFacade;
 import acq.IHelper;
+import acq.IItem;
 import acq.IPlayer;
 import acq.ISaboteur;
 import acq.ITimeHolder;
@@ -51,9 +53,12 @@ public class LogFacade implements ILogFacade
         Command command = process.processInput(Command);
         Game.getInstance().getGameCommand().processCommand(command);
     }
-    
+
     @Override
-    public ITimeHolder getTimeholder() {return game.getTimeHolder();} 
+    public IItem[] getItemsInCurrentRoom()
+    {
+        return game.getGameCommand().getItemsInCurrentRoomItems();
+    }
     
     @Override
     public IPlayer getPlayer() {return game.getPlayer();}
@@ -63,5 +68,11 @@ public class LogFacade implements ILogFacade
     
     @Override
     public IHelper getHelper() {return game.getHelper();}
+    
+    @Override
+    public ITimeHolder getTimeHolder() {return game.getTimeHolder();} 
+    
+    @Override
+    public IGameInfo getGameInfo() {return game.getGameInfo();}
     
 }

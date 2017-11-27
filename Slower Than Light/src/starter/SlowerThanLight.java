@@ -20,7 +20,8 @@ public class SlowerThanLight {
     /**
      * @param args the command line arguments
      */
-    public static void main(String[] args) throws FileNotFoundException {
+    public static void main(String[] args)
+    {
         // TODO code application logic here
         /*Game game = Game.getInstance();
         txtLoader loader = new txtLoader();

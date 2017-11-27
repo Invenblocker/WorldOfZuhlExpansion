@@ -12,16 +12,20 @@ package acq;
  */
 public interface ILogFacade {
 
+    void injectData(IDataFacade dataFacade);
+
+    void processCommand(String Command);
+    
+    IItem[] getItemsInCurrentRoom();
+
     IHelper getHelper();
 
     IPlayer getPlayer();
 
     ISaboteur getSaboteur();
 
-    ITimeHolder getTimeholder();
-
-    void injectData(IDataFacade dataFacade);
-
-    void processCommand(String Command);
+    ITimeHolder getTimeHolder();
+    
+    IGameInfo getGameInfo();
     
 }

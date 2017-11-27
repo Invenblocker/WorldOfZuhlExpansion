@@ -2,18 +2,12 @@ package logic;
 
 import GUI.GUIController;
 import acq.ILoader;
-import database.txtLoader;
-import java.io.File;
-import java.io.FileNotFoundException;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Random;
-import java.util.Scanner;
 import java.util.Timer;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import logic.elements.characters.Helper;
 import logic.elements.characters.HelperTask;
 import logic.elements.characters.Player;
@@ -74,14 +68,13 @@ public class Game
      */
     public void setupGame(ILoader loader)
     {
-        // Load elements
-        
         // Setup Game elements
         rooms = loader.getRooms();
         items = loader.getItems();
+        specialItems = loader.getSpecialItems();
         
         Game.StringConverter sc = new StringConverter();
-        sc.initializePlayer(loader.getPlayerInfo(), rooms, items);
+        sc.initializePlayer(loader.getPlayerInfo(), rooms, items, specialItems);
         sc.initializeSaboteur(loader.getSaboteurInfo(), rooms);
         sc.initializeHelper(loader.getHelperInfo(), rooms);
         sc.initializeTimeHolder(loader.getTimeHolderInfo());
@@ -91,11 +84,9 @@ public class Game
         helper = sc.helperSC;
         timeHolder = sc.timeHolderSC;
         
-        
         Game.GameSetup gameSetup = new GameSetup();
         gameSetup.addItemsToDefaultRooms(items);
         gameSetup.addRepairItemsToRooms(items, rooms);
-        
         
         Room randomRoom = gameSetup.getRandomSaboteurStartRoom(rooms);
         if (player == null)
@@ -265,17 +256,17 @@ public class Game
         private Helper helperSC;
         private TimeHolder timeHolderSC;
         
-        private void initializePlayer(String[] words, HashMap<String, Room> _rooms, HashMap<String, Item> _items)
+        private void initializePlayer(String[] words, HashMap<String, Room> _rooms, HashMap<String, Item> _items, HashMap<String, Item> _specialItems)
         {
             Room room = _rooms.get(words[1]);    //Sets room reference equal to index 1 in our hashmap, which is a room.
 
             playerSC = new Player(room, Integer.parseInt(words[2]));
             int i = 3;         //index for item in txtfile
             
-            if(items.containsKey(i))           //checks if txtfile contains same key in items hashmap
+            if(_items.containsKey(words[i]))           //checks if txtfile contains same key in items hashmap
                 playerSC.addItem(_items.get(words[i])); //adds item to player inventory
-            else if (specialItems.containsKey(i))  //checks if txtfile contains same key in specialItems hashmap
-                playerSC.addItem(specialItems.get(words[i]));    //adds specialItem to player inventory
+            else if (_specialItems.containsKey(words[i]))  //checks if txtfile contains same key in specialItems hashmap
+                playerSC.addItem(_specialItems.get(words[i]));    //adds specialItem to player inventory
             
             i++;
         }

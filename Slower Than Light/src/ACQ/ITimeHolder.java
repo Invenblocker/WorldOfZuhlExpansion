@@ -11,7 +11,6 @@ package acq;
  */
 public interface ITimeHolder
 {
-
     int getHelperCountdown();
 
     double getOxygenLeft();
@@ -25,6 +24,4 @@ public interface ITimeHolder
     void setSaboteurCountdown(int value);
 
     void setupReferences();
-    
-    
 }

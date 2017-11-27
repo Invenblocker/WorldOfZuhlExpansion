@@ -2,6 +2,7 @@ package logic.processors;
 
 import database.txtWriter;
 import java.util.ArrayList;
+import java.util.List;
 import logic.Game;
 import logic.elements.characters.Helper;
 import logic.elements.characters.HelperTask;
@@ -17,9 +18,9 @@ import logic.SystemLog;
 public class GameCommand {
     private Game game;
 
-    public GameCommand(){
+    public GameCommand()
+    {
         game = Game.getInstance();
-
     }
 
     /**
@@ -76,6 +77,15 @@ public class GameCommand {
             System.out.println("Please write in a command before hitting enter.");
         
         return wantToQuit;
+    }
+    
+    public Item[] getItemsInCurrentRoomItems ()
+    {
+        List<Item> itemList = roomItemList();
+        Item[] itemArray = new Item[itemList.size()];
+        itemArray = roomItemList().toArray(itemArray);
+        
+        return itemArray;
     }
     
     /**
@@ -361,27 +371,28 @@ public class GameCommand {
      * However, if the currentRoom is not an instance of either of these classes, it returns null.
      */
     private ArrayList<Item> roomItemList ()
+    {
+        ArrayList<Item>roomInventory = new ArrayList<>();
+        Room currentRoom = game.getPlayer().getCurrentRoom();
+
+        if (currentRoom instanceof ItemRoom)
         {
-            ArrayList<Item>roomInventory = new ArrayList<>();
-            Room currentRoom = game.getPlayer().getCurrentRoom();
+            ItemRoom currentRoomAsItemRoom =(ItemRoom) currentRoom ;
+            if (currentRoomAsItemRoom.getItem()!= null)
+                roomInventory.add(currentRoomAsItemRoom.getItem());
+            if (currentRoomAsItemRoom.getSpecialItem()!= null)
+                roomInventory.add(currentRoomAsItemRoom.getSpecialItem());
 
-            if (currentRoom instanceof ItemRoom)
-            {
-                ItemRoom currentRoomAsItemRoom =(ItemRoom) currentRoom ;
-                if (currentRoomAsItemRoom.getItem()!= null)
-                    roomInventory.add(currentRoomAsItemRoom.getItem());
-                if (currentRoomAsItemRoom.getSpecialItem()!= null)
-                    roomInventory.add(currentRoomAsItemRoom.getSpecialItem());
-
-                return roomInventory;
-            }
-            else if (currentRoom instanceof WorkshopRoom) 
-            {
-                WorkshopRoom currentRoomAsWorkshopRoom  = (WorkshopRoom) currentRoom;
-                    roomInventory.addAll(currentRoomAsWorkshopRoom.getItems());
-                return roomInventory;
-            }
-
-            return null;
+            return roomInventory;
         }
+        else if (currentRoom instanceof WorkshopRoom) 
+        {
+            WorkshopRoom currentRoomAsWorkshopRoom  = (WorkshopRoom) currentRoom;
+            roomInventory.addAll(currentRoomAsWorkshopRoom.getItems());
+
+            return roomInventory;
+        }
+
+        return null;
+    }
 }
