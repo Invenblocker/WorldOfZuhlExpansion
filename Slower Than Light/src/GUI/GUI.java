@@ -35,7 +35,7 @@ public class GUI implements IGUI, IVisualUpdateCaller
     
     public GUI()
     {
-        this.minimap = new MiniMap();       //Creates new minimap object
+        //this.minimap = new MiniMap();       //Creates new minimap object
         this.log = new Log(5);
     }
     
