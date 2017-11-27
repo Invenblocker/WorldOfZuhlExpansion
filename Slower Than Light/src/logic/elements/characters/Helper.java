@@ -152,66 +152,82 @@ public class Helper extends RoomHopper implements IHelper
         }
     }
     
-    ArrayList<Room> findReturnRoute()
+    /**
+	 *
+	 * @author Invenblocker
+	 *
+	 * Finds the shortest route to the control room and returns the route as an ArrayList of Rooms.
+	 *
+	 * @return An ArrayList of Room instances that dictate the Helper's shortest route to a ControlRoom.
+	 */
+	private ArrayList<Room> findReturnRoute()
     {
         ArrayList<ArrayList<Room>> routes = new ArrayList();
         boolean foundControlRoom = false;
         int routeLength = 0;
-        routes.add(new ArrayList());
+        //Create a new route and et the current room as the only room in it.
+		//This route will be used as a starting point for generating other routes.
+		routes.add(new ArrayList());
         routes.get(0).add(getCurrentRoom());
         
-        while(!foundControlRoom)
+        while(!foundControlRoom)  //Loop until a controlRoom has been found
         {
-            if(routeLength > Game.getInstance().getRooms().values().size())
+            if(routeLength > Game.getInstance().getRooms().values().size())  //If the route's length exceeds that of the amount of rooms in the game, assume an error has occured.
             {
-                ERROR_LOG.writeToLog("No valid route to a control room was found.",
+                ERROR_LOG.writeToLog("No valid route to a control room was found.",  //Write a message into the error log.
                         "As a failsafe, the Helper will move from its current room to its current room");
-                ArrayList<Room> route = new ArrayList();
+                
+				//In order to avoid a nullpointer exception, the method will in this failsafe state simply return the current room.
+				ArrayList<Room> route = new ArrayList();
                 route.add(getCurrentRoom());
                 return(route);
             }
-            for(int a = routes.size() - 1; a >= 0; a--)
+            for(int a = routes.size() - 1; a >= 0; a--)  //Loop backwards through all routes plotted so far.
             {
-                ArrayList<Room> exits = new ArrayList();
-                Room checkRoom = routes.get(a).get(routeLength);
-                for(Exit exit : checkRoom.getCollectionOfExits())
+                ArrayList<Room> neighbors = new ArrayList();  //Create an ArrayList to store valid neighbors.
+                Room checkRoom = routes.get(a).get(routeLength);  //Grabs the current last room on the route.
+                for(Exit exit : checkRoom.getCollectionOfExits())  //Loops through the checkRoom's exits.
                 {
-                    if(!exit.isOperating())
+                    if(!exit.isOperating())  //Ends the iteration if the exit cannot be used.
                     {
                         break;
                     }
                     
                     if(checkRoom.getExit(exit).isControlRoom())
                     {
+                        //If the neighbor is a control room, add it to the route and tell the system a control room has been found.
                         foundControlRoom = true;
+						neighbors.add(checkRoom.getExit(exit));
+						break;
                     }
                     
                     if(!routes.get(a).contains(checkRoom.getExit(exit)))
                     {
-                        exits.add(checkRoom.getExit(exit));
+						//If the room is not on the current route, remove it.
+                        neighbors.add(checkRoom.getExit(exit));
                     }
                 }
                 
-                switch(exits.size())
+                switch(neighbors.size())
                 {
-                    case 0:
+                    case 0:  //If no valid neighbors have been found, remove the current route from the list.
                         routes.remove(a);
                         break;
-                    case 1:
-                        routes.get(a).add(exits.get(0));
+                    case 1:  //If exactly one valid neighbor has been found, add it to the current room.
+                        routes.get(a).add(neighbors.get(0));
                         break;
-                    default:
-                        for(int b = 1; b < exits.size(); b++)
+                    default:  //If more than one valid neighbor has been found, add one of them to the current route and create new routes for the others.
+                        for(int b = 1; b < neighbors.size(); b++)
                         {
                             ArrayList routeCopy = new ArrayList();
                             for(int c = 0; c < routes.get(a).size(); c++)
                             {
                                 routeCopy.add(routes.get(a).get(c));
                             }
-                            routeCopy.add(exits.get(b));
+                            routeCopy.add(neighbors.get(b));
                             routes.add(routeCopy);
                         }
-                        routes.get(a).add(exits.get(0));
+                        routes.get(a).add(neighbors.get(0));
                         break;
                 }
             }
@@ -222,19 +238,19 @@ public class Helper extends RoomHopper implements IHelper
         {
             if(!routes.get(i).get(routeLength).isControlRoom())
             {
-                routes.remove(i);
+                routes.remove(i);  //Remove all routes that do not lead to a control room.
             }
             else
             {
-                routes.get(i).remove(0);
+                routes.get(i).remove(0);  //Remove the current room from the routes.
             }
         }
         
-        ArrayList<Room> route = routes.get((int) Math.floor(Math.random() * routes.size()));
+        ArrayList<Room> route = routes.get((int) Math.floor(Math.random() * routes.size()));  //Pick a valid route at random.
         
         String returnRoute = "";
         
-        for(int i = 0; i < route.size(); i++)
+        for(int i = 0; i < route.size(); i++)  //Generate a String describing the return route.
         {
             returnRoute += "goto \"the " + route.get(i).getName() + '"';
             if(i < routes.size() - 1)
@@ -243,9 +259,9 @@ public class Helper extends RoomHopper implements IHelper
             }
         }
         
-        ACTION_LOG.writeToLog("The Helper \"" + name + "\" plotted the following route to the controlRoom: First " + returnRoute + '.');
+        ACTION_LOG.writeToLog("The Helper \"" + name + "\" plotted the following route to the controlRoom: First " + returnRoute + '.');  //Write the route into the action log.
         
-        return(route);
+        return(route);  //Return the route that was created.
     }
     
     public HelperTask getHelperTask()
