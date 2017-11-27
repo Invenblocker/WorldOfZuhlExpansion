@@ -27,6 +27,7 @@ public class txtLoader implements ILoader
     private String[] saboteurInfo;
     private String[] helperInfo;
     private String[] timeHolderInfo;
+    private String[] roomPositionInfo;
     
     private LinkedHashMap<String, Integer> highScore;
     private int roomsRepaired;
@@ -95,6 +96,9 @@ public class txtLoader implements ILoader
             }
             else if(words[0].equals("TimeHolder:")){
                 timeHolderInfo = words;
+                 }
+            else if(words[0].equals("RoomPos")){
+                roomPositionInfo = words;
             }
             else{
                 exitInfo.add(words);
@@ -104,6 +108,9 @@ public class txtLoader implements ILoader
     
     @Override
     public String[] getRoomsInfo() {return roomsInfo;}
+    
+    @Override
+    public String[] getRoomPositionInfo() {return roomPositionInfo;}
     
     @Override
     public String[] getItemsInfo() {return itemsInfo;}

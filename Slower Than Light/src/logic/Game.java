@@ -2,6 +2,8 @@ package logic;
 
 import GUI.GUI;
 import acq.ILoader;
+import com.sun.java.accessibility.util.EventID;
+import java.awt.Point;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashMap;
@@ -265,6 +267,7 @@ public class Game
         private Saboteur saboteurSC;
         private Helper helperSC;
         private TimeHolder timeHolderSC;
+        private Map<String, Point> roomPositionInfo;
         
         private StringConverter()
         {
@@ -305,6 +308,22 @@ public class Game
                 i += 3;         //Jumps to room index in our txt
                 j += 3;         //jumps to next boolean in txt
                 k += 3;
+            }
+        }
+        
+        private void initializeMiniMap (String[] words) {
+            int i = 1;                                          
+            int j = 2;
+            int k = 3;
+            
+            while (k < words.length) {
+               roomPositionInfo.put(words[1], new Point (Integer.parseInt(words[2]), Integer.parseInt(words[3])));
+             
+               
+               i += 3;
+               j += 3;
+               k += 3;
+               
             }
         }
         
