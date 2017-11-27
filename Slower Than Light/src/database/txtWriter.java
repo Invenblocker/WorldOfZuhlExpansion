@@ -5,7 +5,7 @@
  */
 package database;
 
-import ACQ.IWriter;
+import acq.IWriter;
 import java.awt.Point;
 import java.io.File;
 import java.io.FileNotFoundException;
