@@ -110,6 +110,9 @@ public class txtLoader implements ILoader
     public String[] getRoomsInfo() {return roomsInfo;}
     
     @Override
+    public String[] getRoomPositionInfo() {return roomPositionInfo;}
+    
+    @Override
     public String[] getItemsInfo() {return itemsInfo;}
     
     @Override

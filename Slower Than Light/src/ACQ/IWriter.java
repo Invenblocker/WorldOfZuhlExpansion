@@ -5,6 +5,7 @@
  */
 package acq;
 
+import java.awt.Point;
 import java.util.List;
 import java.util.Map;
 import logic.elements.characters.Helper;
@@ -20,7 +21,7 @@ import logic.processors.TimeHolder;
  */
 public interface IWriter {
 
-    void saveGameFromObjects(Map<String, Room> rooms, Map<String, Item> items, Player player, Saboteur saboteur, Helper helper, int roomsRepaired, TimeHolder time, String saveName);
+    void saveGameFromObjects(Map<String, Room> rooms, Map<String, Item> items, Player player, Saboteur saboteur, Helper helper, int roomsRepaired, TimeHolder time, String saveName, Map<String, Point> roomPosition);
     
     void saveGame (String roomsInfo, String itemsInfo, String specialItemsInfo,
                     List<String> exitInfo, String playerInfo,String saboteurInfo,

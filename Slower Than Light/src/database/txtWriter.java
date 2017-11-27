@@ -6,6 +6,7 @@
 package database;
 
 import acq.IWriter;
+import java.awt.Point;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.PrintWriter;
@@ -35,7 +36,7 @@ public class txtWriter implements IWriter {
     
     @Override
     public void saveGameFromObjects (Map<String, Room> rooms, Map<String, Item> items, Player player, Saboteur saboteur, 
-            Helper helper, int roomsRepaired, TimeHolder time, String saveName)
+            Helper helper, int roomsRepaired, TimeHolder time, String saveName, Map<String, Point> roomPosition)
     {
         Exit exit = null;
         File newSave = new File("assets/maps/saveGame.txt");
@@ -177,6 +178,16 @@ public class txtWriter implements IWriter {
         txtWriter.print("TimeHolder: " + time.getTimeLeft() + " " + time.getOxygenLeft() + " " + time.getHelperCountdown() + " " + time.getSaboteurCountdown());
         txtWriter.println();
 
+        txtWriter.print("RoomPos: ");                   //Prints RoomPos into our textfile at 0
+        for (String key : roomPosition.keySet()){       //Iterates through our roomPosition map   
+           
+            txtWriter.print(key + " ");                 //Prints the keys/names in our map into our txt file
+            txtWriter.print(roomPosition.get(key).x + " " + roomPosition.get(key).y + " "); //Prints x and y values for our key into txt file
+            
+            
+            }
+        txtWriter.println();
+        
         
      
         txtWriter.close();
