@@ -5,9 +5,11 @@
  */
 package starter;
 
+import GUI.GUI;
+import acq.IDataFacade;
+import acq.IGUI;
+import acq.ILogFacade;
 import database.DataFacade;
-import database.txtLoader;
-import java.io.FileNotFoundException;
 import logic.Game;
 import logic.LogFacade;
 
@@ -30,10 +32,15 @@ public class SlowerThanLight {
         game.setupGame(loader);
         game.play();*/
         
-        DataFacade data = new DataFacade();
+        IDataFacade data = new DataFacade();
         data.getLoader().loadGame("assets/maps/bigRectangle.txt");
-        LogFacade logik = LogFacade.getInstance();
+        
+        ILogFacade logik = LogFacade.getInstance();
         logik.injectData(data);
+        System.out.println(logik);
+        IGUI gui = GUI.getInstance();
+        gui.injectLogic(logik);
+        
         Game.getInstance().play();
     }
     

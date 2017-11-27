@@ -112,6 +112,7 @@ public class GameCommand {
         {
             Room pastRoom = game.getPlayer().setRoom(exitRoom);
             
+            
             if (game.getSaboteur().getCurrentRoom() == exitRoom)
             {
                 if(game.getGameInfo().getHelper().getHelperTask() == HelperTask.BODYGUARD)

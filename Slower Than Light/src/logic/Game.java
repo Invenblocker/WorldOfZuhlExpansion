@@ -34,10 +34,9 @@ public class Game
     private static Game instance = null;
     public static Game getInstance()
     {
-        if (instance == null) 
-        {
+        if (instance == null)
             instance = new Game();
-        }
+        
         return instance;
     }
     
@@ -115,7 +114,7 @@ public class Game
         gameCommand = new GameCommand();
         
         // Setup GUI
-        gui = new GUI();
+        gui = GUI.getInstance();
         
         // Game is loaded
         gameLoaded = true;
