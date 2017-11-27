@@ -328,9 +328,9 @@ public class GameCommand {
         
         // save game to file
         IWriter writer = LogFacade.getInstance().getDataFacade().getWriter();
-        writer.saveGame(gec.getRoomsInfo(), gec.getItemsInfo(), gec.getSpecialItemsInfo(),
+        /*writer.saveGame(gec.getRoomsInfo(), gec.getItemsInfo(), gec.getSpecialItemsInfo(),
                 gec.getExitInfo(), gec.getPlayerInfo(), gec.getSaboteurInfo(),
-                gec.getHelperInfo(), gec.getTimeHolderInfo(), game.getGameInfo().getRoomsRepaired());
+                gec.getHelperInfo(), gec.getTimeHolderInfo(), game.getGameInfo().getRoomsRepaired());*/
     }
     
     /**
