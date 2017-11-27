@@ -13,6 +13,7 @@ import acq.IItem;
 import acq.IPlayer;
 import acq.ISaboteur;
 import acq.ITimeHolder;
+import acq.IVisualUpdateCaller;
 import logic.user_input.Command;
 import logic.user_input.Parser;
 
@@ -44,6 +45,12 @@ public class LogFacade implements ILogFacade
     {
         data = dataFacade;
         game.setupGame(data.getLoader());
+    }
+
+    @Override
+    public void injectGUIUpdateMethod(IVisualUpdateCaller caller)
+    {
+        game.getTimeHolder().addVisualUpdateCaller(caller);
     }
     
     @Override

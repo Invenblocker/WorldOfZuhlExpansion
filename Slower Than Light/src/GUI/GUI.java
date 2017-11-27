@@ -5,17 +5,31 @@
  */
 package GUI;
 
-import java.util.HashMap;
+import acq.IGUI;
+import acq.IItem;
+import acq.ILogFacade;
+import acq.IRoom;
+import acq.IVisualUpdateCaller;
+import java.util.Map;
 import logic.Game;
-import logic.elements.characters.Item;
-import logic.elements.rooms.Room;
 
 /**
  *
  * @author Erik
  */
-public class GUI
+public class GUI implements IGUI, IVisualUpdateCaller
 {
+    private static GUI instance = null;
+    public static GUI getInstance()
+    {
+        if (instance == null)
+            instance = new GUI();
+        
+        return instance;
+    }
+    
+    private ILogFacade logFacade;
+    
     private MiniMap minimap;
     private Log log;
     
@@ -24,23 +38,37 @@ public class GUI
         this.minimap = new MiniMap();       //Creates new minimap object
         this.log = new Log(5);
     }
+    
+    @Override
+    public void injectLogic(ILogFacade _logFacade)
+    {
+        logFacade = _logFacade;
+        logFacade.injectGUIUpdateMethod(this);
+    }
+
+    @Override
+    public void updateWithTimer()
+    {
+        writeToLog("Updated timer");
+    }
   
-    public void updateMinimap(Room saboteurRoom, Room[] destroyedRooms) { //updates saboteur position, calls update in MiniMap class.
+    public void updateMinimap(IRoom saboteurRoom, IRoom[] destroyedRooms) { //updates saboteur position, calls update in MiniMap class.
         //minimap.update(saboteurRoom, destroyedRooms);
         
     }
   
-    public void updateRoom(Room room)       //updates player position to minimap   
+    public void updateRoom(IRoom room)       //updates player position to minimap   
     {
         //minimap.updatePlayerPosition(room);
+        writeToLog("You moved to " + logFacade.getPlayer().getCurrentRoom().getName());
     }
   
-    public void updateInventory(Item[] inventory)
+    public void updateInventory(IItem[] inventory)
     {
         System.out.println(inventory);
     }
   
-    public void investigate(Room room)
+    public void investigate(IRoom room)
     {
         
     }
@@ -59,12 +87,12 @@ public class GUI
     public void printWelcome() {
         
     }
-    public void prinInventory(Item[]inventory)
+    public void prinInventory(IItem[] inventory)
     {
         System.out.println(inventory);
     }
     
-    public void showHighScore(HashMap <String, Integer> highScore) {
+    public void showHighScore(Map <String, Integer> highScore) {
         
     }
     

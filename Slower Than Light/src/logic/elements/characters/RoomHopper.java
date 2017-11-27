@@ -42,7 +42,7 @@ public abstract class RoomHopper implements IRoomHopper
         Room oldRoom = currentRoom;
         currentRoom = newRoom;
         getActionLog().writeToLog("Moved from \"" + oldRoom + "\" to \"" + newRoom + "\".");
-        return(oldRoom);
+        return oldRoom;
     }
     
     /**
@@ -55,7 +55,7 @@ public abstract class RoomHopper implements IRoomHopper
     @Override
     public Room getCurrentRoom()
     {
-        return(currentRoom);
+        return currentRoom;
     }
     
     public abstract SystemLog getActionLog();
