@@ -5,6 +5,7 @@
  */
 package acq;
 
+import java.awt.Point;
 import java.util.List;
 import java.util.Map;
 
@@ -12,8 +13,15 @@ import java.util.Map;
  *
  * @author mortenskovgaard
  */
+<<<<<<< HEAD
 public interface IWriter
 {
+=======
+public interface IWriter {
+
+    void saveGameFromObjects(Map<String, Room> rooms, Map<String, Item> items, Player player, Saboteur saboteur, Helper helper, int roomsRepaired, TimeHolder time, String saveName, Map<String, Point> roomPosition);
+    
+>>>>>>> Minimao
     void saveGame (String roomsInfo, String itemsInfo, String specialItemsInfo,
                     List<String> exitInfo, String playerInfo,String saboteurInfo,
                     String helperInfo, String timeHolderInfo, int roomsRepaired);
