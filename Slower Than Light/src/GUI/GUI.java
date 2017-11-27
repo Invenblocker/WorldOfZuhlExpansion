@@ -26,12 +26,13 @@ public class GUI
     }
   
     public void updateMinimap(Room saboteurRoom, Room[] destroyedRooms) { //updates saboteur position, calls update in MiniMap class.
-        minimap.update(saboteurRoom, destroyedRooms);
+        //minimap.update(saboteurRoom, destroyedRooms);
+        
     }
   
     public void updateRoom(Room room)       //updates player position to minimap   
     {
-      minimap.updatePlayerPosition(room);
+        //minimap.updatePlayerPosition(room);
     }
   
     public void updateInventory(Item[] inventory)
