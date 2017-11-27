@@ -303,7 +303,7 @@ public class GameCommand {
         else
             System.out.println("Please type in a task for helper before hitting enter ! ");
        }
-        System.out.println("You need to be in the control room to give" + helperName + "a control ! ");
+       System.out.println("You need to be in the control room to give" + helperName + "a control ! ");
        return;
     }
     
@@ -314,7 +314,7 @@ public class GameCommand {
     private void saveGame() 
     {
         txtWriter _txtWriter = new txtWriter();
-        _txtWriter.saveGame(game.getRooms(), game.getItems(), game.getPlayer(),
+        _txtWriter.saveGameFromObjects(game.getRooms(), game.getItems(), game.getPlayer(),
                            game.getSaboteur(), game.getGameInfo().getHelper(),game.getGameInfo().getRoomsRepaired(),
                            game.getTimeHolder(),"Player Name");
     }

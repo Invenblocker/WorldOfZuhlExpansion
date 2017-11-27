@@ -9,6 +9,7 @@ import acq.IWriter;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.PrintWriter;
+import java.util.List;
 import java.util.Map;
 import logic.elements.characters.Helper;
 import logic.elements.characters.Item;
@@ -33,7 +34,7 @@ public class txtWriter implements IWriter {
     
     
     @Override
-    public void saveGame (Map<String, Room> rooms, Map<String, Item> items, Player player, Saboteur saboteur, 
+    public void saveGameFromObjects (Map<String, Room> rooms, Map<String, Item> items, Player player, Saboteur saboteur, 
             Helper helper, int roomsRepaired, TimeHolder time, String saveName)
     {
         Exit exit = null;
@@ -167,7 +168,7 @@ public class txtWriter implements IWriter {
         txtWriter.print(helper.getHelperTask() + " ");
         txtWriter.print(helper.CHANCE_OF_DISCOVERY_GROWTH + " ");
         txtWriter.print(helper.DEFAULT_CHANCE_OF_DISCOVERY + " ");
-        //txtWriter.print(helper.getChanceOfDiscovery + " ");
+        txtWriter.print(helper.getChanceOfDiscovery() + " ");
         txtWriter.println();
 
         txtWriter.print("RoomsRepaired: " + roomsRepaired);   // roomsrepaired kommer fra gameinfo.increment 
@@ -182,6 +183,55 @@ public class txtWriter implements IWriter {
 
 
   }
+
+    @Override
+    public void saveGame(String roomsInfo, String itemsInfo,String specialItemsInfo,
+            List<String> exitInfo, String playerInfo, String saboteurInfo,
+            String helperInfo, String timeHolderInfo, int roomsRepaired)
+    {
+        File newSave = new File("assets/maps/saveGame.txt");
+        PrintWriter txtWriter = null;
+        try
+        {// overrides the txt file if the name already exits. Otherwise it creates a new file with the name.
+            txtWriter = new PrintWriter(newSave);
+        }
+        catch (FileNotFoundException e)
+        {
+            String msg = "Cannot setup the write file in txtWriter";
+            System.out.println(msg + "\n" + e.getMessage());
+            return;
+        }
+        
+        txtWriter.print(roomsInfo);
+        txtWriter.println();
+        
+        for (String string : exitInfo)
+            txtWriter.print(string);
+        txtWriter.println();
+        
+        txtWriter.print(itemsInfo);
+        txtWriter.println();
+        
+        txtWriter.print(specialItemsInfo);
+        txtWriter.println();
+        
+        txtWriter.print(playerInfo);
+        txtWriter.println();
+        
+        txtWriter.print(saboteurInfo);
+        txtWriter.println();
+        
+        txtWriter.print(helperInfo);
+        txtWriter.println();
+
+        txtWriter.print(timeHolderInfo);
+        txtWriter.println();
+
+        txtWriter.print("RoomsRepaired: " + roomsRepaired);   // roomsrepaired kommer fra gameinfo.increment 
+        txtWriter.println();
+        
+        txtWriter.close();
+    }
      
     @Override
    public void writeHighScore(Map<String, Integer> highScore, String highscoreName)

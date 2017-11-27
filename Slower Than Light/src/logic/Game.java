@@ -1,6 +1,6 @@
 package logic;
 
-import GUI.GUIController;
+import GUI.GUI;
 import acq.ILoader;
 import java.util.ArrayList;
 import java.util.Collections;
@@ -52,7 +52,7 @@ public class Game
     private Helper helper;
     private TimeHolder timeHolder;
     private GameCommand gameCommand;
-    private GUIController guiController;
+    private GUI gui;
     private boolean gameLoaded;
     
         
@@ -115,7 +115,7 @@ public class Game
         gameCommand = new GameCommand();
         
         // Setup GUI
-        guiController = new GUIController();
+        gui = new GUI();
         
         // Game is loaded
         gameLoaded = true;
@@ -137,7 +137,7 @@ public class Game
         }
         
         // Print welcome message
-        guiController.printWelcome();
+        gui.printWelcome();
         
         // Setup Timer
         Timer timer = new Timer();
@@ -190,7 +190,7 @@ public class Game
     
     public GameCommand getGameCommand() {return gameCommand;}
     
-    public GUIController getGUI() {return guiController;}
+    public GUI getGUI() {return gui;}
     
     
     private class GameSetup
