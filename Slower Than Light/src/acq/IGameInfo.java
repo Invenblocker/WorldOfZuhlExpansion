@@ -6,6 +6,7 @@
 package acq;
 
 import java.util.LinkedHashMap;
+import java.util.Map;
 import logic.elements.rooms.Room;
 
 /**
@@ -16,7 +17,7 @@ public interface IGameInfo {
 
     Room[] getDestroyedRooms();
 
-    LinkedHashMap<String, Integer> getHighScoreMap();
+    Map<String, Integer> getHighScoreMap();
 
     boolean isGameFinished();
 

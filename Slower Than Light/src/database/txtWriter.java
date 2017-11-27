@@ -10,8 +10,8 @@ import logic.SystemLog;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.PrintWriter;
-import java.util.HashMap;
 import java.util.LinkedHashMap;
+import java.util.Map;
 import logic.elements.characters.Helper;
 import logic.elements.characters.Item;
 import logic.elements.characters.Player;
@@ -35,7 +35,7 @@ public class txtWriter implements IWriter {
     
     
     @Override
-    public void saveGame (HashMap<String, Room> rooms, HashMap<String, Item> items, Player player, Saboteur saboteur, 
+    public void saveGame (Map<String, Room> rooms, Map<String, Item> items, Player player, Saboteur saboteur, 
             Helper helper, int roomsRepaired, TimeHolder time, String saveName)
     {
         Exit exit = null;
@@ -187,7 +187,7 @@ public class txtWriter implements IWriter {
   }
      
     @Override
-   public void writeHighScore(LinkedHashMap<String, Integer> highScore, String highscoreName)
+   public void writeHighScore(Map<String, Integer> highScore, String highscoreName)
    {
         // hashmappet må kun være en vis størrelse
         File newSave = new File(highscoreName);

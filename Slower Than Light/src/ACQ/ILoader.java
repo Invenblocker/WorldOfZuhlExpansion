@@ -7,6 +7,7 @@ package acq;
 
 import java.util.HashMap;
 import java.util.LinkedHashMap;
+import java.util.List;
 import logic.elements.characters.Item;
 import logic.elements.rooms.Room;
 
@@ -25,6 +26,14 @@ public interface ILoader
     HashMap<String, Item> getItems();
 
     HashMap<String, Item> getSpecialItems();
+
+    String[] getRoomsInfo();
+
+    String[] getItemsInfo();
+
+    String[] getSpecialItemsInfo();
+    
+    List<String[]> getExitInfo();
     
     String[] getPlayerInfo();
     

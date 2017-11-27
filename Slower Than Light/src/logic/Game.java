@@ -6,6 +6,7 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.Random;
 import java.util.Timer;
 import logic.elements.characters.Helper;
@@ -14,8 +15,11 @@ import logic.elements.characters.Player;
 import logic.elements.characters.Saboteur;
 import logic.elements.characters.Item;
 import logic.elements.characters.Tool;
+import logic.elements.rooms.ControlRoom;
+import logic.elements.rooms.Exit;
 import logic.elements.rooms.ItemRoom;
 import logic.elements.rooms.Room;
+import logic.elements.rooms.WorkshopRoom;
 import logic.processors.GameCommand;
 import logic.processors.TimeHolder;
 import logic.user_input.Command;
@@ -37,9 +41,9 @@ public class Game
         return instance;
     }
     
-    private HashMap<String, Room>rooms;
-    private HashMap<String, Item>items;
-    private HashMap<String, Item>specialItems;
+    private Map<String, Room>rooms;
+    private Map<String, Item>items;
+    private Map<String, Item>specialItems;
     
     private GameInfo gameInfo;
     private Parser parser;
@@ -63,22 +67,25 @@ public class Game
     /**
      * Creates the rooms in the world. Has the list of rooms as well as their
      * exits hard coded in the command. Sets the current room as well.
-     * @param loader Supply the game with a loader which has loaded all of
-     * the data for the game.
+     * @param loader The loader that contains all the data for the game.
      */
     public void setupGame(ILoader loader)
     {
         // Setup Game elements
-        rooms = loader.getRooms();
-        items = loader.getItems();
-        specialItems = loader.getSpecialItems();
-        
         Game.StringConverter sc = new StringConverter();
-        sc.initializePlayer(loader.getPlayerInfo(), rooms, items, specialItems);
-        sc.initializeSaboteur(loader.getSaboteurInfo(), rooms);
-        sc.initializeHelper(loader.getHelperInfo(), rooms);
+        sc.initializeRooms(loader.getRoomsInfo());
+        sc.initializeItems(loader.getItemsInfo());
+        sc.initializeSpecialItems(loader.getSpecialItemsInfo());
+        for (String[] exitString : loader.getExitInfo())
+            sc.initializeExit(exitString);
+        sc.initializePlayer(loader.getPlayerInfo());
+        sc.initializeSaboteur(loader.getSaboteurInfo());
+        sc.initializeHelper(loader.getHelperInfo());
         sc.initializeTimeHolder(loader.getTimeHolderInfo());
         
+        rooms = sc.roomsSC;
+        items = sc.itemsSC;
+        specialItems = sc.specialItemsSC;
         player = sc.playerSC;
         saboteur = sc.saboteurSC;
         helper = sc.helperSC;
@@ -100,10 +107,8 @@ public class Game
         gameInfo = new GameInfo(helper);
         
         // Setup Timer
-        /*if (loader.getTimeHolder() == null)
+        if (sc.timeHolderSC == null)
             timeHolder = new TimeHolder(300, 350);
-        else
-            timeHolder = loader.getTimeHolder();*/
         timeHolder.setupReferences();
         
         // Setup GameCommand
@@ -114,7 +119,6 @@ public class Game
         
         // Game is loaded
         gameLoaded = true;
-        
     }
     
      /**
@@ -125,7 +129,10 @@ public class Game
     {            
         if (!gameLoaded)
         {
-            System.out.println("A game has not been loaded");
+            String msg = "The game has not been loaded";
+            System.out.println(msg);
+            SystemLog.getErrorLog().writeToLog(msg);
+            SystemLog.saveAllLogs();
             return;
         }
         
@@ -163,11 +170,11 @@ public class Game
         System.out.println("Thank you for playing.  Goodbye.");
     }
     
-    public HashMap<String, Room> getRooms() {return rooms;}
+    public Map<String, Room> getRooms() {return rooms;}
     
-    public HashMap<String, Item> getItems() {return items;}
+    public Map<String, Item> getItems() {return items;}
 
-    public HashMap<String, Item> getSpecialItems() {return specialItems;}
+    public Map<String, Item> getSpecialItems() {return specialItems;}
     
     public GameInfo getGameInfo() {return gameInfo;}
     
@@ -188,7 +195,7 @@ public class Game
     
     private class GameSetup
     {
-        private void addItemsToDefaultRooms(HashMap<String, Item> items)
+        private void addItemsToDefaultRooms(Map<String, Item> items)
         {
             for (Item item : items.values()) {
                 Room defaultRoom = item.getDefaultRoom();
@@ -201,7 +208,7 @@ public class Game
             }
         }
     
-        private void addRepairItemsToRooms(HashMap<String, Item> items, HashMap<String, Room> rooms)
+        private void addRepairItemsToRooms(Map<String, Item> items, Map<String, Room> rooms)
         {
             if (items.isEmpty() || rooms.isEmpty())
                 return;
@@ -226,7 +233,7 @@ public class Game
             }
         }
 
-        private Room getRandomSaboteurStartRoom (HashMap<String, Room> rooms)
+        private Room getRandomSaboteurStartRoom (Map<String, Room> rooms)
         {
             Room randomRoom = null;
         
@@ -251,37 +258,147 @@ public class Game
     
     private class StringConverter
     {
+        private Map<String, Room> roomsSC;
+        private Map<String, Item> itemsSC;
+        private Map<String, Item> specialItemsSC;
         private Player playerSC;
         private Saboteur saboteurSC;
         private Helper helperSC;
         private TimeHolder timeHolderSC;
         
-        private void initializePlayer(String[] words, HashMap<String, Room> _rooms, HashMap<String, Item> _items, HashMap<String, Item> _specialItems)
+        private StringConverter()
         {
-            Room room = _rooms.get(words[1]);    //Sets room reference equal to index 1 in our hashmap, which is a room.
+            roomsSC = new HashMap<>();
+            itemsSC = new HashMap<>();
+            specialItemsSC = new HashMap<>();
+        }
+        
+        //Method inserts room to our hasmap rooms
+        //Private as the method is only used and accessed in the txtLoader class
+        private void initializeRooms (String[] words)
+        {
+            int i = 1;                 //index for room in our txt file            
+            int j = 2;                 //index for boolean in our txt file    
+            int k = 3;
+            Room room;
+            
+            while (j < words.length)    //As long j is less than array lenght put room
+            {
+                switch (words[j]) {
+                    case "ItemRoom":
+                        roomsSC.put(words[i], new ItemRoom(words[i]));
+                        room = roomsSC.get(words[i]);
+                        room.setOperating(Boolean.parseBoolean(words[k]));
+                        break;
+                    case "WorkshopRoom":
+                        roomsSC.put(words[i], new WorkshopRoom(words[i]));
+                        room = roomsSC.get(words[i]);
+                        room.setOperating(Boolean.parseBoolean(words[k]));
+                        break;
+                    default:
+                        roomsSC.put(words[i], new ControlRoom(words[i]));
+                        room = roomsSC.get(words[i]);
+                        room.setOperating(Boolean.parseBoolean(words[k]));
+                        break;
+                }
+                
+                i += 3;         //Jumps to room index in our txt
+                j += 3;         //jumps to next boolean in txt
+                k += 3;
+            }
+        }
+        
+        private void initializeItems (String[] words){
+            int i = 1;
+            int j = 2;
+            int k = 3;
+
+            while (k < words.length)
+            {
+                for (String key : roomsSC.keySet())
+                    if (key.equals(words[k]))
+                        if(words[i].equals("Tool"))
+                            itemsSC.put(words[j], new Tool(words[j], (ItemRoom) roomsSC.get(key)));
+
+                i += 3;    
+                j += 3;
+                k += 3;
+            }
+        }
+        
+        private void initializeSpecialItems (String[] words)   //Adds specialItem to HashMap specialItems
+        {
+            int i = 1;      //index for specialItems in txtfile
+            int j = 2;
+
+            while (j < words.length) //As long as i is less then the length of do ->  speicialItems.put
+            {        
+                if (words[i].equals("Tool"))
+                    specialItemsSC.put(words[j],new Tool(words[j]));
+                else if (words[i].equals("Item"))
+                    specialItemsSC.put(words[j],new Item(words[j]));
+                
+                i += 2;
+                j += 2;
+            }
+        }
+        
+        private void initializeExit(String[] words)
+        {
+            int i = 1;
+            int j = 2;
+            int k = 3;
+            Room room = null;
+            Room room2 = null;
+            Exit exit = null;
+
+            while (k < words.length)
+            {                                           // tjekker at vi ikke overskrider arrayet
+                for (String key : roomsSC.keySet())       // tjekker alle keys i vores hashmap rooms (workshop, controlroom, pub, lab)
+                    if (key.equals(words[0]))           // tjekker om plads 0 (et rum) er det rum vi kigger på.
+                        room = roomsSC.get(key);          // sætter rum = det rum vi vil arbejde med.
+                
+                for (String key : roomsSC.keySet()){      // tjekker alle rum i hashmappet room
+                    if (key.equals(words[k])){          // finder det andet rum som skal sættes som exit til room.
+                        room2 = roomsSC.get(key);         // sætter rummet til room2.
+                        exit = new Exit(room, room2);
+                        exit.setOperating(Boolean.parseBoolean(words[j]));
+                        room.setExit(words[i], exit);  // sætter exit med plads i (en direction) og et room.
+                    }
+                }
+                
+                i += 3;
+                j += 3;
+                k += 3;
+            }
+        }
+        
+        private void initializePlayer(String[] words)
+        {
+            Room room = roomsSC.get(words[1]);    //Sets room reference equal to index 1 in our hashmap, which is a room.
 
             playerSC = new Player(room, Integer.parseInt(words[2]));
             int i = 3;         //index for item in txtfile
             
-            if(_items.containsKey(words[i]))           //checks if txtfile contains same key in items hashmap
-                playerSC.addItem(_items.get(words[i])); //adds item to player inventory
-            else if (_specialItems.containsKey(words[i]))  //checks if txtfile contains same key in specialItems hashmap
-                playerSC.addItem(_specialItems.get(words[i]));    //adds specialItem to player inventory
+            if(itemsSC.containsKey(words[i]))           //checks if txtfile contains same key in items hashmap
+                playerSC.addItem(itemsSC.get(words[i])); //adds item to player inventory
+            else if (specialItemsSC.containsKey(words[i]))  //checks if txtfile contains same key in specialItems hashmap
+                playerSC.addItem(specialItemsSC.get(words[i]));    //adds specialItem to player inventory
             
             i++;
         }
       
-        private void initializeSaboteur(String[] words, HashMap<String, Room> _rooms)
+        private void initializeSaboteur(String[] words)
         {
-            Room room = _rooms.get(words[1]);
+            Room room = roomsSC.get(words[1]);
             saboteurSC = new Saboteur(room, Double.parseDouble(words[2]), Double.parseDouble(words[3]), Double.parseDouble(words[4]));
             saboteurSC.setChanceOfSabotage(Double.parseDouble(words[5]));
             saboteurSC.addStunCountdown(Integer.parseInt(words[6]));
         }
 
-        private void initializeHelper(String[] words, HashMap<String, Room> _rooms)
+        private void initializeHelper(String[] words)
         {
-            Room room = _rooms.get(words[1]);     //Helpers room in txt file
+            Room room = roomsSC.get(words[1]);     //Helpers room in txt file
             helperSC = new Helper(room, words[2], Double.parseDouble(words[4]), Double.parseDouble(words[5])); //[3]chance of discovery growht og [4] er
             helperSC.setChanceOfDiscovery(Double.parseDouble(words[6]));
             helperSC.setTask(HelperTask.getHelperTask(words[3]));

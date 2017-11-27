@@ -7,9 +7,7 @@ package logic;
 
 import acq.IGameInfo;
 import database.txtWriter;
-import java.io.FileNotFoundException;
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.LinkedHashMap;
 import java.util.LinkedList;
 import java.util.List;
@@ -53,7 +51,7 @@ public class GameInfo implements IGameInfo {
     
     public void updateRoomsDestroyed ()
     {
-        HashMap <String, Room> rooms = Game.getInstance().getRooms();
+        Map <String, Room> rooms = Game.getInstance().getRooms();
         destroyedRooms = new ArrayList<>();
         
         for (Room room : rooms.values())
@@ -95,11 +93,7 @@ public class GameInfo implements IGameInfo {
         roomsRepaired++;
     }
     
-    public Exit getHackedExit() 
-    {
-        return hackedExit;
-    }
-    
+    public Exit getHackedExit() {return hackedExit;}
     public void setHackedExit(Exit value)
     {
         if(value == hackedExit)
@@ -120,7 +114,7 @@ public class GameInfo implements IGameInfo {
     }
 
     @Override
-    public LinkedHashMap<String, Integer> getHighScoreMap () {return highScoreMap;}
+    public Map<String, Integer> getHighScoreMap () {return highScoreMap;}
     
     @Override
     public int getScore () {return score;}
@@ -141,11 +135,11 @@ public class GameInfo implements IGameInfo {
         destroyedRoomsPercentage = destroyedRooms.size() / totalRooms;
     }
     
-    private LinkedHashMap<String, Integer>sortHighScore (LinkedHashMap<String, Integer>highScoreMap)
+    private Map<String, Integer>sortHighScore (LinkedHashMap<String, Integer>highScoreMap)
     {
         List<Map.Entry<String, Integer>>listToSort = new LinkedList<>(highScoreMap.entrySet());
-        
         Map.Entry<String, Integer> temp;
+        
         for (int i = 1; i < listToSort.size(); i++) 
         {
             for (int j = i; j > 0; j--) 
@@ -155,16 +149,13 @@ public class GameInfo implements IGameInfo {
                     temp = listToSort.get(j);
                     listToSort.set(j,listToSort.get(j-1));
                     listToSort.set(j-1,temp);
-                    
                 }
-                
             }
         }
-        LinkedHashMap<String, Integer>returnHashMap = new LinkedHashMap<>();
-        for (Map.Entry<String, Integer> entry : listToSort) 
-        {
+        
+        Map<String, Integer>returnHashMap = new LinkedHashMap<>();
+        for (Map.Entry<String, Integer> entry : listToSort)
             returnHashMap.put(entry.getKey(), entry.getValue());
-        }
         
         return returnHashMap;
     }

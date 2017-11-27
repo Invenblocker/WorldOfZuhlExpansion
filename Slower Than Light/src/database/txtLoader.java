@@ -12,8 +12,10 @@ import acq.ISaboteur;
 import acq.ITimeHolder;
 import java.io.File;
 import java.io.FileNotFoundException;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.LinkedHashMap;
+import java.util.List;
 import java.util.Scanner;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -42,9 +44,10 @@ public class txtLoader implements ILoader
     private Helper helper;
     private TimeHolder timeHolder;
     
-    private HashMap<String, String> RoomsInfo;
-    private HashMap<String, String> ItemsInfo;
-    private HashMap<String, String> SpecialItemsInfo;
+    private String[] roomsInfo;
+    private String[] itemsInfo;
+    private String[] specialItemsInfo;
+    private List<String[]> exitInfo;
     private String[] playerInfo;
     private String[] saboteurInfo;
     private String[] helperInfo;
@@ -75,13 +78,15 @@ public class txtLoader implements ILoader
     @Override
     public void newGame(String gameName) 
     {
+        exitInfo = new ArrayList<>();
         initializeGame(gameName);
     }
     
     @Override
     public void loadGame(String gameName)
     {
-      initializeGame(gameName);  
+        exitInfo = new ArrayList<>();
+        initializeGame(gameName);  
     }
     
     public void initializeGame (String gameName)
@@ -99,9 +104,11 @@ public class txtLoader implements ILoader
             String[] words = line.split(" ");
             if(words[0].equals("Room:")){      // adds all rooms to the hashmap rooms.
                 roomToHashMap(words);
+                roomsInfo = words;
             }
             else if(words[0].equals("Item:")){
                 itemToHashMap(words);
+                itemsInfo = words;
             }
             else if(words[0].equals("Player:")){
                 initializePlayer(words);     // mangler noget, special item og item? defaultRoom
@@ -117,6 +124,7 @@ public class txtLoader implements ILoader
             }
             else if(words[0].equals("SpecialItem:")){
                 specialItemToHashMap(words);
+                specialItemsInfo = words;
             }
             else if(words[0].equals("RoomsRepaired:")){
                 roomsRepaired = Integer.parseInt(words[1]);
@@ -129,6 +137,7 @@ public class txtLoader implements ILoader
             }
             else{
                 addRoomExits(words);
+                exitInfo.add(words);
             }
         }
     }
@@ -162,6 +171,18 @@ public class txtLoader implements ILoader
     public ITimeHolder getTimeHolder() {
         return timeHolder;
     }
+    
+    @Override
+    public String[] getRoomsInfo() {return roomsInfo;}
+    
+    @Override
+    public String[] getItemsInfo() {return itemsInfo;}
+    
+    @Override
+    public String[] getSpecialItemsInfo() {return specialItemsInfo;}
+    
+    @Override
+    public List<String[]> getExitInfo() {return exitInfo;}
 
     @Override
     public String[] getPlayerInfo() {return playerInfo;}

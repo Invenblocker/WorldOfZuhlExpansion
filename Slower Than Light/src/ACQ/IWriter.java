@@ -5,8 +5,7 @@
  */
 package acq;
 
-import java.util.HashMap;
-import java.util.LinkedHashMap;
+import java.util.Map;
 import logic.elements.characters.Helper;
 import logic.elements.characters.Item;
 import logic.elements.characters.Player;
@@ -20,8 +19,8 @@ import logic.processors.TimeHolder;
  */
 public interface IWriter {
 
-    void saveGame(HashMap<String, Room> rooms, HashMap<String, Item> items, Player player, Saboteur saboteur, Helper helper, int roomsRepaired, TimeHolder time, String saveName);
+    void saveGame(Map<String, Room> rooms, Map<String, Item> items, Player player, Saboteur saboteur, Helper helper, int roomsRepaired, TimeHolder time, String saveName);
 
-    void writeHighScore(LinkedHashMap<String, Integer> highScore, String highscoreName);
+    void writeHighScore(Map<String, Integer> highScore, String highscoreName);
     
 }
