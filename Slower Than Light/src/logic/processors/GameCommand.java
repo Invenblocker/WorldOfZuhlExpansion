@@ -1,7 +1,6 @@
 package logic.processors;
 
 import acq.IWriter;
-import database.txtWriter;
 import java.util.ArrayList;
 import java.util.List;
 import logic.Game;
@@ -58,6 +57,12 @@ public class GameCommand {
                 break;
             case INVENTORY:
                 printInventory();
+                break;
+            case HELPER:
+                helperAction(command);
+                break;
+            case REPAIR_DOOR:
+                System.out.println("Haha");
                 break;
             case SAVE:
                 saveGame();
@@ -189,30 +194,31 @@ public class GameCommand {
             System.out.println("What item did you mean ? ");
             return;
         }
+        
         Item[] inventory = game.getPlayer().getInventory();
+        
         try 
         {
            int itemIndex = Integer.parseInt(command.getSecondWord());
-           Item itemDropped;
-           itemDropped = inventory[itemIndex];
+           Item itemDropped = inventory[itemIndex];
+           
            if(game.getPlayer().removeItem(itemDropped)) 
            {
-              Room currentRoom = game.getPlayer().getCurrentRoom();
-
-               if (currentRoom instanceof WorkshopRoom) 
-               {
+                Room currentRoom = game.getPlayer().getCurrentRoom();
+                
+                if (currentRoom instanceof WorkshopRoom) 
+                {
                     WorkshopRoom currentRoomAsWorkshopRoom = (WorkshopRoom) currentRoom;
                     currentRoomAsWorkshopRoom.addItem(itemDropped);
-               }
-               else
+                }
+                else
                    setItemToDefault(itemDropped);
            }
-
-       } 
-       catch (NumberFormatException | IndexOutOfBoundsException e) 
-       {
-           System.out.println("This is not a valid item ! ");
-       }
+        }
+        catch (NumberFormatException | IndexOutOfBoundsException e) 
+        {
+            System.out.println("This is not a valid item ! ");
+        }
     }
     
     /**
@@ -281,16 +287,16 @@ public class GameCommand {
      */
     private void helperAction(Command command) 
     {
-       
-       Room currentRoom = game.getPlayer().getCurrentRoom();
-       Room HelperCurrentRoom = game.getGameInfo().getHelper().getCurrentRoom();
-       HelperTask helperTask = game.getGameInfo().getHelper().getHelperTask();
-       Helper performTask = game.getGameInfo().getHelper();
-       String helperName = game.getGameInfo().getHelper().getName();
-       if (currentRoom == HelperCurrentRoom && currentRoom.isControlRoom())
-       {
-       if (!command.hasSecondWord()) switch (helperTask)   
-           {
+        Room currentRoom = game.getPlayer().getCurrentRoom();
+        Room HelperCurrentRoom = game.getGameInfo().getHelper().getCurrentRoom();
+        HelperTask helperTask = game.getGameInfo().getHelper().getHelperTask();
+        Helper performTask = game.getGameInfo().getHelper();
+        String helperName = game.getGameInfo().getHelper().getName();
+        
+        if (currentRoom == HelperCurrentRoom && currentRoom.isControlRoom())
+        {
+            if (!command.hasSecondWord()) switch (helperTask)   
+            {
                 case BODYGUARD:
                    performTask.setTask(helperTask);
                    break;
@@ -301,13 +307,13 @@ public class GameCommand {
                     performTask.setTask(helperTask);
                     break;
                 default:
-                    System.out.println("What task did you mean ? ");
-           }
+                    System.out.println("What task did you mean ?");
+            }
+            else
+                System.out.println("Please type in a task for helper before hitting enter !");
+        }
         else
-            System.out.println("Please type in a task for helper before hitting enter ! ");
-       }
-       System.out.println("You need to be in the control room to give" + helperName + "a control ! ");
-       return;
+           System.out.println("You need to be in the control room to give " + helperName + " a control!");
     }
     
     /**

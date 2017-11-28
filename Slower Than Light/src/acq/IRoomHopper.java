@@ -5,8 +5,6 @@
  */
 package acq;
 
-import logic.elements.rooms.Room;
-
 /**
  *
  * @author mortenskovgaard
@@ -21,6 +19,6 @@ public interface IRoomHopper
      *
      * @return The room in which the character is currently located.
      */
-    Room getCurrentRoom();
+    IRoom getCurrentRoom();
     
 }

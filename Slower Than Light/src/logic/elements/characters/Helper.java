@@ -325,6 +325,7 @@ public class Helper extends RoomHopper implements IHelper
         chanceOfDiscovery = value;
     }
 
+    @Override
     public String generateHelperMessage()
     {
         if(foundItemString != "")
@@ -343,7 +344,7 @@ public class Helper extends RoomHopper implements IHelper
             }
             else
             {
-                switch(HelperTask)
+                switch(task)
                 {
                     case SEARCH:
                         return("Oh hi, I'm still searching for something, I'll meet you in the control room when I've found it.");
