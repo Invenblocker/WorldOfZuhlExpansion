@@ -92,6 +92,8 @@ public class GameGraphicsController implements Initializable, IInjectableControl
         logFacade = GUI.getInstance().getILogFacade();
         logFacade.injectGUIUpdateMethod(this);
         logFacade.play();
+        
+        
     }
     
     @Override
@@ -145,7 +147,7 @@ public class GameGraphicsController implements Initializable, IInjectableControl
     
     @FXML
     public void repair() {
-        logFacade.processCommand("repair");
+        logFacade.processCommand("repdoor");
         //INCOMPLETE
     }
     
