@@ -297,6 +297,7 @@ public class Helper extends RoomHopper implements IHelper
     public void setTask(HelperTask task)
     {
         this.task = task;
+        returnRoute = new ArrayList();
         ACTION_LOG.writeToLog("The helper \"" + name + "\" had its task set to \"" + task.toString() + "\".");
     }
     
