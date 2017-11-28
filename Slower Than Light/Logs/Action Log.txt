@@ -1,6 +1,5 @@
 Helper (Erik): The helper "Erik" had its task set to "bodyguard".
-Saboteur: Moved from "logic.elements.rooms.ItemRoom@4e36b2b5" to "logic.elements.rooms.ItemRoom@40f15503".
-Saboteur: Moved to "the OxygenContainer".
-Saboteur: Sabotaged the room: "OxygenContainer".
-Saboteur: Moved from "logic.elements.rooms.ItemRoom@40f15503" to "logic.elements.rooms.ItemRoom@44ced9c5".
-Saboteur: Moved to "the LivingQuarters".
+Saboteur: Sabotaged the room: "Office".
+Player: Moved from "logic.elements.rooms.ControlRoom@1b6d3586" to "logic.elements.rooms.ItemRoom@4554617c".
+Saboteur: Moved from "logic.elements.rooms.ItemRoom@682e0f31" to "logic.elements.rooms.WorkshopRoom@66e9ec44".
+Saboteur: Moved to "the Workshop".

@@ -1,0 +1,1 @@
+The room "controlRoom" does not have an exit in the direction "north".

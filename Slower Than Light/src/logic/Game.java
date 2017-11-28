@@ -265,6 +265,9 @@ public class Game
     private class StringConverter
     {
         private Map<String, Point> roomPositionsSC;
+        private String playerPositionSC;
+        private String saboteurPositionSC;
+        
         
         private Map<String, Room> roomsSC;
         private Map<String, Item> itemsSC;
@@ -319,18 +322,21 @@ public class Game
         }
         
         private void initializeMiniMap (String[] words) {
-            int i = 1;                                          
-            int j = 2;
-            int k = 3;
+            
+            int i = 3;                                          
+            int j = 4;
+            int k = 5;
+            
+            playerPositionSC = words[1];
+            saboteurPositionSC = words[2];
             
             while (k < words.length)
             {
                roomPositionsSC.put(words[1], new Point (Integer.parseInt(words[2]), Integer.parseInt(words[3])));
-               
+
                i += 3;
                j += 3;
-               k += 3;
-               
+               k += 3;  
             }
         }
         
