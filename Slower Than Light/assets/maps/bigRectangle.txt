@@ -2,8 +2,8 @@ Room: controlRoom ControlRoom true Workshop WorkshopRoom true Kitchen ItemRoom t
 Kitchen down true EntryRamp right true ShieldGenerator
 ShieldGenerator left true Kitchen down true controlRoom right true LivingQuarters
 LivingQuarters left true ShieldGenerator down true OxygenContainer
-EntryRamp up true Kitchen right true controlRoom down true Lab
-controlRoom left true EntryRamp up true ShieldGenerator right true OxygenContainer
+EntryRamp up true Kitchen right false controlRoom down true Lab
+controlRoom left false EntryRamp up true ShieldGenerator right true OxygenContainer
 OxygenContainer up true LivingQuarters left true controlRoom down true Office
 Lab up true EntryRamp right true Workshop down true LeftThruster
 Workshop left true Lab right true Office
