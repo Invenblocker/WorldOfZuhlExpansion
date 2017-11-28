@@ -15,6 +15,7 @@ import javafx.fxml.Initializable;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
+import javafx.scene.control.ProgressBar;
 import javafx.scene.image.ImageView;
 import javafx.scene.shape.Circle;
 import javafx.scene.text.Text;
@@ -56,6 +57,7 @@ public class GameGraphicsController implements Initializable, IInjectableControl
     @FXML
     private Canvas minimapCanvas;
     @FXML
+<<<<<<< HEAD
     private Button repairButton;
     @FXML
     private Button investigateButton;
@@ -66,6 +68,22 @@ public class GameGraphicsController implements Initializable, IInjectableControl
     @FXML
     private Button saveButton;
     @FXML
+=======
+    private ProgressBar oxygenBar;
+    @FXML
+    private ProgressBar timeBar;
+    @FXML
+    private Button repairButton;
+    @FXML
+    private Button investigateButton;
+    @FXML
+    private Button talkButton;
+    @FXML
+    private Button helpButton;
+    @FXML
+    private Button saveButton;
+    @FXML
+>>>>>>> SceneBuilderGUI
     private Button quitButton;
 
     /**
