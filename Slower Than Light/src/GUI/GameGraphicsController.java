@@ -92,11 +92,11 @@ public class GameGraphicsController implements Initializable, IInjectableControl
     }
 <<<<<<< HEAD
 */
-=======
+
 
     private Stage stage;
             
->>>>>>> master
+
     @Override
     public void injectStage(Stage _stage) {
         stage = _stage;
