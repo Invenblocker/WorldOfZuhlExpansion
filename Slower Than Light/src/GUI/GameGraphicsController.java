@@ -5,7 +5,9 @@
  */
 package GUI;
 
+import acq.IInjectableController;
 import acq.IItem;
+import acq.ILogFacade;
 import java.net.URL;
 import java.util.ResourceBundle;
 import javafx.fxml.FXML;
@@ -16,13 +18,14 @@ import javafx.scene.control.Label;
 import javafx.scene.image.ImageView;
 import javafx.scene.shape.Circle;
 import javafx.scene.text.Text;
+import javafx.stage.Stage;
 
 /**
  * FXML Controller class
  *
  * @author sdown
  */
-public class GameGraphicsController implements Initializable {
+public class GameGraphicsController implements Initializable, IInjectableController {
 
     @FXML
     private ImageView currentRoomDisplay;
@@ -75,6 +78,8 @@ public class GameGraphicsController implements Initializable {
     
     public void walk(String direction) {
         
+            
+        
     }
     
     public void drop(IItem item) {
@@ -108,4 +113,35 @@ public class GameGraphicsController implements Initializable {
     public void quit() {
         
     }
+
+    public void sabouteurAlert() {
+        
+    }
+
+    @Override
+    public void injectLogFacade(ILogFacade logFacade) {
+        
+    }
+
+    @Override
+    public void injectStage(Stage stage) {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+
+    
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 }
