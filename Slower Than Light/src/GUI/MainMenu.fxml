@@ -17,7 +17,7 @@
          <children>
             <ImageView fitHeight="500.0" fitWidth="700.0" pickOnBounds="true" preserveRatio="true">
                <image>
-                  <Image url="@../../../../../../OneDrive/SDU/1.%20Semester/OOP/Semesterprojekt/STLbaggrund.png" />
+                  <Image url="@../../assets/mainMenuBackground.png" />
                </image>
             </ImageView>
          </children>
