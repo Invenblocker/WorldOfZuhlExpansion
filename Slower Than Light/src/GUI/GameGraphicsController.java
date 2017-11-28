@@ -5,6 +5,7 @@
  */
 package GUI;
 
+import acq.IItem;
 import java.net.URL;
 import java.util.ResourceBundle;
 import javafx.fxml.FXML;
