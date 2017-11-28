@@ -55,6 +55,8 @@ public class Game
     private TimeHolder timeHolder;
     private GameCommand gameCommand;
     private GUI gui;
+    
+    private Timer timer;
     private boolean gameLoaded;
     
         
@@ -153,7 +155,7 @@ public class Game
         gui.printWelcome();
         
         // Setup Timer
-        Timer timer = new Timer();
+        timer = new Timer();
         timer.schedule(timeHolder, 0, 1000);
         
         // Setup user input
@@ -177,6 +179,13 @@ public class Game
             SystemLog.saveAllLogs(); // Save logs no matter what
         }
         */
+    }
+    
+    public void endGame ()
+    {
+        SystemLog.saveAllLogs();
+        timer.cancel();
+        timer.purge();
     }
 
     public Map<String, Point> getRoomPositions() {return roomPositions;}

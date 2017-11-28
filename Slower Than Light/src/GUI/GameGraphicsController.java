@@ -173,7 +173,7 @@ public class GameGraphicsController implements Initializable, IInjectableControl
 
     @FXML
     public void quit() throws IOException {
-        //logFacade.processCommand("quit");
+        logFacade.quit();
         FXMLLoader loader = new FXMLLoader(getClass().getResource("MainMenu.fxml"));
         Parent root = loader.load();
         

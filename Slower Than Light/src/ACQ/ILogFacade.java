@@ -17,6 +17,8 @@ public interface ILogFacade {
 
     void play();
     
+    void quit();
+    
     void loadGame();
     
     void newGame();
