@@ -1,7 +1,6 @@
 package logic.processors;
 
 import acq.IWriter;
-import database.txtWriter;
 import java.util.ArrayList;
 import java.util.List;
 import logic.Game;
@@ -58,6 +57,12 @@ public class GameCommand {
                 break;
             case INVENTORY:
                 printInventory();
+                break;
+            case HELPER:
+                helperAction(command);
+                break;
+            case REPAIR_DOOR:
+                System.out.println("Haha");
                 break;
             case SAVE:
                 saveGame();
@@ -189,30 +194,31 @@ public class GameCommand {
             System.out.println("What item did you mean ? ");
             return;
         }
+        
         Item[] inventory = game.getPlayer().getInventory();
+        
         try 
         {
            int itemIndex = Integer.parseInt(command.getSecondWord());
-           Item itemDropped;
-           itemDropped = inventory[itemIndex];
+           Item itemDropped = inventory[itemIndex];
+           
            if(game.getPlayer().removeItem(itemDropped)) 
            {
-              Room currentRoom = game.getPlayer().getCurrentRoom();
-
-               if (currentRoom instanceof WorkshopRoom) 
-               {
+                Room currentRoom = game.getPlayer().getCurrentRoom();
+                
+                if (currentRoom instanceof WorkshopRoom) 
+                {
                     WorkshopRoom currentRoomAsWorkshopRoom = (WorkshopRoom) currentRoom;
                     currentRoomAsWorkshopRoom.addItem(itemDropped);
-               }
-               else
+                }
+                else
                    setItemToDefault(itemDropped);
            }
-
-       } 
-       catch (NumberFormatException | IndexOutOfBoundsException e) 
-       {
-           System.out.println("This is not a valid item ! ");
-       }
+        }
+        catch (NumberFormatException | IndexOutOfBoundsException e) 
+        {
+            System.out.println("This is not a valid item ! ");
+        }
     }
     
     /**
