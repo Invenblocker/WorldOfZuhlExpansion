@@ -332,7 +332,7 @@ public class Game
             
             while (k < words.length)
             {
-               roomPositionsSC.put(words[1], new Point (Integer.parseInt(words[2]), Integer.parseInt(words[3])));
+               roomPositionsSC.put(words[i], new Point (Integer.parseInt(words[j]), Integer.parseInt(words[k])));
 
                i += 3;
                j += 3;
