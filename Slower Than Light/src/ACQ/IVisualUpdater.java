@@ -9,7 +9,7 @@ package acq;
  *
  * @author Erik
  */
-public interface IVisualUpdateCaller
+public interface IVisualUpdater
 {
     void updateWithTimer();
 }

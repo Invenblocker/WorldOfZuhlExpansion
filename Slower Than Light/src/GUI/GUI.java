@@ -9,15 +9,15 @@ import acq.IGUI;
 import acq.IItem;
 import acq.ILogFacade;
 import acq.IRoom;
-import acq.IVisualUpdateCaller;
 import java.util.Map;
 import logic.Game;
+import acq.IVisualUpdater;
 
 /**
  *
  * @author Erik
  */
-public class GUI implements IGUI, IVisualUpdateCaller
+public class GUI implements IGUI, IVisualUpdater
 {
     private static GUI instance = null;
     public static GUI getInstance()

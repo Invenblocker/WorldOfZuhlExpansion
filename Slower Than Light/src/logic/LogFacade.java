@@ -13,9 +13,9 @@ import acq.IItem;
 import acq.IPlayer;
 import acq.ISaboteur;
 import acq.ITimeHolder;
-import acq.IVisualUpdateCaller;
 import logic.user_input.Command;
 import logic.user_input.Parser;
+import acq.IVisualUpdater;
 
 /**
  *
@@ -48,7 +48,7 @@ public class LogFacade implements ILogFacade
     }
 
     @Override
-    public void injectGUIUpdateMethod(IVisualUpdateCaller caller)
+    public void injectGUIUpdateMethod(IVisualUpdater caller)
     {
         game.getTimeHolder().addVisualUpdateCaller(caller);
     }

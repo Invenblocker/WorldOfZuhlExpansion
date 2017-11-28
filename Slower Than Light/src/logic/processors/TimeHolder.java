@@ -7,7 +7,7 @@ import logic.GameInfo;
 import logic.elements.characters.HelperTask;
 import logic.elements.rooms.Room;
 import acq.ITimeHolder;
-import acq.IVisualUpdateCaller;
+import acq.IVisualUpdater;
 
 public class TimeHolder extends TimerTask implements ITimeHolder{
     
@@ -19,7 +19,7 @@ public class TimeHolder extends TimerTask implements ITimeHolder{
     private Game game;
     private GameInfo gameInfo;
     
-    private IVisualUpdateCaller caller;
+    private IVisualUpdater caller;
     
     public TimeHolder ()
     {
@@ -42,7 +42,7 @@ public class TimeHolder extends TimerTask implements ITimeHolder{
         oxygenLeft = oxygenTime;
     }
     
-    public void addVisualUpdateCaller (IVisualUpdateCaller _caller)
+    public void addVisualUpdateCaller (IVisualUpdater _caller)
     {
         caller = _caller;
     }

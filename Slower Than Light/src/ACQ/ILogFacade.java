@@ -14,7 +14,7 @@ public interface ILogFacade {
 
     void injectData(IDataFacade dataFacade);
     
-    void injectGUIUpdateMethod(IVisualUpdateCaller caller);
+    void injectGUIUpdateMethod(IVisualUpdater caller);
 
     void processCommand(String Command);
     
