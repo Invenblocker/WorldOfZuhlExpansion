@@ -94,42 +94,61 @@ public class GameGraphicsController implements Initializable, IInjectableControl
     
     
     
-    public void walk(String direction) {
-        
-            
-        
+    public void walkUp() {
+        logFacade.processCommand("go up");
     }
     
-    public void drop(IItem item) {
-        
-    }
-    
-    public void take(IItem item) {
-        
+    public void walkDown() {
+        logFacade.processCommand("go down");
     }
 
-    public void repair() {
-        //
+    public void walkLeft() {
+        logFacade.processCommand("go left");
+    }
+
+    public void walkRight() {
+        logFacade.processCommand("go right");
+    }
+
+    public void dropItem0() {
+        logFacade.processCommand("drop 0");
     }
     
-    public void giveTask(String task) {
-        //
+    public void dropItem1() {
+        logFacade.processCommand("drop 1");
+    }
+    
+    public void takeItem0() {
+        logFacade.processCommand("take 0");
+    }
+
+    public void takeItem1() {
+        logFacade.processCommand("take 1");
+    }
+    
+    public void repair() {
+        logFacade.processCommand("repair");
+        //INCOMPLETE
+    }
+    
+    public void giveTask() {
+        
     }
 
     public void investigate() {
-        //
+        logFacade.processCommand("investigate");
     }
 
     public void saveGame() {
-        
+        logFacade.processCommand("save");
     }
 
     public void help() {
-        
+        logFacade.processCommand("help");
     }
 
     public void quit() {
-        
+        logFacade.processCommand("quit");
     }
 
     public void sabouteurAlert() {
