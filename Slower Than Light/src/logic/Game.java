@@ -41,6 +41,8 @@ public class Game
         return instance;
     }
     
+    private Map<String, Point> roomPositions;
+    
     private Map<String, Room>rooms;
     private Map<String, Item>items;
     private Map<String, Item>specialItems;
@@ -73,6 +75,7 @@ public class Game
     {
         // Setup Game elements
         Game.StringConverter sc = new StringConverter();
+        sc.initializeMiniMap(loader.getRoomPositionInfo());
         sc.initializeRooms(loader.getRoomsInfo());
         sc.initializeItems(loader.getItemsInfo());
         sc.initializeSpecialItems(loader.getSpecialItemsInfo());
@@ -83,6 +86,7 @@ public class Game
         sc.initializeHelper(loader.getHelperInfo());
         sc.initializeTimeHolder(loader.getTimeHolderInfo());
         
+        roomPositions = sc.roomPositionsSC;
         rooms = sc.roomsSC;
         items = sc.itemsSC;
         specialItems = sc.specialItemsSC;
@@ -169,6 +173,8 @@ public class Game
         SystemLog.saveAllLogs();
         System.out.println("Thank you for playing.  Goodbye.");
     }
+
+    public Map<String, Point> getRoomPositions() {return roomPositions;}
     
     public Map<String, Room> getRooms() {return rooms;}
     
@@ -258,6 +264,11 @@ public class Game
     
     private class StringConverter
     {
+        private Map<String, Point> roomPositionsSC;
+        private String playerPositionSC;
+        private String saboteurPositionSC;
+        
+        
         private Map<String, Room> roomsSC;
         private Map<String, Item> itemsSC;
         private Map<String, Item> specialItemsSC;
@@ -265,10 +276,11 @@ public class Game
         private Saboteur saboteurSC;
         private Helper helperSC;
         private TimeHolder timeHolderSC;
-        private Map<String, Point> roomPositionInfo;
         
         private StringConverter()
         {
+            roomPositionsSC = new HashMap<>();
+            
             roomsSC = new HashMap<>();
             itemsSC = new HashMap<>();
             specialItemsSC = new HashMap<>();
@@ -310,18 +322,21 @@ public class Game
         }
         
         private void initializeMiniMap (String[] words) {
-            int i = 1;                                          
-            int j = 2;
-            int k = 3;
             
-            while (k < words.length) {
-               roomPositionInfo.put(words[1], new Point (Integer.parseInt(words[2]), Integer.parseInt(words[3])));
-             
-               
+            int i = 3;                                          
+            int j = 4;
+            int k = 5;
+            
+            playerPositionSC = words[1];
+            saboteurPositionSC = words[2];
+            
+            while (k < words.length)
+            {
+               roomPositionsSC.put(words[i], new Point (Integer.parseInt(words[j]), Integer.parseInt(words[k])));
+
                i += 3;
                j += 3;
-               k += 3;
-               
+               k += 3;  
             }
         }
         

@@ -1,5 +1,8 @@
 package acq;
 
+import java.awt.Point;
+import java.util.Map;
+
 /*
  * To change this license header, choose License Headers in Project Properties.
  * To change this template file, choose Tools | Templates
@@ -19,6 +22,8 @@ public interface ILogFacade {
     void processCommand(String Command);
     
     IItem[] getItemsInCurrentRoom();
+    
+    Map<String, Point> getRoomPositions();
 
     IHelper getHelper();
 

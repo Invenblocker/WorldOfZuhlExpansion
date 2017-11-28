@@ -17,7 +17,7 @@ public interface IWriter
 {
     void saveGame (String roomsInfo, String itemsInfo, String specialItemsInfo,
                     List<String> exitInfo, String playerInfo,String saboteurInfo,
-                    String helperInfo, String timeHolderInfo, int roomsRepaired, Map<String, Point> roomPosition);
+                    String helperInfo, String timeHolderInfo, int roomsRepaired, String roomPosition);
     
     void writeHighScore(Map<String, Integer> highScore, String highscoreName);
     

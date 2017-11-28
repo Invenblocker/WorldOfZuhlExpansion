@@ -97,7 +97,7 @@ public class txtLoader implements ILoader
             else if(words[0].equals("TimeHolder:")){
                 timeHolderInfo = words;
                  }
-            else if(words[0].equals("RoomPos")){
+            else if(words[0].equals("RoomPos:")){
                 roomPositionInfo = words;
             }
             else{

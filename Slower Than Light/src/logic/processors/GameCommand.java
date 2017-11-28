@@ -318,6 +318,7 @@ public class GameCommand {
     {
         // convert elements
         GameElementsConverter gec = new GameElementsConverter();
+        gec.convertRoomPositions(game.getRoomPositions(), game.getPlayer(), game.getSaboteur());
         gec.convertRooms(game.getRooms());
         gec.convertItems(game.getItems());
         gec.convertSpecialItems(game.getSpecialItems());
@@ -328,9 +329,9 @@ public class GameCommand {
         
         // save game to file
         IWriter writer = LogFacade.getInstance().getDataFacade().getWriter();
-        /*writer.saveGame(gec.getRoomsInfo(), gec.getItemsInfo(), gec.getSpecialItemsInfo(),
-                gec.getExitInfo(), gec.getPlayerInfo(), gec.getSaboteurInfo(),
-                gec.getHelperInfo(), gec.getTimeHolderInfo(), game.getGameInfo().getRoomsRepaired());*/
+        writer.saveGame(gec.getRoomsInfo(), gec.getItemsInfo(), gec.getSpecialItemsInfo(),
+                gec.getExitInfo(), gec.getPlayerInfo(), gec.getSaboteurInfo(), gec.getHelperInfo(),
+                gec.getTimeHolderInfo(), game.getGameInfo().getRoomsRepaired(), gec.getRoomPositions());
     }
     
     /**

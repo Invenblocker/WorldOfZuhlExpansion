@@ -44,6 +44,7 @@ public class GUI implements IGUI, IVisualUpdater
     {
         logFacade = _logFacade;
         logFacade.injectGUIUpdateMethod(this);
+        this.minimap = new MiniMap(logFacade.getRoomPositions());
     }
 
     @Override
