@@ -190,7 +190,7 @@ public class Helper extends RoomHopper implements IHelper
                 {
                     if(!exit.isOperating())  //Ends the iteration if the exit cannot be used.
                     {
-                        break;
+                        continue;
                     }
                     
                     if(checkRoom.getExit(exit).isControlRoom())
@@ -198,7 +198,7 @@ public class Helper extends RoomHopper implements IHelper
                         //If the neighbor is a control room, add it to the route and tell the system a control room has been found.
                         foundControlRoom = true;
 						neighbors.add(checkRoom.getExit(exit));
-						break;
+						continue;
                     }
                     
                     if(!routes.get(a).contains(checkRoom.getExit(exit)))
