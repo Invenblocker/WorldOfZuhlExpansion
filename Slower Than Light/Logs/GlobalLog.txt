@@ -1,6 +1,3 @@
 Action Log: Helper (Erik): The helper "Erik" had its task set to "bodyguard".
-Action Log: Saboteur: Moved from "logic.elements.rooms.ItemRoom@4e36b2b5" to "logic.elements.rooms.ItemRoom@40f15503".
-Action Log: Saboteur: Moved to "the OxygenContainer".
-Action Log: Saboteur: Sabotaged the room: "OxygenContainer".
-Action Log: Saboteur: Moved from "logic.elements.rooms.ItemRoom@40f15503" to "logic.elements.rooms.ItemRoom@44ced9c5".
-Action Log: Saboteur: Moved to "the LivingQuarters".
+Action Log: Saboteur: Moved from "logic.elements.rooms.ItemRoom@676792c6" to "logic.elements.rooms.WorkshopRoom@69a0605a".
+Action Log: Saboteur: Moved to "the Workshop".

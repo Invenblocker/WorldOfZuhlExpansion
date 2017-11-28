@@ -324,4 +324,40 @@ public class Helper extends RoomHopper implements IHelper
     {
         chanceOfDiscovery = value;
     }
+
+    @Override
+    public String generateHelperMessage()
+    {
+        if(foundItemString != "")
+        {
+            String message = foundItemString;
+            foundItemString = "";
+            return(message);
+        }
+        else
+        {
+            if(task == null)
+            {
+                ERROR_LOG.writeToLog("Task is null", "As a failsafe, task has been set to RETURN_TO_DEFAULT");
+                setTask(HelperTask.RETURN_TO_DEFAULT);
+                return("I... Uhm... what exactly am I doing?");
+            }
+            else
+            {
+                switch(task)
+                {
+                    case SEARCH:
+                        return("Oh hi, I'm still searching for something, I'll meet you in the control room when I've found it.");
+                    case BODYGUARD:
+                        return("Don't worry, I'll keep you safe, just don't do anything rash.");
+                    case RETURN_TO_DEFAULT:
+                        if(getCurrentRoom().isControlRoom()) return("I'm on my way to the control room, see you there.");
+                        else return("It's scary with that saboteur around. Can't say I like the situation, but I'll do anything I can to help. Do you need me to do anything?");
+                    default:
+                        ERROR_LOG.writeToLog("Task is not recognized.", "As a failsafe, task has been set to RETURN_TO_DEFAULT");
+                        return("I... Uhm... what exactly am I doing?");
+                }
+            }
+        }
+    }
 }

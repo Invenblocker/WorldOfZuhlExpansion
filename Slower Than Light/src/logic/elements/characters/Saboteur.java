@@ -67,9 +67,9 @@ public class Saboteur extends RoomHopper implements ISaboteur
         }
         else
         {
-            if((getCurrentRoom().isOperating() || Game.getInstance().getGameInfo().getHackedExit() == null) && Math.random() < chanceOfSabotage)
+            if(((getCurrentRoom().isOperating() && getCurrentRoom() instanceof ItemRoom) || Game.getInstance().getGameInfo().getHackedExit() == null) && Math.random() < chanceOfSabotage)
             {
-                if(!getCurrentRoom().isOperating())
+                if(!getCurrentRoom().isOperating() || !(getCurrentRoom() instanceof ItemRoom))
                 {
                     int sabotageExit = (int) Math.floor(Math.random() * getCurrentRoom().getCollectionOfExits().size());
                     getCurrentRoom().getCollectionOfExits().get(sabotageExit).setOperating(false);
@@ -116,7 +116,7 @@ public class Saboteur extends RoomHopper implements ISaboteur
                 
                 chanceOfSabotage += CHANCE_OF_SABOTAGE_GROWTH;
                 
-                ACTION_LOG.writeToLog("Moved to \"the " + getCurrentRoom().getName() + "\".");
+                //ACTION_LOG.writeToLog("Moved to \"the " + getCurrentRoom().getName() + "\".");
                 
                 checkChasingPlayer();
             }
