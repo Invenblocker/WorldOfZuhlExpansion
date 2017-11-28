@@ -1,15 +1,14 @@
    package logic.elements.rooms;
 
+import acq.IRoom;
 import java.util.ArrayList;
 import java.util.Set;
 import java.util.HashMap;
-import java.util.Iterator;
 import logic.SystemLog;
-import logic.elements.characters.Item;
 import logic.elements.characters.Tool;
 
 
-public class Room 
+public class Room implements IRoom 
 {
     private String name;
     private boolean operating;         //is room damaged
@@ -25,9 +24,9 @@ public class Room
     public Room(String name){
          this.controlRoom = false;     //constructs value for controlroom 
          this.name = name;
-         this.repairTools = new ArrayList<Tool>();
+         this.repairTools = new ArrayList<>();
          this.operating = true;
-         exits = new HashMap<String, Exit>();    //Creates an empty HashMap  key/value
+         exits = new HashMap<>();    //Creates an empty HashMap  key/value
     }
     
     public Room(String name, boolean controlRoom) //constructor for  boolean CR
@@ -35,18 +34,18 @@ public class Room
         this(name);
         this.controlRoom = controlRoom;
     }
-
     
-
-     /**
+    /**
      * Returns the name of the room.
      * @return The room's name.
      */
+    @Override
     public String getName()
     {
         return this.name;
     }
     
+    @Override
       public boolean isOperating(){   //checks boolean value for room
         
         return this.operating;       //returns setOperatinge - dameged room or not
@@ -108,7 +107,9 @@ public class Room
      */
     public Room getExit(String direction) 
     {
-        if(exits.keySet().contains(direction))
+      
+        
+        if(!exits.keySet().contains(direction))
         {
             SystemLog.getErrorLog().writeToLog("The room \"" + this.getName() + "\" does not have an exit in the direction \"" + direction + "\".");
             return null;
@@ -117,41 +118,53 @@ public class Room
         {
             if(exits.get(direction) != null)
             {
-                if(exits.get(direction).getExitRoom1().name.equals(this.name))
-                    return exits.get(direction).getExitRoom2();
-                else
+                if(exits.get(direction).getExitRoom1().name.equals(this.name)){
+                    Room exit = exits.get(direction).getExitRoom2();
+                    
+                    return exit;
+                }
+                else{
                    return exits.get(direction).getExitRoom1();
+                }
             }
             else
             {
+                
                 SystemLog.getErrorLog().writeToLog("The exit stored by the room \"" + this.getName() + "\" stores an empty exit in the direction \"" + direction + "\".");
                 return null;
             }
         }
     }
     
-    public Room getExit(Exit direction)
+    public Room getExit(Exit exit)
     {
-        if(exits.values().contains(direction))
+        if(exits.values().contains(exit))
         {
-            if(direction.getExitRoom1().equals(this))
-                return(direction.getExitRoom2());
+            if(exit.getExitRoom1().equals(this))
+                return(exit.getExitRoom2());
             else
-                return(direction.getExitRoom1());
+                return(exit.getExitRoom1());
         }
         else
         {
-            System.out.println(direction.toString() + " is not an exit from " + getName());
+            System.out.println(exit.toString() + " is not an exit from " + getName());
             return null;
         }
     }
     
     public Exit getExit(Room room)
     {
-        for(Exit exit : exits.values())
-            if(getExit(exit).equals(room))
-                return(exit);
+        //System.out.println("HEY");
         
+        for(Exit exit : exits.values()){
+            
+          
+            if(exit.getExitRoom1().equals(room)){
+                return(exit);
+            }
+            
+                
+        }
         return null;
     }
     

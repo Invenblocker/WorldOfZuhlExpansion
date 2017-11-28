@@ -5,10 +5,9 @@
  */
 package logic;
 
+import acq.IGameInfo;
 import database.txtWriter;
-import java.io.FileNotFoundException;
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.LinkedHashMap;
 import java.util.LinkedList;
 import java.util.List;
@@ -21,7 +20,7 @@ import logic.elements.rooms.Room;
  *
  * @author Erik
  */
-public class GameInfo {
+public class GameInfo implements IGameInfo {
     
     private final double ALLOWED_ROOMS_DESTROYED_PERCENTAGE = 0.7;
     private double destroyedRoomsPercentage;
@@ -52,7 +51,7 @@ public class GameInfo {
     
     public void updateRoomsDestroyed ()
     {
-        HashMap <String, Room> rooms = Game.getInstance().getRooms();
+        Map <String, Room> rooms = Game.getInstance().getRooms();
         destroyedRooms = new ArrayList<>();
         
         for (Room room : rooms.values())
@@ -70,11 +69,13 @@ public class GameInfo {
         score = (int) ((roomsRepaired * 5) + (oxygenLeft * 5) - (destroyedRoomsCount * 2) + helperAlivePoints); 
     }
     
+    @Override
     public LinkedHashMap<String, Integer> saveHighScore(String playerName)
     {
         highScoreMap.put(playerName, score);
         sortHighScore(highScoreMap);
-        txtWriter.writeHighScore(highScoreMap, playerName);
+        txtWriter Writer = new txtWriter();
+        Writer.writeHighScore(highScoreMap, playerName);
         
         return highScoreMap;
     }
@@ -83,6 +84,7 @@ public class GameInfo {
 
     public double getDestroyedRoomsPercentage() {return destroyedRoomsPercentage;}
 
+    @Override
     public Room[] getDestroyedRooms() {return destroyedRooms.toArray(new Room[0]);}
     
     public int getRoomsRepaired () {return roomsRepaired;}
@@ -91,11 +93,7 @@ public class GameInfo {
         roomsRepaired++;
     }
     
-    public Exit getHackedExit() 
-    {
-        return hackedExit;
-    }
-    
+    public Exit getHackedExit() {return hackedExit;}
     public void setHackedExit(Exit value)
     {
         if(value == hackedExit)
@@ -115,10 +113,13 @@ public class GameInfo {
         helper = null;
     }
 
-    public LinkedHashMap<String, Integer> getHighScoreMap () {return highScoreMap;}
+    @Override
+    public Map<String, Integer> getHighScoreMap () {return highScoreMap;}
     
+    @Override
     public int getScore () {return score;}
     
+    @Override
     public boolean isGameFinished () {return gameFinished;}
     public void setGameFinished(boolean value)
     {
@@ -134,11 +135,11 @@ public class GameInfo {
         destroyedRoomsPercentage = destroyedRooms.size() / totalRooms;
     }
     
-    private LinkedHashMap<String, Integer>sortHighScore (LinkedHashMap<String, Integer>highScoreMap)
+    private Map<String, Integer>sortHighScore (LinkedHashMap<String, Integer>highScoreMap)
     {
         List<Map.Entry<String, Integer>>listToSort = new LinkedList<>(highScoreMap.entrySet());
-        
         Map.Entry<String, Integer> temp;
+        
         for (int i = 1; i < listToSort.size(); i++) 
         {
             for (int j = i; j > 0; j--) 
@@ -148,16 +149,13 @@ public class GameInfo {
                     temp = listToSort.get(j);
                     listToSort.set(j,listToSort.get(j-1));
                     listToSort.set(j-1,temp);
-                    
                 }
-                
             }
         }
-        LinkedHashMap<String, Integer>returnHashMap = new LinkedHashMap<>();
-        for (Map.Entry<String, Integer> entry : listToSort) 
-        {
+        
+        Map<String, Integer>returnHashMap = new LinkedHashMap<>();
+        for (Map.Entry<String, Integer> entry : listToSort)
             returnHashMap.put(entry.getKey(), entry.getValue());
-        }
         
         return returnHashMap;
     }

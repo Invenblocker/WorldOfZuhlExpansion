@@ -5,13 +5,14 @@
  */
 package logic.elements.characters;
 
+import acq.IItem;
 import logic.elements.rooms.*;
 
 /**
  *
  * @author Invenblocker & JN97
  */
-public class Item
+public class Item implements IItem
 {
     private String name;
     private ItemRoom defaultRoom;
@@ -50,6 +51,7 @@ public class Item
      * 
      * @return The item's name.
      */
+    @Override
     public String getName()
     {
         return(name);
@@ -67,6 +69,7 @@ public class Item
         return defaultRoom;
     }
     
+    @Override
     public String toString()
     {
         return this.getName();

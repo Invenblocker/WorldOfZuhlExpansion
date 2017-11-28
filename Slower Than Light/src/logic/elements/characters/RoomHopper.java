@@ -5,6 +5,7 @@
  */
 package logic.elements.characters;
 
+import acq.IRoomHopper;
 import logic.SystemLog;
 import logic.elements.rooms.*;
 
@@ -12,7 +13,7 @@ import logic.elements.rooms.*;
  *
  * @author Invenblocer & JN97
  */
-public abstract class RoomHopper
+public abstract class RoomHopper implements IRoomHopper
 {
     private Room currentRoom;
     
@@ -41,7 +42,7 @@ public abstract class RoomHopper
         Room oldRoom = currentRoom;
         currentRoom = newRoom;
         getActionLog().writeToLog("Moved from \"" + oldRoom + "\" to \"" + newRoom + "\".");
-        return(oldRoom);
+        return oldRoom;
     }
     
     /**
@@ -51,9 +52,10 @@ public abstract class RoomHopper
      * 
      * @return The room in which the character is currently located.
      */
+    @Override
     public Room getCurrentRoom()
     {
-        return(currentRoom);
+        return currentRoom;
     }
     
     public abstract SystemLog getActionLog();

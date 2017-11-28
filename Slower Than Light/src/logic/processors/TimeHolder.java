@@ -6,8 +6,10 @@ import logic.Game;
 import logic.GameInfo;
 import logic.elements.characters.HelperTask;
 import logic.elements.rooms.Room;
+import acq.ITimeHolder;
+import acq.IVisualUpdater;
 
-public class TimeHolder extends TimerTask{
+public class TimeHolder extends TimerTask implements ITimeHolder{
     
     private final int DEFAULT_HELPER_COUNTDOWN = 5;
     private int saboteurCountdown;
@@ -16,6 +18,8 @@ public class TimeHolder extends TimerTask{
     private double oxygenLeft;
     private Game game;
     private GameInfo gameInfo;
+    
+    private IVisualUpdater caller;
     
     public TimeHolder ()
     {
@@ -36,6 +40,11 @@ public class TimeHolder extends TimerTask{
         this();
         timeLeft = gameTime;
         oxygenLeft = oxygenTime;
+    }
+    
+    public void addVisualUpdateCaller (IVisualUpdater _caller)
+    {
+        caller = _caller;
     }
 
     @Override
@@ -83,9 +92,11 @@ public class TimeHolder extends TimerTask{
             timeLeft -= (1 - gameInfo.getDestroyedRoomsPercentage()); 
             oxygenLeft -= 1;
         }
-         
+        
+        caller.updateWithTimer();
     }
     
+    @Override
     public void setupReferences ()
     {
         if (game != null)
@@ -98,25 +109,31 @@ public class TimeHolder extends TimerTask{
         }
     }
 
+    @Override
     public void setSaboteurCountdown(int value) 
     {
         this.saboteurCountdown = value;    
     }
+    @Override
     public void setHelperCountdown(int value) 
     {
         this.helperCountdown = value;
     }
     
+    @Override
     public int getSaboteurCountdown () {return saboteurCountdown;}
     
+    @Override
     public int getHelperCountdown()
     {
         return helperCountdown;
     }
+    @Override
     public double getOxygenLeft()
     {
         return oxygenLeft;
     }
+    @Override
     public double getTimeLeft()
     {
         return timeLeft;

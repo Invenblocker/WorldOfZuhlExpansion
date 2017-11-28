@@ -1,8 +1,11 @@
 package logic.processors;
 
+import acq.IWriter;
 import database.txtWriter;
 import java.util.ArrayList;
+import java.util.List;
 import logic.Game;
+import logic.LogFacade;
 import logic.elements.characters.Helper;
 import logic.elements.characters.HelperTask;
 import logic.elements.characters.Item;
@@ -17,9 +20,9 @@ import logic.SystemLog;
 public class GameCommand {
     private Game game;
 
-    public GameCommand(){
+    public GameCommand()
+    {
         game = Game.getInstance();
-
     }
 
     /**
@@ -78,6 +81,15 @@ public class GameCommand {
         return wantToQuit;
     }
     
+    public Item[] getItemsInCurrentRoomItems ()
+    {
+        List<Item> itemList = roomItemList();
+        Item[] itemArray = new Item[itemList.size()];
+        itemArray = roomItemList().toArray(itemArray);
+        
+        return itemArray;
+    }
+    
     /**
      * Goes to the room specified by the player, if the player has not entered a
      * second word in the command, asks the player for direction and does
@@ -99,6 +111,7 @@ public class GameCommand {
         if (exitRoom != null)
         {
             Room pastRoom = game.getPlayer().setRoom(exitRoom);
+            
             
             if (game.getSaboteur().getCurrentRoom() == exitRoom)
             {
@@ -155,7 +168,7 @@ public class GameCommand {
             Item itemTaken = roomInventory.get(itemReference);
             game.getPlayer().addItem(itemTaken); 
         } 
-        catch (Exception e) 
+        catch (NumberFormatException | IndexOutOfBoundsException e) 
         {
             System.out.println("This is not a valid item ! ");
         }
@@ -196,7 +209,7 @@ public class GameCommand {
            }
 
        } 
-       catch (Exception e) 
+       catch (NumberFormatException | IndexOutOfBoundsException e) 
        {
            System.out.println("This is not a valid item ! ");
        }
@@ -293,7 +306,7 @@ public class GameCommand {
         else
             System.out.println("Please type in a task for helper before hitting enter ! ");
        }
-        System.out.println("You need to be in the control room to give" + helperName + "a control ! ");
+       System.out.println("You need to be in the control room to give" + helperName + "a control ! ");
        return;
     }
     
@@ -303,9 +316,21 @@ public class GameCommand {
      */
     private void saveGame() 
     {
-        txtWriter.saveGame(game.getRooms(), game.getItems(), game.getPlayer(),
-                           game.getSaboteur(), game.getGameInfo().getHelper(),game.getGameInfo().getRoomsRepaired(),
-                           game.getTimeHolder(),"Player Name");
+        // convert elements
+        GameElementsConverter gec = new GameElementsConverter();
+        gec.convertRooms(game.getRooms());
+        gec.convertItems(game.getItems());
+        gec.convertSpecialItems(game.getSpecialItems());
+        gec.convertPlayer(game.getPlayer());
+        gec.convertSaboteur(game.getSaboteur());
+        gec.convertHelper(game.getHelper());
+        gec.convertTimeHolder(game.getTimeHolder());
+        
+        // save game to file
+        IWriter writer = LogFacade.getInstance().getDataFacade().getWriter();
+        /*writer.saveGame(gec.getRoomsInfo(), gec.getItemsInfo(), gec.getSpecialItemsInfo(),
+                gec.getExitInfo(), gec.getPlayerInfo(), gec.getSaboteurInfo(),
+                gec.getHelperInfo(), gec.getTimeHolderInfo(), game.getGameInfo().getRoomsRepaired());*/
     }
     
     /**
@@ -350,8 +375,6 @@ public class GameCommand {
             if (playerInventory[i] != null) 
                 System.out.println("[" + i + "] "+ playerInventory[i].getName());
     }
-
-    
     
     /**
      * ArrayList, which holds information about the items in the player's current room.
@@ -360,27 +383,28 @@ public class GameCommand {
      * However, if the currentRoom is not an instance of either of these classes, it returns null.
      */
     private ArrayList<Item> roomItemList ()
+    {
+        ArrayList<Item>roomInventory = new ArrayList<>();
+        Room currentRoom = game.getPlayer().getCurrentRoom();
+
+        if (currentRoom instanceof ItemRoom)
         {
-            ArrayList<Item>roomInventory = new ArrayList<>();
-            Room currentRoom = game.getPlayer().getCurrentRoom();
+            ItemRoom currentRoomAsItemRoom =(ItemRoom) currentRoom ;
+            if (currentRoomAsItemRoom.getItem()!= null)
+                roomInventory.add(currentRoomAsItemRoom.getItem());
+            if (currentRoomAsItemRoom.getSpecialItem()!= null)
+                roomInventory.add(currentRoomAsItemRoom.getSpecialItem());
 
-            if (currentRoom instanceof ItemRoom)
-            {
-                ItemRoom currentRoomAsItemRoom =(ItemRoom) currentRoom ;
-                if (currentRoomAsItemRoom.getItem()!= null)
-                    roomInventory.add(currentRoomAsItemRoom.getItem());
-                if (currentRoomAsItemRoom.getSpecialItem()!= null)
-                    roomInventory.add(currentRoomAsItemRoom.getSpecialItem());
-
-                return roomInventory;
-            }
-            else if (currentRoom instanceof WorkshopRoom) 
-            {
-                WorkshopRoom currentRoomAsWorkshopRoom  = (WorkshopRoom) currentRoom;
-                    roomInventory.addAll(currentRoomAsWorkshopRoom.getItems());
-                return roomInventory;
-            }
-
-            return null;
+            return roomInventory;
         }
+        else if (currentRoom instanceof WorkshopRoom) 
+        {
+            WorkshopRoom currentRoomAsWorkshopRoom  = (WorkshopRoom) currentRoom;
+            roomInventory.addAll(currentRoomAsWorkshopRoom.getItems());
+
+            return roomInventory;
+        }
+
+        return null;
+    }
 }
