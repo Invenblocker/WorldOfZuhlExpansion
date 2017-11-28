@@ -69,7 +69,42 @@ public class GameGraphicsController implements Initializable {
      */
     @Override
     public void initialize(URL url, ResourceBundle rb) {
-        // TODO
+        
     }    
     
+    public void walk(String direction) {
+        
+    }
+    
+    public void drop(IItem item) {
+        
+    }
+    
+    public void take(IItem item) {
+        
+    }
+
+    public void repair() {
+        //
+    }
+    
+    public void giveTask(String task) {
+        //
+    }
+
+    public void investigate() {
+        //
+    }
+
+    public void saveGame() {
+        
+    }
+
+    public void help() {
+        
+    }
+
+    public void quit() {
+        
+    }
 }
