@@ -39,6 +39,22 @@ public class MainMenuController implements Initializable {
     
     }    
 
+    @FXML
+    private void handleNewGameBtn(MouseEvent event) {
+    }
+
+    @FXML
+    private void handleLoadGameBtn(MouseEvent event) {
+    }
+
+    @FXML
+    private void handleHighscoreBtn(MouseEvent event) {
+    }
+
+    @FXML
+    private void handleQuitBtn(MouseEvent event) {
+    }
+
    
     
     
