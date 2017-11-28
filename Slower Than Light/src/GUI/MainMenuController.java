@@ -61,8 +61,6 @@ public class MainMenuController implements Initializable, IInjectableController 
     private void handleNewGameBtn(MouseEvent event) throws IOException
     {
         logFacade.newGame();
-        logFacade.injectGUIUpdateMethod(GUI.getInstance());
-        logFacade.play();
         FXMLLoader loader = new FXMLLoader(getClass().getResource("GameGraphics.fxml"));
         Parent root = loader.load();
         
@@ -82,8 +80,6 @@ public class MainMenuController implements Initializable, IInjectableController 
     private void handleLoadGameBtn(MouseEvent event) throws IOException
     {
         logFacade.loadGame();
-        logFacade.injectGUIUpdateMethod(GUI.getInstance());
-        logFacade.play();
         FXMLLoader loader = new FXMLLoader(getClass().getResource("GameGraphics.fxml"));
         Parent root = loader.load();
         

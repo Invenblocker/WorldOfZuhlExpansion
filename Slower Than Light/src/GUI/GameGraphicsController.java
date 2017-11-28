@@ -8,10 +8,15 @@ package GUI;
 import acq.IInjectableController;
 import acq.IItem;
 import acq.ILogFacade;
+import acq.IVisualUpdater;
+import java.io.IOException;
 import java.net.URL;
 import java.util.ResourceBundle;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
@@ -26,7 +31,7 @@ import javafx.stage.Stage;
  *
  * @author sdown
  */
-public class GameGraphicsController implements Initializable, IInjectableController {
+public class GameGraphicsController implements Initializable, IInjectableController, IVisualUpdater {
 
     @FXML
     private ImageView currentRoomDisplay;
@@ -75,37 +80,30 @@ public class GameGraphicsController implements Initializable, IInjectableControl
     @FXML
     private Button quitButton;
 
+    private ILogFacade logFacade;
+    private Stage stage;
+    
     /**
      * Initializes the controller class.
      */
     @Override
-    public void initialize(URL url, ResourceBundle rb) {
-        
-    }    
-    
-    
-    private ILogFacade logFacade;
-    /*
-    @Override
-    public void injectLogFacade(ILogFacade _logFacade) {
-        logFacade = _logFacade;
+    public void initialize(URL url, ResourceBundle rb)
+    {
+        logFacade = GUI.getInstance().getILogFacade();
+        logFacade.injectGUIUpdateMethod(this);
+        logFacade.play();
     }
-<<<<<<< HEAD
-*/
-
-
-    private Stage stage;
-            
-
+    
     @Override
     public void injectStage(Stage _stage) {
         stage = _stage;
     }
-
     
-    
-    
-    
+    @Override
+    public void updateWithTimer()
+    {
+        System.out.println("Updated timer");
+    }
     
     @FXML
     public void walkUp() {
@@ -172,13 +170,24 @@ public class GameGraphicsController implements Initializable, IInjectableControl
     }
 
     @FXML
-    public void quit() {
-        logFacade.processCommand("quit");
+    public void quit() throws IOException {
+        //logFacade.processCommand("quit");
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("MainMenu.fxml"));
+        Parent root = loader.load();
+        
+        Scene scene = new Scene(root);
+        
+        IInjectableController controller = loader.getController();
+        controller.injectStage(stage);
+        
+        stage.setScene(scene);
+        stage.show();
     }
 
     public void saboteurAlert() {
         
     }
+
 
     
     

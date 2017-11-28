@@ -93,6 +93,7 @@ public class GUI extends Application implements IGUI, IVisualUpdater
     }
   
     public void printWelcome() {
+        writeToLog("Welcome to the game");
         
     }
     public void prinInventory(IItem[] inventory)

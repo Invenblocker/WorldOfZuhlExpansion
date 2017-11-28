@@ -149,8 +149,8 @@ public class Game
         
         // Setup user input
         parser = new Parser();
-        //gameCommand.processCommand(new Command(CommandWord.SAVE, ""));
         
+        /*
         // Game loop
         try
         {
@@ -165,13 +165,9 @@ public class Game
         {
             System.out.println("Caught RuntimeException");
             e.printStackTrace();
-            SystemLog.saveAllLogs(); /* Save logs no matter what*/
+            SystemLog.saveAllLogs(); // Save logs no matter what
         }
-        
-        // Game end
-        timer.cancel();
-        SystemLog.saveAllLogs();
-        System.out.println("Thank you for playing.  Goodbye.");
+        */
     }
 
     public Map<String, Point> getRoomPositions() {return roomPositions;}
