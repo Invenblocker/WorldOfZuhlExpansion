@@ -5,7 +5,9 @@
  */
 package GUI;
 
+import acq.IInjectableController;
 import acq.IItem;
+import acq.ILogFacade;
 import java.net.URL;
 import java.util.ResourceBundle;
 import javafx.fxml.FXML;
@@ -16,13 +18,14 @@ import javafx.scene.control.Label;
 import javafx.scene.image.ImageView;
 import javafx.scene.shape.Circle;
 import javafx.scene.text.Text;
+import javafx.stage.Stage;
 
 /**
  * FXML Controller class
  *
  * @author sdown
  */
-public class GameGraphicsController implements Initializable {
+public class GameGraphicsController implements Initializable, IInjectableController {
 
     @FXML
     private ImageView currentRoomDisplay;
@@ -73,39 +76,100 @@ public class GameGraphicsController implements Initializable {
         
     }    
     
-    public void walk(String direction) {
-        
-    }
     
-    public void drop(IItem item) {
-        
-    }
+    private ILogFacade logFacade;
     
-    public void take(IItem item) {
-        
+    @Override
+    public void injectLogFacade(ILogFacade _logFacade) {
+        logFacade = _logFacade;
     }
 
-    public void repair() {
-        //
+    @Override
+    public void injectStage(Stage stage) {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+
+    
+    
+    
+    
+    
+    public void walkUp() {
+        logFacade.processCommand("go up");
     }
     
-    public void giveTask(String task) {
-        //
+    public void walkDown() {
+        logFacade.processCommand("go down");
+    }
+
+    public void walkLeft() {
+        logFacade.processCommand("go left");
+    }
+
+    public void walkRight() {
+        logFacade.processCommand("go right");
+    }
+
+    public void dropItem0() {
+        logFacade.processCommand("drop 0");
+    }
+    
+    public void dropItem1() {
+        logFacade.processCommand("drop 1");
+    }
+    
+    public void takeItem0() {
+        logFacade.processCommand("take 0");
+    }
+
+    public void takeItem1() {
+        logFacade.processCommand("take 1");
+    }
+    
+    public void repair() {
+        logFacade.processCommand("repair");
+        //INCOMPLETE
+    }
+    
+    public void giveTask() {
+        
     }
 
     public void investigate() {
-        //
+        logFacade.processCommand("investigate");
     }
 
     public void saveGame() {
-        
+        logFacade.processCommand("save");
     }
 
     public void help() {
-        
+        logFacade.processCommand("help");
     }
 
     public void quit() {
+        logFacade.processCommand("quit");
+    }
+
+    public void sabouteurAlert() {
         
     }
+
+    
+    
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 }
