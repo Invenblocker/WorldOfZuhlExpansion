@@ -287,16 +287,16 @@ public class GameCommand {
      */
     private void helperAction(Command command) 
     {
-       
-       Room currentRoom = game.getPlayer().getCurrentRoom();
-       Room HelperCurrentRoom = game.getGameInfo().getHelper().getCurrentRoom();
-       HelperTask helperTask = game.getGameInfo().getHelper().getHelperTask();
-       Helper performTask = game.getGameInfo().getHelper();
-       String helperName = game.getGameInfo().getHelper().getName();
-       if (currentRoom == HelperCurrentRoom && currentRoom.isControlRoom())
-       {
-       if (!command.hasSecondWord()) switch (helperTask)   
-           {
+        Room currentRoom = game.getPlayer().getCurrentRoom();
+        Room HelperCurrentRoom = game.getGameInfo().getHelper().getCurrentRoom();
+        HelperTask helperTask = game.getGameInfo().getHelper().getHelperTask();
+        Helper performTask = game.getGameInfo().getHelper();
+        String helperName = game.getGameInfo().getHelper().getName();
+        
+        if (currentRoom == HelperCurrentRoom && currentRoom.isControlRoom())
+        {
+            if (!command.hasSecondWord()) switch (helperTask)   
+            {
                 case BODYGUARD:
                    performTask.setTask(helperTask);
                    break;
@@ -307,13 +307,13 @@ public class GameCommand {
                     performTask.setTask(helperTask);
                     break;
                 default:
-                    System.out.println("What task did you mean ? ");
-           }
+                    System.out.println("What task did you mean ?");
+            }
+            else
+                System.out.println("Please type in a task for helper before hitting enter !");
+        }
         else
-            System.out.println("Please type in a task for helper before hitting enter ! ");
-       }
-       System.out.println("You need to be in the control room to give" + helperName + "a control ! ");
-       return;
+           System.out.println("You need to be in the control room to give " + helperName + " a control!");
     }
     
     /**
