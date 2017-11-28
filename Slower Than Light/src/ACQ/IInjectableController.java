@@ -12,8 +12,6 @@ import javafx.stage.Stage;
  * @author Erik
  */
 public interface IInjectableController
-{
-    void injectLogFacade (ILogFacade logFacade);
-    
+{   
     void injectStage (Stage stage);
 }

@@ -51,7 +51,8 @@ public class MainMenuController implements Initializable, IInjectableController 
     @Override
     public void initialize(URL url, ResourceBundle rb) 
     {
-       
+       logFacade = GUI.getInstance().getILogFacade();
+        System.out.println("Hallo 4" + logFacade);
     
     
     }    
@@ -61,7 +62,8 @@ public class MainMenuController implements Initializable, IInjectableController 
     {
         logFacade.newGame();
         logFacade.injectGUIUpdateMethod(GUI.getInstance());
-        FXMLLoader loader = new FXMLLoader(getClass().getResource("FXMLGameGraphics.fxml"));
+        logFacade.play();
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("GameGraphics.fxml"));
         Parent root = loader.load();
         
         Scene scene = new Scene(root);
@@ -69,7 +71,6 @@ public class MainMenuController implements Initializable, IInjectableController 
         
         IInjectableController controller = loader.getController();
         controller.injectStage(stage);
-        controller.injectLogFacade(logFacade);
         
         stage.setScene(scene);
         stage.show();
@@ -82,14 +83,14 @@ public class MainMenuController implements Initializable, IInjectableController 
     {
         logFacade.loadGame();
         logFacade.injectGUIUpdateMethod(GUI.getInstance());
-        FXMLLoader loader = new FXMLLoader(getClass().getResource(" "));
+        logFacade.play();
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("GameGraphics.fxml"));
         Parent root = loader.load();
         
         Scene scene = new Scene(root);
         
         IInjectableController controller = loader.getController();
         controller.injectStage(stage);
-        controller.injectLogFacade(logFacade);
         
         stage.setScene(scene);
         stage.show();
@@ -105,7 +106,6 @@ public class MainMenuController implements Initializable, IInjectableController 
         
         IInjectableController controller = loader.getController();
         controller.injectStage(stage);
-        controller.injectLogFacade(logFacade);
         
         stage.setScene(scene);
         stage.show();
@@ -116,13 +116,13 @@ public class MainMenuController implements Initializable, IInjectableController 
     {
         System.exit(0);
     }
-
+/*
     @Override
     public void injectLogFacade(ILogFacade logFacade) 
     {
        this.logFacade = logFacade;
     }
-
+*/
    
     
     

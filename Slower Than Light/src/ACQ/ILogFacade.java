@@ -15,6 +15,8 @@ import java.util.Map;
  */
 public interface ILogFacade {
 
+    void play();
+    
     void loadGame();
     
     void newGame();

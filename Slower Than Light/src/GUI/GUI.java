@@ -50,6 +50,7 @@ public class GUI extends Application implements IGUI, IVisualUpdater
     {
         logFacade = _logFacade;
         
+        
         this.minimap = new MiniMap(logFacade.getRoomPositions());
     }
 
@@ -111,14 +112,15 @@ public class GUI extends Application implements IGUI, IVisualUpdater
     @Override
     public void start(Stage primaryStage) throws Exception 
     {
-        FXMLLoader loader = new FXMLLoader(getClass().getResource("FXMLMainMenu.fxml")); //Creates new FXML Loader which loads MainMenu.fxml
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("MainMenu.fxml")); //Creates new FXML Loader which loads MainMenu.fxml
         Parent root = loader.load();                                 //Sets root equals to our loaded MainMenu.fxml
         
         Scene scene = new Scene(root);                          //Creates new Scene of our root
         
         IInjectableController controller = loader.getController();      //Injects loader into our controller
-        controller.injectStage(primaryStage);                            //Injects primarystage 
-        controller.injectLogFacade(logFacade);                      //Injects logFacade
+        controller.injectStage(primaryStage);                            //Injects primarystage                      //Injects logFacade
+        
+        
         
         primaryStage.setScene(scene);                               //Sets secene
         primaryStage.show();                                        //Shows stage
@@ -127,9 +129,14 @@ public class GUI extends Application implements IGUI, IVisualUpdater
     @Override
     public void startApplication(String[] args) 
     {
+        
         launch(args);
         
+        
     }
-    
+    public ILogFacade getILogFacade()
+    {
+        return logFacade;
+    }
 }
 

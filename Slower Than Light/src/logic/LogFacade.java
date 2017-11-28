@@ -53,6 +53,7 @@ public class LogFacade implements ILogFacade
     public void injectGUIUpdateMethod(IVisualUpdater caller)
     {
         game.getTimeHolder().addVisualUpdateCaller(caller);
+        System.out.println("Caller" + caller);
     }
     
     @Override
@@ -94,7 +95,7 @@ public class LogFacade implements ILogFacade
     {
         data.getLoader().newGame("assets/maps/bigRectangle.txt");
         game.setupGame(data.getLoader());
-        game.play();
+       
     }
     
     @Override
@@ -102,9 +103,15 @@ public class LogFacade implements ILogFacade
     {
         data.getLoader().loadGame("assets/maps/saveGame.txt");
         game.setupGame(data.getLoader());
-        game.play();
+        
     }
     
+    @Override
+    public void play()
+    {
+        game.play();
+       
+    }
     
     
 }
