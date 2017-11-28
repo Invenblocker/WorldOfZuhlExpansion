@@ -56,19 +56,8 @@ public class GameGraphicsController implements Initializable, IInjectableControl
     private Button downButton;
     @FXML
     private Canvas minimapCanvas;
+    
     @FXML
-<<<<<<< HEAD
-    private Button repairButton;
-    @FXML
-    private Button investigateButton;
-    @FXML
-    private Button talkButton;
-    @FXML
-    private Button helpButton;
-    @FXML
-    private Button saveButton;
-    @FXML
-=======
     private ProgressBar oxygenBar;
     @FXML
     private ProgressBar timeBar;
@@ -82,8 +71,8 @@ public class GameGraphicsController implements Initializable, IInjectableControl
     private Button helpButton;
     @FXML
     private Button saveButton;
+    
     @FXML
->>>>>>> SceneBuilderGUI
     private Button quitButton;
 
     /**
