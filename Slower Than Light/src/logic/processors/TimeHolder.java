@@ -7,6 +7,7 @@ import logic.GameInfo;
 import logic.elements.characters.HelperTask;
 import logic.elements.rooms.Room;
 import acq.ITimeHolder;
+import acq.IVisualUpdater;
 
 public class TimeHolder extends TimerTask implements ITimeHolder{
     
@@ -17,6 +18,8 @@ public class TimeHolder extends TimerTask implements ITimeHolder{
     private double oxygenLeft;
     private Game game;
     private GameInfo gameInfo;
+    
+    private IVisualUpdater caller;
     
     public TimeHolder ()
     {
@@ -37,6 +40,11 @@ public class TimeHolder extends TimerTask implements ITimeHolder{
         this();
         timeLeft = gameTime;
         oxygenLeft = oxygenTime;
+    }
+    
+    public void addVisualUpdateCaller (IVisualUpdater _caller)
+    {
+        caller = _caller;
     }
 
     @Override
@@ -84,7 +92,8 @@ public class TimeHolder extends TimerTask implements ITimeHolder{
             timeLeft -= (1 - gameInfo.getDestroyedRoomsPercentage()); 
             oxygenLeft -= 1;
         }
-         
+        
+        caller.updateWithTimer();
     }
     
     @Override

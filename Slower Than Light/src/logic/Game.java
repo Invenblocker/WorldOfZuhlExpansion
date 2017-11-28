@@ -1,7 +1,8 @@
 package logic;
 
-import GUI.GUIController;
+import GUI.GUI;
 import acq.ILoader;
+import java.awt.Point;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashMap;
@@ -34,12 +35,13 @@ public class Game
     private static Game instance = null;
     public static Game getInstance()
     {
-        if (instance == null) 
-        {
+        if (instance == null)
             instance = new Game();
-        }
+        
         return instance;
     }
+    
+    private Map<String, Point> roomPositions;
     
     private Map<String, Room>rooms;
     private Map<String, Item>items;
@@ -52,7 +54,7 @@ public class Game
     private Helper helper;
     private TimeHolder timeHolder;
     private GameCommand gameCommand;
-    private GUIController guiController;
+    private GUI gui;
     private boolean gameLoaded;
     
         
@@ -73,6 +75,7 @@ public class Game
     {
         // Setup Game elements
         Game.StringConverter sc = new StringConverter();
+        sc.initializeMiniMap(loader.getRoomPositionInfo());
         sc.initializeRooms(loader.getRoomsInfo());
         sc.initializeItems(loader.getItemsInfo());
         sc.initializeSpecialItems(loader.getSpecialItemsInfo());
@@ -83,6 +86,7 @@ public class Game
         sc.initializeHelper(loader.getHelperInfo());
         sc.initializeTimeHolder(loader.getTimeHolderInfo());
         
+        roomPositions = sc.roomPositionsSC;
         rooms = sc.roomsSC;
         items = sc.itemsSC;
         specialItems = sc.specialItemsSC;
@@ -115,7 +119,7 @@ public class Game
         gameCommand = new GameCommand();
         
         // Setup GUI
-        guiController = new GUIController();
+        gui = GUI.getInstance();
         
         // Game is loaded
         gameLoaded = true;
@@ -137,7 +141,7 @@ public class Game
         }
         
         // Print welcome message
-        guiController.printWelcome();
+        gui.printWelcome();
         
         // Setup Timer
         Timer timer = new Timer();
@@ -145,8 +149,8 @@ public class Game
         
         // Setup user input
         parser = new Parser();
-        //gameCommand.processCommand(new Command(CommandWord.SAVE, ""));
         
+        /*
         // Game loop
         try
         {
@@ -161,14 +165,12 @@ public class Game
         {
             System.out.println("Caught RuntimeException");
             e.printStackTrace();
-            SystemLog.saveAllLogs(); /* Save logs no matter what*/
+            SystemLog.saveAllLogs(); // Save logs no matter what
         }
-        
-        // Game end
-        timer.cancel();
-        SystemLog.saveAllLogs();
-        System.out.println("Thank you for playing.  Goodbye.");
+        */
     }
+
+    public Map<String, Point> getRoomPositions() {return roomPositions;}
     
     public Map<String, Room> getRooms() {return rooms;}
     
@@ -190,7 +192,7 @@ public class Game
     
     public GameCommand getGameCommand() {return gameCommand;}
     
-    public GUIController getGUI() {return guiController;}
+    public GUI getGUI() {return gui;}
     
     
     private class GameSetup
@@ -258,6 +260,11 @@ public class Game
     
     private class StringConverter
     {
+        private Map<String, Point> roomPositionsSC;
+        private String playerPositionSC;
+        private String saboteurPositionSC;
+        
+        
         private Map<String, Room> roomsSC;
         private Map<String, Item> itemsSC;
         private Map<String, Item> specialItemsSC;
@@ -268,6 +275,8 @@ public class Game
         
         private StringConverter()
         {
+            roomPositionsSC = new HashMap<>();
+            
             roomsSC = new HashMap<>();
             itemsSC = new HashMap<>();
             specialItemsSC = new HashMap<>();
@@ -305,6 +314,25 @@ public class Game
                 i += 3;         //Jumps to room index in our txt
                 j += 3;         //jumps to next boolean in txt
                 k += 3;
+            }
+        }
+        
+        private void initializeMiniMap (String[] words) {
+            
+            int i = 3;                                          
+            int j = 4;
+            int k = 5;
+            
+            playerPositionSC = words[1];
+            saboteurPositionSC = words[2];
+            
+            while (k < words.length)
+            {
+               roomPositionsSC.put(words[i], new Point (Integer.parseInt(words[j]), Integer.parseInt(words[k])));
+
+               i += 3;
+               j += 3;
+               k += 3;  
             }
         }
         

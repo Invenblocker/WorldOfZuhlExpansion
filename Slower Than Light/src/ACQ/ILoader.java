@@ -5,11 +5,8 @@
  */
 package acq;
 
-import java.util.HashMap;
 import java.util.LinkedHashMap;
 import java.util.List;
-import logic.elements.characters.Item;
-import logic.elements.rooms.Room;
 
 /**
  *
@@ -24,6 +21,8 @@ public interface ILoader
     String[] getRoomsInfo();
 
     String[] getItemsInfo();
+    
+    String[] getRoomPositionInfo();
 
     String[] getSpecialItemsInfo();
     

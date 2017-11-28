@@ -9,7 +9,7 @@ package acq;
  *
  * @author Erik
  */
-public interface IGUIController
+public interface IVisualUpdater
 {
-    void injectLogic (ILogFacade logFacade);
+    void updateWithTimer();
 }

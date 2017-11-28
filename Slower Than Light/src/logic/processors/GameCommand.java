@@ -1,9 +1,10 @@
 package logic.processors;
 
-import database.txtWriter;
+import acq.IWriter;
 import java.util.ArrayList;
 import java.util.List;
 import logic.Game;
+import logic.LogFacade;
 import logic.elements.characters.Helper;
 import logic.elements.characters.HelperTask;
 import logic.elements.characters.Item;
@@ -57,6 +58,12 @@ public class GameCommand {
             case INVENTORY:
                 printInventory();
                 break;
+            case HELPER:
+                helperAction(command);
+                break;
+            case REPAIR_DOOR:
+                System.out.println("Haha");
+                break;
             case SAVE:
                 saveGame();
                 break;
@@ -109,6 +116,7 @@ public class GameCommand {
         if (exitRoom != null)
         {
             Room pastRoom = game.getPlayer().setRoom(exitRoom);
+            
             
             if (game.getSaboteur().getCurrentRoom() == exitRoom)
             {
@@ -186,30 +194,31 @@ public class GameCommand {
             System.out.println("What item did you mean ? ");
             return;
         }
+        
         Item[] inventory = game.getPlayer().getInventory();
+        
         try 
         {
            int itemIndex = Integer.parseInt(command.getSecondWord());
-           Item itemDropped;
-           itemDropped = inventory[itemIndex];
+           Item itemDropped = inventory[itemIndex];
+           
            if(game.getPlayer().removeItem(itemDropped)) 
            {
-              Room currentRoom = game.getPlayer().getCurrentRoom();
-
-               if (currentRoom instanceof WorkshopRoom) 
-               {
+                Room currentRoom = game.getPlayer().getCurrentRoom();
+                
+                if (currentRoom instanceof WorkshopRoom) 
+                {
                     WorkshopRoom currentRoomAsWorkshopRoom = (WorkshopRoom) currentRoom;
                     currentRoomAsWorkshopRoom.addItem(itemDropped);
-               }
-               else
+                }
+                else
                    setItemToDefault(itemDropped);
            }
-
-       } 
-       catch (NumberFormatException | IndexOutOfBoundsException e) 
-       {
-           System.out.println("This is not a valid item ! ");
-       }
+        }
+        catch (NumberFormatException | IndexOutOfBoundsException e) 
+        {
+            System.out.println("This is not a valid item ! ");
+        }
     }
     
     /**
@@ -278,16 +287,16 @@ public class GameCommand {
      */
     private void helperAction(Command command) 
     {
-       
-       Room currentRoom = game.getPlayer().getCurrentRoom();
-       Room HelperCurrentRoom = game.getGameInfo().getHelper().getCurrentRoom();
-       HelperTask helperTask = game.getGameInfo().getHelper().getHelperTask();
-       Helper performTask = game.getGameInfo().getHelper();
-       String helperName = game.getGameInfo().getHelper().getName();
-       if (currentRoom == HelperCurrentRoom && currentRoom.isControlRoom())
-       {
-       if (!command.hasSecondWord()) switch (helperTask)   
-           {
+        Room currentRoom = game.getPlayer().getCurrentRoom();
+        Room HelperCurrentRoom = game.getGameInfo().getHelper().getCurrentRoom();
+        HelperTask helperTask = game.getGameInfo().getHelper().getHelperTask();
+        Helper performTask = game.getGameInfo().getHelper();
+        String helperName = game.getGameInfo().getHelper().getName();
+        
+        if (currentRoom == HelperCurrentRoom && currentRoom.isControlRoom())
+        {
+            if (command.hasSecondWord()) switch (helperTask)   
+            {
                 case BODYGUARD:
                    performTask.setTask(helperTask);
                    break;
@@ -298,13 +307,13 @@ public class GameCommand {
                     performTask.setTask(helperTask);
                     break;
                 default:
-                    System.out.println("What task did you mean ? ");
-           }
+                    System.out.println("What task did you mean ?");
+            }
+            else
+                System.out.println("Please type in a task for helper before hitting enter !");
+        }
         else
-            System.out.println("Please type in a task for helper before hitting enter ! ");
-       }
-        System.out.println("You need to be in the control room to give" + helperName + "a control ! ");
-       return;
+           System.out.println("You need to be in the control room to give " + helperName + " a control!");
     }
     
     /**
@@ -313,10 +322,22 @@ public class GameCommand {
      */
     private void saveGame() 
     {
-        txtWriter _txtWriter = new txtWriter();
-        _txtWriter.saveGame(game.getRooms(), game.getItems(), game.getPlayer(),
-                           game.getSaboteur(), game.getGameInfo().getHelper(),game.getGameInfo().getRoomsRepaired(),
-                           game.getTimeHolder(),"Player Name");
+        // convert elements
+        GameElementsConverter gec = new GameElementsConverter();
+        gec.convertRoomPositions(game.getRoomPositions(), game.getPlayer(), game.getSaboteur());
+        gec.convertRooms(game.getRooms());
+        gec.convertItems(game.getItems());
+        gec.convertSpecialItems(game.getSpecialItems());
+        gec.convertPlayer(game.getPlayer());
+        gec.convertSaboteur(game.getSaboteur());
+        gec.convertHelper(game.getHelper());
+        gec.convertTimeHolder(game.getTimeHolder());
+        
+        // save game to file
+        IWriter writer = LogFacade.getInstance().getDataFacade().getWriter();
+        writer.saveGame(gec.getRoomsInfo(), gec.getItemsInfo(), gec.getSpecialItemsInfo(),
+                gec.getExitInfo(), gec.getPlayerInfo(), gec.getSaboteurInfo(), gec.getHelperInfo(),
+                gec.getTimeHolderInfo(), game.getGameInfo().getRoomsRepaired(), gec.getRoomPositions());
     }
     
     /**
@@ -361,8 +382,6 @@ public class GameCommand {
             if (playerInventory[i] != null) 
                 System.out.println("[" + i + "] "+ playerInventory[i].getName());
     }
-
-    
     
     /**
      * ArrayList, which holds information about the items in the player's current room.

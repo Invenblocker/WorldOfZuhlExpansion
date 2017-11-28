@@ -15,6 +15,9 @@ import acq.ISaboteur;
 import acq.ITimeHolder;
 import logic.user_input.Command;
 import logic.user_input.Parser;
+import acq.IVisualUpdater;
+import java.awt.Point;
+import java.util.Map;
 
 /**
  *
@@ -22,8 +25,8 @@ import logic.user_input.Parser;
  */
 public class LogFacade implements ILogFacade 
 {
-    private static ILogFacade instance;
-    public static ILogFacade getInstance()
+    private static LogFacade instance;
+    public static LogFacade getInstance()
     {
         if (instance == null)
             instance = new LogFacade();
@@ -33,6 +36,7 @@ public class LogFacade implements ILogFacade
     
     private IDataFacade data;
     private Game game;
+    private ILogFacade logFacade;
     
     public LogFacade()
     {
@@ -43,7 +47,13 @@ public class LogFacade implements ILogFacade
     public void injectData (IDataFacade dataFacade)
     {
         data = dataFacade;
-        game.setupGame(data.getLoader());
+    }
+
+    @Override
+    public void injectGUIUpdateMethod(IVisualUpdater caller)
+    {
+        game.getTimeHolder().addVisualUpdateCaller(caller);
+        System.out.println("Caller" + caller);
     }
     
     @Override
@@ -59,6 +69,9 @@ public class LogFacade implements ILogFacade
     {
         return game.getGameCommand().getItemsInCurrentRoomItems();
     }
+
+    @Override
+    public Map<String, Point> getRoomPositions() {return game.getRoomPositions();}
     
     @Override
     public IPlayer getPlayer() {return game.getPlayer();}
@@ -74,5 +87,31 @@ public class LogFacade implements ILogFacade
     
     @Override
     public IGameInfo getGameInfo() {return game.getGameInfo();}
+    
+    public IDataFacade getDataFacade() {return data;}
+    
+    @Override
+    public void newGame()
+    {
+        data.getLoader().newGame("assets/maps/bigRectangle.txt");
+        game.setupGame(data.getLoader());
+       
+    }
+    
+    @Override
+    public void loadGame() 
+    {
+        data.getLoader().loadGame("assets/maps/saveGame.txt");
+        game.setupGame(data.getLoader());
+        
+    }
+    
+    @Override
+    public void play()
+    {
+        game.play();
+       
+    }
+    
     
 }
