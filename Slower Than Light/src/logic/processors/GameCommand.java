@@ -295,7 +295,7 @@ public class GameCommand {
         
         if (currentRoom == HelperCurrentRoom && currentRoom.isControlRoom())
         {
-            if (!command.hasSecondWord()) switch (helperTask)   
+            if (command.hasSecondWord()) switch (helperTask)   
             {
                 case BODYGUARD:
                    performTask.setTask(helperTask);
