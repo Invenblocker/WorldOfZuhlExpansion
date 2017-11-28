@@ -12,12 +12,14 @@ import acq.IRoom;
 import java.util.Map;
 import logic.Game;
 import acq.IVisualUpdater;
+import javafx.application.Application;
+import javafx.stage.Stage;
 
 /**
  *
  * @author Erik
  */
-public class GUI implements IGUI, IVisualUpdater
+public class GUI extends Application implements IGUI, IVisualUpdater
 {
     private static GUI instance = null;
     public static GUI getInstance()
@@ -100,6 +102,18 @@ public class GUI implements IGUI, IVisualUpdater
     public void writeToLog (String text)
     {
         log.write(text);
+    }
+
+    @Override
+    public void start(Stage primaryStage) throws Exception 
+    {
+        
+    }
+
+    @Override
+    public void startApplication(String[] args) 
+    {
+        
     }
     
 }
