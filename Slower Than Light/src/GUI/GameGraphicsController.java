@@ -76,6 +76,24 @@ public class GameGraphicsController implements Initializable, IInjectableControl
         
     }    
     
+    
+    private ILogFacade logFacade;
+    
+    @Override
+    public void injectLogFacade(ILogFacade _logFacade) {
+        logFacade = _logFacade;
+    }
+
+    @Override
+    public void injectStage(Stage stage) {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+
+    
+    
+    
+    
+    
     public void walk(String direction) {
         
             
@@ -118,16 +136,7 @@ public class GameGraphicsController implements Initializable, IInjectableControl
         
     }
 
-    @Override
-    public void injectLogFacade(ILogFacade logFacade) {
-        
-    }
-
-    @Override
-    public void injectStage(Stage stage) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-    }
-
+    
     
 
 
