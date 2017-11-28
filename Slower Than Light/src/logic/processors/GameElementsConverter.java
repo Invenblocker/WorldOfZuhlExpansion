@@ -67,9 +67,9 @@ public class GameElementsConverter
     public void convertRoomPositions (Map<String, Point> roomPosition, Player player, Saboteur saboteur){
         this.roomPositions = "RoomPos: ";
         
-        this.roomPositions = this.roomPositions + player.getCurrentRoom().getName() + " " + saboteur.getCurrentRoom().getName() + " ";
+        this.roomPositions += player.getCurrentRoom().getName() + " " + saboteur.getCurrentRoom().getName() + " ";
         for (String key : roomPosition.keySet()) {
-            this.roomPositions = this.roomPositions + key + " " + roomPosition.get(key).x + " " + roomPosition.get(key).y + " ";
+            this.roomPositions += key + " " + roomPosition.get(key).x + " " + roomPosition.get(key).y + " ";
         }
         
     }
