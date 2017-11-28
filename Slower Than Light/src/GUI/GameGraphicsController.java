@@ -15,6 +15,7 @@ import javafx.fxml.Initializable;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
+import javafx.scene.control.ProgressBar;
 import javafx.scene.image.ImageView;
 import javafx.scene.shape.Circle;
 import javafx.scene.text.Text;
@@ -46,18 +47,6 @@ public class GameGraphicsController implements Initializable, IInjectableControl
     @FXML
     private Label roomItem2;
     @FXML
-    private Button commandButton0;
-    @FXML
-    private Button commandButton1;
-    @FXML
-    private Button commandButton2;
-    @FXML
-    private Button commandButton3;
-    @FXML
-    private Button commandButton4;
-    @FXML
-    private Button commandButton5;
-    @FXML
     private Button leftButton;
     @FXML
     private Button upButton;
@@ -67,6 +56,24 @@ public class GameGraphicsController implements Initializable, IInjectableControl
     private Button downButton;
     @FXML
     private Canvas minimapCanvas;
+    
+    @FXML
+    private ProgressBar oxygenBar;
+    @FXML
+    private ProgressBar timeBar;
+    @FXML
+    private Button repairButton;
+    @FXML
+    private Button investigateButton;
+    @FXML
+    private Button talkButton;
+    @FXML
+    private Button helpButton;
+    @FXML
+    private Button saveButton;
+    
+    @FXML
+    private Button quitButton;
 
     /**
      * Initializes the controller class.
@@ -83,10 +90,16 @@ public class GameGraphicsController implements Initializable, IInjectableControl
     public void injectLogFacade(ILogFacade _logFacade) {
         logFacade = _logFacade;
     }
+<<<<<<< HEAD
 */
+=======
+
+    private Stage stage;
+            
+>>>>>>> master
     @Override
-    public void injectStage(Stage stage) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    public void injectStage(Stage _stage) {
+        stage = _stage;
     }
 
     
@@ -94,18 +107,22 @@ public class GameGraphicsController implements Initializable, IInjectableControl
     
     
     
+    @FXML
     public void walkUp() {
         logFacade.processCommand("go up");
     }
     
+    @FXML
     public void walkDown() {
         logFacade.processCommand("go down");
     }
 
+    @FXML
     public void walkLeft() {
         logFacade.processCommand("go left");
     }
 
+    @FXML
     public void walkRight() {
         logFacade.processCommand("go right");
     }
@@ -118,40 +135,48 @@ public class GameGraphicsController implements Initializable, IInjectableControl
         logFacade.processCommand("drop 1");
     }
     
+    @FXML
     public void takeItem0() {
         logFacade.processCommand("take 0");
     }
 
+    @FXML
     public void takeItem1() {
         logFacade.processCommand("take 1");
     }
     
+    @FXML
     public void repair() {
         logFacade.processCommand("repair");
         //INCOMPLETE
     }
     
-    public void giveTask() {
+    @FXML
+    public void talk() {
         
     }
 
+    @FXML
     public void investigate() {
         logFacade.processCommand("investigate");
     }
 
+    @FXML
     public void saveGame() {
         logFacade.processCommand("save");
     }
 
+    @FXML
     public void help() {
         logFacade.processCommand("help");
     }
 
+    @FXML
     public void quit() {
         logFacade.processCommand("quit");
     }
 
-    public void sabouteurAlert() {
+    public void saboteurAlert() {
         
     }
 
