@@ -24,7 +24,7 @@ public class txtWriter implements IWriter {
     @Override
     public void saveGame(String roomsInfo, String itemsInfo,String specialItemsInfo,
             List<String> exitInfo, String playerInfo, String saboteurInfo,
-            String helperInfo, String timeHolderInfo, int roomsRepaired, Map<String, Point> roomPosition)
+            String helperInfo, String timeHolderInfo, int roomsRepaired, String roomPosition)
     {
         File newSave = new File("assets/maps/saveGame.txt");
         PrintWriter txtWriter = null;

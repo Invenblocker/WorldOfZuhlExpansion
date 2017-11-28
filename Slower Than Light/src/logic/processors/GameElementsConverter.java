@@ -33,7 +33,7 @@ public class GameElementsConverter
     private String saboteurInfo;
     private String helperInfo;
     private String timeHolderInfo;
-    private String roomPosition;
+    private String roomPositions;
     
     public GameElementsConverter ()
     {
@@ -64,11 +64,11 @@ public class GameElementsConverter
         
     }
     
-    public void convertRoomPosition (Map<String, Point> roomPosition){
-        this.roomPosition = "RoomPos: ";
+    public void convertRoomPositions (Map<String, Point> roomPosition){
+        this.roomPositions = "RoomPos: ";
         
         for (String key : roomPosition.keySet()) {
-            this.roomPosition = this.roomPosition + key + " " + roomPosition.get(key).x + " " + roomPosition.get(key).y + " ";
+            this.roomPositions = this.roomPositions + key + " " + roomPosition.get(key).x + " " + roomPosition.get(key).y + " ";
         }
         
     }
@@ -207,5 +207,7 @@ public class GameElementsConverter
     public String getHelperInfo() {return helperInfo;}
 
     public String getTimeHolderInfo() {return timeHolderInfo;}
+    
+    public String getRoomPositions() {return roomPositions;}
     
 }

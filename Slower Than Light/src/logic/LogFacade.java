@@ -16,6 +16,8 @@ import acq.ITimeHolder;
 import logic.user_input.Command;
 import logic.user_input.Parser;
 import acq.IVisualUpdater;
+import java.awt.Point;
+import java.util.Map;
 
 /**
  *
@@ -66,6 +68,9 @@ public class LogFacade implements ILogFacade
     {
         return game.getGameCommand().getItemsInCurrentRoomItems();
     }
+
+    @Override
+    public Map<String, Point> getRoomPositions() {return game.getRoomPositions();}
     
     @Override
     public IPlayer getPlayer() {return game.getPlayer();}

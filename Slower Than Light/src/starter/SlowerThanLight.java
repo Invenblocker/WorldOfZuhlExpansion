@@ -37,7 +37,6 @@ public class SlowerThanLight {
         
         ILogFacade logik = LogFacade.getInstance();
         logik.injectData(data);
-        System.out.println(logik);
         IGUI gui = GUI.getInstance();
         gui.injectLogic(logik);
         
