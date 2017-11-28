@@ -65,6 +65,11 @@ public class MainMenuController implements Initializable, IInjectableController 
         
         Scene scene = new Scene(root);
         
+        
+        IInjectableController controller = loader.getController();
+        controller.injectStage(stage);
+        controller.injectLogFacade(logFacade);
+        
         stage.setScene(scene);
         stage.show();
         
@@ -80,6 +85,10 @@ public class MainMenuController implements Initializable, IInjectableController 
         
         Scene scene = new Scene(root);
         
+        IInjectableController controller = loader.getController();
+        controller.injectStage(stage);
+        controller.injectLogFacade(logFacade);
+        
         stage.setScene(scene);
         stage.show();
     }
@@ -91,6 +100,10 @@ public class MainMenuController implements Initializable, IInjectableController 
         Parent root = loader.load();
         
         Scene scene = new Scene(root);
+        
+        IInjectableController controller = loader.getController();
+        controller.injectStage(stage);
+        controller.injectLogFacade(logFacade);
         
         stage.setScene(scene);
         stage.show();

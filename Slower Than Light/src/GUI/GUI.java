@@ -6,6 +6,7 @@
 package GUI;
 
 import acq.IGUI;
+import acq.IInjectableController;
 import acq.IItem;
 import acq.ILogFacade;
 import acq.IRoom;
@@ -13,6 +14,9 @@ import java.util.Map;
 import logic.Game;
 import acq.IVisualUpdater;
 import javafx.application.Application;
+import javafx.fxml.FXMLLoader;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
 import javafx.stage.Stage;
 
 /**
@@ -107,12 +111,23 @@ public class GUI extends Application implements IGUI, IVisualUpdater
     @Override
     public void start(Stage primaryStage) throws Exception 
     {
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("FXMLMainMenu.fxml")); //Creates new FXML Loader which loads MainMenu.fxml
+        Parent root = loader.load();                                 //Sets root equals to our loaded MainMenu.fxml
         
+        Scene scene = new Scene(root);                          //Creates new Scene of our root
+        
+        IInjectableController controller = loader.getController();      //Injects loader into our controller
+        controller.injectStage(primaryStage);                            //Injects primarystage 
+        controller.injectLogFacade(logFacade);                      //Injects logFacade
+        
+        primaryStage.setScene(scene);                               //Sets secene
+        primaryStage.show();                                        //Shows stage
     }
 
     @Override
     public void startApplication(String[] args) 
     {
+        launch(args);
         
     }
     
