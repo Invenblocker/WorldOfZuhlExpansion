@@ -15,6 +15,7 @@ import javafx.fxml.Initializable;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
+import javafx.scene.control.ProgressBar;
 import javafx.scene.image.ImageView;
 import javafx.scene.shape.Circle;
 import javafx.scene.text.Text;
@@ -46,18 +47,6 @@ public class GameGraphicsController implements Initializable, IInjectableControl
     @FXML
     private Label roomItem2;
     @FXML
-    private Button commandButton0;
-    @FXML
-    private Button commandButton1;
-    @FXML
-    private Button commandButton2;
-    @FXML
-    private Button commandButton3;
-    @FXML
-    private Button commandButton4;
-    @FXML
-    private Button commandButton5;
-    @FXML
     private Button leftButton;
     @FXML
     private Button upButton;
@@ -67,6 +56,22 @@ public class GameGraphicsController implements Initializable, IInjectableControl
     private Button downButton;
     @FXML
     private Canvas minimapCanvas;
+    @FXML
+    private ProgressBar oxygenBar;
+    @FXML
+    private ProgressBar timeBar;
+    @FXML
+    private Button repairButton;
+    @FXML
+    private Button investigateButton;
+    @FXML
+    private Button talkButton;
+    @FXML
+    private Button helpButton;
+    @FXML
+    private Button saveButton;
+    @FXML
+    private Button quitButton;
 
     /**
      * Initializes the controller class.
@@ -94,18 +99,22 @@ public class GameGraphicsController implements Initializable, IInjectableControl
     
     
     
+    @FXML
     public void walkUp() {
         logFacade.processCommand("go up");
     }
     
+    @FXML
     public void walkDown() {
         logFacade.processCommand("go down");
     }
 
+    @FXML
     public void walkLeft() {
         logFacade.processCommand("go left");
     }
 
+    @FXML
     public void walkRight() {
         logFacade.processCommand("go right");
     }
