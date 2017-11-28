@@ -49,7 +49,7 @@ public class GUI extends Application implements IGUI, IVisualUpdater
     public void injectLogic(ILogFacade _logFacade)
     {
         logFacade = _logFacade;
-        logFacade.injectGUIUpdateMethod(this);
+        
         this.minimap = new MiniMap(logFacade.getRoomPositions());
     }
 
