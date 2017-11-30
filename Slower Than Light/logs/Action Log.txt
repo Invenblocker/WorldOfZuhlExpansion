@@ -1,0 +1,11 @@
+Helper (Erik): The helper "Erik" had its task set to "bodyguard".
+Saboteur: Sabotaged the room: "Office".
+Saboteur: Moved from "Office" to "OxygenContainer".
+Saboteur: Sabotaged the room: "OxygenContainer".
+Player: Moved from "controlRoom" to "ShieldGenerator".
+Saboteur: Moved from "OxygenContainer" to "LivingQuarters".
+Player: Moved from "ShieldGenerator" to "controlRoom".
+Saboteur: Moved from "LivingQuarters" to "ShieldGenerator".
+Player: Moved from "controlRoom" to "ShieldGenerator".
+Player: Moved from "ShieldGenerator" to "controlRoom".
+Player: Moved from "controlRoom" to "ShieldGenerator".

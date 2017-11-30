@@ -6,11 +6,11 @@
 package GUI;
 
 import acq.IInjectableController;
-import acq.IItem;
 import acq.ILogFacade;
 import acq.IVisualUpdater;
 import java.io.IOException;
 import java.net.URL;
+import java.util.Arrays;
 import java.util.ResourceBundle;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -18,6 +18,7 @@ import javafx.fxml.Initializable;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.canvas.Canvas;
+import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.ProgressBar;
@@ -76,12 +77,13 @@ public class GameGraphicsController implements Initializable, IInjectableControl
     private Button helpButton;
     @FXML
     private Button saveButton;
-    
     @FXML
     private Button quitButton;
 
     private ILogFacade logFacade;
     private Stage stage;
+    private GraphicsContext minimapCanvasGC;
+    private MiniMap minimap;
     
     /**
      * Initializes the controller class.
@@ -93,6 +95,11 @@ public class GameGraphicsController implements Initializable, IInjectableControl
         logFacade.injectGUIUpdateMethod(this);
         logFacade.play();
         
+        minimapCanvasGC = minimapCanvas.getGraphicsContext2D();
+        minimap = new MiniMap(logFacade.getRoomPositions());
+        String playerRoom = logFacade.getPlayer().getCurrentRoom().getName();
+        String saboteurRoom = logFacade.getSaboteur().getCurrentRoom().getName();
+        //minimap.update(Arrays.asList(logFacade.getGameInfo().getDestroyedRooms()), new LayeredSprite(), minimapCanvasGC, playerRoom, saboteurRoom);
         
     }
     
@@ -123,14 +130,18 @@ public class GameGraphicsController implements Initializable, IInjectableControl
     }
 
     @FXML
-    public void walkRight() {
+    public void walkRight()
+    {
         logFacade.processCommand("go right");
     }
-
-    public void dropItem0() {
+    
+    @FXML
+    public void dropItem0()
+    {
         logFacade.processCommand("drop 0");
     }
     
+    @FXML
     public void dropItem1() {
         logFacade.processCommand("drop 1");
     }

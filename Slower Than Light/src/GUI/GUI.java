@@ -35,8 +35,6 @@ public class GUI extends Application implements IGUI, IVisualUpdater
     }
     
     private ILogFacade logFacade;
-    
-    private MiniMap minimap;
     private Log log;
     
     public GUI()
@@ -49,9 +47,6 @@ public class GUI extends Application implements IGUI, IVisualUpdater
     public void injectLogic(ILogFacade _logFacade)
     {
         logFacade = _logFacade;
-        
-        
-        this.minimap = new MiniMap(logFacade.getRoomPositions());
     }
 
     @Override
@@ -135,9 +130,7 @@ public class GUI extends Application implements IGUI, IVisualUpdater
         
         
     }
-    public ILogFacade getILogFacade()
-    {
-        return logFacade;
-    }
+    
+    public ILogFacade getILogFacade() {return logFacade;}
 }
 
