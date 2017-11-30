@@ -25,7 +25,7 @@ public class GameInfo implements IGameInfo {
     
     private final double ALLOWED_ROOMS_DESTROYED_PERCENTAGE = 0.7;
     private double destroyedRoomsPercentage;
-    private ArrayList<Room> destroyedRooms;
+    private List<Room> destroyedRooms;
     
     private Exit hackedExit;
     private Helper helper;
@@ -86,7 +86,7 @@ public class GameInfo implements IGameInfo {
     public double getDestroyedRoomsPercentage() {return destroyedRoomsPercentage;}
 
     @Override
-    public IRoom[] getDestroyedRooms() {return destroyedRooms.toArray(new Room[0]);}
+    public Room[] getDestroyedRooms() {return destroyedRooms.toArray(new Room[0]);}
     
     public int getRoomsRepaired () {return roomsRepaired;}
     public void incrementRoomsRepaired() 
