@@ -111,6 +111,7 @@ public class Game
         
         // Setup GameInfo
         gameInfo = new GameInfo(helper);
+        gameInfo.updateRoomsDestroyed();
         
         for (String key : rooms.keySet()){
             for (Exit exit : rooms.get(key).getCollectionOfExits()){

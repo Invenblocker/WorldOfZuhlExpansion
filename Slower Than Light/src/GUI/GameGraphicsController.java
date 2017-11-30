@@ -82,7 +82,6 @@ public class GameGraphicsController implements Initializable, IInjectableControl
 
     private ILogFacade logFacade;
     private Stage stage;
-    private GraphicsContext minimapCanvasGC;
     private MiniMap minimap;
     
     /**
@@ -95,12 +94,10 @@ public class GameGraphicsController implements Initializable, IInjectableControl
         logFacade.injectGUIUpdateMethod(this);
         logFacade.play();
         
-        minimapCanvasGC = minimapCanvas.getGraphicsContext2D();
-        minimap = new MiniMap(logFacade.getRoomPositions());
+        minimap = new MiniMap(logFacade.getRoomPositions(), minimapCanvas.getGraphicsContext2D());
         String playerRoom = logFacade.getPlayer().getCurrentRoom().getName();
         String saboteurRoom = logFacade.getSaboteur().getCurrentRoom().getName();
-        //minimap.update(Arrays.asList(logFacade.getGameInfo().getDestroyedRooms()), new LayeredSprite(), minimapCanvasGC, playerRoom, saboteurRoom);
-        
+        minimap.update(logFacade.getGameInfo().getDestroyedRooms(), playerRoom, saboteurRoom);
     }
     
     @Override
@@ -111,21 +108,32 @@ public class GameGraphicsController implements Initializable, IInjectableControl
     @Override
     public void updateWithTimer()
     {
-        System.out.println("Updated timer");
+        System.out.println("Updated MiniMap in GameGraphicsController");
+        
+        // *****   update minimap here   *****
+        // *****   update minimap here   *****
+        // *****   update minimap here   *****
+        // *****   update minimap here   *****
+        // *****   update minimap here   *****
+        // *****   update minimap here   *****
+        // *****   update minimap here   *****
     }
     
     @FXML
-    public void walkUp() {
+    public void walkUp()
+    {
         logFacade.processCommand("go up");
     }
     
     @FXML
-    public void walkDown() {
+    public void walkDown()
+    {
         logFacade.processCommand("go down");
     }
 
     @FXML
-    public void walkLeft() {
+    public void walkLeft()
+    {
         logFacade.processCommand("go left");
     }
 
@@ -142,48 +150,57 @@ public class GameGraphicsController implements Initializable, IInjectableControl
     }
     
     @FXML
-    public void dropItem1() {
+    public void dropItem1()
+    {
         logFacade.processCommand("drop 1");
     }
     
     @FXML
-    public void takeItem0() {
+    public void takeItem0()
+    {
         logFacade.processCommand("take 0");
     }
 
     @FXML
-    public void takeItem1() {
+    public void takeItem1()
+    {
         logFacade.processCommand("take 1");
     }
     
     @FXML
-    public void repair() {
+    public void repair()
+    {
         logFacade.processCommand("repdoor");
         //INCOMPLETE
     }
     
     @FXML
-    public void talk() {
+    public void talk()
+    {
         
     }
 
     @FXML
-    public void investigate() {
+    public void investigate()
+    {
         logFacade.processCommand("investigate");
     }
 
     @FXML
-    public void saveGame() {
+    public void saveGame()
+    {
         logFacade.processCommand("save");
     }
 
     @FXML
-    public void help() {
+    public void help()
+    {
         logFacade.processCommand("help");
     }
 
     @FXML
-    public void quit() throws IOException {
+    public void quit() throws IOException
+    {
         logFacade.quit();
         FXMLLoader loader = new FXMLLoader(getClass().getResource("MainMenu.fxml"));
         Parent root = loader.load();
@@ -197,26 +214,9 @@ public class GameGraphicsController implements Initializable, IInjectableControl
         stage.show();
     }
 
-    public void saboteurAlert() {
+    public void saboteurAlert()
+    {
         
     }
-
-
-    
-    
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 }

@@ -12,13 +12,15 @@ import javafx.scene.image.Image;
  *
  * @author Peter
  */
-public class drawRoom extends BaseSprite {
+public class DestroyedRoomDraw extends BaseSprite
+{
     private Point position;
     
-    public drawRoom(Point position, String name){
+    public DestroyedRoomDraw(Point position, String name)
+    {
         super();
         this.position = position;
-        setImage(new Image("assets/room.png"));
+        setImage(new Image("images/destroyedRoom.png"));
         setPosition(position.x, position.y);
         setId(name);
         

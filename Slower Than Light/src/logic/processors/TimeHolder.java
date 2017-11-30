@@ -73,10 +73,9 @@ public class TimeHolder extends TimerTask implements ITimeHolder{
                     
                     gameInfo.updateRoomsDestroyed();
 
-                    if (game.getPlayer().getCurrentRoom().isControlRoom()) {
-                        Room saboteurRoom = game.getSaboteur().getCurrentRoom();
-                        Room[] destroyedRooms = gameInfo.getDestroyedRooms();
-                        game.getGUI().updateMinimap(saboteurRoom, destroyedRooms);
+                    if (game.getPlayer().getCurrentRoom().isControlRoom())
+                    {
+                        caller.updateWithTimer();
                     }
                     
                 }    
@@ -92,8 +91,6 @@ public class TimeHolder extends TimerTask implements ITimeHolder{
             timeLeft -= (1 - gameInfo.getDestroyedRoomsPercentage()); 
             oxygenLeft -= 1;
         }
-        
-        caller.updateWithTimer();
     }
     
     @Override

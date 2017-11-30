@@ -14,10 +14,13 @@ import java.util.Map;
 import logic.Game;
 import acq.IVisualUpdater;
 import javafx.application.Application;
+import javafx.application.Platform;
+import javafx.event.EventHandler;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
+import javafx.stage.WindowEvent;
 
 /**
  *
@@ -116,7 +119,13 @@ public class GUI extends Application implements IGUI, IVisualUpdater
         IInjectableController controller = loader.getController();      //Injects loader into our controller
         controller.injectStage(primaryStage);                            //Injects primarystage                      //Injects logFacade
         
-        
+        primaryStage.setOnCloseRequest(new EventHandler<WindowEvent>() {
+            @Override
+            public void handle(WindowEvent event) {
+                Platform.exit();
+                System.exit(0);
+            }
+        });
         
         primaryStage.setScene(scene);                               //Sets secene
         primaryStage.show();                                        //Shows stage
@@ -125,11 +134,10 @@ public class GUI extends Application implements IGUI, IVisualUpdater
     @Override
     public void startApplication(String[] args) 
     {
-        
         launch(args);
-        
-        
     }
+    
+    
     
     public ILogFacade getILogFacade() {return logFacade;}
 }

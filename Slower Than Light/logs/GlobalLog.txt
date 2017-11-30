@@ -1,11 +1,2 @@
 Action Log: Helper (Erik): The helper "Erik" had its task set to "bodyguard".
 Action Log: Saboteur: Sabotaged the room: "Office".
-Action Log: Saboteur: Moved from "Office" to "OxygenContainer".
-Action Log: Saboteur: Sabotaged the room: "OxygenContainer".
-Action Log: Player: Moved from "controlRoom" to "ShieldGenerator".
-Action Log: Saboteur: Moved from "OxygenContainer" to "LivingQuarters".
-Action Log: Player: Moved from "ShieldGenerator" to "controlRoom".
-Action Log: Saboteur: Moved from "LivingQuarters" to "ShieldGenerator".
-Action Log: Player: Moved from "controlRoom" to "ShieldGenerator".
-Action Log: Player: Moved from "ShieldGenerator" to "controlRoom".
-Action Log: Player: Moved from "controlRoom" to "ShieldGenerator".
