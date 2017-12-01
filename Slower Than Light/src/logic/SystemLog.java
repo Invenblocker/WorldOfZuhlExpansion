@@ -302,7 +302,7 @@ public class SystemLog
     {
         if(PARENT_LOG != null)
         {
-            return(PARENT_LOG.getLongName() + ": " + getName());
+            return(PARENT_LOG.getLongName() + " - " + getName());
         }
         else
         {
