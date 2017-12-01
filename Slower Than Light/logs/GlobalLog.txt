@@ -1,2 +1,0 @@
-Action Log: Helper (Erik): The helper "Erik" had its task set to "bodyguard".
-Action Log: Saboteur: Sabotaged the room: "Office".
