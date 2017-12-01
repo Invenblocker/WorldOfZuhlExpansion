@@ -15,6 +15,14 @@ import java.util.Map;
  */
 public interface ILogFacade {
 
+    void play();
+    
+    void quit();
+    
+    void loadGame();
+    
+    void newGame();
+    
     void injectData(IDataFacade dataFacade);
     
     void injectGUIUpdateMethod(IVisualUpdater caller);

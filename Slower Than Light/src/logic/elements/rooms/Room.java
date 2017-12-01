@@ -46,6 +46,12 @@ public class Room implements IRoom
     }
     
     @Override
+    public String toString()
+    {
+        return this.name;
+    }
+    
+    @Override
       public boolean isOperating(){   //checks boolean value for room
         
         return this.operating;       //returns setOperatinge - dameged room or not

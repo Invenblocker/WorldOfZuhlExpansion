@@ -50,50 +50,59 @@ public class TimeHolder extends TimerTask implements ITimeHolder{
     @Override
     public void run()
     {
-        if (!gameInfo.isGameFinished()) {    
+        if (!gameInfo.isGameFinished())
+        {   
+            // check if game is finished
             if (gameInfo.getDestroyedRoomsPercentage() > gameInfo.getALLOWED_ROOMS_DESTROYED_PERCENTAGE() || timeLeft <= 0 || oxygenLeft <= 0) {
                 gameInfo.setGameFinished(true);
                 return;
             }
-                if (game.getSaboteur().getStunCountdown() != 0)
-                {
-                    game.getSaboteur().decrementStunCountdown();
-                    System.out.println("Decrement stun countdown");
-                }
-                else if (saboteurCountdown == 0)
-                {
-                    int newCountdown = game.getSaboteur().performAction();
-                        if(game.getSaboteur().getCurrentRoom() == game.getPlayer().getCurrentRoom())
-                        {
-                            gameInfo.setGameFinished(true);
-                            System.out.println("Game over!! ");   
-                        }
-
-                    saboteurCountdown = newCountdown;
-                    
-                    gameInfo.updateRoomsDestroyed();
-
-                    if (game.getPlayer().getCurrentRoom().isControlRoom()) {
-                        Room saboteurRoom = game.getSaboteur().getCurrentRoom();
-                        Room[] destroyedRooms = gameInfo.getDestroyedRooms();
-                        game.getGUI().updateMinimap(saboteurRoom, destroyedRooms);
-                    }
-                    
-                }    
-                else {
-                    saboteurCountdown--;
-                }
-                if (helperCountdown == 0 && (gameInfo.getHelper().getHelperTask() == HelperTask.SEARCH || gameInfo.getHelper().getHelperTask() == HelperTask.RETURN_TO_DEFAULT))
-                {
-                    int newCountdown = gameInfo.getHelper().performAction();
-                        helperCountdown = newCountdown;
-                }
+            
+            // check if saboteur is stunned or should move
+            if (game.getSaboteur().getStunCountdown() != 0)
+            {
+                game.getSaboteur().decrementStunCountdown();
+                SystemLog.getActionLog().writeToLog("Decrement stun countdown");
+                System.out.println("Decrement stun countdown");
+            }
+            else if (saboteurCountdown == 0)
+            {
+                int newCountdown = game.getSaboteur().performAction();
                 
+                if(game.getSaboteur().getCurrentRoom() == game.getPlayer().getCurrentRoom())
+                {
+                    gameInfo.setGameFinished(true);
+                    SystemLog.getActionLog().writeToLog("Game over!!");
+                    System.out.println("Game over!! ");   
+                }
+
+                saboteurCountdown = newCountdown;
+
+                gameInfo.updateRoomsDestroyed();
+            }    
+            else
+            {
+                saboteurCountdown--;
+            }
+            
+            // check if helper should move
+            HelperTask currentHelperTask = gameInfo.getHelper().getHelperTask();
+            if (helperCountdown == 0 && (currentHelperTask == HelperTask.SEARCH || currentHelperTask == HelperTask.RETURN_TO_DEFAULT))
+            {
+                int newCountdown = gameInfo.getHelper().performAction();
+                helperCountdown = newCountdown;
+            }
+            
+            // update values for counting time
             timeLeft -= (1 - gameInfo.getDestroyedRoomsPercentage()); 
             oxygenLeft -= 1;
+            
+            // update minimap if player is located in the ControlRoom
+            if (game.getPlayer().getCurrentRoom().isControlRoom())
+            {
+                caller.updateWithTimer();
+            } 
         }
-        
-        caller.updateWithTimer();
     }
     
     @Override

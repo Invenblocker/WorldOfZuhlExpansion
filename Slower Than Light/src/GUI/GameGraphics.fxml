@@ -86,13 +86,13 @@
                                           <StackPane prefHeight="150.0" prefWidth="200.0">
                                              <children>
                                                 <Rectangle arcHeight="5.0" arcWidth="5.0" fill="DODGERBLUE" height="40.0" stroke="BLACK" strokeType="INSIDE" width="40.0" />
-                                                <Label fx:id="playerItem1" text="Item0" />
+                                                <Label fx:id="playerItem1" text="Item1" />
                                              </children>
                                           </StackPane>
                                           <StackPane prefHeight="150.0" prefWidth="200.0">
                                              <children>
                                                 <Rectangle arcHeight="5.0" arcWidth="5.0" fill="DODGERBLUE" height="40.0" stroke="BLACK" strokeType="INSIDE" width="40.0" />
-                                                <Label fx:id="playerItem2" text="Item1" />
+                                                <Label fx:id="playerItem2" text="Item2" />
                                              </children>
                                           </StackPane>
                                        </children>
@@ -112,13 +112,13 @@
                                           <StackPane prefHeight="150.0" prefWidth="200.0">
                                              <children>
                                                 <Rectangle arcHeight="5.0" arcWidth="5.0" fill="DODGERBLUE" height="40.0" stroke="BLACK" strokeType="INSIDE" width="40.0" />
-                                                <Label fx:id="roomItem1" text="item" />
+                                                <Label fx:id="roomItem1" onMouseClicked="#takeItem0" text="Item1" />
                                              </children>
                                           </StackPane>
                                           <StackPane prefHeight="150.0" prefWidth="200.0">
                                              <children>
                                                 <Rectangle arcHeight="5.0" arcWidth="5.0" fill="DODGERBLUE" height="40.0" stroke="BLACK" strokeType="INSIDE" width="40.0" />
-                                                <Label fx:id="roomItem2" text="special" />
+                                                <Label fx:id="roomItem2" onMouseClicked="#takeItem1" text="Item2" />
                                              </children>
                                           </StackPane>
                                        </children>
@@ -152,18 +152,18 @@
                             <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
                           </rowConstraints>
                            <children>
-                              <Button fx:id="repairButton" alignment="CENTER" mnemonicParsing="false" prefHeight="30.0" text="Repair">
+                              <Button fx:id="repairButton" alignment="CENTER" mnemonicParsing="false" onAction="#repair" prefHeight="30.0" text="Repair">
                                  <GridPane.margin>
                                     <Insets left="5.0" top="15.0" />
                                  </GridPane.margin></Button>
-                              <Button fx:id="investigateButton" alignment="CENTER" mnemonicParsing="false" prefHeight="30.0" prefWidth="100.0" text="Investigate" GridPane.columnIndex="1">
+                              <Button fx:id="investigateButton" alignment="CENTER" mnemonicParsing="false" onAction="#investigate" prefHeight="30.0" prefWidth="100.0" text="Investigate" GridPane.columnIndex="1">
                                  <GridPane.margin>
                                     <Insets left="15.0" top="15.0" />
                                  </GridPane.margin></Button>
-                              <Button fx:id="talkButton" alignment="CENTER" mnemonicParsing="false" text="Talk" GridPane.columnIndex="2" />
-                              <Button fx:id="helpButton" alignment="CENTER" mnemonicParsing="false" text="Help" GridPane.rowIndex="1" />
-                              <Button fx:id="saveButton" alignment="CENTER" mnemonicParsing="false" text="Save" GridPane.columnIndex="1" GridPane.rowIndex="1" />
-                              <Button fx:id="quitButton" alignment="CENTER" mnemonicParsing="false" text="Quit" GridPane.columnIndex="2" GridPane.rowIndex="1" />
+                              <Button fx:id="talkButton" alignment="CENTER" mnemonicParsing="false" onAction="#talk" text="Talk" GridPane.columnIndex="2" />
+                              <Button fx:id="helpButton" alignment="CENTER" mnemonicParsing="false" onAction="#help" text="Help" GridPane.rowIndex="1" />
+                              <Button fx:id="saveButton" alignment="CENTER" mnemonicParsing="false" onAction="#saveGame" text="Save" GridPane.columnIndex="1" GridPane.rowIndex="1" />
+                              <Button fx:id="quitButton" alignment="CENTER" mnemonicParsing="false" onAction="#quit" text="Quit" GridPane.columnIndex="2" GridPane.rowIndex="1" />
                            </children>
                            <HBox.margin>
                               <Insets left="50.0" />

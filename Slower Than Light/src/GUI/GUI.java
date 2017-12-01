@@ -6,18 +6,27 @@
 package GUI;
 
 import acq.IGUI;
+import acq.IInjectableController;
 import acq.IItem;
 import acq.ILogFacade;
 import acq.IRoom;
 import java.util.Map;
 import logic.Game;
 import acq.IVisualUpdater;
+import javafx.application.Application;
+import javafx.application.Platform;
+import javafx.event.EventHandler;
+import javafx.fxml.FXMLLoader;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
+import javafx.stage.Stage;
+import javafx.stage.WindowEvent;
 
 /**
  *
  * @author Erik
  */
-public class GUI implements IGUI, IVisualUpdater
+public class GUI extends Application implements IGUI, IVisualUpdater
 {
     private static GUI instance = null;
     public static GUI getInstance()
@@ -29,8 +38,6 @@ public class GUI implements IGUI, IVisualUpdater
     }
     
     private ILogFacade logFacade;
-    
-    private MiniMap minimap;
     private Log log;
     
     public GUI()
@@ -43,8 +50,6 @@ public class GUI implements IGUI, IVisualUpdater
     public void injectLogic(ILogFacade _logFacade)
     {
         logFacade = _logFacade;
-        logFacade.injectGUIUpdateMethod(this);
-        this.minimap = new MiniMap(logFacade.getRoomPositions());
     }
 
     @Override
@@ -86,6 +91,7 @@ public class GUI implements IGUI, IVisualUpdater
     }
   
     public void printWelcome() {
+        writeToLog("Welcome to the game");
         
     }
     public void prinInventory(IItem[] inventory)
@@ -101,6 +107,38 @@ public class GUI implements IGUI, IVisualUpdater
     {
         log.write(text);
     }
+
+    @Override
+    public void start(Stage primaryStage) throws Exception 
+    {
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("MainMenu.fxml")); //Creates new FXML Loader which loads MainMenu.fxml
+        Parent root = loader.load();                                 //Sets root equals to our loaded MainMenu.fxml
+        
+        Scene scene = new Scene(root);                          //Creates new Scene of our root
+        
+        IInjectableController controller = loader.getController();      //Injects loader into our controller
+        controller.injectStage(primaryStage);                            //Injects primarystage                      //Injects logFacade
+        
+        primaryStage.setOnCloseRequest(new EventHandler<WindowEvent>() {
+            @Override
+            public void handle(WindowEvent event) {
+                Platform.exit();
+                System.exit(0);
+            }
+        });
+        
+        primaryStage.setScene(scene);                               //Sets secene
+        primaryStage.show();                                        //Shows stage
+    }
+
+    @Override
+    public void startApplication(String[] args) 
+    {
+        launch(args);
+    }
     
+    
+    
+    public ILogFacade getILogFacade() {return logFacade;}
 }
 

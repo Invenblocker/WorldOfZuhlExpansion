@@ -297,6 +297,7 @@ public class Helper extends RoomHopper implements IHelper
     public void setTask(HelperTask task)
     {
         this.task = task;
+        returnRoute = new ArrayList();
         ACTION_LOG.writeToLog("The helper \"" + name + "\" had its task set to \"" + task.toString() + "\".");
     }
     
@@ -325,6 +326,7 @@ public class Helper extends RoomHopper implements IHelper
         chanceOfDiscovery = value;
     }
 
+    @Override
     public String generateHelperMessage()
     {
         if(foundItemString != "")
@@ -343,7 +345,7 @@ public class Helper extends RoomHopper implements IHelper
             }
             else
             {
-                switch(HelperTask)
+                switch(task)
                 {
                     case SEARCH:
                         return("Oh hi, I'm still searching for something, I'll meet you in the control room when I've found it.");
