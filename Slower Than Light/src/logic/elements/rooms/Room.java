@@ -160,12 +160,10 @@ public class Room implements IRoom
     
     public Exit getExit(Room room)
     {
-        //System.out.println("HEY");
-        
         for(Exit exit : exits.values()){
-            
-          
-            if(exit.getExitRoom1().equals(room)){
+            System.out.println("Sammenligner: " + exit.getExitRoom2() + " Og " + room + " || " + exit.getExitRoom1() + " og " + this);
+            if(exit.getExitRoom2().equals(room) || exit.getExitRoom1().equals(room)){
+                
                 return(exit);
             }
             

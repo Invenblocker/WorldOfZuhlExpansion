@@ -408,10 +408,21 @@ public class Game
                 for (String key : roomsSC.keySet()){      // tjekker alle rum i hashmappet room
                     if (key.equals(words[k])){          // finder det andet rum som skal sættes som exit til room.
                         room2 = roomsSC.get(key);         // sætter rummet til room2.
-                        exit = new Exit(room, room2);
+                        if (room2.getExit(room) != null){
+                           exit = room2.getExit(room);
+                           
+                         //   System.out.println("Room2 er: " + room2.getName() + " og får exit: " + exit + " til rummet: " + room.getName());
+                        }
+                        else{
+                           exit = new Exit(room, room2);  
+                        
+                          //  System.out.println("Lavede nyt exit: Room2 er: " + room2.getName() + " og får exit: " + exit + " til rummet: " + room.getName());
+                        }
+                        
                         exit.setOperating(Boolean.parseBoolean(words[j]));
                         
                         room.setExit(words[i], exit);  // sætter exit med plads i (en direction) og et room.
+                        System.out.println(room + " har sat direction " + words[i] + " der leder mod " + exit);
                     }
                 }
                 

@@ -233,7 +233,6 @@ public class GameCommand {
         Room roomCheck = game.getPlayer().getCurrentRoom();
         if(game.getGameInfo().getHackedExit() != null){
             if ( game.getPlayer().getCurrentRoom().isControlRoom()){
-                
                       System.out.println("You successfully repaired the broken door");
                       game.getGameInfo().getHackedExit().setOperating(true);
                       game.getGameInfo().repairHackedExit();
