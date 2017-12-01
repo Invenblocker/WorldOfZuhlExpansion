@@ -86,11 +86,14 @@ public class TimeHolder extends TimerTask implements ITimeHolder{
             }
             
             // check if helper should move
-            HelperTask currentHelperTask = gameInfo.getHelper().getHelperTask();
-            if (helperCountdown == 0 && (currentHelperTask == HelperTask.SEARCH || currentHelperTask == HelperTask.RETURN_TO_DEFAULT))
+            if(gameInfo.getHelper() != null)
             {
-                int newCountdown = gameInfo.getHelper().performAction();
-                helperCountdown = newCountdown;
+                HelperTask currentHelperTask = gameInfo.getHelper().getHelperTask();
+                if (helperCountdown == 0 && (currentHelperTask == HelperTask.SEARCH || currentHelperTask == HelperTask.RETURN_TO_DEFAULT))
+                {
+                    int newCountdown = gameInfo.getHelper().performAction();
+                    helperCountdown = newCountdown;
+                }
             }
             
             // update values for counting time
