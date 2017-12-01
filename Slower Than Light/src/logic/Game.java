@@ -55,6 +55,8 @@ public class Game
     private TimeHolder timeHolder;
     private GameCommand gameCommand;
     private GUI gui;
+    
+    private Timer timer;
     private boolean gameLoaded;
     
         
@@ -109,6 +111,16 @@ public class Game
         
         // Setup GameInfo
         gameInfo = new GameInfo(helper);
+        gameInfo.updateRoomsDestroyed();
+        
+        for (String key : rooms.keySet()){
+            for (Exit exit : rooms.get(key).getCollectionOfExits()){
+                if(!exit.isOperating()){
+                    gameInfo.setHackedExit(exit);
+                        
+                }
+            }
+        }
         
         // Setup Timer
         if (sc.timeHolderSC == null)
@@ -144,7 +156,7 @@ public class Game
         gui.printWelcome();
         
         // Setup Timer
-        Timer timer = new Timer();
+        timer = new Timer();
         timer.schedule(timeHolder, 0, 1000);
         
         // Setup user input
@@ -168,6 +180,13 @@ public class Game
             SystemLog.saveAllLogs(); // Save logs no matter what
         }
         */
+    }
+    
+    public void endGame ()
+    {
+        SystemLog.saveAllLogs();
+        timer.cancel();
+        timer.purge();
     }
 
     public Map<String, Point> getRoomPositions() {return roomPositions;}
@@ -391,9 +410,11 @@ public class Game
                         room2 = roomsSC.get(key);         // sætter rummet til room2.
                         exit = new Exit(room, room2);
                         exit.setOperating(Boolean.parseBoolean(words[j]));
+                        
                         room.setExit(words[i], exit);  // sætter exit med plads i (en direction) og et room.
                     }
                 }
+                
                 
                 i += 3;
                 j += 3;

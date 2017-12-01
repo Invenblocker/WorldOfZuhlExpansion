@@ -6,6 +6,7 @@
 package logic;
 
 import acq.IGameInfo;
+import acq.IRoom;
 import database.txtWriter;
 import java.util.ArrayList;
 import java.util.LinkedHashMap;
@@ -24,7 +25,7 @@ public class GameInfo implements IGameInfo {
     
     private final double ALLOWED_ROOMS_DESTROYED_PERCENTAGE = 0.7;
     private double destroyedRoomsPercentage;
-    private ArrayList<Room> destroyedRooms;
+    private List<IRoom> destroyedRooms;
     
     private Exit hackedExit;
     private Helper helper;
@@ -70,7 +71,7 @@ public class GameInfo implements IGameInfo {
     }
     
     @Override
-    public LinkedHashMap<String, Integer> saveHighScore(String playerName)
+    public Map<String, Integer> saveHighScore(String playerName)
     {
         highScoreMap.put(playerName, score);
         sortHighScore(highScoreMap);
@@ -85,7 +86,7 @@ public class GameInfo implements IGameInfo {
     public double getDestroyedRoomsPercentage() {return destroyedRoomsPercentage;}
 
     @Override
-    public Room[] getDestroyedRooms() {return destroyedRooms.toArray(new Room[0]);}
+    public List<IRoom> getDestroyedRooms() {return destroyedRooms;}
     
     public int getRoomsRepaired () {return roomsRepaired;}
     public void incrementRoomsRepaired() 

@@ -12,14 +12,15 @@ import javafx.scene.image.Image;
  *
  * @author Peter
  */
-public class SaboteurDraw extends BaseSprite{
+public class SaboteurDraw extends BaseSprite
+{
     private Point position;
     
-    public SaboteurDraw(Point position){
+    public SaboteurDraw(Point position)
+    {
         super();
         this.position = position;
-        setImage(new Image("assets/saboteur.png"));
+        setImage(new Image("images/saboteur.png"));
         setPosition(position.x, position.y);
-        
     }
 }

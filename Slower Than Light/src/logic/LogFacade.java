@@ -110,7 +110,12 @@ public class LogFacade implements ILogFacade
     public void play()
     {
         game.play();
-       
+    }
+    
+    @Override
+    public void quit()
+    {
+        game.endGame();
     }
     
     

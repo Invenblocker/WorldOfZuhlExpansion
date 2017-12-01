@@ -15,6 +15,7 @@ import logic.elements.rooms.WorkshopRoom;
 import logic.user_input.Command;
 import logic.user_input.CommandWord;
 import logic.SystemLog;
+import logic.elements.rooms.Exit;
 
 public class GameCommand {
     private Game game;
@@ -62,7 +63,8 @@ public class GameCommand {
                 helperAction(command);
                 break;
             case REPAIR_DOOR:
-                System.out.println("Haha");
+                System.out.println("Haha, not yet implemented");
+                repairDoor(command);
                 break;
             case SAVE:
                 saveGame();
@@ -143,6 +145,8 @@ public class GameCommand {
         
     }
     
+    
+    
     /**
      * Checks if the player types a second word and if it's valid. It checks if the 
      * player have space in his inventory and if that's the case
@@ -220,6 +224,43 @@ public class GameCommand {
             System.out.println("This is not a valid item ! ");
         }
     }
+    
+    
+    
+    private void repairDoor(Command command){
+        
+        Item[] inventory = game.getPlayer().getInventory();
+        Room roomCheck = game.getPlayer().getCurrentRoom();
+        if(game.getGameInfo().getHackedExit() != null){
+            if ( game.getPlayer().getCurrentRoom().isControlRoom()){
+                
+                      System.out.println("You successfully repaired the broken door");
+                      game.getGameInfo().getHackedExit().setOperating(true);
+                      game.getGameInfo().repairHackedExit();
+            }
+            else{
+              if(inventory.length != 0){
+              for (Item item : inventory){
+                    if(item.getName() == "pc"){
+                      System.out.println("You successfully repaired the door, and removed your item: " + item.getName());
+                      game.getGameInfo().getHackedExit().setOperating(true);
+                      game.getGameInfo().repairHackedExit();
+                      game.getPlayer().removeItem(item);
+                    }
+                   else {
+                      System.out.println("you dont own the item required to repair the door!");
+                   }
+            }
+               
+            }
+               System.out.println("You have no items");
+          
+        }
+       
+    }
+         System.out.println("No door is destroyed");
+    }
+    
     
     /**
      * This class starts by checking if the room is broken. If the room is broken 
