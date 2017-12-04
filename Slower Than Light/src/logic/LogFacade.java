@@ -129,6 +129,14 @@ public class LogFacade implements ILogFacade
     {
         game.endGame();
     }
+
+    @Override
+    public Map<String, Integer> getHighScore() 
+    {
+        return data.getLoader().getHighscore();
+    }
+    
+    
     
     
 }

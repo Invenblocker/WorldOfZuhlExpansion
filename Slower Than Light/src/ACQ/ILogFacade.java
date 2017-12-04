@@ -34,6 +34,8 @@ public interface ILogFacade {
     IItem[] getPlayerItems();
     
     Map<String, Point> getRoomPositions();
+    
+    Map<String, Integer> getHighScore();
 
     IHelper getHelper();
 
@@ -44,5 +46,7 @@ public interface ILogFacade {
     ITimeHolder getTimeHolder();
     
     IGameInfo getGameInfo();
+    
+    
     
 }

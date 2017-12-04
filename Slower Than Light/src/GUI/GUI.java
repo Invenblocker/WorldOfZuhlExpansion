@@ -93,8 +93,9 @@ public class GUI extends Application implements IGUI
         System.out.println(inventory);
     }
     
-    public void showHighScore(Map <String, Integer> highScore) {
-        
+    public void showHighScore(Map <String, Integer> highScore) 
+    {
+       
     }
     
     public void writeToLog (String text)

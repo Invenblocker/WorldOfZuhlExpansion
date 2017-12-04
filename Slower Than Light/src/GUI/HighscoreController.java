@@ -10,8 +10,12 @@ import acq.ILogFacade;
 import java.io.IOException;
 import java.net.URL;
 import java.util.ArrayList;
+import java.util.List;
+import java.util.Map;
 import java.util.ResourceBundle;
 import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
+import javafx.collections.ObservableMap;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
@@ -19,6 +23,8 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.ListView;
+import javafx.scene.control.TableColumn;
+import javafx.scene.control.TableView;
 import javafx.scene.input.MouseEvent;
 import javafx.stage.Stage;
 
@@ -30,13 +36,21 @@ import javafx.stage.Stage;
 public class HighscoreController implements Initializable, IInjectableController 
 {
 
-    @FXML
-    private ListView<String> HighscoreLw;
-    @FXML
-    private Button BackToMainMenuBtn;
+    
 
     ILogFacade logFacade;
     Stage stage;
+    @FXML
+    private Button BackToMainMenuBtn;
+    
+
+    @FXML
+    private ListView<String> nameCol;
+    private ObservableList<String> nameList;
+    @FXML
+    private ListView<Integer> scoreCol;
+        private ObservableList<Integer> scoreList;
+
     
     /**
      * Initializes the controller class.
@@ -46,8 +60,17 @@ public class HighscoreController implements Initializable, IInjectableController
     {
         logFacade = GUI.getInstance().getILogFacade();
         
-       // ArrayList<String>highscoreString = new ArrayList<>();
+        Map<String, Integer> highscore = logFacade.getHighScore();
         
+        
+        List<String>nameStrings = new ArrayList<>(highscore.keySet());
+        nameList = FXCollections.observableList(nameStrings);
+        
+        List<Integer>scoreIntegers = new ArrayList<>(highscore.values());
+        scoreList = FXCollections.observableList(scoreIntegers);
+        
+        scoreCol.setItems(scoreList);
+        nameCol.setItems(nameList);
     }    
 
     @Override
@@ -71,5 +94,16 @@ public class HighscoreController implements Initializable, IInjectableController
         stage.setScene(scene);
         stage.show();
     }
-    
+    /*
+    private TableView<Map>highscoreTableView()
+            {
+                LinkedHashMap<String, Integer>highscoreMap = new LinkedHashMap<>();
+        
+                highscoreMap.putAll(GUI.getInstance().);
+        
+        tableViewHighscore = FXCollections.observableMap((Map<String, Integer>) highscoreMap);
+        
+        highscoreTw.setItems(tableViewHighscore);
+            }
+*/
 }
