@@ -113,7 +113,7 @@ public class GameGraphicsController implements Initializable, IInjectableControl
         updateHeader();
         updatePlayerItemButtons();
         updateRoomItemButtons();
-        updateChasePlayer();
+        updateSaboteurAlert();
     }
     
     @Override
@@ -129,7 +129,7 @@ public class GameGraphicsController implements Initializable, IInjectableControl
         String playerRoom = logFacade.getPlayer().getCurrentRoom().getName();
         String saboteurRoom = logFacade.getSaboteur().getCurrentRoom().getName();
         minimap.update(destroyedRoom, playerRoom, saboteurRoom);
-        updateChasePlayer();
+        updateSaboteurAlert();
     }
     
     @FXML
@@ -283,17 +283,12 @@ public class GameGraphicsController implements Initializable, IInjectableControl
         stage.setScene(scene);
         stage.show();
     }
-
-    public void saboteurAlert()
-    {
-        
-    }
     
     private void walk()
     {
         updateHeader();
         updateRoomItemButtons();
-        updateChasePlayer();
+        updateSaboteurAlert();
     }
     
     private void updateHeader()
@@ -360,7 +355,7 @@ public class GameGraphicsController implements Initializable, IInjectableControl
         }
     }
     
-    public void updateChasePlayer()
+    public void updateSaboteurAlert()
     {
         if (logFacade.getSaboteur().isChasingPlayer())
             chaseAlert.setFill(Color.DARKRED);
