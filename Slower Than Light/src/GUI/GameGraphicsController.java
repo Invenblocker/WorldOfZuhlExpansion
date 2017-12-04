@@ -134,6 +134,9 @@ public class GameGraphicsController implements Initializable, IInjectableControl
     @FXML
     public void walkUp()
     {
+        if(logFacade.getGameInfo().isGameFinished())
+            return;
+        
         logFacade.processCommand("go up");
         walk();
     }
@@ -141,6 +144,9 @@ public class GameGraphicsController implements Initializable, IInjectableControl
     @FXML
     public void walkDown()
     {
+        if(logFacade.getGameInfo().isGameFinished())
+            return;
+        
         logFacade.processCommand("go down");
         walk();
     }
@@ -148,6 +154,9 @@ public class GameGraphicsController implements Initializable, IInjectableControl
     @FXML
     public void walkLeft()
     {
+        if(logFacade.getGameInfo().isGameFinished())
+            return;
+        
         logFacade.processCommand("go left");
         walk();
     }
@@ -155,6 +164,9 @@ public class GameGraphicsController implements Initializable, IInjectableControl
     @FXML
     public void walkRight()
     {
+        if(logFacade.getGameInfo().isGameFinished())
+            return;
+        
         logFacade.processCommand("go right");
         walk();
     }
@@ -162,6 +174,9 @@ public class GameGraphicsController implements Initializable, IInjectableControl
     @FXML
     public void dropItem0()
     {
+        if(logFacade.getGameInfo().isGameFinished())
+            return;
+        
         logFacade.processCommand("drop 0");
         updatePlayerItemButtons();
         updateRoomItemButtons();
@@ -171,6 +186,9 @@ public class GameGraphicsController implements Initializable, IInjectableControl
     @FXML
     public void dropItem1()
     {
+        if(logFacade.getGameInfo().isGameFinished())
+            return;
+        
         logFacade.processCommand("drop 1");
         updatePlayerItemButtons();
         updateRoomItemButtons();
@@ -180,6 +198,9 @@ public class GameGraphicsController implements Initializable, IInjectableControl
     @FXML
     public void takeItem0()
     {
+        if(logFacade.getGameInfo().isGameFinished())
+            return;
+        
         logFacade.processCommand("take 0");
         updatePlayerItemButtons();
         updateRoomItemButtons();
@@ -189,6 +210,9 @@ public class GameGraphicsController implements Initializable, IInjectableControl
     @FXML
     public void takeItem1()
     {
+        if(logFacade.getGameInfo().isGameFinished())
+            return;
+        
         logFacade.processCommand("take 1");
         updatePlayerItemButtons();
         updateRoomItemButtons();
@@ -198,6 +222,9 @@ public class GameGraphicsController implements Initializable, IInjectableControl
     @FXML
     public void repair()
     {
+        if(logFacade.getGameInfo().isGameFinished())
+            return;
+        
         logFacade.processCommand("repair");
         //INCOMPLETE
     }
@@ -205,24 +232,36 @@ public class GameGraphicsController implements Initializable, IInjectableControl
     @FXML
     public void talk()
     {
+        if(logFacade.getGameInfo().isGameFinished())
+            return;
+        
         
     }
 
     @FXML
     public void investigate()
     {
+        if(logFacade.getGameInfo().isGameFinished())
+            return;
+        
         logFacade.processCommand("investigate");
     }
 
     @FXML
     public void saveGame()
     {
+        if(logFacade.getGameInfo().isGameFinished())
+            return;
+        
         logFacade.processCommand("save");
     }
 
     @FXML
     public void help()
     {
+        if(logFacade.getGameInfo().isGameFinished())
+            return;
+        
         logFacade.processCommand("help");
     }
 
