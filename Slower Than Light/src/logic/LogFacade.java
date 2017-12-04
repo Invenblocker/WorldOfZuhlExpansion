@@ -73,10 +73,11 @@ public class LogFacade implements ILogFacade
     @Override
     public IItem[] getPlayerItems()
     {
-        IItem[] returnInventory = new IItem[]{};
         Item[] playerInventory = game.getPlayer().getInventory();
+        IItem[] returnInventory = new IItem[playerInventory.length];
         
-        
+        for (int i = 0; i < playerInventory.length; i++)
+            returnInventory[i] = playerInventory[i];
         
         return returnInventory;
     }

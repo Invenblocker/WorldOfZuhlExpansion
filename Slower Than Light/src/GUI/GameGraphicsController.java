@@ -106,6 +106,10 @@ public class GameGraphicsController implements Initializable, IInjectableControl
         String playerRoom = logFacade.getPlayer().getCurrentRoom().getName();
         String saboteurRoom = logFacade.getSaboteur().getCurrentRoom().getName();
         minimap.update(logFacade.getGameInfo().getDestroyedRooms(), playerRoom, saboteurRoom);
+        
+        updateHeader();
+        updatePlayerItemButtons();
+        updateRoomItemButtons();
     }
     
     @Override
@@ -131,30 +135,36 @@ public class GameGraphicsController implements Initializable, IInjectableControl
     public void walkUp()
     {
         logFacade.processCommand("go up");
+        walk();
     }
     
     @FXML
     public void walkDown()
     {
         logFacade.processCommand("go down");
+        walk();
     }
 
     @FXML
     public void walkLeft()
     {
         logFacade.processCommand("go left");
+        walk();
     }
 
     @FXML
     public void walkRight()
     {
         logFacade.processCommand("go right");
+        walk();
     }
     
     @FXML
     public void dropItem0()
     {
         logFacade.processCommand("drop 0");
+        updatePlayerItemButtons();
+        updateRoomItemButtons();
         System.out.println("Drop 0");
     }
     
@@ -162,6 +172,8 @@ public class GameGraphicsController implements Initializable, IInjectableControl
     public void dropItem1()
     {
         logFacade.processCommand("drop 1");
+        updatePlayerItemButtons();
+        updateRoomItemButtons();
         System.out.println("Drop 1");
     }
     
@@ -169,6 +181,8 @@ public class GameGraphicsController implements Initializable, IInjectableControl
     public void takeItem0()
     {
         logFacade.processCommand("take 0");
+        updatePlayerItemButtons();
+        updateRoomItemButtons();
         System.out.println("take 0");
     }
 
@@ -176,6 +190,8 @@ public class GameGraphicsController implements Initializable, IInjectableControl
     public void takeItem1()
     {
         logFacade.processCommand("take 1");
+        updatePlayerItemButtons();
+        updateRoomItemButtons();
         System.out.println("take 1");
     }
     
@@ -231,26 +247,51 @@ public class GameGraphicsController implements Initializable, IInjectableControl
         
     }
     
-    private void updateItemButtons()
+    private void walk()
     {
-        
+        updateHeader();
+        updateRoomItemButtons();
     }
     
-    private void updateRoomButtons()
+    private void updateHeader()
+    {
+        currentRoomName.setText(logFacade.getPlayer().getCurrentRoom().getName());
+    }
+    
+    private void updatePlayerItemButtons()
+    {
+        IItem[] itemsInInvetory = logFacade.getPlayerItems();
+        
+        switch (logFacade.getPlayer().getItemCount()) {
+            case 1:
+                playerItem1.setText(itemsInInvetory[0].getName());
+                break;
+            case 2:
+                playerItem1.setText(itemsInInvetory[0].getName());
+                playerItem2.setText(itemsInInvetory[1].getName());
+                break;
+            default:
+                playerItem1.setText("");
+                playerItem2.setText("");
+                break;
+        }
+    }
+    
+    private void updateRoomItemButtons()
     {
         IItem[] itemsInCurrentRoom = logFacade.getItemsInCurrentRoom();
         
         switch (itemsInCurrentRoom.length) {
             case 1:
-                playerItem1.setText(itemsInCurrentRoom[0].getName());
+                roomItem1.setText(itemsInCurrentRoom[0].getName());
                 break;
             case 2:
-                playerItem1.setText(itemsInCurrentRoom[0].getName());
-                playerItem2.setText(itemsInCurrentRoom[1].getName());
+                roomItem1.setText(itemsInCurrentRoom[0].getName());
+                roomItem2.setText(itemsInCurrentRoom[1].getName());
                 break;
             default:
-                playerItem1.setText("");
-                playerItem2.setText("");
+                roomItem1.setText("");
+                roomItem2.setText("");
                 break;
         }
     }

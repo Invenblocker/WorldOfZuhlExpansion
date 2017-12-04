@@ -13,15 +13,7 @@ import logic.elements.characters.Item;
  */
 public interface IPlayer extends IRoomHopper
 {
-    /**
-     * @author Invenblocker
-     *
-     * Returns a copy of the player's inventory.
-     *
-     * @return The inventory as an array passed by value.
-     */
-    Item[] getInventory();
-
+    int getItemCount();
 }
     
 
