@@ -157,6 +157,12 @@ public class GameCommand {
             return;
         }
         
+        if (!game.getPlayer().getCurrentRoom().isOperating())
+        {
+            writeToActionLog("You cannot take the item because the room is broken");
+            return;
+        }
+        
         ArrayList<Item> roomInventory = roomItemList();
         if (roomInventory.isEmpty())
         {
