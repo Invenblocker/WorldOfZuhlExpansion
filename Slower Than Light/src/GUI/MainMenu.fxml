@@ -17,7 +17,7 @@
          <children>
             <ImageView fitHeight="500.0" fitWidth="700.0" pickOnBounds="true" preserveRatio="true">
                <image>
-                  <Image url="@AssetLibrary/mainMenuBackground.png" />
+                  <Image url="@../images/mainMenuBackground.png " />
                </image>
             </ImageView>
          </children>
