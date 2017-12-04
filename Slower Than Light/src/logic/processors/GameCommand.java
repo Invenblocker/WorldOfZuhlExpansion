@@ -116,9 +116,10 @@ public class GameCommand {
             Room pastRoom = game.getPlayer().setRoom(exitRoom);
             
             
-            if (game.getSaboteur().getCurrentRoom() == exitRoom)
+            if (game.getSaboteur().getCurrentRoom() == exitRoom && game.getSaboteur().getStunCountdown() == 0)
             {
-                if(game.getGameInfo().getHelper().getHelperTask() == HelperTask.BODYGUARD)
+                Helper helper = game.getGameInfo().getHelper();
+                if(helper != null && helper.getHelperTask() == HelperTask.BODYGUARD)
                 {
                    game.getGameInfo().killHepler();
                    game.getSaboteur().setStunCountdown(15);

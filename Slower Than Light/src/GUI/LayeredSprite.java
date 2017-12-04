@@ -46,11 +46,9 @@ public class LayeredSprite extends BaseSprite{
     {
         for (LinkedList<BaseSprite> spriteList : sprites.values()){
             for (BaseSprite sprite : spriteList){
-                System.out.println("Printer: " + sprite.getPosition());
                 gc.drawImage(sprite.getImage(), sprite.getX() + getX(), sprite.getY() + getY());
-                if(sprite.getId() != null){
+                if(sprite.getId() != null)
                     gc.fillText(sprite.getId(), sprite.getX() + 25,sprite.getY() + 50 );
-                }
             }
         }
         

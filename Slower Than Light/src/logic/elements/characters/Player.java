@@ -62,10 +62,9 @@ public class Player extends RoomHopper implements IPlayer
     public boolean hasItem(Item item)
     {
         for(Item slot : inventory)
-        {
-            if(item.equals(slot))
+            if(item == slot)
                 return true;
-        }
+        
         return false;
     }
     

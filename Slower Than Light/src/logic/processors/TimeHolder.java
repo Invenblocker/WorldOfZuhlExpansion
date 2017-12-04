@@ -101,10 +101,8 @@ public class TimeHolder extends TimerTask implements ITimeHolder{
             oxygenLeft -= 1;
             
             // update minimap if player is located in the ControlRoom
-            if (game.getPlayer().getCurrentRoom().isControlRoom())
-            {
+            if (game.getPlayer().getCurrentRoom().isControlRoom() || game.getPlayer().hasItem(game.getItems().get("pc")))
                 caller.updateWithTimer();
-            } 
         }
     }
     

@@ -8,9 +8,11 @@ package GUI;
 import acq.IInjectableController;
 import acq.IItem;
 import acq.ILogFacade;
+import acq.IRoom;
 import acq.IVisualUpdater;
 import java.io.IOException;
 import java.net.URL;
+import java.util.List;
 import java.util.ResourceBundle;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -99,13 +101,13 @@ public class GameGraphicsController implements Initializable, IInjectableControl
     public void initialize(URL url, ResourceBundle rb)
     {
         logFacade = GUI.getInstance().getILogFacade();
+        
+        // setup minimap
+        minimap = new MiniMap(logFacade.getRoomPositions(), minimapCanvas.getGraphicsContext2D());
+        updateWithTimer();
+        
         logFacade.injectGUIUpdateMethod(this);
         logFacade.play();
-        
-        minimap = new MiniMap(logFacade.getRoomPositions(), minimapCanvas.getGraphicsContext2D());
-        String playerRoom = logFacade.getPlayer().getCurrentRoom().getName();
-        String saboteurRoom = logFacade.getSaboteur().getCurrentRoom().getName();
-        minimap.update(logFacade.getGameInfo().getDestroyedRooms(), playerRoom, saboteurRoom);
         
         updateHeader();
         updatePlayerItemButtons();
@@ -121,6 +123,10 @@ public class GameGraphicsController implements Initializable, IInjectableControl
     public void updateWithTimer()
     {
         System.out.println("Updated MiniMap in GameGraphicsController");
+        List<IRoom> destroyedRoom = logFacade.getGameInfo().getDestroyedRooms();
+        String playerRoom = logFacade.getPlayer().getCurrentRoom().getName();
+        String saboteurRoom = logFacade.getSaboteur().getCurrentRoom().getName();
+        minimap.update(destroyedRoom, playerRoom, saboteurRoom);
         
         // *****   update minimap here   *****
         // *****   update minimap here   *****
@@ -226,6 +232,8 @@ public class GameGraphicsController implements Initializable, IInjectableControl
             return;
         
         logFacade.processCommand("repair");
+        updatePlayerItemButtons();
+        System.out.println("repair");
         //INCOMPLETE
     }
     

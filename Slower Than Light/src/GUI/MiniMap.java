@@ -8,6 +8,7 @@ package GUI;
 import acq.IRoom;
 import java.awt.Point;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -41,6 +42,13 @@ public class MiniMap extends LayeredSprite {
         this.playerRoom = playerRoom;
         this.saboteurRoom = saboteurRoom;
         redraw();
+        
+        System.out.println("***   Rooms updated   ***");
+        System.out.println("Saboteur is in room: " + saboteurRoom);
+        System.out.print("Rooms destroyed: ");
+        for (IRoom destroyedRoom : destroyedRooms)
+            System.out.print(destroyedRoom.getName() + " ");
+        System.out.println("");
     }
     
     public void updatePlayerPosition(IRoom playerRoom)
@@ -86,13 +94,8 @@ public class MiniMap extends LayeredSprite {
                     addSprite(2, new DestroyedRoomDraw(roomPositions.get(key), key));     // tilføjer koordinaterne til det ødelagte rum og tilføjer det til minimappet
                 else if(!destroyedRooms.get(i).getName().equals(key))
                     addSprite(1, new RoomDraw(roomPositions.get(key), key));
-                
-                System.out.println("Destroyed room key: " + destroyedRooms.get(i).getName() + " Room key: " + key);
             }
         }
-        
-        System.out.println("***   Rooms updated   ***");
-        System.out.println("Rooms count: " + destroyedRooms.size());
     }
     
     private void updatePlayer(String playerRoom)
