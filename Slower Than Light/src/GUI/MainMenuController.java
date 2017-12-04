@@ -92,7 +92,7 @@ public class MainMenuController implements Initializable, IInjectableController
     @FXML
     private void handleHighscoreBtn(MouseEvent event) throws IOException
     {
-        FXMLLoader loader = new FXMLLoader(getClass().getResource(" "));
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("Highscore.fxml"));
         Parent root = loader.load();
         
         Scene scene = new Scene(root);
