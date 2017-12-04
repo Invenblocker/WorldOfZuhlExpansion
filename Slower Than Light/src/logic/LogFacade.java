@@ -53,7 +53,6 @@ public class LogFacade implements ILogFacade
     public void injectGUIUpdateMethod(IVisualUpdater caller)
     {
         game.getTimeHolder().addVisualUpdateCaller(caller);
-        System.out.println("Caller" + caller);
     }
     
     @Override

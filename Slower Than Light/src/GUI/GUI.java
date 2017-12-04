@@ -26,7 +26,7 @@ import javafx.stage.WindowEvent;
  *
  * @author Erik
  */
-public class GUI extends Application implements IGUI, IVisualUpdater
+public class GUI extends Application implements IGUI
 {
     private static GUI instance = null;
     public static GUI getInstance()
@@ -50,12 +50,6 @@ public class GUI extends Application implements IGUI, IVisualUpdater
     public void injectLogic(ILogFacade _logFacade)
     {
         logFacade = _logFacade;
-    }
-
-    @Override
-    public void updateWithTimer()
-    {
-        writeToLog("Updated timer");
     }
   
     public void updateMinimap(IRoom saboteurRoom, IRoom[] destroyedRooms) { //updates saboteur position, calls update in MiniMap class.
