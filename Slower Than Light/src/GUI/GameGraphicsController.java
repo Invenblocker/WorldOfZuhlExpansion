@@ -25,6 +25,7 @@ import javafx.scene.control.Label;
 import javafx.scene.control.ProgressBar;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.Pane;
+import javafx.scene.paint.Color;
 import javafx.scene.shape.Circle;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
@@ -112,6 +113,7 @@ public class GameGraphicsController implements Initializable, IInjectableControl
         updateHeader();
         updatePlayerItemButtons();
         updateRoomItemButtons();
+        updateSaboteurAlert();
     }
     
     @Override
@@ -127,14 +129,7 @@ public class GameGraphicsController implements Initializable, IInjectableControl
         String playerRoom = logFacade.getPlayer().getCurrentRoom().getName();
         String saboteurRoom = logFacade.getSaboteur().getCurrentRoom().getName();
         minimap.update(destroyedRoom, playerRoom, saboteurRoom);
-        
-        // *****   update minimap here   *****
-        // *****   update minimap here   *****
-        // *****   update minimap here   *****
-        // *****   update minimap here   *****
-        // *****   update minimap here   *****
-        // *****   update minimap here   *****
-        // *****   update minimap here   *****
+        updateSaboteurAlert();
     }
     
     @FXML
@@ -288,16 +283,12 @@ public class GameGraphicsController implements Initializable, IInjectableControl
         stage.setScene(scene);
         stage.show();
     }
-
-    public void saboteurAlert()
-    {
-        
-    }
     
     private void walk()
     {
         updateHeader();
         updateRoomItemButtons();
+        updateSaboteurAlert();
     }
     
     private void updateHeader()
@@ -310,7 +301,12 @@ public class GameGraphicsController implements Initializable, IInjectableControl
         IItem[] itemsInInvetory = logFacade.getPlayerItems();
         
         
-        switch (logFacade.getPlayer().getItemCount()) {
+        switch (logFacade.getPlayer().getItemCount())
+        {
+            case 0:
+                playerItem1.setText("");
+                playerItem2.setText("");
+                break;
             case 1:
                 if (itemsInInvetory[0] != null)
                 {
@@ -323,13 +319,9 @@ public class GameGraphicsController implements Initializable, IInjectableControl
                     playerItem2.setText(itemsInInvetory[1].getName());
                 }
                 break;
-            case 2:
+            default:
                 playerItem1.setText(itemsInInvetory[0].getName());
                 playerItem2.setText(itemsInInvetory[1].getName());
-                break;
-            default:
-                playerItem1.setText("");
-                playerItem2.setText("");
                 break;
         }
     }
@@ -338,7 +330,12 @@ public class GameGraphicsController implements Initializable, IInjectableControl
     {
         IItem[] itemsInCurrentRoom = logFacade.getItemsInCurrentRoom();
         
-        switch (itemsInCurrentRoom.length) {
+        switch (itemsInCurrentRoom.length)
+        {
+            case 0:
+                roomItem1.setText("");
+                roomItem2.setText("");
+                break;
             case 1:
                 if (itemsInCurrentRoom[0] != null)
                 {
@@ -351,15 +348,19 @@ public class GameGraphicsController implements Initializable, IInjectableControl
                     roomItem2.setText(itemsInCurrentRoom[1].getName());
                 }
                 break;
-            case 2:
+            default:
                 roomItem1.setText(itemsInCurrentRoom[0].getName());
                 roomItem2.setText(itemsInCurrentRoom[1].getName());
                 break;
-            default:
-                roomItem1.setText("");
-                roomItem2.setText("");
-                break;
         }
+    }
+    
+    public void updateSaboteurAlert()
+    {
+        if (logFacade.getSaboteur().isChasingPlayer())
+            chaseAlert.setFill(Color.DARKRED);
+        else
+            chaseAlert.setFill(Color.GREEN);
     }
 
 }
