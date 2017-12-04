@@ -31,6 +31,8 @@ public interface ILogFacade {
     
     IItem[] getItemsInCurrentRoom();
     
+    IItem[] getPlayerItems();
+    
     Map<String, Point> getRoomPositions();
 
     IHelper getHelper();

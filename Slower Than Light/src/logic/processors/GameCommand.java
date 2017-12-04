@@ -29,11 +29,9 @@ public class GameCommand {
      * Processes the command entered by the player running its function and
      * checking if the game should end.
      * @param command The command entered by the player.
-     * @return A boolean that states if the game should end.
      */
-    public boolean processCommand(Command command)
+    public void processCommand(Command command)
     {
-        boolean wantToQuit = false;
 
         CommandWord commandWord = command.getCommandWord();
 
@@ -73,19 +71,17 @@ public class GameCommand {
                 game.getGUI().printHelp();
                 break;
             case QUIT:
-                wantToQuit = quit(command);
+                //quit(command);
+                System.out.println("Cannot quit through GameCommand");
                 break;
             case PRINT:
                 SystemLog.printGlobalLog();
                 break;
             default:
-                System.out.println("I don't know what you mean...\nType \"help\" for a list of commands.");
-                return false;
+                System.out.println("I don't know what you mean...\nPress \"help\" for a list of commands.");
         }
         else
-            System.out.println("Please write in a command before hitting enter.");
-        
-        return wantToQuit;
+            System.out.println("Invalid call of processCommand!");
     }
     
     public Item[] getItemsInCurrentRoomItems ()
@@ -120,9 +116,10 @@ public class GameCommand {
             Room pastRoom = game.getPlayer().setRoom(exitRoom);
             
             
-            if (game.getSaboteur().getCurrentRoom() == exitRoom)
+            if (game.getSaboteur().getCurrentRoom() == exitRoom && game.getSaboteur().getStunCountdown() == 0)
             {
-                if(game.getGameInfo().getHelper().getHelperTask() == HelperTask.BODYGUARD)
+                Helper helper = game.getGameInfo().getHelper();
+                if(helper != null && helper.getHelperTask() == HelperTask.BODYGUARD)
                 {
                    game.getGameInfo().killHepler();
                    game.getSaboteur().setStunCountdown(15);
@@ -161,21 +158,42 @@ public class GameCommand {
             return;
         }
         
+        if (!game.getPlayer().getCurrentRoom().isOperating())
+        {
+            writeToActionLog("You cannot take the item because the room is broken");
+            return;
+        }
+        
+        ArrayList<Item> roomInventory = roomItemList();
+        if (roomInventory.isEmpty())
+        {
+            writeToActionLog("There is no items in this room");
+            return;
+        }
+        
         Item[] inventory = game.getPlayer().getInventory();
         int itemCount = game.getPlayer().getItemCount();
         
         if (itemCount == inventory.length)
         {
             System.out.println("Your inventory is full ! ");
-            System.out.println("You need to drop a item to be able to pike up a new item ");
+            System.out.println("You need to drop a item to be able to pick up a new item ");
             return;
         }
         
-        ArrayList<Item> roomInventory = roomItemList();
-        try {
+        try
+        {
             int itemReference = Integer.parseInt(command.getSecondWord());
             Item itemTaken = roomInventory.get(itemReference);
-            game.getPlayer().addItem(itemTaken); 
+            game.getPlayer().addItem(itemTaken);
+            
+            Room room = game.getPlayer().getCurrentRoom();
+            if (room instanceof ItemRoom)
+                ((ItemRoom) room).removeItem();
+            else if (room instanceof WorkshopRoom)
+                ((WorkshopRoom) room).removeItem(itemTaken);
+            
+            writeToActionLog("Player took item: " + itemTaken.getName());
         } 
         catch (NumberFormatException | IndexOutOfBoundsException e) 
         {
@@ -195,7 +213,13 @@ public class GameCommand {
     {
         if (!command.hasSecondWord()) 
         {
-            System.out.println("What item did you mean ? ");
+            System.out.println("What item did you mean?");
+            return;
+        }
+        
+        if (game.getPlayer().getItemCount() == 0)
+        {
+            writeToActionLog("The player is not carrying any items");
             return;
         }
         
@@ -216,7 +240,9 @@ public class GameCommand {
                     currentRoomAsWorkshopRoom.addItem(itemDropped);
                 }
                 else
-                   setItemToDefault(itemDropped);
+                    setItemToDefault(itemDropped);
+                
+                writeToActionLog("Player dropped item " + itemDropped);
            }
         }
         catch (NumberFormatException | IndexOutOfBoundsException e) 
@@ -225,39 +251,42 @@ public class GameCommand {
         }
     }
     
-    
-    
     private void repairDoor(Command command){
         
         Item[] inventory = game.getPlayer().getInventory();
         Room roomCheck = game.getPlayer().getCurrentRoom();
-        if(game.getGameInfo().getHackedExit() != null){
-            if ( game.getPlayer().getCurrentRoom().isControlRoom()){
-                      System.out.println("You successfully repaired the broken door");
-                      game.getGameInfo().getHackedExit().setOperating(true);
-                      game.getGameInfo().repairHackedExit();
+        
+        if(game.getGameInfo().getHackedExit() != null)
+        {
+            if ( game.getPlayer().getCurrentRoom().isControlRoom())
+            {
+                System.out.println("You successfully repaired the broken door");
+                game.getGameInfo().getHackedExit().setOperating(true);
+                game.getGameInfo().repairHackedExit();
             }
-            else{
-              if(inventory.length != 0){
-              for (Item item : inventory){
-                    if(item.getName() == "pc"){
-                      System.out.println("You successfully repaired the door, and removed your item: " + item.getName());
-                      game.getGameInfo().getHackedExit().setOperating(true);
-                      game.getGameInfo().repairHackedExit();
-                      game.getPlayer().removeItem(item);
+            else
+            {
+                if(inventory.length != 0)
+                {
+                    for (Item item : inventory)
+                    {
+                        if(item.getName().equals("pc"))
+                        {
+                            System.out.println("You successfully repaired the door, and removed your item: " + item.getName());
+                            game.getGameInfo().getHackedExit().setOperating(true);
+                            game.getGameInfo().repairHackedExit();
+                            game.getPlayer().removeItem(item);
+                        }
+                        else
+                        {
+                            System.out.println("you dont own the item required to repair the door!");
+                        }
                     }
-                   else {
-                      System.out.println("you dont own the item required to repair the door!");
-                   }
+                }
+                System.out.println("You have no items");
             }
-               
-            }
-               System.out.println("You have no items");
-          
         }
-       
-    }
-         System.out.println("No door is destroyed");
+        System.out.println("No door is destroyed");
     }
     
     
@@ -270,29 +299,35 @@ public class GameCommand {
      */
     private void repairRoom (Command command) 
     {
+        if (game.getPlayer().getCurrentRoom().isControlRoom())
+        {
+            writeToActionLog("The room is operating and cannot be repaired");
+            return;
+        }
+        
         ArrayList<Tool> roomRepairTool = game.getPlayer().getCurrentRoom().getRepairTools();
         Item[] inventory = game.getPlayer().getInventory();
-        Room roomCheck = game.getPlayer().getCurrentRoom();
         
-        if (!roomCheck.isOperating())
+        for (Tool tool : roomRepairTool)
         {
-            for (Tool tool : roomRepairTool)
+            for (Item item : inventory)
             {
-                for (Item item : inventory)
+                if (tool == item)
                 {
-                    if (tool == item)
-                    {
-                        System.out.println("You had the necessary tool to repair the room. " + roomRepairTool + " was used and removed from the inventory");  
-                        game.getPlayer().getCurrentRoom().setOperating(true);
-                        game.getPlayer().removeItem(item);
-                        setItemToDefault(item);
-                        game.getGameInfo().updateRoomsDestroyed();
-                    }
-                    else
-                        System.out.println("You didn't have the " + roomRepairTool + ". You can't repair this room!");
+                    game.getPlayer().getCurrentRoom().setOperating(true);
+                    game.getPlayer().removeItem(item);
+                    setItemToDefault(item);
+                    game.getGameInfo().updateRoomsDestroyed();
+                    
+                    writeToActionLog("The room was repaired with a " + item);
+                    //System.out.println("You had the necessary tool to repair the room. " + roomRepairTool + " was used and removed from the inventory");  
+                    return;
                 }
             }
         }
+        
+        writeToActionLog("You didn't have the necessary item to repair the room (" + roomRepairTool + ")");
+        //System.out.println("You didn't have the " + roomRepairTool + ". You can't repair this room!");
     }
     
     /**
@@ -315,10 +350,10 @@ public class GameCommand {
             System.out.println("These items are in this room: ");
             
             for (int i = 0; i < roomInventory.size(); i++)
-                System.out.println("[" +i + "] "+ roomInventory.get(i).getName());
+                System.out.println("[" + i + "] "+ roomInventory.get(i).getName());
         }
         else
-            System.out.println("There is no item !");
+            System.out.println("There is no item!");
     }
     
     /**
@@ -327,6 +362,12 @@ public class GameCommand {
      */
     private void helperAction(Command command) 
     {
+        if (game.getGameInfo().getHelper() == null)
+        {
+            writeToActionLog("You cannot set the helper action because the helper is dead");
+            return;
+        }
+        
         Room currentRoom = game.getPlayer().getCurrentRoom();
         Room HelperCurrentRoom = game.getGameInfo().getHelper().getCurrentRoom();
         HelperTask helperTask = game.getGameInfo().getHelper().getHelperTask();
@@ -347,13 +388,13 @@ public class GameCommand {
                     performTask.setTask(helperTask);
                     break;
                 default:
-                    System.out.println("What task did you mean ?");
+                    System.out.println("What task did you mean?");
             }
             else
-                System.out.println("Please type in a task for helper before hitting enter !");
+                System.out.println("Please type in a task for helper before hitting enter!");
         }
         else
-           System.out.println("You need to be in the control room to give " + helperName + " a control!");
+            writeToActionLog("You need to be in the control room to give " + helperName + " a control!");
     }
     
     /**
@@ -378,6 +419,8 @@ public class GameCommand {
         writer.saveGame(gec.getRoomsInfo(), gec.getItemsInfo(), gec.getSpecialItemsInfo(),
                 gec.getExitInfo(), gec.getPlayerInfo(), gec.getSaboteurInfo(), gec.getHelperInfo(),
                 gec.getTimeHolderInfo(), game.getGameInfo().getRoomsRepaired(), gec.getRoomPositions());
+        
+        writeToActionLog("The game was saved succesfully");
     }
     
     /**
@@ -385,7 +428,7 @@ public class GameCommand {
      * @param command The command entered by the player
      * @return Returns if the quit command is valid.
      */
-    private boolean quit(Command command) 
+    /*private void quit(Command command) 
     {
         if (command.hasSecondWord())
         {
@@ -394,7 +437,7 @@ public class GameCommand {
         }
         else
             return true;
-    }
+    }*/
     
     /**
      * Finds the item's default room and sets the item to that room. 
@@ -431,7 +474,7 @@ public class GameCommand {
      */
     private ArrayList<Item> roomItemList ()
     {
-        ArrayList<Item>roomInventory = new ArrayList<>();
+        ArrayList<Item> roomInventory = new ArrayList<>();
         Room currentRoom = game.getPlayer().getCurrentRoom();
 
         if (currentRoom instanceof ItemRoom)
@@ -452,6 +495,12 @@ public class GameCommand {
             return roomInventory;
         }
 
-        return null;
+        return roomInventory;
+    }
+    
+    private void writeToActionLog (String msg)
+    {
+        SystemLog.getActionLog().writeToLog(msg);
+        System.out.println(msg);
     }
 }
