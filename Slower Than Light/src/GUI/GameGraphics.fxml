@@ -1,5 +1,13 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import java.lang.*?>
+<?import javafx.geometry.*?>
+<?import javafx.scene.canvas.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.image.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.shape.*?>
+<?import javafx.scene.text.*?>
 <?import javafx.geometry.Insets?>
 <?import javafx.scene.canvas.Canvas?>
 <?import javafx.scene.control.Button?>
@@ -18,7 +26,7 @@
 <?import javafx.scene.shape.Rectangle?>
 <?import javafx.scene.text.Text?>
 
-<AnchorPane id="AnchorPane" prefHeight="500.0" prefWidth="700.0" xmlns="http://javafx.com/javafx/9.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="GUI.GameGraphicsController">
+<AnchorPane id="AnchorPane" prefHeight="500.0" prefWidth="700.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="GUI.GameGraphicsController">
    <children>
       <VBox layoutY="-2.0" prefHeight="400.0" prefWidth="600.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
          <children>
@@ -87,7 +95,7 @@
                                              <children>
                                                 <Rectangle arcHeight="5.0" arcWidth="5.0" fill="DODGERBLUE" height="40.0" stroke="BLACK" strokeType="INSIDE" width="40.0" />
                                                 <Label fx:id="playerItem1" text="Item1" />
-                                                <Pane fx:id="playerItem1Button" prefHeight="200.0" prefWidth="200.0">
+                                                <Pane fx:id="playerItem1Button" onMouseClicked="#dropItem0" prefHeight="200.0" prefWidth="200.0">
                                                    <StackPane.margin>
                                                       <Insets bottom="20.0" left="20.0" right="20.0" top="20.0" />
                                                    </StackPane.margin>
@@ -98,7 +106,7 @@
                                              <children>
                                                 <Rectangle arcHeight="5.0" arcWidth="5.0" fill="DODGERBLUE" height="40.0" stroke="BLACK" strokeType="INSIDE" width="40.0" />
                                                 <Label fx:id="playerItem2" text="Item2" />
-                                                <Pane fx:id="playerItem2Button" prefHeight="200.0" prefWidth="200.0">
+                                                <Pane fx:id="playerItem2Button" onMouseClicked="#dropItem1" prefHeight="200.0" prefWidth="200.0">
                                                    <StackPane.margin>
                                                       <Insets bottom="20.0" left="20.0" right="20.0" top="20.0" />
                                                    </StackPane.margin>
@@ -122,8 +130,8 @@
                                           <StackPane prefHeight="150.0" prefWidth="200.0">
                                              <children>
                                                 <Rectangle arcHeight="5.0" arcWidth="5.0" fill="DODGERBLUE" height="40.0" stroke="BLACK" strokeType="INSIDE" width="40.0" />
-                                                <Label fx:id="roomItem1" onMouseClicked="#takeItem0" text="Item1" />
-                                                <Pane fx:id="roomItem1Button" prefHeight="200.0" prefWidth="200.0">
+                                                <Label fx:id="roomItem1" text="Item1" />
+                                                <Pane fx:id="roomItem1Button" onMouseClicked="#takeItem0" prefHeight="200.0" prefWidth="200.0">
                                                    <StackPane.margin>
                                                       <Insets bottom="20.0" left="20.0" right="20.0" top="20.0" />
                                                    </StackPane.margin>
@@ -133,8 +141,8 @@
                                           <StackPane prefHeight="150.0" prefWidth="200.0">
                                              <children>
                                                 <Rectangle arcHeight="5.0" arcWidth="5.0" fill="DODGERBLUE" height="40.0" stroke="BLACK" strokeType="INSIDE" width="40.0" />
-                                                <Label fx:id="roomItem2" onMouseClicked="#takeItem1" text="Item2" />
-                                                <Pane fx:id="roomItem2Button" prefHeight="200.0" prefWidth="200.0">
+                                                <Label fx:id="roomItem2" text="Item2" />
+                                                <Pane fx:id="roomItem2Button" onMouseClicked="#takeItem1" prefHeight="200.0" prefWidth="200.0">
                                                    <StackPane.margin>
                                                       <Insets bottom="20.0" left="20.0" right="20.0" top="20.0" />
                                                    </StackPane.margin>

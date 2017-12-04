@@ -10,7 +10,6 @@ import acq.ILogFacade;
 import acq.IVisualUpdater;
 import java.io.IOException;
 import java.net.URL;
-import java.util.Arrays;
 import java.util.ResourceBundle;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -18,11 +17,11 @@ import javafx.fxml.Initializable;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.canvas.Canvas;
-import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.ProgressBar;
 import javafx.scene.image.ImageView;
+import javafx.scene.layout.Pane;
 import javafx.scene.shape.Circle;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
@@ -49,9 +48,17 @@ public class GameGraphicsController implements Initializable, IInjectableControl
     @FXML
     private Label playerItem2;
     @FXML
+    private Pane playerItem1Button;
+    @FXML
+    private Pane playerItem2Button;
+    @FXML
     private Label roomItem1;
     @FXML
     private Label roomItem2;
+    @FXML
+    private Pane roomItem1Button;
+    @FXML
+    private Pane roomItem2Button;
     @FXML
     private Button leftButton;
     @FXML
@@ -147,24 +154,28 @@ public class GameGraphicsController implements Initializable, IInjectableControl
     public void dropItem0()
     {
         logFacade.processCommand("drop 0");
+        System.out.println("Drop 0");
     }
     
     @FXML
     public void dropItem1()
     {
         logFacade.processCommand("drop 1");
+        System.out.println("Drop 1");
     }
     
     @FXML
     public void takeItem0()
     {
         logFacade.processCommand("take 0");
+        System.out.println("take 0");
     }
 
     @FXML
     public void takeItem1()
     {
         logFacade.processCommand("take 1");
+        System.out.println("take 1");
     }
     
     @FXML
@@ -215,6 +226,16 @@ public class GameGraphicsController implements Initializable, IInjectableControl
     }
 
     public void saboteurAlert()
+    {
+        
+    }
+    
+    private void updateItemButtons()
+    {
+        
+    }
+    
+    private void updateRoomButtons()
     {
         
     }
