@@ -18,6 +18,7 @@ import logic.user_input.Parser;
 import acq.IVisualUpdater;
 import java.awt.Point;
 import java.util.Map;
+import logic.elements.characters.Item;
 
 /**
  *
@@ -67,6 +68,17 @@ public class LogFacade implements ILogFacade
     public IItem[] getItemsInCurrentRoom()
     {
         return game.getGameCommand().getItemsInCurrentRoomItems();
+    }
+    
+    @Override
+    public IItem[] getPlayerItems()
+    {
+        IItem[] returnInventory = new IItem[]{};
+        Item[] playerInventory = game.getPlayer().getInventory();
+        
+        
+        
+        return returnInventory;
     }
 
     @Override

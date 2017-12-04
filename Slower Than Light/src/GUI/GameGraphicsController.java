@@ -6,6 +6,7 @@
 package GUI;
 
 import acq.IInjectableController;
+import acq.IItem;
 import acq.ILogFacade;
 import acq.IVisualUpdater;
 import java.io.IOException;
@@ -181,7 +182,7 @@ public class GameGraphicsController implements Initializable, IInjectableControl
     @FXML
     public void repair()
     {
-        logFacade.processCommand("repdoor");
+        logFacade.processCommand("repair");
         //INCOMPLETE
     }
     
@@ -237,7 +238,21 @@ public class GameGraphicsController implements Initializable, IInjectableControl
     
     private void updateRoomButtons()
     {
+        IItem[] itemsInCurrentRoom = logFacade.getItemsInCurrentRoom();
         
+        switch (itemsInCurrentRoom.length) {
+            case 1:
+                playerItem1.setText(itemsInCurrentRoom[0].getName());
+                break;
+            case 2:
+                playerItem1.setText(itemsInCurrentRoom[0].getName());
+                playerItem2.setText(itemsInCurrentRoom[1].getName());
+                break;
+            default:
+                playerItem1.setText("");
+                playerItem2.setText("");
+                break;
+        }
     }
 
 }
