@@ -212,7 +212,7 @@ public class GameCommand {
     {
         if (!command.hasSecondWord()) 
         {
-            System.out.println("What item did you mean ? ");
+            System.out.println("What item did you mean?");
             return;
         }
         

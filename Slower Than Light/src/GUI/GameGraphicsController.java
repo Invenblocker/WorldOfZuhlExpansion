@@ -262,9 +262,19 @@ public class GameGraphicsController implements Initializable, IInjectableControl
     {
         IItem[] itemsInInvetory = logFacade.getPlayerItems();
         
+        
         switch (logFacade.getPlayer().getItemCount()) {
             case 1:
-                playerItem1.setText(itemsInInvetory[0].getName());
+                if (itemsInInvetory[0] != null)
+                {
+                    playerItem1.setText(itemsInInvetory[0].getName());
+                    playerItem2.setText("");
+                }
+                else
+                {
+                    playerItem1.setText("");
+                    playerItem2.setText(itemsInInvetory[1].getName());
+                }
                 break;
             case 2:
                 playerItem1.setText(itemsInInvetory[0].getName());
@@ -283,7 +293,16 @@ public class GameGraphicsController implements Initializable, IInjectableControl
         
         switch (itemsInCurrentRoom.length) {
             case 1:
-                roomItem1.setText(itemsInCurrentRoom[0].getName());
+                if (itemsInCurrentRoom[0] != null)
+                {
+                    roomItem1.setText(itemsInCurrentRoom[0].getName());
+                    roomItem2.setText("");
+                }
+                else
+                {
+                    roomItem1.setText("");
+                    roomItem2.setText(itemsInCurrentRoom[1].getName());
+                }
                 break;
             case 2:
                 roomItem1.setText(itemsInCurrentRoom[0].getName());
