@@ -18,8 +18,8 @@ import javafx.scene.canvas.GraphicsContext;
  *
  * @author Peter
  */
-public class MiniMap extends LayeredSprite {
-    
+public class MiniMap {
+    LayeredSprite ls = new LayeredSprite();
     Map<String, Point> roomPositions = new HashMap<>();
     GraphicsContext gc;
     
@@ -75,10 +75,11 @@ public class MiniMap extends LayeredSprite {
      */
     private void redraw ()
     {
-        updateRoom(destroyedRooms);
-        updatePlayer(playerRoom);
-        updateSaboteur(saboteurRoom);
-        render(gc);
+        ls = new LayeredSprite();
+        updateRoom(destroyedRooms, ls);
+        updatePlayer(playerRoom, ls);
+        updateSaboteur(saboteurRoom, ls);
+        ls.render(gc);
     }
     
     /**
@@ -86,30 +87,31 @@ public class MiniMap extends LayeredSprite {
      * @param destroyedRooms Array som består af de rum som er ødelagt.
      * @param gc Det
      */
-    private void updateRoom(List<IRoom> destroyedRooms)
+    private void updateRoom(List<IRoom> destroyedRooms, LayeredSprite ls)
     {
+        
         for (int i = 0; i < destroyedRooms.size(); i++){            // kører gennem array med ødelagte rum
             for (String key : roomPositions.keySet()){              // kører gennem vores hashmap
                 if (destroyedRooms.get(i).getName().equals(key))        // tjekker om rummet i hashmappet er det samme som det ødelagte rum
-                    addSprite(2, new DestroyedRoomDraw(roomPositions.get(key), key));     // tilføjer koordinaterne til det ødelagte rum og tilføjer det til minimappet
+                    ls.addSprite(2, new DestroyedRoomDraw(roomPositions.get(key), key));     // tilføjer koordinaterne til det ødelagte rum og tilføjer det til minimappet
                 else if(!destroyedRooms.get(i).getName().equals(key))
-                    addSprite(1, new RoomDraw(roomPositions.get(key), key));
+                    ls.addSprite(1, new RoomDraw(roomPositions.get(key), key));
             }
         }
     }
     
-    private void updatePlayer(String playerRoom)
+    private void updatePlayer(String playerRoom, LayeredSprite ls)
     {
         for (String key : roomPositions.keySet())
             if (key.equals(playerRoom))
-                addSprite(3, new PlayerDraw(roomPositions.get(key)));
+                ls.addSprite(3, new PlayerDraw(roomPositions.get(key)));
     }
     
-    private void updateSaboteur(String saboteurRoom)
+    private void updateSaboteur(String saboteurRoom, LayeredSprite ls)
     {
         for (String key : roomPositions.keySet())
             if (key.equals(saboteurRoom))
-                addSprite(3, new SaboteurDraw(roomPositions.get(key)));
+                ls.addSprite(3, new SaboteurDraw(roomPositions.get(key)));
     }
     
 }

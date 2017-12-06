@@ -102,7 +102,6 @@ public class GameGraphicsController implements Initializable, IInjectableControl
     public void initialize(URL url, ResourceBundle rb)
     {
         logFacade = GUI.getInstance().getILogFacade();
-        
         // setup minimap
         minimap = new MiniMap(logFacade.getRoomPositions(), minimapCanvas.getGraphicsContext2D());
         updateWithTimer();
@@ -140,6 +139,10 @@ public class GameGraphicsController implements Initializable, IInjectableControl
         
         logFacade.processCommand("go up");
         walk();
+        
+        IRoom playerRoom = logFacade.getPlayer().getCurrentRoom();
+       
+        minimap.updatePlayerPosition(playerRoom);
     }
     
     @FXML
@@ -150,6 +153,8 @@ public class GameGraphicsController implements Initializable, IInjectableControl
         
         logFacade.processCommand("go down");
         walk();
+         IRoom playerRoom = logFacade.getPlayer().getCurrentRoom();
+        minimap.updatePlayerPosition(playerRoom);
     }
 
     @FXML
@@ -160,6 +165,8 @@ public class GameGraphicsController implements Initializable, IInjectableControl
         
         logFacade.processCommand("go left");
         walk();
+         IRoom playerRoom = logFacade.getPlayer().getCurrentRoom();
+        minimap.updatePlayerPosition(playerRoom);
     }
 
     @FXML
@@ -170,6 +177,8 @@ public class GameGraphicsController implements Initializable, IInjectableControl
         
         logFacade.processCommand("go right");
         walk();
+         IRoom playerRoom = logFacade.getPlayer().getCurrentRoom();
+        minimap.updatePlayerPosition(playerRoom);
     }
     
     @FXML
