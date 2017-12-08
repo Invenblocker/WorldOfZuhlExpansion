@@ -310,24 +310,39 @@ public class SystemLog
         }
     }
     
+    public void wipeLog()
+    {
+        LOG.clear();
+    }
+    
+    public static void wipeAllLogs()
+    {
+        SYSTEM_LOGS.clear();
+        GLOBAL_LOG.clear();
+        ACTION_LOG.wipeLog();
+        ERROR_LOG.wipeLog();
+        SYSTEM_LOGS.add(ACTION_LOG);
+        SYSTEM_LOGS.add(ERROR_LOG);
+    }
+    
     private static String fileNamePurge(String text)
     {
-        text.replace('~', '-');
-        text.replace("#", "no");
-        text.replace("&", "and");
-        text.replace("*", "star");
-        text.replace('{', '(');
-        text.replace('}', ')');
-        text.replace('\\', '-');
-        text.replace(":", " -");
-        text.replace('<', '[');
-        text.replace('>', ']');
-        text.replace("?", "QuestionMark");
-        text.replace('/', '-');
-        text.replace('+', ' ');
-        text.replace('|', 'I');
-        text.replace('"', '\'');
-        text.replace('.', ',');
+        text = text.replace('~', '-');
+        text = text.replace("#", "no");
+        text = text.replace("&", "and");
+        text = text.replace("*", "star");
+        text = text.replace('{', '(');
+        text = text.replace('}', ')');
+        text = text.replace('\\', '-');
+        text = text.replace(":", " -");
+        text = text.replace('<', '[');
+        text = text.replace('>', ']');
+        text = text.replace("?", "QuestionMark");
+        text = text.replace('/', '-');
+        text = text.replace('+', ' ');
+        text = text.replace('|', 'I');
+        text = text.replace('"', '\'');
+        text = text.replace('.', ',');
         
         return(text);
     }
