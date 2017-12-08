@@ -438,14 +438,29 @@ public class Game
             Room room = roomsSC.get(words[1]);    //Sets room reference equal to index 1 in our hashmap, which is a room.
 
             playerSC = new Player(room, Integer.parseInt(words[2]));
+            
             int i = 3;         //index for item in txtfile
             
-            if(itemsSC.containsKey(words[i]))           //checks if txtfile contains same key in items hashmap
+            for (int j = 1; j <= playerSC.getInventory().length; j++){
+                
+             if(i < words.length){
+            
+            if(itemsSC.containsKey(words[i])){           //checks if txtfile contains same key in items hashmap
                 playerSC.addItem(itemsSC.get(words[i])); //adds item to player inventory
-            else if (specialItemsSC.containsKey(words[i]))  //checks if txtfile contains same key in specialItems hashmap
+            }
+            else if (specialItemsSC.containsKey(words[i])) { //checks if txtfile contains same key in specialItems hashmap
                 playerSC.addItem(specialItemsSC.get(words[i]));    //adds specialItem to player inventory
+        
+            }
             
             i++;
+            }
+             else{
+                 playerSC.addItem(null);
+             }
+            }
+            System.out.println("Færdig med for loop");
+
         }
       
         private void initializeSaboteur(String[] words)
