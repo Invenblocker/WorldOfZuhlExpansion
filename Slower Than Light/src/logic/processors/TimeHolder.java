@@ -8,8 +8,11 @@ import logic.elements.characters.HelperTask;
 import logic.elements.rooms.Room;
 import acq.ITimeHolder;
 import acq.IVisualUpdater;
+import javafx.application.Platform;
 
 public class TimeHolder extends TimerTask implements ITimeHolder{
+    
+    private final SystemLog ACTION_LOG;
     
     private final int DEFAULT_HELPER_COUNTDOWN = 5;
     private int saboteurCountdown;
@@ -23,6 +26,8 @@ public class TimeHolder extends TimerTask implements ITimeHolder{
     
     public TimeHolder ()
     {
+        ACTION_LOG = new SystemLog("TimeHolder", SystemLog.getActionLog());
+        
         saboteurCountdown = 5;
         helperCountdown = 0;
         timeLeft = 30;
@@ -50,60 +55,70 @@ public class TimeHolder extends TimerTask implements ITimeHolder{
     @Override
     public void run()
     {
-        if (!gameInfo.isGameFinished())
-        {   
-            // check if game is finished
-            if (gameInfo.getDestroyedRoomsPercentage() > gameInfo.getALLOWED_ROOMS_DESTROYED_PERCENTAGE() || timeLeft <= 0 || oxygenLeft <= 0) {
-                gameInfo.setGameFinished(true);
-                return;
-            }
-            
-            // check if saboteur is stunned or should move
-            if (game.getSaboteur().getStunCountdown() != 0)
+        Platform.runLater(new Runnable()
+        {
+            @Override
+            public void run()
             {
-                game.getSaboteur().decrementStunCountdown();
-                SystemLog.getActionLog().writeToLog("Decrement stun countdown");
-                System.out.println("Decrement stun countdown");
-            }
-            else if (saboteurCountdown == 0)
-            {
-                int newCountdown = game.getSaboteur().performAction();
-                
-                if(game.getSaboteur().getCurrentRoom() == game.getPlayer().getCurrentRoom())
-                {
-                    gameInfo.setGameFinished(true);
-                    SystemLog.getActionLog().writeToLog("Game over!!");
-                    System.out.println("Game over!! ");   
-                }
+                if (!gameInfo.isGameFinished())
+                {   
+                    // check if game is finished
+                    if (gameInfo.getDestroyedRoomsPercentage() > gameInfo.getALLOWED_ROOMS_DESTROYED_PERCENTAGE() || timeLeft <= 0 || oxygenLeft <= 0) {
+                        gameInfo.setGameFinished(true);
+                        return;
+                    }
 
-                saboteurCountdown = newCountdown;
+                    // check if saboteur is stunned or should move
+                    if (game.getSaboteur().getStunCountdown() != 0)
+                    {
+                        game.getSaboteur().decrementStunCountdown();
+                        writeToActionLog("Decrement stun countdown");
+                        
+                        if(game.getSaboteur().getStunCountdown() == 0)
+                        {
+                            checkSameRoom();
+                            game.getSaboteur().checkChasingPlayer();
+                        }
+                    }
+                    else if (saboteurCountdown == 0)
+                    {
+                        int newCountdown = game.getSaboteur().performAction();
+                        
+                        checkSameRoom();
+                        
+                        saboteurCountdown = newCountdown;
+                        
+                        gameInfo.updateRoomsDestroyed();
+                    }    
+                    else
+                    {
+                        saboteurCountdown--;
+                    }
 
-                gameInfo.updateRoomsDestroyed();
-            }    
-            else
-            {
-                saboteurCountdown--;
-            }
-            
-            // check if helper should move
-            if(gameInfo.getHelper() != null)
-            {
-                HelperTask currentHelperTask = gameInfo.getHelper().getHelperTask();
-                if (helperCountdown == 0 && (currentHelperTask == HelperTask.SEARCH || currentHelperTask == HelperTask.RETURN_TO_DEFAULT))
-                {
-                    int newCountdown = gameInfo.getHelper().performAction();
-                    helperCountdown = newCountdown;
+                    // check if helper should move
+                    if(gameInfo.getHelper() != null)
+                    {
+                        HelperTask currentHelperTask = gameInfo.getHelper().getHelperTask();
+                        if (helperCountdown == 0 && (currentHelperTask == HelperTask.SEARCH || currentHelperTask == HelperTask.RETURN_TO_DEFAULT))
+                        {
+                            int newCountdown = gameInfo.getHelper().performAction();
+                            helperCountdown = newCountdown;
+                        }
+                    }
+
+                    // update values for counting time
+                    timeLeft -= (1 - gameInfo.getDestroyedRoomsPercentage()); 
+                    oxygenLeft -= 1;
+
+                    // update minimap if player is located in the ControlRoom
+                    if ((game.getPlayer().getCurrentRoom().isControlRoom() || game.getPlayer().hasItem(game.getItems().get("pc"))) || game.getGameInfo().isGameFinished())
+                        caller.updateWithTimer();
+                    else if (game.getSaboteur().isChasingPlayer())
+                        caller.updateWithTimer();
                 }
             }
-            
-            // update values for counting time
-            timeLeft -= (1 - gameInfo.getDestroyedRoomsPercentage()); 
-            oxygenLeft -= 1;
-            
-            // update minimap if player is located in the ControlRoom
-            if (game.getPlayer().getCurrentRoom().isControlRoom() || game.getPlayer().hasItem(game.getItems().get("pc")))
-                caller.updateWithTimer();
-        }
+        });
+        
     }
     
     @Override
@@ -113,7 +128,7 @@ public class TimeHolder extends TimerTask implements ITimeHolder{
             gameInfo = game.getGameInfo();
         else
         {
-            String msg = "Could not add a reference to Game in TimeHolder";
+            String msg = "TimeHolder: Could not add a reference to Game in TimeHolder";
             SystemLog.getErrorLog().writeToLog(msg);
             System.out.println(msg);
         }
@@ -147,6 +162,30 @@ public class TimeHolder extends TimerTask implements ITimeHolder{
     public double getTimeLeft()
     {
         return timeLeft;
+    }
+    
+    private void checkSameRoom()
+    {
+        if(game.getSaboteur().getCurrentRoom() == game.getPlayer().getCurrentRoom())
+        {
+            if (gameInfo.getHelper() == null)
+            {
+                gameInfo.setGameFinished(true);
+                writeToActionLog("Game over!!");
+            }
+            else
+            {
+                gameInfo.killHepler();
+                game.getSaboteur().setStunCountdown(15);
+            }
+            
+        }
+    }
+    
+    private void writeToActionLog (String msg)
+    {
+        ACTION_LOG.writeToLog(msg);
+        System.out.println(msg);
     }
 }
 
