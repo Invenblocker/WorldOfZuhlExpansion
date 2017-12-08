@@ -15,13 +15,17 @@ import logic.elements.rooms.WorkshopRoom;
 import logic.user_input.Command;
 import logic.user_input.CommandWord;
 import logic.SystemLog;
-import logic.elements.rooms.Exit;
 
-public class GameCommand {
+public class GameCommand
+{
+    private final SystemLog ACTION_LOG;
+    
     private Game game;
 
     public GameCommand()
     {
+        ACTION_LOG = new SystemLog("GameCommand", SystemLog.getActionLog());
+        
         game = Game.getInstance();
     }
 
@@ -39,7 +43,7 @@ public class GameCommand {
         {
             case GO:
                 goRoom(command);
-                game.getGUI().updateRoom(game.getPlayer().getCurrentRoom());
+                //game.getGUI().updateRoom(game.getPlayer().getCurrentRoom());
                 printInventory();
                 break;
             case TAKE:
@@ -68,7 +72,7 @@ public class GameCommand {
                 saveGame();
                 break;
             case HELP:
-                game.getGUI().printHelp();
+                //game.getGUI().printHelp();
                 break;
             case QUIT:
                 //quit(command);
@@ -115,7 +119,6 @@ public class GameCommand {
         {
             Room pastRoom = game.getPlayer().setRoom(exitRoom);
             
-            
             if (game.getSaboteur().getCurrentRoom() == exitRoom && game.getSaboteur().getStunCountdown() == 0)
             {
                 Helper helper = game.getGameInfo().getHelper();
@@ -127,8 +130,8 @@ public class GameCommand {
                 else
                 {
                     game.getGameInfo().setGameFinished(true);
-                    System.out.println("You went into the same room as the saboteur. ");
-                    System.out.println("Game over !! ");
+                    writeToActionLog("You went into the same room as the saboteur. ");
+                    writeToActionLog("Game over !!");
                     return;
                 }
             }
@@ -500,7 +503,7 @@ public class GameCommand {
     
     private void writeToActionLog (String msg)
     {
-        SystemLog.getActionLog().writeToLog(msg);
+        ACTION_LOG.writeToLog(msg);
         System.out.println(msg);
     }
 }

@@ -18,7 +18,8 @@ import javafx.scene.canvas.GraphicsContext;
  *
  * @author Peter
  */
-public class MiniMap {
+public class MiniMap
+{
     LayeredSprite ls = new LayeredSprite();
     Map<String, Point> roomPositions = new HashMap<>();
     GraphicsContext gc;
@@ -60,6 +61,13 @@ public class MiniMap {
             destroyedRooms.remove(playerRoom);
         else if (!playerRoom.isOperating() && !destroyedRooms.contains(playerRoom))
             destroyedRooms.add(playerRoom);
+        
+        redraw();
+    }
+    
+    public void updateSaboteurPosition(IRoom saboteurRoom)
+    {
+        this.saboteurRoom = saboteurRoom.getName();
         
         redraw();
     }

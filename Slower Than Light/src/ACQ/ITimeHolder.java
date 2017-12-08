@@ -18,10 +18,4 @@ public interface ITimeHolder
     int getSaboteurCountdown();
 
     double getTimeLeft();
-
-    void setHelperCountdown(int value);
-
-    void setSaboteurCountdown(int value);
-
-    void setupReferences();
 }
