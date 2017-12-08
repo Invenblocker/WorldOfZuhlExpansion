@@ -1,6 +1,5 @@
 package logic;
 
-import GUI.GUI;
 import acq.ILoader;
 import java.awt.Point;
 import java.util.ArrayList;
@@ -23,7 +22,6 @@ import logic.elements.rooms.Room;
 import logic.elements.rooms.WorkshopRoom;
 import logic.processors.GameCommand;
 import logic.processors.TimeHolder;
-import logic.user_input.Command;
 import logic.user_input.Parser;
 
 /**
@@ -54,7 +52,6 @@ public class Game
     private Helper helper;
     private TimeHolder timeHolder;
     private GameCommand gameCommand;
-    private GUI gui;
     
     private Timer timer;
     private boolean gameLoaded;
@@ -99,7 +96,7 @@ public class Game
         
         Game.GameSetup gameSetup = new GameSetup();
         gameSetup.addItemsToDefaultRooms(items);
-        gameSetup.addRepairItemsToRooms(items, rooms);
+        gameSetup.addRepairItemsToRooms(items, specialItems, rooms);
         
         Room randomRoom = gameSetup.getRandomSaboteurStartRoom(rooms);
         if (player == null)
@@ -113,14 +110,10 @@ public class Game
         gameInfo = new GameInfo(helper);
         gameInfo.updateRoomsDestroyed();
         
-        for (String key : rooms.keySet()){
-            for (Exit exit : rooms.get(key).getCollectionOfExits()){
-                if(!exit.isOperating()){
+        for (String key : rooms.keySet())
+            for (Exit exit : rooms.get(key).getCollectionOfExits())
+                if(!exit.isOperating())
                     gameInfo.setHackedExit(exit);
-                        
-                }
-            }
-        }
         
         // Setup Timer
         if (sc.timeHolderSC == null)
@@ -129,9 +122,6 @@ public class Game
         
         // Setup GameCommand
         gameCommand = new GameCommand();
-        
-        // Setup GUI
-        gui = GUI.getInstance();
         
         // Game is loaded
         gameLoaded = true;
@@ -158,25 +148,6 @@ public class Game
         
         // Setup user input
         parser = new Parser();
-        
-        /*
-        // Game loop
-        try
-        {
-            while (!gameInfo.isGameFinished())
-            {
-                Command command = parser.getCommand();
-                boolean gameFinished = gameCommand.processCommand(command);
-                gameInfo.setGameFinished(gameFinished);
-            }
-        } 
-        catch (RuntimeException e)
-        {
-            System.out.println("Caught RuntimeException");
-            e.printStackTrace();
-            SystemLog.saveAllLogs(); // Save logs no matter what
-        }
-        */
     }
     
     public void endGame ()
@@ -208,9 +179,6 @@ public class Game
     
     public GameCommand getGameCommand() {return gameCommand;}
     
-    public GUI getGUI() {return gui;}
-    
-    
     private class GameSetup
     {
         private void addItemsToDefaultRooms(Map<String, Item> items)
@@ -226,7 +194,7 @@ public class Game
             }
         }
     
-        private void addRepairItemsToRooms(Map<String, Item> items, Map<String, Room> rooms)
+        private void addRepairItemsToRooms(Map<String, Item> items, Map<String, Item> specialItems, Map<String, Room> rooms)
         {
             if (items.isEmpty() || rooms.isEmpty())
                 return;
@@ -236,14 +204,14 @@ public class Game
             
             for (String roomKey : rooms.keySet())
             {
-                if(rooms.get(roomKey) instanceof ItemRoom )
+                if(rooms.get(roomKey) instanceof ItemRoom)
                 {
                     Room room = rooms.get(roomKey);
                     Item item;
                     item = items.get(itemKeys.remove(0));
                     
                     room.addRepairTools((Tool) item);
-                    //itemKeys.remove(item.getName());
+                    room.addRepairTools((Tool) specialItems.get("ducttape"));
                 }
                 
                 if (itemKeys.isEmpty()) //Stop assigning items if there is no more
@@ -478,9 +446,6 @@ public class Game
         
         private void initializeTimeHolder(String[] words)
         {
-            /*timeHolderSC = new TimeHolder(Double.parseDouble(words[1]), Double.parseDouble(words[2]));
-            timeHolderSC.setHelperCountdown(Integer.parseInt(words[3]));
-            timeHolderSC.setSaboteurCountdown(Integer.parseInt(words[4]));*/
             timeHolderSC = new TimeHolder(Double.parseDouble(words[1]), Double.parseDouble(words[2]), Integer.parseInt(words[4]), Integer.parseInt(words[3]));
         }
     }

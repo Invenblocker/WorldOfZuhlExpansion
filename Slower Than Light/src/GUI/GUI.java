@@ -51,57 +51,6 @@ public class GUI extends Application implements IGUI
     {
         logFacade = _logFacade;
     }
-  
-    public void updateMinimap(IRoom saboteurRoom, IRoom[] destroyedRooms) { //updates saboteur position, calls update in MiniMap class.
-        //minimap.update(saboteurRoom, destroyedRooms);
-        
-    }
-  
-    public void updateRoom(IRoom room)       //updates player position to minimap   
-    {
-        //minimap.updatePlayerPosition(room);
-        writeToLog("You moved to " + logFacade.getPlayer().getCurrentRoom().getName());
-    }
-  
-    public void updateInventory(IItem[] inventory)
-    {
-        System.out.println(inventory);
-    }
-  
-    public void investigate(IRoom room)
-    {
-        
-    }
-  
-    /**
-      * Prints a short description of the game and then a list of commands.
-      */
-    public void printHelp()
-    {
-        System.out.println("YOU BE FUCKED");
-        System.out.println();
-        System.out.println("Your command words are:");
-        Game.getInstance().getParser().showCommands();
-    }
-  
-    public void printWelcome() {
-        writeToLog("Welcome to the game");
-        
-    }
-    public void prinInventory(IItem[] inventory)
-    {
-        System.out.println(inventory);
-    }
-    
-    public void showHighScore(Map <String, Integer> highScore) 
-    {
-       
-    }
-    
-    public void writeToLog (String text)
-    {
-        log.write(text);
-    }
 
     @Override
     public void start(Stage primaryStage) throws Exception 
@@ -131,8 +80,6 @@ public class GUI extends Application implements IGUI
     {
         launch(args);
     }
-    
-    
     
     public ILogFacade getILogFacade() {return logFacade;}
 }

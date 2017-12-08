@@ -43,6 +43,7 @@ public class GameInfo implements IGameInfo
         destroyedRoomsPercentage = 0;
         destroyedRooms = new ArrayList<>();
         roomsRepaired = 0;
+        highScoreMap = new LinkedHashMap<>();
         score = 0;
         gameFinished = false;
     }

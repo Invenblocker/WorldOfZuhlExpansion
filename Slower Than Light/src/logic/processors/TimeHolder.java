@@ -5,7 +5,6 @@ import java.util.TimerTask;
 import logic.Game;
 import logic.GameInfo;
 import logic.elements.characters.HelperTask;
-import logic.elements.rooms.Room;
 import acq.ITimeHolder;
 import acq.IVisualUpdater;
 import javafx.application.Platform;
@@ -67,6 +66,7 @@ public class TimeHolder extends TimerTask implements ITimeHolder{
                     // check if game is finished
                     if (gameInfo.getDestroyedRoomsPercentage() > gameInfo.getALLOWED_ROOMS_DESTROYED_PERCENTAGE() || timeLeft <= 0 || oxygenLeft <= 0) {
                         gameInfo.setGameFinished(true);
+                        caller.updateGameEnd();
                         return;
                     }
 
@@ -113,15 +113,17 @@ public class TimeHolder extends TimerTask implements ITimeHolder{
                     // update values for counting time
                     timeLeft -= (1 - gameInfo.getDestroyedRoomsPercentage()); 
                     oxygenLeft -= 1;
-                            
-                    //System.out.println("Time before: " + System.currentTimeMillis());
 
                     // update minimap if player is located in the ControlRoom
-                    if ((game.getPlayer().getCurrentRoom().isControlRoom() || game.getPlayer().hasItem(game.getItems().get("pc"))) || game.getGameInfo().isGameFinished())
+                    if ((game.getPlayer().getCurrentRoom().isControlRoom() || game.getPlayer().hasItem(game.getItems().get("pc"))))
                         caller.updateMinimap();
                     else if (game.getSaboteur().isChasingPlayer())
                         caller.updateIsChasingPlayer();
-                    //System.out.println("Time after: " + System.currentTimeMillis());
+                    else if (gameInfo.isGameFinished())
+                    {
+                        System.out.println("game ended");
+                        caller.updateGameEnd();
+                    }
                 }
             }
         });

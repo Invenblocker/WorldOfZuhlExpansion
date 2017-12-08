@@ -16,4 +16,6 @@ public interface IVisualUpdater
     void updateSaboteurRoom();
     
     void updateIsChasingPlayer();
+    
+    boolean updateGameEnd();
 }
