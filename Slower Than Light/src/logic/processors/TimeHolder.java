@@ -47,9 +47,11 @@ public class TimeHolder extends TimerTask implements ITimeHolder{
         oxygenLeft = oxygenTime;
     }
     
-    public void addVisualUpdateCaller (IVisualUpdater _caller)
+    public TimeHolder(double gameTime, double oxygenTime, int saboteurCountdown, int helperCountdown)
     {
-        caller = _caller;
+        this(gameTime, oxygenTime);
+        this.saboteurCountdown = saboteurCountdown;
+        this.helperCountdown = helperCountdown;
     }
 
     @Override
@@ -123,7 +125,11 @@ public class TimeHolder extends TimerTask implements ITimeHolder{
                 }
             }
         });
-        
+    }
+    
+    public void addVisualUpdateCaller (IVisualUpdater _caller)
+    {
+        caller = _caller;
     }
     
     public void setupReferences ()
@@ -141,7 +147,7 @@ public class TimeHolder extends TimerTask implements ITimeHolder{
     public void setSaboteurCountdown(int value) 
     {
         this.saboteurCountdown = value; 
-        System.out.println("set sab countdown: " + value);
+        System.out.println("set sab countdown: " + saboteurCountdown);
     }
     
     public void setHelperCountdown(int value) 

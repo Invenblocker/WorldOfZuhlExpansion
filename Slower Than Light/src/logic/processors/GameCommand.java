@@ -137,7 +137,7 @@ public class GameCommand
             }
             
             int saboteurCountdown = game.getSaboteur().chasePlayer(pastRoom);
-            if (saboteurCountdown != -1)
+            if (saboteurCountdown != -1 && game.getSaboteur().getStunCountdown() == 0)
                 game.getTimeHolder().setSaboteurCountdown(saboteurCountdown);   
         }
         else
