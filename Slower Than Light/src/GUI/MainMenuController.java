@@ -26,15 +26,8 @@ import javafx.stage.Stage;
  *
  * @author sdown
  */
-public class MainMenuController implements Initializable, IInjectableController {
-
-    ILogFacade logFacade;
-    Stage stage;
-    
-    public void injectStage (Stage _stage)
-    {
-        stage = _stage;
-    }
+public class MainMenuController implements Initializable, IInjectableController
+{
     
     @FXML
     private Button newGameButton;
@@ -45,6 +38,9 @@ public class MainMenuController implements Initializable, IInjectableController 
     @FXML
     private Button quitButton;
 
+    ILogFacade logFacade;
+    Stage stage;
+
     /**
      * Initializes the controller class.
      */
@@ -52,10 +48,13 @@ public class MainMenuController implements Initializable, IInjectableController 
     public void initialize(URL url, ResourceBundle rb) 
     {
        logFacade = GUI.getInstance().getILogFacade();
-        System.out.println("Hallo 4" + logFacade);
+    }
     
-    
-    }    
+    @Override
+    public void injectStage (Stage _stage)
+    {
+        stage = _stage;
+    }
 
     @FXML
     private void handleNewGameBtn(MouseEvent event) throws IOException
@@ -72,8 +71,6 @@ public class MainMenuController implements Initializable, IInjectableController 
         
         stage.setScene(scene);
         stage.show();
-        
-        
     }
 
     @FXML
@@ -95,7 +92,7 @@ public class MainMenuController implements Initializable, IInjectableController 
     @FXML
     private void handleHighscoreBtn(MouseEvent event) throws IOException
     {
-        FXMLLoader loader = new FXMLLoader(getClass().getResource(" "));
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("Highscore.fxml"));
         Parent root = loader.load();
         
         Scene scene = new Scene(root);
@@ -112,14 +109,5 @@ public class MainMenuController implements Initializable, IInjectableController 
     {
         System.exit(0);
     }
-/*
-    @Override
-    public void injectLogFacade(ILogFacade logFacade) 
-    {
-       this.logFacade = logFacade;
-    }
-*/
-   
-    
     
 }

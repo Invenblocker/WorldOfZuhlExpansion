@@ -78,7 +78,6 @@ public class GameElementsConverter
     {
         String roomName = room.getName();           // Rummet der bliver arbejdet på's navn.
         String exitString = roomName + " ";
-        
         Room roomUp = rooms.get(roomName).getExit("up");
         Room roomDown = rooms.get(roomName).getExit("down");
         Room roomLeft = rooms.get(roomName).getExit("left");
@@ -89,41 +88,62 @@ public class GameElementsConverter
             exitString += "up ";                        // Hvis direction er up, bliver det skrevet ind i .txtfilen.
             
             Room exitRoom = rooms.get(roomName);        // får referencen af rummet vi arbejder på.
-            Exit exit = exitRoom.getExit(rooms.get(roomName));    // Får fat i 
+     
+            if(roomName.equals("RightThruster")){
+                System.out.println(rooms.get(roomName).getCollectionOfExits());
+                Exit exit = exitRoom.getExit(roomUp);
+                System.out.println("Exis =" + exit);
+            }
+            
+            Exit exit = exitRoom.getExit(roomUp);    // Får fat i det rigtige exit.
             
             exitString += exit.isOperating() + " ";     // prints the boolean value to the txt file
             exitString += roomUp.getName() + " ";       // prints the room on the opposing side of the exit to the txt file.
+             System.out.println(exitString);
+            
         }
         if (roomDown != null)
         {
             exitString += "down ";                      // Hvis direction er down, bliver det skrevet ind i .txtfilen.
             
             Room exitRoom = rooms.get(roomName);        // får referencen af rummet vi arbejder på.
-            Exit exit = exitRoom.getExit(rooms.get(roomName));    // Får fat i 
             
+            Exit exit = exitRoom.getExit(roomDown);    // Får fat i 
+            
+            System.out.println("Exit operating? " + exit.isOperating());
             exitString += exit.isOperating() + " ";     // prints the boolean value to the txt file
             exitString += roomDown.getName() + " ";     // prints the room on the opposing side of the exit to the txt file.
+             System.out.println(exitString);
         }
         if (roomLeft != null)
         {
             exitString += "left ";                      // Hvis direction er down, bliver det skrevet ind i .txtfilen.
             
             Room exitRoom = rooms.get(roomName);        // får referencen af rummet vi arbejder på.
-            Exit exit = exitRoom.getExit(rooms.get(roomName));    // Får fat i 
-            
+            Exit exit = exitRoom.getExit(roomLeft);    // Får fat i 
+         
+            System.out.println("Exit operating? " + exit.isOperating());
             exitString += exit.isOperating() + " ";     // prints the boolean value to the txt file
             exitString += roomLeft.getName() + " ";     // prints the room on the opposing side of the exit to the txt file.
+             System.out.println(exitString);
         }
         if (roomRight != null)
         {
             exitString += "right ";                      // Hvis direction er down, bliver det skrevet ind i .txtfilen.
             
             Room exitRoom = rooms.get(roomName);        // får referencen af rummet vi arbejder på.
-            Exit exit = exitRoom.getExit(rooms.get(roomName));    // Får fat i 
+            Exit exit = exitRoom.getExit(roomRight);    // Får fat i 
+
+            System.out.println("Exit operating? " + exit.isOperating());
             
             exitString += exit.isOperating() + " ";     // prints the boolean value to the txt file
+           
             exitString += roomRight.getName() + " ";     // prints the room on the opposing side of the exit to the txt file.
+             System.out.println(exitString);
+            
         }
+        
+       // System.out.println(rooms.get("controlRoom").getExit(rooms.get("EntryRamp")).equals(rooms.get("EntryRamp").getExit(rooms.get("controlRoom"))));
         
         exitInfo.add(exitString);
     }

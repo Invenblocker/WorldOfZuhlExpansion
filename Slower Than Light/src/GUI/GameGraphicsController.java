@@ -8,9 +8,11 @@ package GUI;
 import acq.IInjectableController;
 import acq.IItem;
 import acq.ILogFacade;
+import acq.IRoom;
 import acq.IVisualUpdater;
 import java.io.IOException;
 import java.net.URL;
+import java.util.List;
 import java.util.ResourceBundle;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -22,6 +24,8 @@ import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.ProgressBar;
 import javafx.scene.image.ImageView;
+import javafx.scene.layout.Pane;
+import javafx.scene.paint.Color;
 import javafx.scene.shape.Circle;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
@@ -48,9 +52,17 @@ public class GameGraphicsController implements Initializable, IInjectableControl
     @FXML
     private Label playerItem2;
     @FXML
+    private Pane playerItem1Button;
+    @FXML
+    private Pane playerItem2Button;
+    @FXML
     private Label roomItem1;
     @FXML
     private Label roomItem2;
+    @FXML
+    private Pane roomItem1Button;
+    @FXML
+    private Pane roomItem2Button;
     @FXML
     private Button leftButton;
     @FXML
@@ -76,12 +88,12 @@ public class GameGraphicsController implements Initializable, IInjectableControl
     private Button helpButton;
     @FXML
     private Button saveButton;
-    
     @FXML
     private Button quitButton;
 
     private ILogFacade logFacade;
     private Stage stage;
+    private MiniMap minimap;
     
     /**
      * Initializes the controller class.
@@ -90,120 +102,336 @@ public class GameGraphicsController implements Initializable, IInjectableControl
     public void initialize(URL url, ResourceBundle rb)
     {
         logFacade = GUI.getInstance().getILogFacade();
+        
+        // setup minimap
+        minimap = new MiniMap(logFacade.getRoomPositions(), minimapCanvas.getGraphicsContext2D());
+        updateMinimap();
+        updateIsChasingPlayer();
+        
         logFacade.injectGUIUpdateMethod(this);
         logFacade.play();
+        
+        updateHeader();
+        updatePlayerItemButtons();
+        updateRoomItemButtons();
+        updateSaboteurAlert();
     }
     
     @Override
     public void injectStage(Stage _stage) {
         stage = _stage;
     }
-    
+
     @Override
-    public void updateWithTimer()
+    public void updateMinimap()
     {
-        System.out.println("Updated timer");
-    }
-    
-    @FXML
-    public void walkUp() {
-        logFacade.processCommand("go up");
-    }
-    
-    @FXML
-    public void walkDown() {
-        logFacade.processCommand("go down");
+        if (!updateGameEnd())
+        {
+            List<IRoom> destroyedRoom = logFacade.getGameInfo().getDestroyedRooms();
+            String playerRoom = logFacade.getPlayer().getCurrentRoom().getName();
+            String saboteurRoom = logFacade.getSaboteur().getCurrentRoom().getName();
+            minimap.update(destroyedRoom, playerRoom, saboteurRoom);
+            
+            updateIsChasingPlayer();
+        }
     }
 
-    @FXML
-    public void walkLeft() {
-        logFacade.processCommand("go left");
+    @Override
+    public void updateSaboteurRoom()
+    {
+        if (!updateGameEnd())
+        {
+            minimap.updateSaboteurPosition(logFacade.getSaboteur().getCurrentRoom());
+            
+            updateIsChasingPlayer();
+        }
     }
 
-    @FXML
-    public void walkRight() {
-        logFacade.processCommand("go right");
-    }
-
-    public void dropItem0() {
-        logFacade.processCommand("drop 0");
-    }
-    
-    public void dropItem1() {
-        logFacade.processCommand("drop 1");
+    @Override
+    public void updateIsChasingPlayer()
+    {
+        if (!updateGameEnd())
+            updateSaboteurAlert();
     }
     
     @FXML
-    public void takeItem0() {
-        logFacade.processCommand("take 0");
-    }
-
-    @FXML
-    public void takeItem1() {
-        logFacade.processCommand("take 1");
-    }
-    
-    @FXML
-    public void repair() {
-        logFacade.processCommand("repair");
-        //INCOMPLETE
-    }
-    
-    @FXML
-    public void talk() {
+    public void walkUp()
+    {
+        if(logFacade.getGameInfo().isGameFinished())
+            return;
         
+        walk("up");
+    }
+    
+    @FXML
+    public void walkDown()
+    {
+        if(logFacade.getGameInfo().isGameFinished())
+            return;
+        
+        walk("down");
     }
 
     @FXML
-    public void investigate() {
+    public void walkLeft()
+    {
+        if(logFacade.getGameInfo().isGameFinished())
+            return;
+        
+        walk("left");
+    }
+
+    @FXML
+    public void walkRight()
+    {
+        if(logFacade.getGameInfo().isGameFinished())
+            return;
+        
+        walk("right");
+    }
+    
+    @FXML
+    public void dropItem0()
+    {
+        if(logFacade.getGameInfo().isGameFinished())
+            return;
+        
+        logFacade.processCommand("drop 0");
+        updatePlayerItemButtons();
+        updateRoomItemButtons();
+        System.out.println("Drop 0");
+    }
+    
+    @FXML
+    public void dropItem1()
+    {
+        if(logFacade.getGameInfo().isGameFinished())
+            return;
+        
+        logFacade.processCommand("drop 1");
+        updatePlayerItemButtons();
+        updateRoomItemButtons();
+        System.out.println("Drop 1");
+    }
+    
+    @FXML
+    public void takeItem0()
+    {
+        if(logFacade.getGameInfo().isGameFinished())
+            return;
+        
+        logFacade.processCommand("take 0");
+        updatePlayerItemButtons();
+        updateRoomItemButtons();
+        System.out.println("take 0");
+    }
+
+    @FXML
+    public void takeItem1()
+    {
+        if(logFacade.getGameInfo().isGameFinished())
+            return;
+        
+        logFacade.processCommand("take 1");
+        updatePlayerItemButtons();
+        updateRoomItemButtons();
+        System.out.println("take 1");
+    }
+    
+    @FXML
+    public void repair()
+    {
+        if(logFacade.getGameInfo().isGameFinished())
+            return;
+        
+        logFacade.processCommand("repair");
+        updatePlayerItemButtons();
+        
+        IRoom playerRoom = logFacade.getPlayer().getCurrentRoom();
+        minimap.updatePlayerPosition(playerRoom);
+        
+        System.out.println("repair");
+    }
+    
+    @FXML
+    public void talk()
+    {
+        if(logFacade.getGameInfo().isGameFinished())
+            return;
+    }
+
+    @FXML
+    public void investigate()
+    {
+        if(logFacade.getGameInfo().isGameFinished())
+            return;
+        
         logFacade.processCommand("investigate");
     }
 
     @FXML
-    public void saveGame() {
+    public void saveGame()
+    {
+        if(logFacade.getGameInfo().isGameFinished())
+            return;
+        
         logFacade.processCommand("save");
     }
 
     @FXML
-    public void help() {
+    public void help()
+    {
+        if(logFacade.getGameInfo().isGameFinished())
+            return;
+        
         logFacade.processCommand("help");
     }
 
     @FXML
-    public void quit() throws IOException {
-        //logFacade.processCommand("quit");
-        FXMLLoader loader = new FXMLLoader(getClass().getResource("MainMenu.fxml"));
-        Parent root = loader.load();
+    public void quit() throws IOException
+    {
+        logFacade.quit();
+        changeScene("MainMenu.fxml");
+    }
+    
+    private void walk(String direction)
+    {
+        logFacade.processCommand("go " + direction);
         
-        Scene scene = new Scene(root);
+        updateHeader();
+        updateRoomItemButtons();
+        updateSaboteurAlert();
         
-        IInjectableController controller = loader.getController();
-        controller.injectStage(stage);
+        IRoom playerRoom = logFacade.getPlayer().getCurrentRoom();
+        minimap.updatePlayerPosition(playerRoom);
         
-        stage.setScene(scene);
-        stage.show();
+        if (logFacade.getGameInfo().isGameFinished() && logFacade.getPlayer().getCurrentRoom() == logFacade.getSaboteur().getCurrentRoom())
+            processGameLost("player walking into saboteur");
+    }
+    
+    private void updateHeader()
+    {
+        currentRoomName.setText(logFacade.getPlayer().getCurrentRoom().getName());
+    }
+    
+    private void updatePlayerItemButtons()
+    {
+        IItem[] itemsInInvetory = logFacade.getPlayerItems();
+        
+        
+        switch (logFacade.getPlayer().getItemCount())
+        {
+            case 0:
+                playerItem1.setText("");
+                playerItem2.setText("");
+                break;
+            case 1:
+                if (itemsInInvetory[0] != null)
+                {
+                    playerItem1.setText(itemsInInvetory[0].getName());
+                    playerItem2.setText("");
+                }
+                else
+                {
+                    playerItem1.setText("");
+                    playerItem2.setText(itemsInInvetory[1].getName());
+                }
+                break;
+            default:
+                playerItem1.setText(itemsInInvetory[0].getName());
+                playerItem2.setText(itemsInInvetory[1].getName());
+                break;
+        }
+    }
+    
+    private void updateRoomItemButtons()
+    {
+        IItem[] itemsInCurrentRoom = logFacade.getItemsInCurrentRoom();
+        
+        switch (itemsInCurrentRoom.length)
+        {
+            case 0:
+                roomItem1.setText("");
+                roomItem2.setText("");
+                break;
+            case 1:
+                if (itemsInCurrentRoom[0] != null)
+                {
+                    roomItem1.setText(itemsInCurrentRoom[0].getName());
+                    roomItem2.setText("");
+                }
+                else
+                {
+                    roomItem1.setText("");
+                    roomItem2.setText(itemsInCurrentRoom[1].getName());
+                }
+                break;
+            default:
+                roomItem1.setText(itemsInCurrentRoom[0].getName());
+                roomItem2.setText(itemsInCurrentRoom[1].getName());
+                break;
+        }
+    }
+    
+    public void updateSaboteurAlert()
+    {
+        if (logFacade.getSaboteur().isChasingPlayer())
+            chaseAlert.setFill(Color.DARKRED);
+        else
+            chaseAlert.setFill(Color.GREEN);
     }
 
-    public void saboteurAlert() {
+    private boolean updateGameEnd()
+    {
+        if (logFacade.getGameInfo().isGameFinished())
+        {
+            if (logFacade.getTimeHolder().getTimeLeft()<= 0)
+                processGameWon();
+            else if (logFacade.getTimeHolder().getOxygenLeft() <= 0)
+                processGameLost("oxygon ran out");
+            else if (logFacade.getPlayer().getCurrentRoom() == logFacade.getSaboteur().getCurrentRoom())
+                processGameLost("saboteur hit player");
+            
+            return true;
+        }
         
+        return false;
+    }
+    
+    private void processGameWon()
+    {
+        logFacade.quit();
+        System.out.println("Game won. Congratulations!!!");
+        logFacade.getGameInfo().saveHighScore("Player 1");
+        changeScene("Highscore.fxml");
     }
 
-
+    private void processGameLost(String msg)
+    {
+        logFacade.quit();
+        System.out.println("Game lost from " + msg);
+        changeScene("MainMenu.fxml");
+    }
     
-    
+    private void changeScene(String sceneName)
+    {
+        try {
+            FXMLLoader loader = new FXMLLoader(getClass().getResource(sceneName));
+            Parent root = loader.load();
 
+            Scene scene = new Scene(root);
 
+            IInjectableController controller = loader.getController();
+            controller.injectStage(stage);
 
-
-
-
-
-
-
-
-
-
-
-
+            stage.setScene(scene);
+            stage.show();
+        }
+        catch (IOException e)
+        {
+            System.out.println("Game: Tried to change scene to " + sceneName);
+            e.printStackTrace();
+        }
+    }
 
 }

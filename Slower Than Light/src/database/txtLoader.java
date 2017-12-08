@@ -140,7 +140,7 @@ public class txtLoader implements ILoader
         int score;
         Scanner sc = null;
         try {
-            sc = new Scanner (new File("highScore"));
+            sc = new Scanner (new File("assets/maps/highscore.txt"));
         } catch (FileNotFoundException ex) {
             Logger.getLogger(txtLoader.class.getName()).log(Level.SEVERE, null, ex);
         }

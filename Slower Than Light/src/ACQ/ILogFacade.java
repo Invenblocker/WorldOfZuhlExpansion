@@ -17,6 +17,8 @@ public interface ILogFacade {
 
     void play();
     
+    void quit();
+    
     void loadGame();
     
     void newGame();
@@ -29,7 +31,11 @@ public interface ILogFacade {
     
     IItem[] getItemsInCurrentRoom();
     
+    IItem[] getPlayerItems();
+    
     Map<String, Point> getRoomPositions();
+    
+    Map<String, Integer> getHighScore();
 
     IHelper getHelper();
 
@@ -40,5 +46,7 @@ public interface ILogFacade {
     ITimeHolder getTimeHolder();
     
     IGameInfo getGameInfo();
+    
+    
     
 }

@@ -61,11 +61,14 @@ public class Player extends RoomHopper implements IPlayer
     
     public boolean hasItem(Item item)
     {
+        if (getItemCount() == 0)
+            return false;
+        
         for(Item slot : inventory)
-        {
-            if(item.equals(slot)) return(true);
-        }
-        return(false);
+            if(item == slot)
+                return true;
+        
+        return false;
     }
     
     /**
@@ -82,7 +85,7 @@ public class Player extends RoomHopper implements IPlayer
         if(item == null)
         {
             ERROR_LOG.writeToLog("Attempting to remove null from inventory");
-            return(false);
+            return false;
         }
         for(int i = inventory.length - 1; i >= 0; i--)
         {
@@ -111,18 +114,18 @@ public class Player extends RoomHopper implements IPlayer
         if(index < 0 || index >= inventory.length)
         {
             ERROR_LOG.writeToLog("Attempted to remove an item that is out of bounds to the inventory.");
-            return(false);
+            return false;
         }
         if(inventory[index] == null)
         {
             ERROR_LOG.writeToLog("Attempted to remove the item at an empty slot.");
-            return(false);
+            return false;
         }
         else
         {
             ACTION_LOG.writeToLog("Removed \"" + inventory[index].getName() + "\" from the inventory.");
             inventory[index] = null;
-            return(true);
+            return true;
         }
     }
     
@@ -133,19 +136,17 @@ public class Player extends RoomHopper implements IPlayer
      * 
      * @return The inventory as an array passed by value.
      */
-    @Override
     public Item[] getInventory()
     {
         Item[] copy = new Item[inventory.length];
         
-        for(int i = 0; i < inventory.length; i++)
-        {
+        for(int i = 0; i < copy.length; i++)
             copy[i] = inventory[i];
-        }
         
-        return(copy);
+        return copy;
     }
     
+    @Override
     public int getItemCount()
     {
         int count = 0;
@@ -156,16 +157,16 @@ public class Player extends RoomHopper implements IPlayer
                 count++;
             }
         }
-        return(count);
+        return count;
     }
     
     public SystemLog getActionLog()
     {
-        return(ACTION_LOG);
+        return ACTION_LOG;
     }
     
     public SystemLog getErrorLog()
     {
-        return(ERROR_LOG);
+        return ERROR_LOG;
     }
 }

@@ -18,6 +18,7 @@ import logic.user_input.Parser;
 import acq.IVisualUpdater;
 import java.awt.Point;
 import java.util.Map;
+import logic.elements.characters.Item;
 
 /**
  *
@@ -53,7 +54,6 @@ public class LogFacade implements ILogFacade
     public void injectGUIUpdateMethod(IVisualUpdater caller)
     {
         game.getTimeHolder().addVisualUpdateCaller(caller);
-        System.out.println("Caller" + caller);
     }
     
     @Override
@@ -68,6 +68,18 @@ public class LogFacade implements ILogFacade
     public IItem[] getItemsInCurrentRoom()
     {
         return game.getGameCommand().getItemsInCurrentRoomItems();
+    }
+    
+    @Override
+    public IItem[] getPlayerItems()
+    {
+        Item[] playerInventory = game.getPlayer().getInventory();
+        IItem[] returnInventory = new IItem[playerInventory.length];
+        
+        for (int i = 0; i < playerInventory.length; i++)
+            returnInventory[i] = playerInventory[i];
+        
+        return returnInventory;
     }
 
     @Override
@@ -110,8 +122,21 @@ public class LogFacade implements ILogFacade
     public void play()
     {
         game.play();
-       
     }
+    
+    @Override
+    public void quit()
+    {
+        game.endGame();
+    }
+
+    @Override
+    public Map<String, Integer> getHighScore() 
+    {
+        return data.getLoader().getHighscore();
+    }
+    
+    
     
     
 }

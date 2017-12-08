@@ -6,6 +6,7 @@
 package logic;
 
 import acq.IGameInfo;
+import acq.IRoom;
 import database.txtWriter;
 import java.util.ArrayList;
 import java.util.LinkedHashMap;
@@ -20,11 +21,13 @@ import logic.elements.rooms.Room;
  *
  * @author Erik
  */
-public class GameInfo implements IGameInfo {
+public class GameInfo implements IGameInfo
+{
+    private final SystemLog ACTION_LOG;
     
     private final double ALLOWED_ROOMS_DESTROYED_PERCENTAGE = 0.7;
     private double destroyedRoomsPercentage;
-    private ArrayList<Room> destroyedRooms;
+    private List<IRoom> destroyedRooms;
     
     private Exit hackedExit;
     private Helper helper;
@@ -35,6 +38,7 @@ public class GameInfo implements IGameInfo {
     
     public GameInfo(Helper helper)
     {
+        ACTION_LOG = new SystemLog("GameInfo", SystemLog.getActionLog());
         this.helper = helper;
         destroyedRoomsPercentage = 0;
         destroyedRooms = new ArrayList<>();
@@ -70,7 +74,7 @@ public class GameInfo implements IGameInfo {
     }
     
     @Override
-    public LinkedHashMap<String, Integer> saveHighScore(String playerName)
+    public Map<String, Integer> saveHighScore(String playerName)
     {
         highScoreMap.put(playerName, score);
         sortHighScore(highScoreMap);
@@ -85,7 +89,7 @@ public class GameInfo implements IGameInfo {
     public double getDestroyedRoomsPercentage() {return destroyedRoomsPercentage;}
 
     @Override
-    public Room[] getDestroyedRooms() {return destroyedRooms.toArray(new Room[0]);}
+    public List<IRoom> getDestroyedRooms() {return destroyedRooms;}
     
     public int getRoomsRepaired () {return roomsRepaired;}
     public void incrementRoomsRepaired() 
@@ -110,6 +114,7 @@ public class GameInfo implements IGameInfo {
     public Helper getHelper() {return helper;}
     public void killHepler()
     {
+        writeToActionLog("Helper(" + helper.getName() + ") was killed");
         helper = null;
     }
 
@@ -125,8 +130,9 @@ public class GameInfo implements IGameInfo {
     {
         if(value == gameFinished)
             return;
-        System.out.println("Game finished set to " + value);
+        
         gameFinished = value;
+        writeToActionLog("Game finished set to " + value);
     }
     
     private void updateDestroyedRoomsPercentage ()
@@ -160,4 +166,9 @@ public class GameInfo implements IGameInfo {
         return returnHashMap;
     }
     
+    private void writeToActionLog(String msg)
+    {
+        ACTION_LOG.writeToLog(msg);
+        System.out.println(msg);
+    }
 }
