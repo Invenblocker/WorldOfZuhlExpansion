@@ -105,7 +105,8 @@ public class GameGraphicsController implements Initializable, IInjectableControl
         
         // setup minimap
         minimap = new MiniMap(logFacade.getRoomPositions(), minimapCanvas.getGraphicsContext2D());
-        updateWithTimer();
+        updateMinimap();
+        updateIsChasingPlayer();
         
         logFacade.injectGUIUpdateMethod(this);
         logFacade.play();
@@ -120,29 +121,37 @@ public class GameGraphicsController implements Initializable, IInjectableControl
     public void injectStage(Stage _stage) {
         stage = _stage;
     }
-    
+
     @Override
-    public void updateWithTimer()
+    public void updateMinimap()
     {
-        if (logFacade.getGameInfo().isGameFinished())
+        if (!updateGameEnd())
         {
-            if (logFacade.getTimeHolder().getTimeLeft()<= 0)
-                processGameWon();
-            else if (logFacade.getTimeHolder().getOxygenLeft() <= 0)
-                processGameLost("oxygon ran out");
-            else if (logFacade.getPlayer().getCurrentRoom() == logFacade.getSaboteur().getCurrentRoom())
-                processGameLost("saboteur hit player");
+            List<IRoom> destroyedRoom = logFacade.getGameInfo().getDestroyedRooms();
+            String playerRoom = logFacade.getPlayer().getCurrentRoom().getName();
+            String saboteurRoom = logFacade.getSaboteur().getCurrentRoom().getName();
+            minimap.update(destroyedRoom, playerRoom, saboteurRoom);
             
-            return;
+            updateIsChasingPlayer();
         }
-        
-        // update MiniMap
-        List<IRoom> destroyedRoom = logFacade.getGameInfo().getDestroyedRooms();
-        String playerRoom = logFacade.getPlayer().getCurrentRoom().getName();
-        String saboteurRoom = logFacade.getSaboteur().getCurrentRoom().getName();
-        minimap.update(destroyedRoom, playerRoom, saboteurRoom);
-        
-        updateSaboteurAlert();
+    }
+
+    @Override
+    public void updateSaboteurRoom()
+    {
+        if (!updateGameEnd())
+        {
+            minimap.updateSaboteurPosition(logFacade.getSaboteur().getCurrentRoom());
+            
+            updateIsChasingPlayer();
+        }
+    }
+
+    @Override
+    public void updateIsChasingPlayer()
+    {
+        if (!updateGameEnd())
+            updateSaboteurAlert();
     }
     
     @FXML
@@ -151,8 +160,7 @@ public class GameGraphicsController implements Initializable, IInjectableControl
         if(logFacade.getGameInfo().isGameFinished())
             return;
         
-        logFacade.processCommand("go up");
-        walk();
+        walk("up");
     }
     
     @FXML
@@ -161,8 +169,7 @@ public class GameGraphicsController implements Initializable, IInjectableControl
         if(logFacade.getGameInfo().isGameFinished())
             return;
         
-        logFacade.processCommand("go down");
-        walk();
+        walk("down");
     }
 
     @FXML
@@ -171,8 +178,7 @@ public class GameGraphicsController implements Initializable, IInjectableControl
         if(logFacade.getGameInfo().isGameFinished())
             return;
         
-        logFacade.processCommand("go left");
-        walk();
+        walk("left");
     }
 
     @FXML
@@ -181,8 +187,7 @@ public class GameGraphicsController implements Initializable, IInjectableControl
         if(logFacade.getGameInfo().isGameFinished())
             return;
         
-        logFacade.processCommand("go right");
-        walk();
+        walk("right");
     }
     
     @FXML
@@ -241,6 +246,10 @@ public class GameGraphicsController implements Initializable, IInjectableControl
         
         logFacade.processCommand("repair");
         updatePlayerItemButtons();
+        
+        IRoom playerRoom = logFacade.getPlayer().getCurrentRoom();
+        minimap.updatePlayerPosition(playerRoom);
+        
         System.out.println("repair");
     }
     
@@ -285,8 +294,10 @@ public class GameGraphicsController implements Initializable, IInjectableControl
         changeScene("MainMenu.fxml");
     }
     
-    private void walk()
+    private void walk(String direction)
     {
+        logFacade.processCommand("go " + direction);
+        
         updateHeader();
         updateRoomItemButtons();
         updateSaboteurAlert();
@@ -368,6 +379,23 @@ public class GameGraphicsController implements Initializable, IInjectableControl
             chaseAlert.setFill(Color.DARKRED);
         else
             chaseAlert.setFill(Color.GREEN);
+    }
+
+    private boolean updateGameEnd()
+    {
+        if (logFacade.getGameInfo().isGameFinished())
+        {
+            if (logFacade.getTimeHolder().getTimeLeft()<= 0)
+                processGameWon();
+            else if (logFacade.getTimeHolder().getOxygenLeft() <= 0)
+                processGameLost("oxygon ran out");
+            else if (logFacade.getPlayer().getCurrentRoom() == logFacade.getSaboteur().getCurrentRoom())
+                processGameLost("saboteur hit player");
+            
+            return true;
+        }
+        
+        return false;
     }
     
     private void processGameWon()

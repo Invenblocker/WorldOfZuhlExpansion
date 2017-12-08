@@ -112,9 +112,9 @@ public class TimeHolder extends TimerTask implements ITimeHolder{
 
                     // update minimap if player is located in the ControlRoom
                     if ((game.getPlayer().getCurrentRoom().isControlRoom() || game.getPlayer().hasItem(game.getItems().get("pc"))) || game.getGameInfo().isGameFinished())
-                        caller.updateWithTimer();
+                        caller.updateMinimap();
                     else if (game.getSaboteur().isChasingPlayer())
-                        caller.updateWithTimer();
+                        caller.updateIsChasingPlayer();
                 }
             }
         });
@@ -177,6 +177,9 @@ public class TimeHolder extends TimerTask implements ITimeHolder{
             {
                 gameInfo.killHepler();
                 game.getSaboteur().setStunCountdown(15);
+                
+                game.getSaboteur().checkChasingPlayer();
+                caller.updateSaboteurRoom();
             }
             
         }
