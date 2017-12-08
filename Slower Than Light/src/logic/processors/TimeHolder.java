@@ -73,8 +73,8 @@ public class TimeHolder extends TimerTask implements ITimeHolder{
                     // check if saboteur is stunned or should move
                     if (game.getSaboteur().getStunCountdown() != 0)
                     {
+                        writeToActionLog("Decrement saboteur stun countdown " + game.getSaboteur().getStunCountdown());
                         game.getSaboteur().decrementStunCountdown();
-                        writeToActionLog("Decrement saboteur stun countdown");
                         
                         if(game.getSaboteur().getStunCountdown() == 0)
                         {
@@ -146,8 +146,7 @@ public class TimeHolder extends TimerTask implements ITimeHolder{
     
     public void setSaboteurCountdown(int value) 
     {
-        this.saboteurCountdown = value; 
-        System.out.println("set sab countdown: " + saboteurCountdown);
+        this.saboteurCountdown = value;
     }
     
     public void setHelperCountdown(int value) 
@@ -191,7 +190,7 @@ public class TimeHolder extends TimerTask implements ITimeHolder{
     private void writeToActionLog (String msg)
     {
         ACTION_LOG.writeToLog(msg);
-        System.out.println(msg);
+        //System.out.println(msg);
     }
 }
 
