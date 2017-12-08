@@ -103,6 +103,9 @@ public class GameGraphicsController implements Initializable, IInjectableControl
     {
         logFacade = GUI.getInstance().getILogFacade();
         
+        // print welcome message
+        printWelcome();
+        
         // setup minimap
         minimap = new MiniMap(logFacade.getRoomPositions(), minimapCanvas.getGraphicsContext2D());
         updateMinimap();
@@ -284,7 +287,7 @@ public class GameGraphicsController implements Initializable, IInjectableControl
         if(logFacade.getGameInfo().isGameFinished())
             return;
         
-        logFacade.processCommand("help");
+        printHelp();
     }
 
     @FXML
@@ -433,5 +436,14 @@ public class GameGraphicsController implements Initializable, IInjectableControl
             e.printStackTrace();
         }
     }
-
+  
+    private void printWelcome()
+    {
+        System.out.println("Welcome to the game");
+    }
+    
+    private void printHelp()
+    {
+        System.out.println("This is your help...");
+    }
 }

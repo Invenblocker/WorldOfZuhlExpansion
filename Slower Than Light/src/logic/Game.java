@@ -122,11 +122,13 @@ public class Game
             }
         }
         
+        System.out.println("timeholder sab time " + sc.timeHolderSC);
+        
         // Setup Timer
         if (sc.timeHolderSC == null)
             timeHolder = new TimeHolder(300, 350);
         timeHolder.setupReferences();
-        
+        System.out.println("timeholder sab time " + timeHolder.getSaboteurCountdown());
         // Setup GameCommand
         gameCommand = new GameCommand();
         
@@ -151,9 +153,6 @@ public class Game
             SystemLog.saveAllLogs();
             return;
         }
-        
-        // Print welcome message
-        gui.printWelcome();
         
         // Setup Timer
         timer = new Timer();
@@ -484,6 +483,7 @@ public class Game
             timeHolderSC = new TimeHolder(Double.parseDouble(words[1]), Double.parseDouble(words[2]));
             timeHolderSC.setHelperCountdown(Integer.parseInt(words[3]));
             timeHolderSC.setSaboteurCountdown(Integer.parseInt(words[4]));
+            System.out.println("Imported sab countdown " + Integer.parseInt(words[4]));
         }
     }
 }

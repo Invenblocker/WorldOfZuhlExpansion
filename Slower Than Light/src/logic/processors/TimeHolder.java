@@ -72,11 +72,12 @@ public class TimeHolder extends TimerTask implements ITimeHolder{
                     if (game.getSaboteur().getStunCountdown() != 0)
                     {
                         game.getSaboteur().decrementStunCountdown();
-                        writeToActionLog("Decrement stun countdown");
+                        writeToActionLog("Decrement saboteur stun countdown");
                         
                         if(game.getSaboteur().getStunCountdown() == 0)
                         {
                             checkSameRoom();
+                            
                             game.getSaboteur().checkChasingPlayer();
                         }
                     }
@@ -92,6 +93,7 @@ public class TimeHolder extends TimerTask implements ITimeHolder{
                     }    
                     else
                     {
+                        writeToActionLog("Decrement saboteur countdown " + saboteurCountdown);
                         saboteurCountdown--;
                     }
 
@@ -109,19 +111,21 @@ public class TimeHolder extends TimerTask implements ITimeHolder{
                     // update values for counting time
                     timeLeft -= (1 - gameInfo.getDestroyedRoomsPercentage()); 
                     oxygenLeft -= 1;
+                            
+                    //System.out.println("Time before: " + System.currentTimeMillis());
 
                     // update minimap if player is located in the ControlRoom
                     if ((game.getPlayer().getCurrentRoom().isControlRoom() || game.getPlayer().hasItem(game.getItems().get("pc"))) || game.getGameInfo().isGameFinished())
                         caller.updateMinimap();
                     else if (game.getSaboteur().isChasingPlayer())
                         caller.updateIsChasingPlayer();
+                    //System.out.println("Time after: " + System.currentTimeMillis());
                 }
             }
         });
         
     }
     
-    @Override
     public void setupReferences ()
     {
         if (game != null)
@@ -133,13 +137,13 @@ public class TimeHolder extends TimerTask implements ITimeHolder{
             System.out.println(msg);
         }
     }
-
-    @Override
+    
     public void setSaboteurCountdown(int value) 
     {
-        this.saboteurCountdown = value;    
+        this.saboteurCountdown = value; 
+        System.out.println("set sab countdown: " + value);
     }
-    @Override
+    
     public void setHelperCountdown(int value) 
     {
         this.helperCountdown = value;
@@ -149,20 +153,13 @@ public class TimeHolder extends TimerTask implements ITimeHolder{
     public int getSaboteurCountdown () {return saboteurCountdown;}
     
     @Override
-    public int getHelperCountdown()
-    {
-        return helperCountdown;
-    }
+    public int getHelperCountdown() {return helperCountdown;}
+    
     @Override
-    public double getOxygenLeft()
-    {
-        return oxygenLeft;
-    }
+    public double getOxygenLeft() {return oxygenLeft;}
+    
     @Override
-    public double getTimeLeft()
-    {
-        return timeLeft;
-    }
+    public double getTimeLeft() {return timeLeft;}
     
     private void checkSameRoom()
     {

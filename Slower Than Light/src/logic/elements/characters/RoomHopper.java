@@ -41,7 +41,11 @@ public abstract class RoomHopper implements IRoomHopper
     {
         Room oldRoom = currentRoom;
         currentRoom = newRoom;
-        getActionLog().writeToLog("Moved from \"" + oldRoom + "\" to \"" + newRoom + "\".");
+        
+        String msg = "Moved from \"" + oldRoom + "\" to \"" + newRoom + "\".";
+        getActionLog().writeToLog(msg);
+        System.out.println(msg);
+        
         return oldRoom;
     }
     
