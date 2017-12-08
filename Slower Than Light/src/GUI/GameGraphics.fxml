@@ -1,5 +1,13 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import java.lang.*?>
+<?import javafx.geometry.*?>
+<?import javafx.scene.canvas.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.image.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.shape.*?>
+<?import javafx.scene.text.*?>
 <?import javafx.geometry.Insets?>
 <?import javafx.scene.canvas.Canvas?>
 <?import javafx.scene.control.Button?>
@@ -19,7 +27,7 @@
 <?import javafx.scene.text.Font?>
 <?import javafx.scene.text.Text?>
 
-<AnchorPane id="AnchorPane" prefHeight="500.0" prefWidth="700.0" xmlns="http://javafx.com/javafx/9.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="GUI.GameGraphicsController">
+<AnchorPane id="AnchorPane" prefHeight="500.0" prefWidth="700.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="GUI.GameGraphicsController">
    <children>
       <VBox layoutY="-2.0" prefHeight="400.0" prefWidth="600.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
          <children>
@@ -196,7 +204,7 @@
                                  <GridPane.margin>
                                     <Insets left="10.0" />
                                  </GridPane.margin></Button>
-                              <Button fx:id="helpButton" alignment="CENTER" mnemonicParsing="false" onAction="#help" prefHeight="48.0" prefWidth="100.0" text="Help" GridPane.rowIndex="1">
+                              <Button fx:id="helpButton" alignment="CENTER" mnemonicParsing="false" onAction="#help" onKeyPressed="#keyPressed" prefHeight="48.0" prefWidth="100.0" text="Help" GridPane.rowIndex="1">
                                  <GridPane.margin>
                                     <Insets right="10.0" />
                                  </GridPane.margin></Button>
@@ -226,13 +234,13 @@
                             <RowConstraints maxHeight="1.7976931348623157E308" minHeight="-Infinity" prefHeight="42.0" vgrow="SOMETIMES" />
                           </rowConstraints>
                            <children>
-                              <Button fx:id="leftButton" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" onAction="#walkLeft" prefHeight="41.0" prefWidth="42.0" text="Left" GridPane.rowIndex="1" />
-                              <Button fx:id="upButton" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" onAction="#walkUp" prefHeight="42.0" prefWidth="41.0" text="Up" GridPane.columnIndex="1" />
-                              <Button fx:id="rightButton" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" onAction="#walkRight" prefHeight="41.0" prefWidth="42.0" text="Right" GridPane.columnIndex="2" GridPane.rowIndex="1">
+                              <Button fx:id="leftButton" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" onAction="#walkLeft" onKeyPressed="#keyPressed" prefHeight="41.0" prefWidth="42.0" text="Left" GridPane.rowIndex="1" />
+                              <Button fx:id="upButton" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" onAction="#walkUp" onKeyPressed="#keyPressed" prefHeight="42.0" prefWidth="41.0" text="Up" GridPane.columnIndex="1" />
+                              <Button fx:id="rightButton" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" onAction="#walkRight" onKeyPressed="#keyPressed" prefHeight="41.0" prefWidth="42.0" text="Right" GridPane.columnIndex="2" GridPane.rowIndex="1">
                                  <GridPane.margin>
                                     <Insets />
                                  </GridPane.margin></Button>
-                              <Button fx:id="downButton" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" onAction="#walkDown" prefHeight="42.0" prefWidth="41.0" text="Down" GridPane.columnIndex="1" GridPane.rowIndex="2" />
+                              <Button fx:id="downButton" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" onAction="#walkDown" onKeyPressed="#keyPressed" prefHeight="42.0" prefWidth="41.0" text="Down" GridPane.columnIndex="1" GridPane.rowIndex="2" />
                            </children>
                         </GridPane>
                      </children>

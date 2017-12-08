@@ -14,6 +14,7 @@ import java.io.IOException;
 import java.net.URL;
 import java.util.List;
 import java.util.ResourceBundle;
+import javafx.event.Event;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
@@ -24,11 +25,13 @@ import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.ProgressBar;
 import javafx.scene.image.ImageView;
+import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.Pane;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Circle;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
+import javax.swing.KeyStroke;
 
 /**
  * FXML Controller class
@@ -189,7 +192,6 @@ public class GameGraphicsController implements Initializable, IInjectableControl
     {
         if(logFacade.getGameInfo().isGameFinished())
             return;
-        
         walk("right");
     }
     
@@ -413,7 +415,7 @@ public class GameGraphicsController implements Initializable, IInjectableControl
     {
         logFacade.quit();
         System.out.println("Game lost from " + msg);
-        changeScene("MainMenu.fxml");
+        changeScene("Highscore.fxml");
     }
     
     private void changeScene(String sceneName)
@@ -446,4 +448,51 @@ public class GameGraphicsController implements Initializable, IInjectableControl
     {
         System.out.println("This is your help...");
     }
+
+    @FXML
+    private void keyPressed(KeyEvent event) 
+    {
+        
+        switch(event.getCode())
+        {
+            case D:
+                walk("right");
+                break;
+            case W:
+                walk("up");
+                break;
+            case A:
+                walk("left");
+                break;
+            case S:
+                walk("down");
+                break;
+            case DIGIT9:
+                takeItem0();
+                break;
+            case DIGIT0:
+                takeItem1();
+                break;
+            case R:
+                repair();
+                break;
+            case I:
+                investigate();
+                break;
+            case T:
+               //
+                break;
+            case DIGIT1:
+                dropItem0();
+                break;
+            case DIGIT2:
+                dropItem1();
+                break;
+                
+                    
+        }
+
+    }
+
+
 }
