@@ -172,7 +172,7 @@ public class Helper extends RoomHopper implements IHelper
         
         while(!foundControlRoom)  //Loop until a controlRoom has been found
         {
-            if(routeLength > Game.getInstance().getRooms().values().size())  //If the route's length exceeds that of the amount of rooms in the game, assume an error has occured.
+            if(routeLength > Game.getInstance().getRooms().values().size() || routes.size() == 0)  //If the route's length exceeds that of the amount of rooms in the game or the list of routes i empty, assume an error has occured.
             {
                 ERROR_LOG.writeToLog("No valid route to a control room was found.",  //Write a message into the error log.
                         "As a failsafe, the Helper will move from its current room to its current room");
