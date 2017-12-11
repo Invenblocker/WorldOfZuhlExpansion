@@ -45,7 +45,6 @@ public class Room implements IRoom
         return this.name;
     }
     /**
-     * 
      * @return the room's name as a string
      */
     @Override
@@ -180,7 +179,8 @@ public class Room implements IRoom
     
    /**
      * Adds an exit to the room defining where the player can go from said room.
-     * @param name The second word of the go command required to use this exit.
+     * name The second word of the go command required to use this exit.
+     * @param direction
      * @param neighbor The room that the exit added to the current leads to.
      */
     public void setExit(String direction, Exit neighbor) 
