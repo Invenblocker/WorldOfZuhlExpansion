@@ -1,7 +1,6 @@
 /*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
+ * This class is responsible for writing the current state of the game, into a
+ * txt file. The saved txt file can then be loaded by the txtLoader class.
  */
 package database;
 
@@ -21,6 +20,21 @@ public class txtWriter implements IWriter {
 
     public txtWriter() {}
 
+    
+    /**
+     * This method is used to store all the needed data of the current game.
+     * @param roomsInfo
+     * @param itemsInfo
+     * @param specialItemsInfo
+     * @param exitInfo
+     * @param playerInfo
+     * @param saboteurInfo
+     * @param helperInfo
+     * @param timeHolderInfo
+     * @param roomsRepaired
+     * @param roomPosition 
+     */
+    
     @Override
     public void saveGame(String roomsInfo, String itemsInfo,String specialItemsInfo,
             List<String> exitInfo, String playerInfo, String saboteurInfo,
@@ -75,6 +89,12 @@ public class txtWriter implements IWriter {
         txtWriter.close();
     }
      
+    /**
+     * This method writes the highscore in a given textfile.
+     * @param highScore
+     * @param highscoreName 
+     */
+    
     @Override
     public void writeHighScore(Map<String, Integer> highScore, String highscoreName)
     {
