@@ -43,19 +43,28 @@ public class LogFacade implements ILogFacade
     {
         game = Game.getInstance();
     }   
-    
+    /**
+     * gets a refrence of the objekt datafacede
+     * @param dataFacade 
+     */
     @Override
     public void injectData (IDataFacade dataFacade)
     {
         data = dataFacade;
     }
-
+/**
+ * makes a refrence to the addVisualUpdateCaller method
+ * @param caller 
+ */
     @Override
     public void injectGUIUpdateMethod(IVisualUpdater caller)
     {
         game.getTimeHolder().addVisualUpdateCaller(caller);
     }
-    
+    /**
+     * Makes a refrence to our processCommand. 
+     * @param Command 
+     */
     @Override
     public void processCommand (String Command)
     {
@@ -63,13 +72,20 @@ public class LogFacade implements ILogFacade
         Command command = process.processInput(Command);
         Game.getInstance().getGameCommand().processCommand(command);
     }
-
+/**
+ * 
+ * @return a list with items the the current room
+ */
     @Override
     public IItem[] getItemsInCurrentRoom()
     {
         return game.getGameCommand().getItemsInCurrentRoomItems();
     }
-    
+    /**
+     * First we get the player's inventory. The we make a new list with the 
+     * player's inventory. 
+     * @return the players inventory
+     */
     @Override
     public IItem[] getPlayerItems()
     {
@@ -81,27 +97,51 @@ public class LogFacade implements ILogFacade
         
         return returnInventory;
     }
-
+    /**
+     * 
+     * @return's a refrence to the roomPosition.
+     */
     @Override
     public Map<String, Point> getRoomPositions() {return game.getRoomPositions();}
-    
+    /**
+     * 
+     * @return's a refrence to the player. 
+     */
     @Override
     public IPlayer getPlayer() {return game.getPlayer();}
-    
+    /**
+     * 
+     * @return's a refrence to the Saboteur.
+     */
     @Override
     public ISaboteur getSaboteur() {return game.getSaboteur();}
-    
+    /**
+     * 
+     * @return's a refrence to the Helper
+     */
     @Override
     public IHelper getHelper() {return game.getHelper();}
-    
+    /**
+     * 
+     * @return's a refrence to timeHolder
+     */
     @Override
     public ITimeHolder getTimeHolder() {return game.getTimeHolder();} 
-    
+    /**
+     * 
+     * @return's a refrence to gameInfo.
+     */
     @Override
     public IGameInfo getGameInfo() {return game.getGameInfo();}
-    
+    /**
+     * 
+     * @return's a refrence to our dataFacede. 
+     */
     public IDataFacade getDataFacade() {return data;}
-    
+    /**
+     * Makes a refrence to where out newGame fill is.
+     * And tells setupGame how to get it when you load a new game.
+     */
     @Override
     public void newGame()
     {
@@ -109,7 +149,10 @@ public class LogFacade implements ILogFacade
         game.setupGame(data.getLoader());
        
     }
-    
+    /**
+     * Makes a refrence to where out saveGame fill is.
+     * And tells setupGame how to get it when you load a saved game.
+     */
     @Override
     public void loadGame() 
     {
@@ -117,19 +160,26 @@ public class LogFacade implements ILogFacade
         game.setupGame(data.getLoader());
         
     }
-    
+    /**
+     * makes a referece to the play method
+     */
     @Override
     public void play()
     {
         game.play();
     }
-    
+    /**
+     * make a refrence to the endGame method
+     */
     @Override
     public void quit()
     {
         game.endGame();
     }
-
+    /**
+     * 
+     * @return's a map with highscore
+     */
     @Override
     public Map<String, Integer> getHighScore() 
     {
