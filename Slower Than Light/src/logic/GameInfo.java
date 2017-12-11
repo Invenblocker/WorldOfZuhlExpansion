@@ -63,7 +63,7 @@ public class GameInfo implements IGameInfo
         destroyedRoomsPercentage = 0;
         destroyedRooms = new ArrayList<>();
         roomsRepaired = 0;
-        highScoreMap = new LinkedHashMap<>();
+        highScoreMap = LogFacade.getInstance().getDataFacade().getLoader().getHighscore();
         score = 0;
         gameFinished = false;
     }
@@ -96,17 +96,6 @@ public class GameInfo implements IGameInfo
     }
     
     /**
-     * Calculate the score for a game in the current state
-     */
-    public void calculateHighScore()
-    {
-        int destroyedRoomsCount = destroyedRooms.size();
-        double oxygenLeft = Game.getInstance().getTimeHolder().getOxygenLeft();
-        int helperAlivePoints = getHelper() != null? 20 : 0;
-        score = (int) ((roomsRepaired * 5) + (oxygenLeft * 5) + helperAlivePoints - (destroyedRoomsCount * 2));
-    }
-    
-    /**
      * Saves the current highscore map with score of the current player
      * @param playerName The name of the current player
      * @return The highcore table as a map
@@ -114,10 +103,12 @@ public class GameInfo implements IGameInfo
     @Override
     public Map<String, Integer> saveHighScore(String playerName)
     {
+        calculateHighScore();
         highScoreMap.put(playerName, score);
-        sortHighScore(highScoreMap);
+        sortHighScore();
+        
         txtWriter Writer = new txtWriter();
-        Writer.writeHighScore(highScoreMap, playerName);
+        Writer.writeHighScore(highScoreMap, "assets/maps/highscore.txt");
         
         return highScoreMap;
     }
@@ -183,11 +174,20 @@ public class GameInfo implements IGameInfo
     }
     
     /**
-     * Sort the scores using insertion sort
-     * @param highScoreMap Highscore table as a map
-     * @return The highscore table sorted and organized in a map
+     * Calculate the score for a game in the current state
      */
-    private Map<String, Integer> sortHighScore (LinkedHashMap<String, Integer>highScoreMap)
+    private void calculateHighScore()
+    {
+        int destroyedRoomsCount = destroyedRooms.size();
+        double oxygenLeft = Game.getInstance().getTimeHolder().getOxygenLeft();
+        int helperAlivePoints = getHelper() != null? 20 : 0;
+        score = (int) ((roomsRepaired * 5) + (oxygenLeft * 5) + helperAlivePoints - (destroyedRoomsCount * 2));
+    }
+    
+    /**
+     * Sort the scores using insertion sort
+     */
+    private void sortHighScore ()
     {
         // Sort highscores as list
         List<Map.Entry<String, Integer>> listToSort = new LinkedList<>(highScoreMap.entrySet());
@@ -196,7 +196,7 @@ public class GameInfo implements IGameInfo
             Map.Entry<String, Integer> currentItem = listToSort.get(i);
             int position = i;
             
-            while (position > 0 && listToSort.get(position - 1).getValue() > currentItem.getValue())
+            while (position > 0 && listToSort.get(position - 1).getValue() < currentItem.getValue())
             {
                 Map.Entry<String, Integer> itemToMove = listToSort.get(position - 1);
                 listToSort.set(position, itemToMove);
@@ -205,13 +205,11 @@ public class GameInfo implements IGameInfo
             
             listToSort.set(position, currentItem);
         }
-        
         // Copy scores from list to Map
-        Map<String, Integer>returnHashMap = new LinkedHashMap<>();
+        highScoreMap = new LinkedHashMap<>();
         for (Map.Entry<String, Integer> entry : listToSort)
-            returnHashMap.put(entry.getKey(), entry.getValue());
+            highScoreMap.put(entry.getKey(), entry.getValue());
         
-        return returnHashMap;
     }
     
     /**

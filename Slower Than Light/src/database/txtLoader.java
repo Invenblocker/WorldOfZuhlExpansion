@@ -167,7 +167,7 @@ public class txtLoader implements ILoader
         }
         while (sc.hasNext()) {
             String line = sc.nextLine();
-            String[] words = line.split (" ");
+            String[] words = line.split (":");
             
             name = words[0];
             score = Integer.parseInt(words[1]);

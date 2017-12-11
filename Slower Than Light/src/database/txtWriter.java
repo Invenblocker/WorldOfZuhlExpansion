@@ -40,11 +40,11 @@ public class txtWriter implements IWriter {
             List<String> exitInfo, String playerInfo, String saboteurInfo,
             String helperInfo, String timeHolderInfo, int roomsRepaired, String roomPosition)
     {
-        File newSave = new File("assets/maps/saveGame.txt");
         PrintWriter txtWriter = null;
+        
         try
         {// overrides the txt file if the name already exits. Otherwise it creates a new file with the name.
-            txtWriter = new PrintWriter(newSave);
+            txtWriter = new PrintWriter(new File("assets/maps/saveGame.txt"));
         }
         catch (FileNotFoundException e)
         {
@@ -98,28 +98,24 @@ public class txtWriter implements IWriter {
     @Override
     public void writeHighScore(Map<String, Integer> highScore, String highscoreName)
     {
-         // hashmappet må kun være en vis størrelse
-         File newSave = new File(highscoreName);
-         PrintWriter txtWriter = null;
-
-         try
-         {
-             txtWriter = new PrintWriter(highscoreName);
-         }
-         catch (FileNotFoundException e)
-         {
-             String msg = "Cannot setup the write file in txtWriter";
-             System.out.println(msg + "\n" + e.getMessage());
-             return;
-         }
-
-
-         for (String key : highScore.keySet())
-         {
-             txtWriter.println(key + highScore.get(key + " "));
-         }
-
-         txtWriter.close();
+        // hashmappet må kun være en vis størrelse
+        PrintWriter txtWriter = null;
+        
+        try
+        {
+           txtWriter = new PrintWriter(new File(highscoreName));
+        }
+        catch (FileNotFoundException e)
+        {
+           String msg = "Cannot setup the write file in txtWriter";
+           System.out.println(msg + "\n" + e.getMessage());
+           return;
+        }
+        
+        for (String key : highScore.keySet())
+           txtWriter.println(key + ":" + highScore.get(key));
+        
+        txtWriter.close();
     }
     
 }
