@@ -1,9 +1,9 @@
 package database;
 
 /*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
+ * This class is responsible for loading the needed game data, from a txt file. 
+ * The data needs to be stored, for then to be manipulated into game objects,
+ * so that the game can be set-up.
  */
 
 import acq.ILoader;
@@ -39,8 +39,12 @@ public class txtLoader implements ILoader
     }
 
     /**
-     * Takes the name of a txt file containing rooms and their exits, and items and their room.
-     * Then puts the rooms into the rooms HashMap with their exits, and puts the items into the items HashMap, with their respective rooms.
+     * Takes the name of a txt file containing rooms and their exits, and items 
+     * and their room.Then puts the rooms into the rooms HashMap with their 
+     * exits, and puts the items into the items HashMap, with their respective 
+     * rooms. The following loadGame method, does exactly the same, the 
+     * difference is that a saved game is loaded instead of the the default txt- 
+     * file.
      * @param gameName 
      */
     @Override
@@ -56,6 +60,15 @@ public class txtLoader implements ILoader
         exitInfo = new ArrayList<>();
         initializeGame(gameName);  
     }
+    
+    /**
+     * A scanner is used to read in all the stored text strings in the file. 
+     * The method ensures that the information are stored correctly in our prog-
+     * ram after being initialized. Dis is done by checking for the keywords, at
+     * index 0 and storing them into ther respective arrays, which is used to 
+     * manipulate the data in our string converter class.
+     * @param gameName 
+     */
     
     public void initializeGame (String gameName)
     {
@@ -132,6 +145,14 @@ public class txtLoader implements ILoader
 
     @Override
     public String[] getTimeHolderInfo() {return timeHolderInfo;}
+    
+      /**
+     * This method is used to creater a new txt file to store a highscore.
+     * A linked hashmap is used, to retain the order of the highscore, whenever 
+     * a new highscore is added to the file.
+     * The highscore is stored with a player name, and a int value for the score.
+
+     */
     
     @Override
     public LinkedHashMap<String, Integer> getHighscore() { 
