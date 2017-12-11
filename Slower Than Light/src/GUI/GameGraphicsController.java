@@ -159,6 +159,24 @@ public class GameGraphicsController implements Initializable, IInjectableControl
         if (!updateGameEnd())
             updateSaboteurAlert();
     }
+
+    @Override
+    public boolean updateGameEnd()
+    {
+        if (logFacade.getGameInfo().isGameFinished())
+        {
+            if (logFacade.getTimeHolder().getTimeLeft()<= 0)
+                processGameWon();
+            else if (logFacade.getTimeHolder().getOxygenLeft() <= 0)
+                processGameLost("oxygon ran out");
+            else if (logFacade.getPlayer().getCurrentRoom() == logFacade.getSaboteur().getCurrentRoom())
+                processGameLost("saboteur hit player");
+            
+            return true;
+        }
+        
+        return false;
+    }
     
     @FXML
     public void walkUp()
@@ -386,7 +404,7 @@ public class GameGraphicsController implements Initializable, IInjectableControl
             chaseAlert.setFill(Color.GREEN);
     }
 
-    private boolean updateGameEnd()
+    private boolean updateGameEnds()
     {
         if (logFacade.getGameInfo().isGameFinished())
         {
@@ -493,6 +511,5 @@ public class GameGraphicsController implements Initializable, IInjectableControl
         }
 
     }
-
-
+    
 }

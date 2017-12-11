@@ -18,12 +18,19 @@ public class LayeredSprite extends BaseSprite{
     
     private Map<Integer, LinkedList<BaseSprite>> sprites;
     
-    
+    /**
+     * Initializes the LayeredSprite
+     */
     public LayeredSprite()
     {
         sprites = new TreeMap<>();
     }
     
+    /**
+     * adds a sprite with a layer, to our Map.
+     * @param layerKey
+     * @param sprite 
+     */
     public void addSprite(int layerKey, BaseSprite sprite)
     {
         LinkedList<BaseSprite> tempList = sprites.get(layerKey);
@@ -34,13 +41,11 @@ public class LayeredSprite extends BaseSprite{
         tempList.add(sprite);
         sprites.put(layerKey, tempList);
     }
-    
-    public void addSprite(int layerKey, BaseSprite sprite, boolean samePositionAsParent)
-    {
-        sprite.setPosition(getX(), getY());
-        addSprite(layerKey, sprite);
-    }
-    
+   
+    /**
+     * renders our Map, so the images will be drawn in the correct order.
+     * @param gc 
+     */
     @Override
     public void render (GraphicsContext gc)
     {

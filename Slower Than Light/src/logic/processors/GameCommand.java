@@ -43,7 +43,6 @@ public class GameCommand
         {
             case GO:
                 goRoom(command);
-                //game.getGUI().updateRoom(game.getPlayer().getCurrentRoom());
                 printInventory();
                 break;
             case TAKE:
@@ -72,7 +71,7 @@ public class GameCommand
                 saveGame();
                 break;
             case HELP:
-                //game.getGUI().printHelp();
+                System.out.println("No help for you!");
                 break;
             case QUIT:
                 //quit(command);
