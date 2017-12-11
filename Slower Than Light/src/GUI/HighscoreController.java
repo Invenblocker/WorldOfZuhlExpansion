@@ -47,9 +47,12 @@ public class HighscoreController implements Initializable, IInjectableController
 
     
     /**
-     * In this method we initialize the scene. We make a local variable of the logfacade.
-     * The we use that to get our highscore method. We the put our data that we get from that
-     * method and add's it to a new arraylist. We make 2 different arraylist with the names in one and the score in the other.
+     * In this method we initialize the scene. 
+     * We make a local variable of the logfacade.
+     * The we use that to get our highscore method. We the put our data that we 
+     * get from that
+     * method and add's it to a new arraylist. We make 2 different arraylist 
+     * with the names in one and the score in the other.
      * Last we a observablelist to the 2 arraylists and show them on the scene.
      * Initializes the controller class.
      */
