@@ -68,13 +68,20 @@ public class Item implements IItem
     {
         return defaultRoom;
     }
-    
+    /**
+     * @author JN97
+     * @return The item's name,
+     */
     @Override
     public String toString()
     {
-        return this.getName();
+        return this.getName(); 
     }
     
+    /**
+     * @author JN97
+     * returns item to the default room.
+     */
     public void returnToDefaultRoom()
     {
         defaultRoom.setItem(this);
