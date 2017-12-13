@@ -201,39 +201,16 @@ public class GameGraphicsController implements Initializable, IInjectableControl
     }
     
     @FXML
-    public void walkUp()
-    {
-        if(logFacade.getGameInfo().isGameFinished())
-            return;
-        
-        walk("up");
-    }
+    public void walkUp() {walk("up");}
     
     @FXML
-    public void walkDown()
-    {
-        if(logFacade.getGameInfo().isGameFinished())
-            return;
-        
-        walk("down");
-    }
+    public void walkDown() {walk("down");}
 
     @FXML
-    public void walkLeft()
-    {
-        if(logFacade.getGameInfo().isGameFinished())
-            return;
-        
-        walk("left");
-    }
+    public void walkLeft() {walk("left");}
 
     @FXML
-    public void walkRight()
-    {
-        if(logFacade.getGameInfo().isGameFinished())
-            return;
-        walk("right");
-    }
+    public void walkRight() {walk("right");}
     
     @FXML
     public void dropItem0()
@@ -378,6 +355,9 @@ public class GameGraphicsController implements Initializable, IInjectableControl
             case T:
                //
                 break;
+            case H:
+                help();
+                break;
             case DIGIT1:
                 dropItem0();
                 break;
@@ -390,6 +370,9 @@ public class GameGraphicsController implements Initializable, IInjectableControl
     
     private void walk(String direction)
     {
+        if(logFacade.getGameInfo().isGameFinished())
+            return;
+        
         logFacade.processCommand("go " + direction);
         
         IRoom playerRoom = logFacade.getPlayer().getCurrentRoom();
@@ -576,12 +559,15 @@ public class GameGraphicsController implements Initializable, IInjectableControl
     
     private void printHelp()
     {
-        writeToLog("This is your help...");
+        writeToLog("You can use the keys:\n  W,A,S,D,R,I and H");
     }
     
     private void writeToLog(String text)
     {
-        logTextArea.appendText(text + "\n");
+        if (logTextArea.getText().equals(""))
+            logTextArea.appendText("- " + text);
+        else
+            logTextArea.appendText("\n- " + text);
     }
     
 }

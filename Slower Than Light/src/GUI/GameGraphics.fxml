@@ -78,9 +78,9 @@
                            </children>
                         </HBox>
                         <Pane prefHeight="200.0" prefWidth="200.0" />
-                        <HBox prefHeight="100.0" prefWidth="200.0">
+                        <HBox prefHeight="120.0" prefWidth="700.0">
                            <children>
-                              <StackPane fx:id="logPane" prefHeight="150.0" prefWidth="200.0">
+                              <StackPane fx:id="logPane" prefHeight="100.0" prefWidth="231.0">
                                  <children>
                                     <TextArea fx:id="logTextArea" prefHeight="200.0" prefWidth="200.0" />
                                  </children>
@@ -89,7 +89,7 @@
                                  <children>
                                     <Text stroke="WHITE" strokeType="OUTSIDE" strokeWidth="4.0" text="Inventory">
                                        <VBox.margin>
-                                          <Insets left="40.0" />
+                                          <Insets left="40.0" top="10.0" />
                                        </VBox.margin>
                                     </Text>
                                     <HBox prefHeight="100.0" prefWidth="200.0">
@@ -125,7 +125,7 @@
                                  <children>
                                     <Text stroke="WHITE" strokeType="OUTSIDE" strokeWidth="4.0" text="Room stuff">
                                        <VBox.margin>
-                                          <Insets right="40.0" />
+                                          <Insets right="40.0" top="10.0" />
                                        </VBox.margin>
                                     </Text>
                                     <HBox prefHeight="100.0" prefWidth="200.0">
