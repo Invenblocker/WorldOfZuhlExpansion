@@ -324,7 +324,7 @@ public class GameGraphicsController implements Initializable, IInjectableControl
     }
     
     @FXML
-    private void keyPressed(KeyEvent event) 
+    private void keyPressed(KeyEvent event) throws IOException 
     {
         switch(event.getCode())
         {
@@ -363,6 +363,9 @@ public class GameGraphicsController implements Initializable, IInjectableControl
                 break;
             case DIGIT2:
                 dropItem1();
+                break;
+            case Q:
+                quit();
                 break;
                 
         }
