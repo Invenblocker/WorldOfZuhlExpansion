@@ -12,6 +12,7 @@ import java.io.FileNotFoundException;
 import java.util.ArrayList;
 import java.util.LinkedHashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.Scanner;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -151,26 +152,40 @@ public class txtLoader implements ILoader
      * A linked hashmap is used, to retain the order of the highscore, whenever 
      * a new highscore is added to the file.
      * The highscore is stored with a player name, and a int value for the score.
-
+     * @return The map containing information about all highscores
      */
     
     @Override
     public LinkedHashMap<String, Integer> getHighscore() { 
-        this.highScore = new LinkedHashMap<String, Integer> ();
-        String name;
-        int score;
+        this.highScore = new LinkedHashMap<> ();
+        int score = (int)Double.NaN;
+        
         Scanner sc = null;
-        try {
+        try
+        {
             sc = new Scanner (new File("assets/maps/highscore.txt"));
-        } catch (FileNotFoundException ex) {
+        }
+        catch (FileNotFoundException ex)
+        {
             Logger.getLogger(txtLoader.class.getName()).log(Level.SEVERE, null, ex);
         }
+        
         while (sc.hasNext()) {
             String line = sc.nextLine();
             String[] words = line.split (":");
             
-            name = words[0];
-            score = Integer.parseInt(words[1]);
+            String name = words[0];
+            
+            try
+            {
+                score = Integer.parseInt(words[1]);
+            }
+            catch (NumberFormatException e)
+            {
+                System.out.println("Highscore does not have the right format");
+                e.printStackTrace();
+            }
+            
             highScore.put(name, score);
         }
         
