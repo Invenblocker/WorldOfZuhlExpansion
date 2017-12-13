@@ -1,9 +1,9 @@
 package database;
 
 /*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
+ * This class is responsible for loading the needed game data, from a txt file. 
+ * The data needs to be stored, for then to be manipulated into game objects,
+ * so that the game can be set-up.
  */
 
 import acq.ILoader;
@@ -12,6 +12,7 @@ import java.io.FileNotFoundException;
 import java.util.ArrayList;
 import java.util.LinkedHashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.Scanner;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -39,8 +40,12 @@ public class txtLoader implements ILoader
     }
 
     /**
-     * Takes the name of a txt file containing rooms and their exits, and items and their room.
-     * Then puts the rooms into the rooms HashMap with their exits, and puts the items into the items HashMap, with their respective rooms.
+     * Takes the name of a txt file containing rooms and their exits, and items 
+     * and their room.Then puts the rooms into the rooms HashMap with their 
+     * exits, and puts the items into the items HashMap, with their respective 
+     * rooms. The following loadGame method, does exactly the same, the 
+     * difference is that a saved game is loaded instead of the the default txt- 
+     * file.
      * @param gameName 
      */
     @Override
@@ -56,6 +61,15 @@ public class txtLoader implements ILoader
         exitInfo = new ArrayList<>();
         initializeGame(gameName);  
     }
+    
+    /**
+     * A scanner is used to read in all the stored text strings in the file. 
+     * The method ensures that the information are stored correctly in our prog-
+     * ram after being initialized. Dis is done by checking for the keywords, at
+     * index 0 and storing them into ther respective arrays, which is used to 
+     * manipulate the data in our string converter class.
+     * @param gameName 
+     */
     
     public void initializeGame (String gameName)
     {
@@ -133,23 +147,45 @@ public class txtLoader implements ILoader
     @Override
     public String[] getTimeHolderInfo() {return timeHolderInfo;}
     
+      /**
+     * This method is used to creater a new txt file to store a highscore.
+     * A linked hashmap is used, to retain the order of the highscore, whenever 
+     * a new highscore is added to the file.
+     * The highscore is stored with a player name, and a int value for the score.
+     * @return The map containing information about all highscores
+     */
+    
     @Override
     public LinkedHashMap<String, Integer> getHighscore() { 
-        this.highScore = new LinkedHashMap<String, Integer> ();
-        String name;
-        int score;
+        this.highScore = new LinkedHashMap<> ();
+        int score = (int)Double.NaN;
+        
         Scanner sc = null;
-        try {
+        try
+        {
             sc = new Scanner (new File("assets/maps/highscore.txt"));
-        } catch (FileNotFoundException ex) {
+        }
+        catch (FileNotFoundException ex)
+        {
             Logger.getLogger(txtLoader.class.getName()).log(Level.SEVERE, null, ex);
         }
+        
         while (sc.hasNext()) {
             String line = sc.nextLine();
-            String[] words = line.split (" ");
+            String[] words = line.split (":");
             
-            name = words[0];
-            score = Integer.parseInt(words[1]);
+            String name = words[0];
+            
+            try
+            {
+                score = Integer.parseInt(words[1]);
+            }
+            catch (NumberFormatException e)
+            {
+                System.out.println("Highscore does not have the right format");
+                e.printStackTrace();
+            }
+            
             highScore.put(name, score);
         }
         

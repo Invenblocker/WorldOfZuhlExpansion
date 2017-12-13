@@ -1,7 +1,6 @@
 /*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
+ * This class is responsible for writing the current state of the game, into a
+ * txt file. The saved txt file can then be loaded by the txtLoader class.
  */
 package database;
 
@@ -21,16 +20,31 @@ public class txtWriter implements IWriter {
 
     public txtWriter() {}
 
+    
+    /**
+     * This method is used to store all the needed data of the current game.
+     * @param roomsInfo
+     * @param itemsInfo
+     * @param specialItemsInfo
+     * @param exitInfo
+     * @param playerInfo
+     * @param saboteurInfo
+     * @param helperInfo
+     * @param timeHolderInfo
+     * @param roomsRepaired
+     * @param roomPosition 
+     */
+    
     @Override
     public void saveGame(String roomsInfo, String itemsInfo,String specialItemsInfo,
             List<String> exitInfo, String playerInfo, String saboteurInfo,
             String helperInfo, String timeHolderInfo, int roomsRepaired, String roomPosition)
     {
-        File newSave = new File("assets/maps/saveGame.txt");
         PrintWriter txtWriter = null;
+        
         try
         {// overrides the txt file if the name already exits. Otherwise it creates a new file with the name.
-            txtWriter = new PrintWriter(newSave);
+            txtWriter = new PrintWriter(new File("assets/maps/saveGame.txt"));
         }
         catch (FileNotFoundException e)
         {
@@ -75,31 +89,33 @@ public class txtWriter implements IWriter {
         txtWriter.close();
     }
      
+    /**
+     * This method writes the highscore in a given textfile.
+     * @param highScore
+     * @param highscoreName 
+     */
+    
     @Override
     public void writeHighScore(Map<String, Integer> highScore, String highscoreName)
     {
-         // hashmappet må kun være en vis størrelse
-         File newSave = new File(highscoreName);
-         PrintWriter txtWriter = null;
-
-         try
-         {
-             txtWriter = new PrintWriter(highscoreName);
-         }
-         catch (FileNotFoundException e)
-         {
-             String msg = "Cannot setup the write file in txtWriter";
-             System.out.println(msg + "\n" + e.getMessage());
-             return;
-         }
-
-
-         for (String key : highScore.keySet())
-         {
-             txtWriter.println(key + highScore.get(key + " "));
-         }
-
-         txtWriter.close();
+        // hashmappet må kun være en vis størrelse
+        PrintWriter txtWriter = null;
+        
+        try
+        {
+           txtWriter = new PrintWriter(new File(highscoreName));
+        }
+        catch (FileNotFoundException e)
+        {
+           String msg = "Cannot setup the write file in txtWriter";
+           System.out.println(msg + "\n" + e.getMessage());
+           return;
+        }
+        
+        for (String key : highScore.keySet())
+           txtWriter.println(key + ":" + highScore.get(key));
+        
+        txtWriter.close();
     }
     
 }

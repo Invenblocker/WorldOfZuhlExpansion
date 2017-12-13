@@ -15,13 +15,17 @@ import logic.elements.rooms.WorkshopRoom;
 import logic.user_input.Command;
 import logic.user_input.CommandWord;
 import logic.SystemLog;
-import logic.elements.rooms.Exit;
 
-public class GameCommand {
+public class GameCommand
+{
+    private final SystemLog ACTION_LOG;
+    
     private Game game;
 
     public GameCommand()
     {
+        ACTION_LOG = new SystemLog("GameCommand", SystemLog.getActionLog());
+        
         game = Game.getInstance();
     }
 
@@ -39,7 +43,6 @@ public class GameCommand {
         {
             case GO:
                 goRoom(command);
-                game.getGUI().updateRoom(game.getPlayer().getCurrentRoom());
                 printInventory();
                 break;
             case TAKE:
@@ -68,7 +71,7 @@ public class GameCommand {
                 saveGame();
                 break;
             case HELP:
-                game.getGUI().printHelp();
+                System.out.println("No help for you!");
                 break;
             case QUIT:
                 //quit(command);
@@ -83,7 +86,11 @@ public class GameCommand {
         else
             System.out.println("Invalid call of processCommand!");
     }
-    
+    /**
+     * Makes a list of items in the current room. It the make a new list called itemArray
+     * and last it returnes the itemArray.
+     * @return 
+     */
     public Item[] getItemsInCurrentRoomItems ()
     {
         List<Item> itemList = roomItemList();
@@ -115,7 +122,6 @@ public class GameCommand {
         {
             Room pastRoom = game.getPlayer().setRoom(exitRoom);
             
-            
             if (game.getSaboteur().getCurrentRoom() == exitRoom && game.getSaboteur().getStunCountdown() == 0)
             {
                 Helper helper = game.getGameInfo().getHelper();
@@ -127,14 +133,14 @@ public class GameCommand {
                 else
                 {
                     game.getGameInfo().setGameFinished(true);
-                    System.out.println("You went into the same room as the saboteur. ");
-                    System.out.println("Game over !! ");
+                    writeToActionLog("You went into the same room as the saboteur. ");
+                    writeToActionLog("Game over !!");
                     return;
                 }
             }
             
             int saboteurCountdown = game.getSaboteur().chasePlayer(pastRoom);
-            if (saboteurCountdown != -1)
+            if (saboteurCountdown != -1 && game.getSaboteur().getStunCountdown() == 0)
                 game.getTimeHolder().setSaboteurCountdown(saboteurCountdown);   
         }
         else
@@ -155,12 +161,6 @@ public class GameCommand {
         if (!command.hasSecondWord())
         {
             System.out.println("Take what ? ");
-            return;
-        }
-        
-        if (!game.getPlayer().getCurrentRoom().isOperating())
-        {
-            writeToActionLog("You cannot take the item because the room is broken");
             return;
         }
         
@@ -250,48 +250,57 @@ public class GameCommand {
             System.out.println("This is not a valid item ! ");
         }
     }
-    
+    /**
+     * At first references to the player's inventory and to roomCheck method. 
+     * We then check if the exit is not hacked. If the exit is hacked we check if 
+     * the room is the controleRoom. We the setOperating to true. If it's not the 
+     * controle room we check if there is any items in the players inventory. 
+     * If there is any items we check if its the pc. If that is the case the 
+     * player repairs the exit and removes the computer from the inventory.
+     * @param command 
+     */
     private void repairDoor(Command command){
         
-        Item[] inventory = game.getPlayer().getInventory();
-        Room roomCheck = game.getPlayer().getCurrentRoom();
+        Item[] inventory = game.getPlayer().getInventory(); // Makes a references to inventory
+        Room roomCheck = game.getPlayer().getCurrentRoom(); // Makes a references to roomCheck
+
         
-        if(game.getGameInfo().getHackedExit() != null)
+        if(game.getGameInfo().getHackedExit() != null) //check if the exit is hacked
         {
-            if ( game.getPlayer().getCurrentRoom().isControlRoom())
+            if ( game.getPlayer().getCurrentRoom().isControlRoom()) // checks is the room is controleRoom
             {
-                System.out.println("You successfully repaired the broken door");
-                game.getGameInfo().getHackedExit().setOperating(true);
+                game.getGameInfo().getHackedExit().setOperating(true); // sets the exit to true
                 game.getGameInfo().repairHackedExit();
+                System.out.println("You successfully repaired the broken door");
             }
             else
             {
-                if(inventory.length != 0)
+                if(inventory.length != 0) // checks if any items in inventory
                 {
-                    for (Item item : inventory)
+                    for (Item item : inventory) // goes though the inventory
                     {
-                        if(item.getName().equals("pc"))
+                        if(item.getName().equals("pc")) //Checks if there a pc in inventory
                         {
                             System.out.println("You successfully repaired the door, and removed your item: " + item.getName());
-                            game.getGameInfo().getHackedExit().setOperating(true);
-                            game.getGameInfo().repairHackedExit();
-                            game.getPlayer().removeItem(item);
+                            game.getGameInfo().getHackedExit().setOperating(true); // stes hackedExit to true
+                            game.getGameInfo().repairHackedExit(); // repairs exit
+                            game.getPlayer().removeItem(item); // removes pc from inventory
                         }
                         else
                         {
-                            System.out.println("you dont own the item required to repair the door!");
+                            System.out.println("you dont own the item required to repair the door!"); // prints if the pc is not in inventory
                         }
                     }
                 }
-                System.out.println("You have no items");
+                System.out.println("You have no items"); // prints if inventory is empty
             }
         }
-        System.out.println("No door is destroyed");
+        System.out.println("No door is destroyed"); // prints if exit is no destoryed
     }
     
     
     /**
-     * This class starts by checking if the room is broken. If the room is broken 
+     * This method starts by checking if the room is broken. If the room is broken 
      * it will compare the repair tool to the player's inventory. If the player have the
      * item needed to repair the room it will do so, and remove the item fra player's inventory
      * and set it to default. Else it says what you need to fix the room.
@@ -320,14 +329,12 @@ public class GameCommand {
                     game.getGameInfo().updateRoomsDestroyed();
                     
                     writeToActionLog("The room was repaired with a " + item);
-                    //System.out.println("You had the necessary tool to repair the room. " + roomRepairTool + " was used and removed from the inventory");  
                     return;
                 }
             }
         }
         
         writeToActionLog("You didn't have the necessary item to repair the room (" + roomRepairTool + ")");
-        //System.out.println("You didn't have the " + roomRepairTool + ". You can't repair this room!");
     }
     
     /**
@@ -424,22 +431,6 @@ public class GameCommand {
     }
     
     /**
-     * Quits the game if no second word has been entered by the player.
-     * @param command The command entered by the player
-     * @return Returns if the quit command is valid.
-     */
-    /*private void quit(Command command) 
-    {
-        if (command.hasSecondWord())
-        {
-            System.out.println("What do you want to quit?");
-            return false;
-        }
-        else
-            return true;
-    }*/
-    
-    /**
      * Finds the item's default room and sets the item to that room. 
      * @param item 
      */
@@ -468,9 +459,11 @@ public class GameCommand {
     
     /**
      * ArrayList, which holds information about the items in the player's current room.
-     * Checks are made, to see if the currentRoom is an instance of the class ItemRoom or a WorkShopRoom.
+     * Checks are made, to see if the currentRoom is an instance
+     * of the class ItemRoom or a WorkShopRoom.
      * In both cases the currentRoom's inventory is returned.
-     * However, if the currentRoom is not an instance of either of these classes, it returns null.
+     * However, if the currentRoom is not an instance of either 
+     * of these classes, it returns null.
      */
     private ArrayList<Item> roomItemList ()
     {
@@ -500,7 +493,7 @@ public class GameCommand {
     
     private void writeToActionLog (String msg)
     {
-        SystemLog.getActionLog().writeToLog(msg);
+        ACTION_LOG.writeToLog(msg);
         System.out.println(msg);
     }
 }

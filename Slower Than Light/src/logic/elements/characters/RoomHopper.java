@@ -11,7 +11,7 @@ import logic.elements.rooms.*;
 
 /**
  *
- * @author Invenblocer & JN97
+ * @author Invenblocker & JN97
  */
 public abstract class RoomHopper implements IRoomHopper
 {
@@ -41,7 +41,11 @@ public abstract class RoomHopper implements IRoomHopper
     {
         Room oldRoom = currentRoom;
         currentRoom = newRoom;
-        getActionLog().writeToLog("Moved from \"" + oldRoom + "\" to \"" + newRoom + "\".");
+        
+        String msg = "Moved from \"" + oldRoom + "\" to \"" + newRoom + "\".";
+        getActionLog().writeToLog(msg);
+        System.out.println(msg);
+        
         return oldRoom;
     }
     
@@ -58,6 +62,15 @@ public abstract class RoomHopper implements IRoomHopper
         return currentRoom;
     }
     
+    /**
+     * @author JN97
+     * @return RoomHopper's ACTION_LOG
+     */
     public abstract SystemLog getActionLog();
+    
+    /**
+     * @author JN97
+     * @return RoomHopper's ERROR_LOG
+     */
     public abstract SystemLog getErrorLog();
 }

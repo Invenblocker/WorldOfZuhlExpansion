@@ -8,8 +8,9 @@ package logic.elements.characters;
 import logic.SystemLog;
 
 /**
- *
- * @author barth_000
+ * A series of tasks that can be used to 
+ * 
+ * @author Invenblocker & JN97
  */
 public enum HelperTask
 {
@@ -17,16 +18,27 @@ public enum HelperTask
     
     private final String COMMAND_STRING;
     
+    /**
+     * @param commandString The name of the command. 
+     */
     HelperTask(String commandString)
     {
         this.COMMAND_STRING = commandString;
     }
     
+    /**
+     * @return The name of the command.
+     */
     public String toString()
     {
         return(COMMAND_STRING);
     }
     
+    /**
+     * Finds a task based on a string.
+     * @param task A string describing the task tath should be used.
+     * @return The task that corresponds to the entered String.
+     */
     public static HelperTask getHelperTask(String task)
     {
         switch (task.toLowerCase())

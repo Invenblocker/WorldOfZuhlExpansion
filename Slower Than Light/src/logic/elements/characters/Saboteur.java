@@ -12,7 +12,7 @@ import logic.elements.rooms.*;
 import java.util.*;
 import logic.SystemLog;
 /**
- *
+ * The main and only antagonist in the game.
  * @author Invenblocker & JN97
  */
 public class Saboteur extends RoomHopper implements ISaboteur
@@ -24,10 +24,8 @@ public class Saboteur extends RoomHopper implements ISaboteur
     private final SystemLog ACTION_LOG, ERROR_LOG;
     
     /**
-     * @author Invenblocker
-     * 
      * The constructor for the basic saboteur.
-     * 
+     * @author Invenblocker
      * @param room The starting room for the saboteur.
      * @param chanceOfSabotage The starting chance that the saboteur will sabotage its current room.
      * @param chanceOfSabotageGrowth How much the chance of sabotaging the current room should grow when moving instead of sabotaging.
@@ -45,10 +43,8 @@ public class Saboteur extends RoomHopper implements ISaboteur
     }
     
     /**
-     * @author Invenblocker
-     * 
      * A simple AI that causes the saboteur to act.
-     * 
+     * @author Invenblocker
      * @return an integer dictating the amount of time to the next action.
      */
     public int performAction()
@@ -126,14 +122,12 @@ public class Saboteur extends RoomHopper implements ISaboteur
     }
     
     /**
-     * @author Invenblocker
-     * 
      * Causes the saboteur to chase the player by entering the room entered in
      * the parameter if they're actively chasing. Returns -1 if not actively
      * chasing, if actively chasing, returns an integer from 5 to 10 both
      * both inclusive stating the amount of time before the saboteur's next
      * action.
-     * 
+     * @author Invenblocker
      * @param room The room in which the saboteur should chase
      * @return The amount of time to the next action (-1 if not actively chasing)
      */
@@ -164,10 +158,8 @@ public class Saboteur extends RoomHopper implements ISaboteur
     }
     
     /**
-     * @author Invenblocker
-     * 
      * Checks to see if the saboteur is chasing the player.
-     * 
+     * @author Invenblocker
      * @return true if chasing, false if not.
      */
     @Override
@@ -176,6 +168,12 @@ public class Saboteur extends RoomHopper implements ISaboteur
         return(chasingPlayer);
     }
     
+    /**
+     * Checks to see if the Saboteur should chase the player
+     * @author Invenblocker
+     * @return The amount of time that shoud pass before the next action if the
+     *         Saboteur starts chasing. -1 if it doesn't.
+     */
     public int checkChasingPlayer()
     {
         if(stunCountdown > 0)
@@ -204,42 +202,77 @@ public class Saboteur extends RoomHopper implements ISaboteur
         }
     }
     
+    /**
+     * @author Invenblocker
+     * @return The current stun countdown
+     */
     public int getStunCountdown()
     {
         return(stunCountdown);
     }
     
+    /**
+     * @author JN97
+     * @param value The value the stun countdown should be set to.
+     */
     public void setStunCountdown(int value)
     {
         stunCountdown = value;
     }
     
+    /**
+     * Adds or subtracts time to or from the stun coundown.
+     * 
+     * @author JN97
+     * @param value The value to be added, use negative value for subtraction.
+     */
     public void addStunCountdown(int value)
     {
         stunCountdown += value;
     }
     
+    /**
+     * Decrements the stun countdown by 1
+     * 
+     * @author Invenblocker
+     */
     public void decrementStunCountdown()
     {
         addStunCountdown(-1);
     }
     
+    /**
+     * @author Invenblocker
+     * @return The chance of sabotage
+     */
     public double getChanceOfSabotage()
     {
         return(chanceOfSabotage);
     }
     
+    /**
+     * @author JN97
+     * @param value The value the chance of sabotage should be set to 
+     */
     public void setChanceOfSabotage(double value)
     {
         chanceOfSabotage = value;
     }
     
+    /**
+     * @author Invenblocker
+     * @return The Saboteur's ACTION_LOG
+     */
     @Override
     public SystemLog getActionLog()
     {
         return(ACTION_LOG);
     }
     
+    /**
+     * @author Invenblocker
+     * @return The Saboteur's ERROR_LOG
+     */
     @Override
     public SystemLog getErrorLog()
     {

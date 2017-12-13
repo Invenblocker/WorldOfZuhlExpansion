@@ -15,7 +15,6 @@ import java.util.Map;
 import java.util.ResourceBundle;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
-import javafx.collections.ObservableMap;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
@@ -23,8 +22,6 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.ListView;
-import javafx.scene.control.TableColumn;
-import javafx.scene.control.TableView;
 import javafx.scene.input.MouseEvent;
 import javafx.stage.Stage;
 
@@ -35,9 +32,6 @@ import javafx.stage.Stage;
  */
 public class HighscoreController implements Initializable, IInjectableController 
 {
-
-    
-
     ILogFacade logFacade;
     Stage stage;
     @FXML
@@ -49,10 +43,17 @@ public class HighscoreController implements Initializable, IInjectableController
     private ObservableList<String> nameList;
     @FXML
     private ListView<Integer> scoreCol;
-        private ObservableList<Integer> scoreList;
+    private ObservableList<Integer> scoreList;
 
     
     /**
+     * In this method we initialize the scene. 
+     * We make a local variable of the logfacade.
+     * The we use that to get our highscore method. We the put our data that we 
+     * get from that
+     * method and add's it to a new arraylist. We make 2 different arraylist 
+     * with the names in one and the score in the other.
+     * Last we a observablelist to the 2 arraylists and show them on the scene.
      * Initializes the controller class.
      */
     @Override
@@ -61,7 +62,6 @@ public class HighscoreController implements Initializable, IInjectableController
         logFacade = GUI.getInstance().getILogFacade();
         
         Map<String, Integer> highscore = logFacade.getHighScore();
-        
         
         List<String>nameStrings = new ArrayList<>(highscore.keySet());
         nameList = FXCollections.observableList(nameStrings);
@@ -78,7 +78,12 @@ public class HighscoreController implements Initializable, IInjectableController
     {
         stage = _stage;
     }
-
+/**
+ * In this method we handle what happens when the user presses the back button in the highscore scene.
+ * We first make at new FXML loader and defines what the loader has to load when the button is pressed. 
+ * @param event
+ * @throws IOException 
+ */
     @FXML
     private void handleBackToMainMenuBtn(MouseEvent event) throws IOException 
     {
@@ -94,16 +99,4 @@ public class HighscoreController implements Initializable, IInjectableController
         stage.setScene(scene);
         stage.show();
     }
-    /*
-    private TableView<Map>highscoreTableView()
-            {
-                LinkedHashMap<String, Integer>highscoreMap = new LinkedHashMap<>();
-        
-                highscoreMap.putAll(GUI.getInstance().);
-        
-        tableViewHighscore = FXCollections.observableMap((Map<String, Integer>) highscoreMap);
-        
-        highscoreTw.setItems(tableViewHighscore);
-            }
-*/
 }

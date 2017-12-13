@@ -44,7 +44,9 @@ public class Room implements IRoom
     {
         return this.name;
     }
-    
+    /**
+     * @return the room's name as a string
+     */
     @Override
     public String toString()
     {
@@ -67,22 +69,15 @@ public class Room implements IRoom
         return this.controlRoom;
     }
 
-     public ArrayList<Tool> getRepairTools() {
-        return this.repairTools;
+     public ArrayList<Tool> getRepairTools() { 
+        return this.repairTools; // returnes the repair tool for the room
     }
      
       public void addRepairTools(Tool tool) {
-        this.repairTools.add(tool);
+        this.repairTools.add(tool); // add's a repair tool to the room.
     }
-
-    /**
-     * Returns a String informing the player of the current room as well as all
-     * possible exits from the room.
-     * @return The current room as well as where the player can go from said room.
-     */
-
-    
-    /**
+      
+ /**
      * Returns a String containing a list of exits.
      * @return A String with a list of possible exits from the current room.
      */
@@ -115,33 +110,38 @@ public class Room implements IRoom
     {
       
         
-        if(!exits.keySet().contains(direction))
+        if(!exits.keySet().contains(direction)) // Checks if there issent a direction to the exit
         {
-            SystemLog.getErrorLog().writeToLog("The room \"" + this.getName() + "\" does not have an exit in the direction \"" + direction + "\".");
+            SystemLog.getErrorLog().writeToLog("The room \"" + this.getName() + "\" does not have an exit in the direction \"" + direction + "\"."); // write's it to the errorlog
             return null;
         }
         else
         {
-            if(exits.get(direction) != null)
+            if(exits.get(direction) != null) // checks the direction of the exit
             {
-                if(exits.get(direction).getExitRoom1().name.equals(this.name)){
+                if(exits.get(direction).getExitRoom1().name.equals(this.name)){ // finds out what rooms there is on both sides of the exit.
                     Room exit = exits.get(direction).getExitRoom2();
                     
                     return exit;
                 }
                 else{
-                   return exits.get(direction).getExitRoom1();
+                   return exits.get(direction).getExitRoom1(); // returns the exit in the specific direction
                 }
             }
             else
             {
                 
-                SystemLog.getErrorLog().writeToLog("The exit stored by the room \"" + this.getName() + "\" stores an empty exit in the direction \"" + direction + "\".");
+                SystemLog.getErrorLog().writeToLog("The exit stored by the room \"" + this.getName() + "\" stores an empty exit in the direction \"" + direction + "\"."); // write's it to the errorlog
                 return null;
             }
         }
     }
-    
+    /**
+     * Checks for exit from exits in the exit map. 
+     * @param exit
+     * @return's exits for eihter exitRoom 1 or exitRoom 2 or null if there 
+     * isent any exit's
+     */
     public Room getExit(Exit exit)
     {
         if(exits.values().contains(exit))
@@ -157,11 +157,16 @@ public class Room implements IRoom
             return null;
         }
     }
-    
+    /**
+     * Goes though the exit map. and compares the exit to first exitRoom 2 and 
+     * the exitRoom 1. 
+     * @param room
+     * @return the exit for the room
+     */
     public Exit getExit(Room room)
     {
         for(Exit exit : exits.values()){
-            System.out.println("Sammenligner: " + exit.getExitRoom2() + " Og " + room + " || " + exit.getExitRoom1() + " og " + this);
+            System.out.println("Compares: " + exit.getExitRoom2() + " and " + room + " || " + exit.getExitRoom1() + " and " + this);
             if(exit.getExitRoom2().equals(room) || exit.getExitRoom1().equals(room)){
                 
                 return(exit);
@@ -174,7 +179,8 @@ public class Room implements IRoom
     
    /**
      * Adds an exit to the room defining where the player can go from said room.
-     * @param name The second word of the go command required to use this exit.
+     * name The second word of the go command required to use this exit.
+     * @param direction
      * @param neighbor The room that the exit added to the current leads to.
      */
     public void setExit(String direction, Exit neighbor) 

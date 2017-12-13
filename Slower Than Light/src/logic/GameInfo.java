@@ -21,35 +21,68 @@ import logic.elements.rooms.Room;
  *
  * @author Erik
  */
-public class GameInfo implements IGameInfo {
+public class GameInfo implements IGameInfo
+{
+    // Reference to TimeHolder's own log
+    private final SystemLog ACTION_LOG;
     
+    // The allowed percentage of rooms destroyed. If the destroyedRoomsPercentage 
+    // is higher than this value, the game is lost
     private final double ALLOWED_ROOMS_DESTROYED_PERCENTAGE = 0.7;
+    
+    // Information about the destroyed rooms
     private double destroyedRoomsPercentage;
     private List<IRoom> destroyedRooms;
     
+    // Reference to an Exit object if any exit has been hacked
     private Exit hackedExit;
+    
+    // Reference to the helper if the helper has not been killed
     private Helper helper;
+    
+    // The amount of rooms repaired
     private int roomsRepaired;
+    
+    // The current highscore in a Map
     private LinkedHashMap<String, Integer> highScoreMap;
+    
+    // Score of the current game
     private int score;
+    
+    // Game finished state
     private boolean gameFinished;
     
+    /**
+     * Constructer which setup a default GameInfo and initializes values
+     * @param helper The helper object
+     */
     public GameInfo(Helper helper)
     {
+        ACTION_LOG = new SystemLog("GameInfo", SystemLog.getActionLog());
         this.helper = helper;
         destroyedRoomsPercentage = 0;
         destroyedRooms = new ArrayList<>();
         roomsRepaired = 0;
+        highScoreMap = LogFacade.getInstance().getDataFacade().getLoader().getHighscore();
         score = 0;
         gameFinished = false;
     }
     
+    /**
+     * Constructer which setup a default GameInfo and initializes values.
+     * This constructor is used for a loaded game
+     * @param helper The helper object
+     * @param roomsRepaired The amount os rooms repaired
+     */
     public GameInfo(Helper helper, int roomsRepaired) 
     {
         this(helper);
         this.roomsRepaired = roomsRepaired;
     }
     
+    /**
+     * Updates the amount rooms destroyed percentage
+     */
     public void updateRoomsDestroyed ()
     {
         Map <String, Room> rooms = Game.getInstance().getRooms();
@@ -62,21 +95,20 @@ public class GameInfo implements IGameInfo {
         updateDestroyedRoomsPercentage();
     }
     
-    public void calculateHighScore()
-    {
-        int destroyedRoomsCount = destroyedRooms.size();
-        double oxygenLeft = Game.getInstance().getTimeHolder().getOxygenLeft();
-        int helperAlivePoints = getHelper() != null? 20 : 0;
-        score = (int) ((roomsRepaired * 5) + (oxygenLeft * 5) - (destroyedRoomsCount * 2) + helperAlivePoints); 
-    }
-    
+    /**
+     * Saves the current highscore map with score of the current player
+     * @param playerName The name of the current player
+     * @return The highcore table as a map
+     */
     @Override
     public Map<String, Integer> saveHighScore(String playerName)
     {
+        calculateHighScore();
         highScoreMap.put(playerName, score);
-        sortHighScore(highScoreMap);
+        sortHighScore();
+        
         txtWriter Writer = new txtWriter();
-        Writer.writeHighScore(highScoreMap, playerName);
+        Writer.writeHighScore(highScoreMap, "assets/maps/highscore.txt");
         
         return highScoreMap;
     }
@@ -111,6 +143,7 @@ public class GameInfo implements IGameInfo {
     public Helper getHelper() {return helper;}
     public void killHepler()
     {
+        writeToActionLog("Helper(" + helper.getName() + ") was killed");
         helper = null;
     }
 
@@ -126,39 +159,66 @@ public class GameInfo implements IGameInfo {
     {
         if(value == gameFinished)
             return;
-        System.out.println("Game finished set to " + value);
+        
         gameFinished = value;
+        writeToActionLog("Game finished set to " + value);
     }
     
+    /**
+     * Updates the percentage of rooms destroyed
+     */
     private void updateDestroyedRoomsPercentage ()
     {
         int totalRooms = Game.getInstance().getRooms().size();
         destroyedRoomsPercentage = destroyedRooms.size() / totalRooms;
     }
     
-    private Map<String, Integer>sortHighScore (LinkedHashMap<String, Integer>highScoreMap)
+    /**
+     * Calculate the score for a game in the current state
+     */
+    private void calculateHighScore()
     {
-        List<Map.Entry<String, Integer>>listToSort = new LinkedList<>(highScoreMap.entrySet());
-        Map.Entry<String, Integer> temp;
-        
-        for (int i = 1; i < listToSort.size(); i++) 
-        {
-            for (int j = i; j > 0; j--) 
-            {
-                if (listToSort.get(j).getValue() > listToSort.get(j-1).getValue())
-                {
-                    temp = listToSort.get(j);
-                    listToSort.set(j,listToSort.get(j-1));
-                    listToSort.set(j-1,temp);
-                }
-            }
-        }
-        
-        Map<String, Integer>returnHashMap = new LinkedHashMap<>();
-        for (Map.Entry<String, Integer> entry : listToSort)
-            returnHashMap.put(entry.getKey(), entry.getValue());
-        
-        return returnHashMap;
+        int destroyedRoomsCount = destroyedRooms.size();
+        double oxygenLeft = Game.getInstance().getTimeHolder().getOxygenLeft();
+        int helperAlivePoints = getHelper() != null? 20 : 0;
+        score = (int) ((roomsRepaired * 5) + (oxygenLeft * 5) + helperAlivePoints - (destroyedRoomsCount * 2));
     }
     
+    /**
+     * Sort the scores using insertion sort
+     */
+    private void sortHighScore ()
+    {
+        // Sort highscores as list
+        List<Map.Entry<String, Integer>> listToSort = new LinkedList<>(highScoreMap.entrySet());
+        for (int i = 1; i < listToSort.size(); i++)
+        {
+            Map.Entry<String, Integer> currentItem = listToSort.get(i);
+            int position = i;
+            
+            while (position > 0 && listToSort.get(position - 1).getValue() < currentItem.getValue())
+            {
+                Map.Entry<String, Integer> itemToMove = listToSort.get(position - 1);
+                listToSort.set(position, itemToMove);
+                position--;
+            }
+            
+            listToSort.set(position, currentItem);
+        }
+        // Copy scores from list to Map
+        highScoreMap = new LinkedHashMap<>();
+        for (Map.Entry<String, Integer> entry : listToSort)
+            highScoreMap.put(entry.getKey(), entry.getValue());
+        
+    }
+    
+    /**
+     * Used for debuging. The message is printed in the console and the log file
+     * @param msg Message to log
+     */
+    private void writeToActionLog(String msg)
+    {
+        ACTION_LOG.writeToLog(msg);
+        System.out.println(msg);
+    }
 }

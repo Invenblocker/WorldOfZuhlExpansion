@@ -18,7 +18,8 @@ import javafx.scene.canvas.GraphicsContext;
  *
  * @author Peter
  */
-public class MiniMap {
+public class MiniMap
+{
     LayeredSprite ls = new LayeredSprite();
     Map<String, Point> roomPositions = new HashMap<>();
     GraphicsContext gc;
@@ -27,15 +28,25 @@ public class MiniMap {
     String playerRoom;
     String saboteurRoom;
     
+    /**
+     * Initializes a minimap, given a Map consisting og String names and Point coordinates, togehter with a GraphicsContext.
+     * @param roomPositions
+     * @param gc 
+     */
     public MiniMap(Map<String, Point> roomPositions, GraphicsContext gc)
     {
-        super();
         this.roomPositions = roomPositions;
         this.gc = gc;
         
         destroyedRooms = new ArrayList<>();
     }
     
+    /**
+     * Update is called when inside the control room. it updates the local variables, whereafter it calls redraw, to redraw the minimap.
+     * @param destroyedRooms
+     * @param playerRoom
+     * @param saboteurRoom 
+     */
     public void update(List<IRoom> destroyedRooms, String playerRoom, String saboteurRoom)
     {
         this.destroyedRooms = destroyedRooms;
@@ -51,6 +62,10 @@ public class MiniMap {
         System.out.println("");
     }
     
+    /**
+     * updatePlayerPosition updates the position of the player, together with the state of the room he enters.
+     * @param playerRoom 
+     */
     public void updatePlayerPosition(IRoom playerRoom)
     {
         this.playerRoom = playerRoom.getName();
@@ -64,11 +79,25 @@ public class MiniMap {
         redraw();
     }
     
+    /**
+     * updateSaboteurPosition is called whenever the player is having a PC in his inventory, or is in the control room.
+     * it updates the position of the saboteur.
+     * @param saboteurRoom 
+     */
+    public void updateSaboteurPosition(IRoom saboteurRoom)
+    {
+        this.saboteurRoom = saboteurRoom.getName();
+        
+        redraw();
+    }
+    
+    /*
     public void updateDestroyedRooms(List<IRoom> destroyedRooms)
     {
         this.destroyedRooms = destroyedRooms;
         redraw();
     }
+    */
     
     /**
      * Updates all the objects on the minimap and draw them once again
@@ -83,23 +112,28 @@ public class MiniMap {
     }
     
     /**
-     * 
+     * Adds the rooms to the LayeredSprite, with the destroyed rooms drawn on top of the non-destroyed rooms. 
      * @param destroyedRooms Array som består af de rum som er ødelagt.
      * @param gc Det
      */
     private void updateRoom(List<IRoom> destroyedRooms, LayeredSprite ls)
     {
         
-        for (int i = 0; i < destroyedRooms.size(); i++){            // kører gennem array med ødelagte rum
-            for (String key : roomPositions.keySet()){              // kører gennem vores hashmap
-                if (destroyedRooms.get(i).getName().equals(key))        // tjekker om rummet i hashmappet er det samme som det ødelagte rum
-                    ls.addSprite(2, new DestroyedRoomDraw(roomPositions.get(key), key));     // tilføjer koordinaterne til det ødelagte rum og tilføjer det til minimappet
+        for (int i = 0; i < destroyedRooms.size(); i++){            // iterates through the array with destroyed rooms
+            for (String key : roomPositions.keySet()){              // iterates through our hashmap
+                if (destroyedRooms.get(i).getName().equals(key))        // checks if the room in the hashmap is the same as the destroyed room
+                    ls.addSprite(2, new DestroyedRoomDraw(roomPositions.get(key), key));  // adds the coordinates to the destroyed room, and adds it to the minimap
                 else if(!destroyedRooms.get(i).getName().equals(key))
                     ls.addSprite(1, new RoomDraw(roomPositions.get(key), key));
             }
         }
     }
     
+    /**
+     * Adds the player to the LayeredSprite - on top of the rooms, regardless of their state, but on same layer as the saboteur.
+     * @param playerRoom
+     * @param ls 
+     */
     private void updatePlayer(String playerRoom, LayeredSprite ls)
     {
         for (String key : roomPositions.keySet())
@@ -107,6 +141,12 @@ public class MiniMap {
                 ls.addSprite(3, new PlayerDraw(roomPositions.get(key)));
     }
     
+    
+    /**
+     * Adds the saboteur to the LayeredSprite - on top of the rooms, regardless of their state, but on same layer as the player.
+     * @param saboteurRoom
+     * @param ls 
+     */
     private void updateSaboteur(String saboteurRoom, LayeredSprite ls)
     {
         for (String key : roomPositions.keySet())

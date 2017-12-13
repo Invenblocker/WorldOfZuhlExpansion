@@ -14,8 +14,9 @@ import logic.elements.rooms.Room;
 import logic.elements.rooms.ItemRoom;
 
 /**
- *
- * @author barth_000
+ * A Helper who aids the player in the battle against the Saboteur.
+ * 
+ * @author Invenblocker & JN97
  */
 public class Helper extends RoomHopper implements IHelper
 {
@@ -27,7 +28,19 @@ public class Helper extends RoomHopper implements IHelper
     private ArrayList<Room> returnRoute;
     private SystemLog ACTION_LOG, ERROR_LOG;
     
-    
+    /**
+     * A constructor used to create a new Helper.
+     * 
+     * @author JN97
+     * @param room The Room the Helper should be located in at the start of the
+     *             game.
+     * @param name The Helper's Name.
+     * @param chanceOfDiscovery The Helper's default chance of finding a special
+     *                          Item while seaching.
+     * @param chanceOfDiscoveryGrowth  The amount by which the Helper's chance
+     *                                 of finding an item increases every time
+     *                                 it doesn't find one.
+     */
     public Helper(Room room, String name, double chanceOfDiscovery, double chanceOfDiscoveryGrowth)
     {
         super(room);
@@ -41,7 +54,13 @@ public class Helper extends RoomHopper implements IHelper
         ERROR_LOG = new SystemLog("Helper (" + this.name + ')', SystemLog.getErrorLog());
     }
     
-    
+    /**
+     * The Helper's AI for when it is searching or returning to the ControlRoom.
+     *
+     * @author JN97
+     * @return The amount of time befoire the next time the Helper should act.
+     *         Returns -1 if the Helper shouldn't act in the first place.
+     */
     public int performAction()
     {
         if (task != null) switch(task)
@@ -69,6 +88,12 @@ public class Helper extends RoomHopper implements IHelper
     }
     
     
+    /**
+     * The AI that makes the Helper search for a special item.
+     * 
+     * @author Invenblocker & JN97
+     * @return The amount of time till the next time the Helper should act.
+     */
     private int search()
     {
         ArrayList<Exit> exits = getCurrentRoom().getCollectionOfExits();
@@ -131,7 +156,12 @@ public class Helper extends RoomHopper implements IHelper
         return(5 + (int) Math.floor(6 * Math.random()));
     }
     
-    
+    /**
+     * Makes the Helper return to the ControlRoom.
+     * 
+     * @author JN97 & Invenblocker
+     * @return A number describing the amount of time before the Helper should act again. Returns -1 if the Helper is already in the ControlRoom.
+     */
     private int returnToDefault()
     {
         if(getCurrentRoom().isControlRoom())
@@ -153,32 +183,30 @@ public class Helper extends RoomHopper implements IHelper
     }
     
     /**
-	 *
-	 * @author Invenblocker
-	 *
-	 * Finds the shortest route to the control room and returns the route as an ArrayList of Rooms.
-	 *
-	 * @return An ArrayList of Room instances that dictate the Helper's shortest route to a ControlRoom.
-	 */
+     * Finds the shortest route to the control room and returns the route as an ArrayList of Rooms.
+     *
+     * @author Invenblocker
+     * @return An ArrayList of Room instances that dictate the Helper's shortest route to a ControlRoom.
+     */
 	private ArrayList<Room> findReturnRoute()
     {
         ArrayList<ArrayList<Room>> routes = new ArrayList();
         boolean foundControlRoom = false;
         int routeLength = 0;
         //Create a new route and et the current room as the only room in it.
-		//This route will be used as a starting point for generating other routes.
-		routes.add(new ArrayList());
+        //This route will be used as a starting point for generating other routes.
+        routes.add(new ArrayList());
         routes.get(0).add(getCurrentRoom());
         
         while(!foundControlRoom)  //Loop until a controlRoom has been found
         {
-            if(routeLength > Game.getInstance().getRooms().values().size())  //If the route's length exceeds that of the amount of rooms in the game, assume an error has occured.
+            if(routeLength > Game.getInstance().getRooms().values().size() || routes.size() == 0)  //If the route's length exceeds that of the amount of rooms in the game or the list of routes i empty, assume an error has occured.
             {
                 ERROR_LOG.writeToLog("No valid route to a control room was found.",  //Write a message into the error log.
                         "As a failsafe, the Helper will move from its current room to its current room");
                 
-				//In order to avoid a nullpointer exception, the method will in this failsafe state simply return the current room.
-				ArrayList<Room> route = new ArrayList();
+                //In order to avoid a nullpointer exception, the method will in this failsafe state simply return the current room.
+                ArrayList<Room> route = new ArrayList();
                 route.add(getCurrentRoom());
                 return(route);
             }
@@ -197,13 +225,13 @@ public class Helper extends RoomHopper implements IHelper
                     {
                         //If the neighbor is a control room, add it to the route and tell the system a control room has been found.
                         foundControlRoom = true;
-						neighbors.add(checkRoom.getExit(exit));
-						continue;
+                        neighbors.add(checkRoom.getExit(exit));
+                        continue;
                     }
                     
                     if(!routes.get(a).contains(checkRoom.getExit(exit)))
                     {
-						//If the room is not on the current route, remove it.
+                        //If the room is not on the current route, remove it.
                         neighbors.add(checkRoom.getExit(exit));
                     }
                 }
@@ -264,17 +292,30 @@ public class Helper extends RoomHopper implements IHelper
         return(route);  //Return the route that was created.
     }
     
+    /**
+     * @author Invenblocker
+     * @return The helper's current task
+     */
     public HelperTask getHelperTask()
     {
         return(task);
     }
     
-    @Override
+    /**
+     * @author JN97
+     * @return The toString value of the Helper's current task.
+     */
     public String getHelperTaskString()
-            {
-                return getHelperTask().toString();
-            }
+    {
+        return getHelperTask().toString();
+    }
     
+    /**
+     * @author Invenblocker
+     * @param remove Defines if the String should be cleared after returning.
+     * @return A String a string describing the special Item the Helper has 
+     *         found, and the room it was located in.
+     */
     public String getFoundItemString(boolean remove)
     {
         if(remove)
@@ -289,11 +330,23 @@ public class Helper extends RoomHopper implements IHelper
         }
     }
     
+    /**
+     * This version of the method will always clear the String.
+     * 
+     * @author Invenblocker
+     * @return A String a string describing the special Item the Helper has 
+     *         found, and the room it was located in.
+     */
     public String getFoundItemString()
     {
         return(getFoundItemString(true));
     }
     
+    /**
+     * Changes the Helper's Task.
+     * @author JN97
+     * @param task The task that the Helper should start working on.
+     */
     public void setTask(HelperTask task)
     {
         this.task = task;
@@ -301,39 +354,60 @@ public class Helper extends RoomHopper implements IHelper
         ACTION_LOG.writeToLog("The helper \"" + name + "\" had its task set to \"" + task.toString() + "\".");
     }
     
+    /**
+     * @author Invenblocker
+     * @return The Helper's ACTION_LOG
+     */
     public SystemLog getActionLog()
     {
         return(ACTION_LOG);
     }
     
+    /**
+     * @author Invenblocker
+     * @return The Helper's ERROR_LOG
+     */
     public SystemLog getErrorLog()
     {
         return(ERROR_LOG);
     }
     
+    /**
+     * @author Invenblocker
+     * @return The Helper's NAME
+     */
     public String getName()
     {
         return(name);
     }
     
+    /**
+     * @author Invenblocker
+     * @return The Helper's current chance of making a discovery
+     */
     public double getChanceOfDiscovery()
     {
         return(chanceOfDiscovery);
     }
     
+    /**
+     * @author Invenblocker
+     * @param value What the chance of discovery should be set to
+     */
     public void setChanceOfDiscovery(double value)
     {
         chanceOfDiscovery = value;
     }
 
-    @Override
+    /**
+     * @author Invenblocker
+     * @return A String detailing what the Helper should say.
+     */
     public String generateHelperMessage()
     {
         if(foundItemString != "")
         {
-            String message = foundItemString;
-            foundItemString = "";
-            return(message);
+            return(getFoundItemString());
         }
         else
         {

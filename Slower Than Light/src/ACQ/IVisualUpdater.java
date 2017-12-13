@@ -11,5 +11,11 @@ package acq;
  */
 public interface IVisualUpdater
 {
-    void updateWithTimer();
+    void updateMinimap();
+    
+    void updateSaboteurRoom();
+    
+    void updateIsChasingPlayer();
+    
+    boolean updateGameEnd();
 }
