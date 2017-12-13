@@ -33,6 +33,8 @@ public interface ILogFacade {
     
     IItem[] getPlayerItems();
     
+    IItem getRepairItemInCurrentRoom();
+    
     Map<String, Point> getRoomPositions();
     
     Map<String, Integer> getHighScore();

@@ -40,15 +40,7 @@
                         <HBox prefHeight="75.0" prefWidth="700.0">
                            <children>
                               <Circle fx:id="chaseAlert" fill="DODGERBLUE" radius="37.5" stroke="BLACK" strokeType="INSIDE" />
-                              <Pane maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" minHeight="-Infinity" minWidth="-Infinity" prefHeight="75.0" prefWidth="380.0">
-                                 <children>
-                                    <Text fx:id="currentRoomName" layoutX="16.0" layoutY="37.5" stroke="WHITE" strokeType="OUTSIDE" strokeWidth="4.0" text="currentRoom" textOrigin="CENTER">
-                                       <font>
-                                          <Font size="24.0" />
-                                       </font>
-                                    </Text>
-                                 </children>
-                              </Pane>
+                              <Pane maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" minHeight="-Infinity" minWidth="-Infinity" prefHeight="75.0" prefWidth="380.0" />
                               <GridPane maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" minHeight="-Infinity" minWidth="-Infinity" prefHeight="75.0" prefWidth="237.0">
                                 <columnConstraints>
                                   <ColumnConstraints hgrow="SOMETIMES" maxWidth="114.0" minWidth="10.0" prefWidth="66.0" />
@@ -88,10 +80,9 @@
                         <Pane prefHeight="200.0" prefWidth="200.0" />
                         <HBox prefHeight="100.0" prefWidth="200.0">
                            <children>
-                              <StackPane prefHeight="150.0" prefWidth="200.0">
+                              <StackPane fx:id="logPane" prefHeight="150.0" prefWidth="200.0">
                                  <children>
-                                    <Rectangle arcHeight="5.0" arcWidth="5.0" fill="DODGERBLUE" height="100.0" stroke="BLACK" strokeType="INSIDE" width="205.0" />
-                                    <Text fx:id="playerLog" strokeType="OUTSIDE" strokeWidth="0.0" text="Log" />
+                                    <TextArea fx:id="logTextArea" prefHeight="200.0" prefWidth="200.0" />
                                  </children>
                               </StackPane>
                               <VBox prefHeight="100.0" prefWidth="167.0">

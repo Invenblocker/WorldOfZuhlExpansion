@@ -14,7 +14,8 @@ import java.io.IOException;
 import java.net.URL;
 import java.util.List;
 import java.util.ResourceBundle;
-import javafx.event.Event;
+import javafx.beans.value.ChangeListener;
+import javafx.beans.value.ObservableValue;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
@@ -24,22 +25,40 @@ import javafx.scene.canvas.Canvas;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.ProgressBar;
+import javafx.scene.control.TextArea;
+import javafx.scene.control.TextFormatter;
+import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.Pane;
+import javafx.scene.layout.StackPane;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Circle;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
-import javax.swing.KeyStroke;
 
 /**
  * FXML Controller class
  *
  * @author sdown
  */
-public class GameGraphicsController implements Initializable, IInjectableController, IVisualUpdater {
-
+public class GameGraphicsController implements Initializable, IInjectableController, IVisualUpdater
+{
+    private final String CONTROL_ROOM_URL = "images/rooms/control-room.png";
+    private final String ENTRY_RAMP_URL = "images/rooms/entry-ramp.png";
+    private final String KITCHEN_URL = "images/rooms/kitchen.png";
+    private final String LAB_URL = "images/rooms/lab.png";
+    private final String LEFT_THRUSTER_URL = "images/rooms/left-thruster.png";
+    private final String LIVING_QUARTERS_URL = "images/rooms/living-quarters.png";
+    private final String LOADING_BAY_URL = "images/rooms/loading-bay.png";
+    private final String OFFICE_URL = "images/rooms/office.png";
+    private final String OXYGEN_CONTAINER_URL = "images/rooms/oxygen-container.png";
+    private final String RIGHT_THRUSTER_URL = "images/rooms/right-thruster.png";
+    private final String SHIELD_GENERATOR_URL = "images/rooms/shield-generator.png";
+    private final String WORKSHOP_URL = "images/rooms/workshop.png";
+    
+    private final int MAX_CHARS = 15;
+    
     @FXML
     private ImageView currentRoomDisplay;
     @FXML
@@ -47,9 +66,9 @@ public class GameGraphicsController implements Initializable, IInjectableControl
     @FXML
     private Circle chaseAlert;
     @FXML
-    private Text currentRoomName;
+    private StackPane logPane;
     @FXML
-    private Text playerLog;
+    private TextArea logTextArea;
     @FXML
     private Label playerItem1;
     @FXML
@@ -76,7 +95,6 @@ public class GameGraphicsController implements Initializable, IInjectableControl
     private Button downButton;
     @FXML
     private Canvas minimapCanvas;
-    
     @FXML
     private ProgressBar oxygenBar;
     @FXML
@@ -93,7 +111,7 @@ public class GameGraphicsController implements Initializable, IInjectableControl
     private Button saveButton;
     @FXML
     private Button quitButton;
-
+    
     private ILogFacade logFacade;
     private Stage stage;
     private MiniMap minimap;
@@ -106,6 +124,10 @@ public class GameGraphicsController implements Initializable, IInjectableControl
     {
         logFacade = GUI.getInstance().getILogFacade();
         
+        // setup player log
+        logTextArea.setEditable(false);
+        logTextArea.setWrapText(true);
+        
         // print welcome message
         printWelcome();
         
@@ -117,7 +139,7 @@ public class GameGraphicsController implements Initializable, IInjectableControl
         logFacade.injectGUIUpdateMethod(this);
         logFacade.play();
         
-        updateHeader();
+        updateBackground(logFacade.getPlayer().getCurrentRoom().getName());
         updatePlayerItemButtons();
         updateRoomItemButtons();
         updateSaboteurAlert();
@@ -290,6 +312,13 @@ public class GameGraphicsController implements Initializable, IInjectableControl
             return;
         
         logFacade.processCommand("investigate");
+        
+        IRoom currentRoom = logFacade.getPlayer().getCurrentRoom();
+        
+        if (currentRoom.isOperating())
+            writeToLog("The room is working");
+        else
+            writeToLog("This room is broken, if you want to repair this room, you'll need a " + logFacade.getRepairItemInCurrentRoom().getName() + ".");
     }
 
     @FXML
@@ -317,24 +346,107 @@ public class GameGraphicsController implements Initializable, IInjectableControl
         changeScene("MainMenu.fxml");
     }
     
+    @FXML
+    private void keyPressed(KeyEvent event) 
+    {
+        switch(event.getCode())
+        {
+            case D:
+                walk("right");
+                break;
+            case W:
+                walk("up");
+                break;
+            case A:
+                walk("left");
+                break;
+            case S:
+                walk("down");
+                break;
+            case DIGIT9:
+                takeItem0();
+                break;
+            case DIGIT0:
+                takeItem1();
+                break;
+            case R:
+                repair();
+                break;
+            case I:
+                investigate();
+                break;
+            case T:
+               //
+                break;
+            case DIGIT1:
+                dropItem0();
+                break;
+            case DIGIT2:
+                dropItem1();
+                break;
+                
+        }
+    }
+    
     private void walk(String direction)
     {
         logFacade.processCommand("go " + direction);
         
-        updateHeader();
-        updateRoomItemButtons();
-        updateSaboteurAlert();
-        
         IRoom playerRoom = logFacade.getPlayer().getCurrentRoom();
         minimap.updatePlayerPosition(playerRoom);
+        
+        updateBackground(playerRoom.getName());
+        updateRoomItemButtons();
+        updateSaboteurAlert();
         
         if (logFacade.getGameInfo().isGameFinished() && logFacade.getPlayer().getCurrentRoom() == logFacade.getSaboteur().getCurrentRoom())
             processGameLost("player walking into saboteur");
     }
     
-    private void updateHeader()
+    public void updateBackground(String roomName)
     {
-        currentRoomName.setText(logFacade.getPlayer().getCurrentRoom().getName());
+        switch(roomName)
+        {
+            case "controlRoom":
+                currentRoomDisplay.setImage(new Image(CONTROL_ROOM_URL));
+                break;
+            case "Workshop":
+                currentRoomDisplay.setImage(new Image(WORKSHOP_URL));
+                break;
+            case "Kitchen":
+                currentRoomDisplay.setImage(new Image(KITCHEN_URL));
+                break;
+            case "EntryRamp":
+                currentRoomDisplay.setImage(new Image(ENTRY_RAMP_URL));
+                break;
+            case "Lab":
+                currentRoomDisplay.setImage(new Image(LAB_URL));
+                break;
+            case "LeftThruster":
+                currentRoomDisplay.setImage(new Image(LEFT_THRUSTER_URL));
+                break;
+            case "LoadingBay":
+                currentRoomDisplay.setImage(new Image(LOADING_BAY_URL));
+                break;
+            case "RightThruster":
+                currentRoomDisplay.setImage(new Image(RIGHT_THRUSTER_URL));
+                break;
+            case "Office":
+                currentRoomDisplay.setImage(new Image(OFFICE_URL));
+                break;
+            case "OxygenContainer":
+                currentRoomDisplay.setImage(new Image(OXYGEN_CONTAINER_URL));
+                break;
+            case "LivingQuarters":
+                currentRoomDisplay.setImage(new Image(LIVING_QUARTERS_URL));
+                break;
+            case "ShieldGenerator":
+                currentRoomDisplay.setImage(new Image(SHIELD_GENERATOR_URL));
+                break;
+            default:
+                System.out.println("GameGraphicsController: Cannot change the background to that room");
+                break;
+        }
     }
     
     private void updatePlayerItemButtons()
@@ -459,57 +571,17 @@ public class GameGraphicsController implements Initializable, IInjectableControl
   
     private void printWelcome()
     {
-        System.out.println("Welcome to the game");
+        writeToLog("Welcome to the game");
     }
     
     private void printHelp()
     {
-        System.out.println("This is your help...");
+        writeToLog("This is your help...");
     }
-
-    @FXML
-    private void keyPressed(KeyEvent event) 
+    
+    private void writeToLog(String text)
     {
-        
-        switch(event.getCode())
-        {
-            case D:
-                walk("right");
-                break;
-            case W:
-                walk("up");
-                break;
-            case A:
-                walk("left");
-                break;
-            case S:
-                walk("down");
-                break;
-            case DIGIT9:
-                takeItem0();
-                break;
-            case DIGIT0:
-                takeItem1();
-                break;
-            case R:
-                repair();
-                break;
-            case I:
-                investigate();
-                break;
-            case T:
-               //
-                break;
-            case DIGIT1:
-                dropItem0();
-                break;
-            case DIGIT2:
-                dropItem1();
-                break;
-                
-                    
-        }
-
+        logTextArea.appendText(text + "\n");
     }
     
 }
