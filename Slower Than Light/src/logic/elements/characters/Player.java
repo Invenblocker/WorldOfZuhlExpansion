@@ -59,6 +59,15 @@ public class Player extends RoomHopper implements IPlayer
         return false;
     }
     
+    /**
+     * @author JN97
+     * 
+     * Counts the inventory of player and returns boolean when inventory is counted.
+     * 
+     * @param item The item counted.
+     * @return amount of items in inventory.
+     */
+    
     public boolean hasItem(Item item)
     {
         if (getItemCount() == 0)
@@ -146,6 +155,13 @@ public class Player extends RoomHopper implements IPlayer
         return copy;
     }
     
+    /**
+     * @author JN97
+     * 
+     * Checks the amount of items in inventory.
+     * 
+     * @return The amount of items counted.
+     */
     @Override
     public int getItemCount()
     {
@@ -160,11 +176,19 @@ public class Player extends RoomHopper implements IPlayer
         return count;
     }
     
+    /**
+     * @JN97
+     * @returns The Player's ACTION_LOG 
+     */
     public SystemLog getActionLog()
     {
         return ACTION_LOG;
     }
     
+    /**
+     * @JN97
+     * @returns The Player's ERROR_LOG 
+     */
     public SystemLog getErrorLog()
     {
         return ERROR_LOG;
