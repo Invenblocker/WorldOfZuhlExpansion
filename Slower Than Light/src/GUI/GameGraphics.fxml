@@ -93,7 +93,7 @@
                               </StackPane>
                               <VBox prefHeight="100.0" prefWidth="167.0">
                                  <children>
-                                    <Text fill="DODGERBLUE" stroke="WHITE" strokeType="OUTSIDE" strokeWidth="2.0" text="Inventory">
+                                    <Text fill="#0a67bf" stroke="WHITE" strokeType="OUTSIDE" text="Inventory">
                                        <VBox.margin>
                                           <Insets left="50.0" top="10.0" />
                                        </VBox.margin>
@@ -129,7 +129,7 @@
                               <Pane prefHeight="200.0" prefWidth="200.0" />
                               <VBox alignment="CENTER_RIGHT" layoutX="215.0" layoutY="10.0" prefHeight="100.0" prefWidth="167.0">
                                  <children>
-                                    <Text fill="DODGERBLUE" stroke="WHITE" strokeType="OUTSIDE" strokeWidth="2.0" text="Room stuff">
+                                    <Text fill="#0a67bf" stroke="WHITE" strokeType="OUTSIDE" text="Room stuff">
                                        <VBox.margin>
                                           <Insets right="40.0" top="10.0" />
                                        </VBox.margin>
