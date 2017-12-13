@@ -195,27 +195,27 @@
                             <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
                           </rowConstraints>
                            <children>
-                              <Button fx:id="repairButton" alignment="CENTER" mnemonicParsing="false" onAction="#repair" prefHeight="48.0" prefWidth="100.0" text="Repair">
+                              <Button fx:id="repairButton" alignment="CENTER" mnemonicParsing="false" onAction="#repair" prefHeight="48.0" prefWidth="100.0" style="-fx-background-color: linear-gradient(#00ffff 0%, #000000 25%, #373837 75%, #00ffff 100%); -fx-border-radius: 5; -fx-border-color: dodgerblue;" text="Repair" textFill="DODGERBLUE">
                                  <GridPane.margin>
                                     <Insets right="10.0" />
                                  </GridPane.margin></Button>
-                              <Button fx:id="investigateButton" alignment="CENTER" mnemonicParsing="false" onAction="#investigate" prefHeight="48.0" prefWidth="100.0" text="Investigate" GridPane.columnIndex="1">
+                              <Button fx:id="investigateButton" alignment="CENTER" mnemonicParsing="false" onAction="#investigate" prefHeight="48.0" prefWidth="100.0" style="-fx-background-color: linear-gradient(#00ffff 0%, #000000 25%, #373837 75%, #00ffff 100%); -fx-border-radius: 5; -fx-border-color: dodgerblue;" text="Investigate" textFill="DODGERBLUE" GridPane.columnIndex="1">
                                  <GridPane.margin>
                                     <Insets />
                                  </GridPane.margin></Button>
-                              <Button fx:id="talkButton" alignment="CENTER" mnemonicParsing="false" onAction="#talk" prefHeight="48.0" prefWidth="100.0" text="Talk" GridPane.columnIndex="2">
+                              <Button fx:id="talkButton" alignment="CENTER" mnemonicParsing="false" onAction="#talk" prefHeight="48.0" prefWidth="100.0" style="-fx-background-color: linear-gradient(#00ffff 0%, #000000 25%, #373837 75%, #00ffff 100%); -fx-border-radius: 5; -fx-border-color: dodgerblue;" text="Talk" textFill="DODGERBLUE" GridPane.columnIndex="2">
                                  <GridPane.margin>
                                     <Insets left="10.0" />
                                  </GridPane.margin></Button>
-                              <Button fx:id="helpButton" alignment="CENTER" mnemonicParsing="false" onAction="#help" onKeyPressed="#keyPressed" prefHeight="48.0" prefWidth="100.0" text="Help" GridPane.rowIndex="1">
+                              <Button fx:id="helpButton" alignment="CENTER" mnemonicParsing="false" onAction="#help" onKeyPressed="#keyPressed" prefHeight="48.0" prefWidth="100.0" style="-fx-background-color: linear-gradient(#00ffff 0%, #000000 25%, #373837 75%, #00ffff 100%); -fx-border-radius: 5; -fx-border-color: dodgerblue;" text="Help" textFill="DODGERBLUE" GridPane.rowIndex="1">
                                  <GridPane.margin>
                                     <Insets right="10.0" />
                                  </GridPane.margin></Button>
-                              <Button fx:id="saveButton" alignment="CENTER" mnemonicParsing="false" onAction="#saveGame" prefHeight="48.0" prefWidth="100.0" text="Save" GridPane.columnIndex="1" GridPane.rowIndex="1">
+                              <Button fx:id="saveButton" alignment="CENTER" mnemonicParsing="false" onAction="#saveGame" prefHeight="48.0" prefWidth="100.0" style="-fx-background-color: linear-gradient(#00ffff 0%, #000000 25%, #373837 75%, #00ffff 100%); -fx-border-radius: 5; -fx-border-color: dodgerblue;" text="Save" textFill="DODGERBLUE" GridPane.columnIndex="1" GridPane.rowIndex="1">
                                  <GridPane.margin>
                                     <Insets />
                                  </GridPane.margin></Button>
-                              <Button fx:id="quitButton" alignment="CENTER" mnemonicParsing="false" onAction="#quit" prefHeight="48.0" prefWidth="100.0" text="Quit" GridPane.columnIndex="2" GridPane.rowIndex="1">
+                              <Button fx:id="quitButton" alignment="CENTER" mnemonicParsing="false" onAction="#quit" prefHeight="48.0" prefWidth="100.0" style="-fx-background-color: linear-gradient(#00ffff 0%, #000000 25%, #373837 75%, #00ffff 100%); -fx-border-radius: 5; -fx-border-color: dodgerblue;" text="Quit" textFill="DODGERBLUE" GridPane.columnIndex="2" GridPane.rowIndex="1">
                                  <GridPane.margin>
                                     <Insets left="10.0" />
                                  </GridPane.margin></Button>
