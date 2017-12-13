@@ -8,7 +8,6 @@ package GUI;
 import acq.IRoom;
 import java.awt.Point;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -91,13 +90,6 @@ public class MiniMap
         redraw();
     }
     
-    /*
-    public void updateDestroyedRooms(List<IRoom> destroyedRooms)
-    {
-        this.destroyedRooms = destroyedRooms;
-        redraw();
-    }
-    */
     
     /**
      * Updates all the objects on the minimap and draw them once again
