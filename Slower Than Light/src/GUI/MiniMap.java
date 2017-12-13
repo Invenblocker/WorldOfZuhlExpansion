@@ -119,10 +119,10 @@ public class MiniMap
     private void updateRoom(List<IRoom> destroyedRooms, LayeredSprite ls)
     {
         
-        for (int i = 0; i < destroyedRooms.size(); i++){            // kører gennem array med ødelagte rum
-            for (String key : roomPositions.keySet()){              // kører gennem vores hashmap
-                if (destroyedRooms.get(i).getName().equals(key))        // tjekker om rummet i hashmappet er det samme som det ødelagte rum
-                    ls.addSprite(2, new DestroyedRoomDraw(roomPositions.get(key), key));     // tilføjer koordinaterne til det ødelagte rum og tilføjer det til minimappet
+        for (int i = 0; i < destroyedRooms.size(); i++){            // iterates through the array with destroyed rooms
+            for (String key : roomPositions.keySet()){              // iterates through our hashmap
+                if (destroyedRooms.get(i).getName().equals(key))        // checks if the room in the hashmap is the same as the destroyed room
+                    ls.addSprite(2, new DestroyedRoomDraw(roomPositions.get(key), key));  // adds the coordinates to the destroyed room, and adds it to the minimap
                 else if(!destroyedRooms.get(i).getName().equals(key))
                     ls.addSprite(1, new RoomDraw(roomPositions.get(key), key));
             }
