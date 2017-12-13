@@ -93,16 +93,16 @@
                               </StackPane>
                               <VBox prefHeight="100.0" prefWidth="167.0">
                                  <children>
-                                    <Text stroke="WHITE" strokeType="OUTSIDE" strokeWidth="4.0" text="Inventory">
+                                    <Text fill="DODGERBLUE" stroke="#000066" strokeType="OUTSIDE" strokeWidth="2.0" text="Inventory">
                                        <VBox.margin>
-                                          <Insets left="40.0" top="10.0" />
+                                          <Insets left="50.0" top="10.0" />
                                        </VBox.margin>
                                     </Text>
                                     <HBox prefHeight="100.0" prefWidth="200.0">
                                        <children>
                                           <StackPane prefHeight="150.0" prefWidth="200.0">
                                              <children>
-                                                <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#000066" height="40.0" stroke="BLACK" strokeType="INSIDE" width="40.0" />
+                                                <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#000066" height="40.0" stroke="BLACK" strokeType="INSIDE" width="75.0" />
                                                 <Label fx:id="playerItem1" text="Item1" textFill="WHITE" />
                                                 <Pane fx:id="playerItem1Button" onMouseClicked="#dropItem0" prefHeight="200.0" prefWidth="200.0">
                                                    <StackPane.margin>
@@ -113,7 +113,7 @@
                                           </StackPane>
                                           <StackPane prefHeight="150.0" prefWidth="200.0">
                                              <children>
-                                                <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#000066" height="40.0" stroke="BLACK" strokeType="INSIDE" width="40.0" />
+                                                <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#000066" height="40.0" stroke="BLACK" strokeType="INSIDE" width="75.0" />
                                                 <Label fx:id="playerItem2" text="Item2" textFill="WHITE" />
                                                 <Pane fx:id="playerItem2Button" onMouseClicked="#dropItem1" prefHeight="200.0" prefWidth="200.0">
                                                    <StackPane.margin>
@@ -129,7 +129,7 @@
                               <Pane prefHeight="200.0" prefWidth="200.0" />
                               <VBox alignment="CENTER_RIGHT" layoutX="215.0" layoutY="10.0" prefHeight="100.0" prefWidth="167.0">
                                  <children>
-                                    <Text stroke="WHITE" strokeType="OUTSIDE" strokeWidth="4.0" text="Room stuff">
+                                    <Text fill="DODGERBLUE" stroke="#000066" strokeType="OUTSIDE" strokeWidth="2.0" text="Room stuff">
                                        <VBox.margin>
                                           <Insets right="40.0" top="10.0" />
                                        </VBox.margin>
@@ -138,7 +138,7 @@
                                        <children>
                                           <StackPane prefHeight="150.0" prefWidth="200.0">
                                              <children>
-                                                <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#000066" height="40.0" stroke="BLACK" strokeType="INSIDE" width="40.0" />
+                                                <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#000066" height="40.0" stroke="BLACK" strokeType="INSIDE" width="75.0" />
                                                 <Label fx:id="roomItem1" text="Item1" textFill="WHITE" />
                                                 <Pane fx:id="roomItem1Button" onMouseClicked="#takeItem0" prefHeight="200.0" prefWidth="200.0">
                                                    <StackPane.margin>
@@ -149,7 +149,7 @@
                                           </StackPane>
                                           <StackPane prefHeight="150.0" prefWidth="200.0">
                                              <children>
-                                                <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#000066" height="40.0" stroke="BLACK" strokeType="INSIDE" width="40.0" />
+                                                <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#000066" height="40.0" stroke="BLACK" strokeType="INSIDE" width="75.0" />
                                                 <Label fx:id="roomItem2" text="Item2" textFill="WHITE" />
                                                 <Pane fx:id="roomItem2Button" onMouseClicked="#takeItem1" prefHeight="200.0" prefWidth="200.0">
                                                    <StackPane.margin>
