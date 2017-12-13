@@ -17,5 +17,7 @@ public interface IVisualUpdater
     
     void updateIsChasingPlayer();
     
+    void updateProgressBar();
+    
     boolean updateGameEnd();
 }

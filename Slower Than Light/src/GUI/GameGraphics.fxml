@@ -65,7 +65,7 @@
                                        </padding></ProgressBar>
                                     <Pane prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="1" GridPane.rowIndex="1">
                                        <children>
-                                          <Label layoutX="92.0" layoutY="13.0" style="-fx-text-fill: dodgerblue;" text="Oxygen">
+                                          <Label layoutX="92.0" layoutY="13.0" style="-fx-text-fill: darkred;" text="Oxygen">
                                              <font>
                                                 <Font size="15.0" />
                                              </font>
@@ -77,7 +77,7 @@
                                     </Pane>
                                     <Pane prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="1" GridPane.rowIndex="2">
                                        <children>
-                                          <Label layoutX="96.0" layoutY="4.0" text="Time" textFill="DODGERBLUE">
+                                          <Label layoutX="96.0" layoutY="4.0" style="-fx-text-fill: darkred;" text="Time" textFill="DODGERBLUE">
                                              <font>
                                                 <Font size="15.0" />
                                              </font>

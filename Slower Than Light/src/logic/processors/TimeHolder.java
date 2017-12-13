@@ -26,6 +26,10 @@ public class TimeHolder extends TimerTask implements ITimeHolder
     private double timeLeft;
     private double oxygenLeft;
     
+    // The amount of time and oxygen when game started
+    private double timeMax;
+    private double oxygenMax;
+    
     // References to other objects
     private Game game;
     private GameInfo gameInfo;
@@ -42,8 +46,9 @@ public class TimeHolder extends TimerTask implements ITimeHolder
         
         saboteurCountdown = 5;
         helperCountdown = 0;
-        timeLeft = 30;
-        oxygenLeft = 50;
+        timeLeft = timeMax = 30;
+        oxygenLeft = oxygenMax =  50;
+        
         game = Game.getInstance();
     }
     
@@ -56,23 +61,30 @@ public class TimeHolder extends TimerTask implements ITimeHolder
     public TimeHolder(double gameTime, double oxygenTime)
     {
         this();
-        timeLeft = gameTime;
-        oxygenLeft = oxygenTime;
+        timeLeft = timeMax = gameTime;
+        oxygenLeft = oxygenMax = oxygenTime;
     }
     
     /**
      * Constructer which setup a default Timeholder and initializes values
-     * @param gameTime The amount of time in seconds which the game last
-     * @param oxygenTime The amount of time in seconds before the player loses 
+     * @param timeLeft The amount of time in seconds which the game last
+     * @param oxygenLeft The amount of time in seconds before the player loses 
      * the game
+     * @param timeMax
+     * @param oxygenMax
      * @param saboteurCountdown The amount of time in seconds before the 
      * saboteur takes the first action
      * @param helperCountdown The amount of time in seconds before the 
      * helper takes the first action
      */
-    public TimeHolder(double gameTime, double oxygenTime, int saboteurCountdown, int helperCountdown)
+    public TimeHolder(double timeLeft, double oxygenLeft, double timeMax, double oxygenMax, int saboteurCountdown, int helperCountdown)
     {
-        this(gameTime, oxygenTime);
+        this();
+        
+        this.timeLeft = timeLeft;
+        this.oxygenLeft = oxygenLeft;
+        this.timeMax = timeMax;
+        this.oxygenMax = oxygenMax;
         this.saboteurCountdown = saboteurCountdown;
         this.helperCountdown = helperCountdown;
     }
@@ -146,14 +158,22 @@ public class TimeHolder extends TimerTask implements ITimeHolder
 
                     // update minimap if player is located in the ControlRoom
                     if ((game.getPlayer().getCurrentRoom().isControlRoom() || game.getPlayer().hasItem(game.getItems().get("pc"))))
+                    {
                         caller.updateMinimap();
+                        System.out.println("First update " + game.getPlayer().getCurrentRoom().isControlRoom() + " "+ game.getPlayer().hasItem(game.getItems().get("pc")));
+                    }
                     else if (game.getSaboteur().isChasingPlayer())
+                    {
                         caller.updateIsChasingPlayer();
+                        System.out.println("Second update");
+                    }
                     else if (gameInfo.isGameFinished())
                     {
                         System.out.println("game ended");
                         caller.updateGameEnd();
                     }
+                    
+                    caller.updateProgressBar();
                 }
             }
         });
@@ -221,6 +241,12 @@ public class TimeHolder extends TimerTask implements ITimeHolder
      */
     @Override
     public double getOxygenLeft() {return oxygenLeft;}
+
+    @Override
+    public double getTimeMax() {return timeMax;}
+
+    @Override
+    public double getOxygenMax() {return oxygenMax;}
     
     /**
      * Check to see if the saboteur and player is in the same room.

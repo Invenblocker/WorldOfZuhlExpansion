@@ -446,7 +446,7 @@ public class Game
         
         private void initializeTimeHolder(String[] words)
         {
-            timeHolderSC = new TimeHolder(Double.parseDouble(words[1]), Double.parseDouble(words[2]), Integer.parseInt(words[4]), Integer.parseInt(words[3]));
+            timeHolderSC = new TimeHolder(Double.parseDouble(words[1]), Double.parseDouble(words[2]), Double.parseDouble(words[3]), Double.parseDouble(words[4]), Integer.parseInt(words[5]), Integer.parseInt(words[6]));
         }
     }
 }

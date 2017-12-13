@@ -209,8 +209,10 @@ public class GameElementsConverter
         timeHolderInfo = "TimeHolder: ";
         timeHolderInfo += timeHolder.getTimeLeft() + " ";
         timeHolderInfo += timeHolder.getOxygenLeft() + " ";
-        timeHolderInfo += timeHolder.getHelperCountdown() + " ";
+        timeHolderInfo += timeHolder.getTimeMax() + " ";
+        timeHolderInfo += timeHolder.getOxygenMax() + " ";
         timeHolderInfo += timeHolder.getSaboteurCountdown() + " ";
+        timeHolderInfo += timeHolder.getHelperCountdown() + " ";
     }
 
     public String getRoomsInfo() {return roomsInfo;}

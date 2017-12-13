@@ -9,6 +9,7 @@ import acq.IInjectableController;
 import acq.IItem;
 import acq.ILogFacade;
 import acq.IRoom;
+import acq.ITimeHolder;
 import acq.IVisualUpdater;
 import java.io.IOException;
 import java.net.URL;
@@ -30,6 +31,7 @@ import javafx.scene.control.TextFormatter;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.KeyEvent;
+import javafx.scene.layout.Background;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.StackPane;
 import javafx.scene.paint.Color;
@@ -180,6 +182,20 @@ public class GameGraphicsController implements Initializable, IInjectableControl
     {
         if (!updateGameEnd())
             updateSaboteurAlert();
+    }
+    
+    @Override
+    public void updateProgressBar()
+    {
+        if (!updateGameEnd())
+        {
+            ITimeHolder th = logFacade.getTimeHolder();
+            double timeProgress = th.getTimeLeft() / th.getTimeMax();
+            double oxygenProgress = th.getOxygenLeft() / th.getOxygenMax();
+            
+            timeBar.setProgress(timeProgress);
+            oxygenBar.setProgress(oxygenProgress);
+        }
     }
 
     @Override
@@ -562,7 +578,7 @@ public class GameGraphicsController implements Initializable, IInjectableControl
     
     private void printHelp()
     {
-        writeToLog("You can use the keys:\n  W,A,S,D,R,I and H");
+        writeToLog("You can use the keys:\n  W,A,S,D,R,I,H and Q");
     }
     
     private void writeToLog(String text)

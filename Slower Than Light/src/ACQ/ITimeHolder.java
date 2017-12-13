@@ -13,9 +13,13 @@ public interface ITimeHolder
 {
     int getHelperCountdown();
 
-    double getOxygenLeft();
-
     int getSaboteurCountdown();
 
     double getTimeLeft();
+
+    double getOxygenLeft();
+    
+    double getTimeMax();
+    
+    double getOxygenMax();
 }
