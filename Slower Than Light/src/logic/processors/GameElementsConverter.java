@@ -174,8 +174,8 @@ public class GameElementsConverter
         playerInfo = "Player: ";
         playerInfo += player.getCurrentRoom().getName() + " "; //players current room name
         playerInfo += 2 + " ";                                 //Inventory size
-        Item[] playerInventory = player.getInventory();          //Item array that holds players current inventory
-        int itemCount = player.getItemCount();                   //itemcount of how many items player current holds
+        Item[] playerInventory = player.getInventory();        //Item array that holds players current inventory
+        int itemCount = player.getItemCount();                 //itemcount of how many items player current holds
         for (int i = 0; i < itemCount; i++)
         {
             playerInfo += playerInventory[i].getName() + " ";  //writes the current items into the txtfile

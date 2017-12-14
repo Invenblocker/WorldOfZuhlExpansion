@@ -103,7 +103,6 @@ public class TimeHolder extends TimerTask implements ITimeHolder
             @Override
             public void run()
             {
-                System.out.println("Time: " + timeLeft + " Oxygen: " + oxygenLeft);
                 if (!gameInfo.isGameFinished())
                 {   
                     // check if game is finished
@@ -161,12 +160,10 @@ public class TimeHolder extends TimerTask implements ITimeHolder
                     if ((game.getPlayer().getCurrentRoom().isControlRoom() || game.getPlayer().hasItem(game.getItems().get("pc"))))
                     {
                         caller.updateMinimap();
-                        System.out.println("First update " + game.getPlayer().getCurrentRoom().isControlRoom() + " "+ game.getPlayer().hasItem(game.getItems().get("pc")));
                     }
                     else if (game.getSaboteur().isChasingPlayer())
                     {
                         caller.updateIsChasingPlayer();
-                        System.out.println("Second update");
                     }
                     else if (gameInfo.isGameFinished())
                     {

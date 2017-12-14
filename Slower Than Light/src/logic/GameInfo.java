@@ -172,7 +172,6 @@ public class GameInfo implements IGameInfo
     {
         double totalRooms = Game.getInstance().getRooms().size();
         destroyedRoomsPercentage = destroyedRooms.size() / totalRooms;
-        System.out.println("destroyed rooms: " + destroyedRooms.size() + " percentage " + destroyedRoomsPercentage + " size " + totalRooms);
     }
     
     /**

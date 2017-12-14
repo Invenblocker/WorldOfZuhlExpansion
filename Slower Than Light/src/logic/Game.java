@@ -106,6 +106,8 @@ public class Game
         if (helper == null)
             helper = new Helper(randomRoom, "Krunk", 0.1, 0.1);
         
+        saboteur.setRoom(randomRoom);
+        
         // Setup GameInfo
         gameInfo = new GameInfo(helper);
         gameInfo.updateRoomsDestroyed();
