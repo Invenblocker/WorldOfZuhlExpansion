@@ -26,11 +26,11 @@ public class SlowerThanLight
     {
         IDataFacade data = new DataFacade();
         
-        ILogFacade logik = LogFacade.getInstance();
-        logik.injectData(data);
+        ILogFacade logic = LogFacade.getInstance();
+        logic.injectData(data);
         
         IGUI gui = GUI.getInstance();
-        gui.injectLogic(logik);
+        gui.injectLogic(logic);
         
         gui.startApplication(args);
     }
