@@ -1,16 +1,13 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package logic.elements.characters;
 
 import acq.ISaboteur;
-import logic.*;
-import logic.elements.*;
-import logic.elements.rooms.*;
-import java.util.*;
+import java.util.ArrayList;
+import logic.Game;
 import logic.SystemLog;
+import logic.elements.rooms.Exit;
+import logic.elements.rooms.ItemRoom;
+import logic.elements.rooms.Room;
+
 /**
  * The main and only antagonist in the game.
  * @author Invenblocker & JN97
@@ -205,6 +202,24 @@ public class Saboteur extends RoomHopper implements ISaboteur
     
     /**
      * @author Invenblocker
+     * @return The chance of sabotage
+     */
+    public double getChanceOfSabotage()
+    {
+        return(chanceOfSabotage);
+    }
+    
+    /**
+     * @author JN97
+     * @param value The value the chance of sabotage should be set to 
+     */
+    public void setChanceOfSabotage(double value)
+    {
+        chanceOfSabotage = value;
+    }
+    
+    /**
+     * @author Invenblocker
      * @return The current stun countdown
      */
     public int getStunCountdown()
@@ -240,24 +255,6 @@ public class Saboteur extends RoomHopper implements ISaboteur
     public void decrementStunCountdown()
     {
         addStunCountdown(-1);
-    }
-    
-    /**
-     * @author Invenblocker
-     * @return The chance of sabotage
-     */
-    public double getChanceOfSabotage()
-    {
-        return(chanceOfSabotage);
-    }
-    
-    /**
-     * @author JN97
-     * @param value The value the chance of sabotage should be set to 
-     */
-    public void setChanceOfSabotage(double value)
-    {
-        chanceOfSabotage = value;
     }
     
     /**

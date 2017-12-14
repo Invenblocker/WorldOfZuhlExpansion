@@ -1,13 +1,9 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package logic.elements.characters;
 
 import acq.IHelper;
 import logic.SystemLog;
 import java.util.ArrayList;
+import java.util.List;
 import logic.Game;
 import logic.elements.rooms.Exit;
 import logic.elements.rooms.Room;
@@ -21,11 +17,11 @@ import logic.elements.rooms.ItemRoom;
 public class Helper extends RoomHopper implements IHelper
 {
     public final double DEFAULT_CHANCE_OF_DISCOVERY, CHANCE_OF_DISCOVERY_GROWTH;
+    private double chanceOfDiscovery;
     private HelperTask task;
     private String name;
-    private double chanceOfDiscovery;
     private String foundItemString;
-    private ArrayList<Room> returnRoute;
+    private List<Room> returnRoute;
     private SystemLog ACTION_LOG, ERROR_LOG;
     
     /**
@@ -188,7 +184,7 @@ public class Helper extends RoomHopper implements IHelper
      * @author Invenblocker
      * @return An ArrayList of Room instances that dictate the Helper's shortest route to a ControlRoom.
      */
-	private ArrayList<Room> findReturnRoute()
+    private List<Room> findReturnRoute()
     {
         ArrayList<ArrayList<Room>> routes = new ArrayList();
         boolean foundControlRoom = false;
@@ -294,6 +290,24 @@ public class Helper extends RoomHopper implements IHelper
     
     /**
      * @author Invenblocker
+     * @return The Helper's current chance of making a discovery
+     */
+    public double getChanceOfDiscovery()
+    {
+        return(chanceOfDiscovery);
+    }
+    
+    /**
+     * @author Invenblocker
+     * @param value What the chance of discovery should be set to
+     */
+    public void setChanceOfDiscovery(double value)
+    {
+        chanceOfDiscovery = value;
+    }
+    
+    /**
+     * @author Invenblocker
      * @return The helper's current task
      */
     public HelperTask getHelperTask()
@@ -308,6 +322,27 @@ public class Helper extends RoomHopper implements IHelper
     public String getHelperTaskString()
     {
         return getHelperTask().toString();
+    }
+    
+    /**
+     * Changes the Helper's Task.
+     * @author JN97
+     * @param task The task that the Helper should start working on.
+     */
+    public void setTask(HelperTask task)
+    {
+        this.task = task;
+        returnRoute = new ArrayList();
+        ACTION_LOG.writeToLog("The helper \"" + name + "\" had its task set to \"" + task.toString() + "\".");
+    }
+    
+    /**
+     * @author Invenblocker
+     * @return The Helper's NAME
+     */
+    public String getName()
+    {
+        return(name);
     }
     
     /**
@@ -343,21 +378,10 @@ public class Helper extends RoomHopper implements IHelper
     }
     
     /**
-     * Changes the Helper's Task.
-     * @author JN97
-     * @param task The task that the Helper should start working on.
-     */
-    public void setTask(HelperTask task)
-    {
-        this.task = task;
-        returnRoute = new ArrayList();
-        ACTION_LOG.writeToLog("The helper \"" + name + "\" had its task set to \"" + task.toString() + "\".");
-    }
-    
-    /**
      * @author Invenblocker
      * @return The Helper's ACTION_LOG
      */
+    @Override
     public SystemLog getActionLog()
     {
         return(ACTION_LOG);
@@ -367,36 +391,10 @@ public class Helper extends RoomHopper implements IHelper
      * @author Invenblocker
      * @return The Helper's ERROR_LOG
      */
+    @Override
     public SystemLog getErrorLog()
     {
         return(ERROR_LOG);
-    }
-    
-    /**
-     * @author Invenblocker
-     * @return The Helper's NAME
-     */
-    public String getName()
-    {
-        return(name);
-    }
-    
-    /**
-     * @author Invenblocker
-     * @return The Helper's current chance of making a discovery
-     */
-    public double getChanceOfDiscovery()
-    {
-        return(chanceOfDiscovery);
-    }
-    
-    /**
-     * @author Invenblocker
-     * @param value What the chance of discovery should be set to
-     */
-    public void setChanceOfDiscovery(double value)
-    {
-        chanceOfDiscovery = value;
     }
 
     /**

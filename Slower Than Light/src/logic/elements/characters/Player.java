@@ -1,13 +1,8 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package logic.elements.characters;
 
 import acq.IPlayer;
 import logic.SystemLog;
-import logic.elements.rooms.*;
+import logic.elements.rooms.Room;
 
 /**
  *
@@ -39,6 +34,27 @@ public class Player extends RoomHopper implements IPlayer
     /**
      * @author JN97
      * 
+     * Counts the inventory of player and returns boolean when inventory is counted.
+     * 
+     * @param item The item counted.
+     * @return amount of items in inventory.
+     */
+    
+    public boolean hasItem(Item item)
+    {
+        if (getItemCount() == 0)
+            return false;
+        
+        for(Item slot : inventory)
+            if(item == slot)
+                return true;
+        
+        return false;
+    }
+    
+    /**
+     * @author JN97
+     * 
      * Adds an item to the inventory. Returns true if the item was successfully
      * added, returns false if the inventory is full.
      * 
@@ -56,27 +72,6 @@ public class Player extends RoomHopper implements IPlayer
                 return true;
             }          
         }
-        return false;
-    }
-    
-    /**
-     * @author JN97
-     * 
-     * Counts the inventory of player and returns boolean when inventory is counted.
-     * 
-     * @param item The item counted.
-     * @return amount of items in inventory.
-     */
-    
-    public boolean hasItem(Item item)
-    {
-        if (getItemCount() == 0)
-            return false;
-        
-        for(Item slot : inventory)
-            if(item == slot)
-                return true;
-        
         return false;
     }
     

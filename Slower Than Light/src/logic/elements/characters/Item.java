@@ -1,12 +1,7 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package logic.elements.characters;
 
 import acq.IItem;
-import logic.elements.rooms.*;
+import logic.elements.rooms.ItemRoom;
 
 /**
  *
@@ -24,7 +19,7 @@ public class Item implements IItem
      * 
      * @param name The name of the item.
      */
-   public Item(String name)
+    public Item(String name)
     {
         this.name = name;
         this.defaultRoom = null;
@@ -38,10 +33,19 @@ public class Item implements IItem
      * @param name The name of the item.
      * @param defaultRoom The default room for the item.
      */
-  public Item(String name, ItemRoom defaultRoom)
+    public Item(String name, ItemRoom defaultRoom)
     {
         this.name = name;
         this.defaultRoom = defaultRoom;
+    }
+    
+    /**
+     * @author JN97
+     * returns item to the default room.
+     */
+    public void returnToDefaultRoom()
+    {
+        defaultRoom.setItem(this);
     }
     
     /**
@@ -68,6 +72,7 @@ public class Item implements IItem
     {
         return defaultRoom;
     }
+    
     /**
      * @author JN97
      * @return The item's name,
@@ -76,14 +81,5 @@ public class Item implements IItem
     public String toString()
     {
         return this.getName(); 
-    }
-    
-    /**
-     * @author JN97
-     * returns item to the default room.
-     */
-    public void returnToDefaultRoom()
-    {
-        defaultRoom.setItem(this);
     }
 }
