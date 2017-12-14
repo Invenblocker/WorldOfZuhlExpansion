@@ -5,7 +5,6 @@
 package database;
 
 import acq.IWriter;
-import java.awt.Point;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.PrintWriter;
@@ -34,7 +33,6 @@ public class txtWriter implements IWriter {
      * @param roomsRepaired
      * @param roomPosition 
      */
-    
     @Override
     public void saveGame(String roomsInfo, String itemsInfo,String specialItemsInfo,
             List<String> exitInfo, String playerInfo, String saboteurInfo,
@@ -94,7 +92,6 @@ public class txtWriter implements IWriter {
      * @param highScore
      * @param highscoreName 
      */
-    
     @Override
     public void writeHighScore(Map<String, Integer> highScore, String highscoreName)
     {

@@ -1,26 +1,19 @@
 package database;
 
-/*
- * This class is responsible for loading the needed game data, from a txt file. 
- * The data needs to be stored, for then to be manipulated into game objects,
- * so that the game can be set-up.
- */
-
 import acq.ILoader;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.util.ArrayList;
 import java.util.LinkedHashMap;
 import java.util.List;
-import java.util.Map;
 import java.util.Scanner;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
-
 public class txtLoader implements ILoader
 {
     private String[] roomsInfo;
+    private String[] roomPositionInfo;
     private String[] itemsInfo;
     private String[] specialItemsInfo;
     private List<String[]> exitInfo;
@@ -28,10 +21,9 @@ public class txtLoader implements ILoader
     private String[] saboteurInfo;
     private String[] helperInfo;
     private String[] timeHolderInfo;
-    private String[] roomPositionInfo;
+    private int roomsRepaired;
     
     private LinkedHashMap<String, Integer> highScore;
-    private int roomsRepaired;
     
     public txtLoader()
     {
@@ -46,7 +38,7 @@ public class txtLoader implements ILoader
      * rooms. The following loadGame method, does exactly the same, the 
      * difference is that a saved game is loaded instead of the the default txt- 
      * file.
-     * @param gameName 
+     * @param gameName The url to the file which should be loaded
      */
     @Override
     public void newGame(String gameName) 
@@ -68,10 +60,9 @@ public class txtLoader implements ILoader
      * ram after being initialized. Dis is done by checking for the keywords, at
      * index 0 and storing them into ther respective arrays, which is used to 
      * manipulate the data in our string converter class.
-     * @param gameName 
+     * @param gameName The url to the file which should be loaded
      */
-    
-    public void initializeGame (String gameName)
+    private void initializeGame (String gameName)
     {
         Scanner sc = null;
         
@@ -147,6 +138,9 @@ public class txtLoader implements ILoader
     @Override
     public String[] getTimeHolderInfo() {return timeHolderInfo;}
     
+    @Override
+    public int getRoomsRepaired () {return roomsRepaired;}
+    
       /**
      * This method is used to creater a new txt file to store a highscore.
      * A linked hashmap is used, to retain the order of the highscore, whenever 
@@ -154,7 +148,6 @@ public class txtLoader implements ILoader
      * The highscore is stored with a player name, and a int value for the score.
      * @return The map containing information about all highscores
      */
-    
     @Override
     public LinkedHashMap<String, Integer> getHighscore() { 
         this.highScore = new LinkedHashMap<> ();
@@ -190,12 +183,6 @@ public class txtLoader implements ILoader
         }
         
         return  highScore;
-    }
-    
-    @Override
-    public int getRoomsRepaired ()
-    {
-        return roomsRepaired;
     }
     
 }

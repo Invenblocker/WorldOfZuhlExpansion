@@ -1,8 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package database;
 
 import acq.IDataFacade;
@@ -15,7 +10,9 @@ import acq.IWriter;
  */
 public class DataFacade implements IDataFacade
 {
-    
+    /**
+     * The loader and writer which handles processing of text files
+     */
     private ILoader loader;
     private IWriter writer;
        
