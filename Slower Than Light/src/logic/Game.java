@@ -365,28 +365,28 @@ public class Game
             Exit exit = null;
 
             while (k < words.length)
-            {                                           // tjekker at vi ikke overskrider arrayet
-                for (String key : roomsSC.keySet())       // tjekker alle keys i vores hashmap rooms (workshop, controlroom, pub, lab)
-                    if (key.equals(words[0]))           // tjekker om plads 0 (et rum) er det rum vi kigger på.
-                        room = roomsSC.get(key);          // sætter rum = det rum vi vil arbejde med.
+            {                                             // checks that we dont exceeds our array
+                for (String key : roomsSC.keySet())     // checks all keys in our hashmap rooms(workshop, controlroom)
+                    if (key.equals(words[0]))           // checks if slot 0 (a room) is the room we are looking at.
+                        room = roomsSC.get(key);        // sets room = the room we will work with
                 
-                for (String key : roomsSC.keySet()){      // tjekker alle rum i hashmappet room
-                    if (key.equals(words[k])){          // finder det andet rum som skal sættes som exit til room.
-                        room2 = roomsSC.get(key);         // sætter rummet til room2.
+                for (String key : roomsSC.keySet()){      // checks all rooms in hashmap rooms
+                    if (key.equals(words[k])){          // finds the other room that has to set as an exit. 
+                        room2 = roomsSC.get(key);         // sets the room to room2
                         if (room2.getExit(room) != null){
                            exit = room2.getExit(room);
                            
-                         //   System.out.println("Room2 er: " + room2.getName() + " og får exit: " + exit + " til rummet: " + room.getName());
+                         //   System.out.println("Room2 is: " + room2.getName() + " and gets exit: " + exit + " to room: " + room.getName());
                         }
                         else{
                            exit = new Exit(room, room2);  
                         
-                          //  System.out.println("Lavede nyt exit: Room2 er: " + room2.getName() + " og får exit: " + exit + " til rummet: " + room.getName());
+                          //  System.out.println("makes a new exit: Room2 is: " + room2.getName() + " and gets exit: " + exit + " to room: " + room.getName());
                         }
                         
                         exit.setOperating(Boolean.parseBoolean(words[j]));
                         
-                        room.setExit(words[i], exit);  // sætter exit med plads i (en direction) og et room.
+                        room.setExit(words[i], exit);  // sets an exit with a point i a direction and a room.
                         System.out.println(room + " har sat direction " + words[i] + " der leder mod " + exit);
                     }
                 }
