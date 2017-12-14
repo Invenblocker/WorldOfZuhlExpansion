@@ -1,26 +1,26 @@
-   package logic.elements.rooms;
+package logic.elements.rooms;
 
 import acq.IRoom;
 import java.util.ArrayList;
 import java.util.Set;
 import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 import logic.SystemLog;
 import logic.elements.characters.Tool;
-
 
 public class Room implements IRoom 
 {
     private String name;
     private boolean operating;         //is room damaged
     private boolean controlRoom;       //check if player is in CR
-    private ArrayList<Tool> repairTools;
-    private HashMap<String, Exit> exits;
+    private List <Tool> repairTools;
+    private Map<String, Exit> exits;
     
     /**
      * A constructor that creates a new room with no exits.
      * @param name The name of the room.
      */
-    
     public Room(String name){
          this.controlRoom = false;     //constructs value for controlroom 
          this.name = name;
@@ -69,7 +69,7 @@ public class Room implements IRoom
         return this.controlRoom;
     }
 
-     public ArrayList<Tool> getRepairTools() { 
+     public List<Tool> getRepairTools() { 
         return this.repairTools; // returnes the repair tool for the room
     }
      
@@ -77,7 +77,7 @@ public class Room implements IRoom
         this.repairTools.add(tool); // add's a repair tool to the room.
     }
       
- /**
+    /**
      * Returns a String containing a list of exits.
      * @return A String with a list of possible exits from the current room.
      */
@@ -92,7 +92,7 @@ public class Room implements IRoom
     }
 
      
-    public ArrayList<Exit> getCollectionOfExits(){
+    public List<Exit> getCollectionOfExits(){
         ArrayList<Exit> list = new ArrayList<Exit>();   // creates an arraylist
           
         Set<String> keys = exits.keySet();              // creates a set of keys from the hashmap exits.

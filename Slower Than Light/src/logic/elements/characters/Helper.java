@@ -92,7 +92,7 @@ public class Helper extends RoomHopper implements IHelper
      */
     private int search()
     {
-        ArrayList<Exit> exits = getCurrentRoom().getCollectionOfExits();
+        List<Exit> exits = getCurrentRoom().getCollectionOfExits();
         
         if((getCurrentRoom() instanceof ItemRoom) && Math.random() < chanceOfDiscovery - CHANCE_OF_DISCOVERY_GROWTH && ((ItemRoom) getCurrentRoom()).getSpecialItem() == null)
         {

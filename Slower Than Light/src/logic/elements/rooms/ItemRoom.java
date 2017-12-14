@@ -1,28 +1,20 @@
 package logic.elements.rooms;
 
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
-
 import logic.elements.characters.Item;
+
 /**
  *
  * @author Erik
  */
-public class ItemRoom  extends Room{  //Itemroom inherits funnctionality from room
+public class ItemRoom  extends Room //Itemroom inherits funnctionality from room
+{
     private Item item;         //Item from subclass player.
     private Item specialItem;  
    
-
-    
-    
     //Constructor for Itemroom, which extends/inherits functionality from room.
     public ItemRoom(String name) {
         super(name, false); //extends room, uses name, and false for cr, as itemroom can't be controlroom
         this.specialItem = null;
-        
     }
     
     //functionality

@@ -1,7 +1,7 @@
 package logic.elements.characters;
 
 import acq.ISaboteur;
-import java.util.ArrayList;
+import java.util.List;
 import logic.Game;
 import logic.SystemLog;
 import logic.elements.rooms.Exit;
@@ -92,7 +92,7 @@ public class Saboteur extends RoomHopper implements ISaboteur
             }
             else
             {
-                ArrayList<Exit> neighbors = getCurrentRoom().getCollectionOfExits();
+                List<Exit> neighbors = getCurrentRoom().getCollectionOfExits();
                 
                 for(int i = neighbors.size() - 1; i >= 0; i--)
                     if(getCurrentRoom().getExit(neighbors.get(i)).isControlRoom() || !neighbors.get(i).isOperating())
@@ -186,7 +186,7 @@ public class Saboteur extends RoomHopper implements ISaboteur
         }
         else
         {
-            ArrayList<Exit> neighbors = getCurrentRoom().getCollectionOfExits();
+            List<Exit> neighbors = getCurrentRoom().getCollectionOfExits();
             for(Exit neighbor : neighbors)
             {
                 if(getCurrentRoom().getExit(neighbor).equals(Game.getInstance().getPlayer().getCurrentRoom()) && neighbor.isOperating())

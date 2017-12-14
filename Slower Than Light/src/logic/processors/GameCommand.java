@@ -314,7 +314,7 @@ public class GameCommand
             return;
         }
         
-        ArrayList<Tool> roomRepairTool = game.getPlayer().getCurrentRoom().getRepairTools();
+        List<Tool> roomRepairTool = game.getPlayer().getCurrentRoom().getRepairTools();
         Item[] inventory = game.getPlayer().getInventory();
         
         for (Tool tool : roomRepairTool)

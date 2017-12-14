@@ -1,20 +1,15 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package logic.elements.rooms;
 
 import java.util.ArrayList;
+import java.util.List;
 import logic.elements.characters.Item;
-import logic.elements.characters.Tool;
 
 /**
  *
  * @author Peter
  */
 public class WorkshopRoom  extends Room{
-    private ArrayList<Item> items = new ArrayList<Item>();
+    private List<Item> items = new ArrayList<Item>();
     
     
     public WorkshopRoom(String name){ //constructs workshoproom
@@ -30,7 +25,7 @@ public class WorkshopRoom  extends Room{
         items.remove(item);
     }
     
-    public ArrayList<Item> getItems(){  //returns all items in the array/workshoproom
+    public List<Item> getItems(){  //returns all items in the array/workshoproom
         return this.items;     
         
     }
