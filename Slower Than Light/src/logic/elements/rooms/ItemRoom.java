@@ -7,8 +7,6 @@ package logic.elements.rooms;
  */
 
 import logic.elements.characters.Item;
-import logic.elements.characters.Tool;
-import logic.elements.rooms.Room;
 /**
  *
  * @author Erik

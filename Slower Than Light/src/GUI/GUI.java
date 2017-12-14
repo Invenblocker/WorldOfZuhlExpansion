@@ -7,12 +7,7 @@ package GUI;
 
 import acq.IGUI;
 import acq.IInjectableController;
-import acq.IItem;
 import acq.ILogFacade;
-import acq.IRoom;
-import java.util.Map;
-import logic.Game;
-import acq.IVisualUpdater;
 import javafx.application.Application;
 import javafx.application.Platform;
 import javafx.event.EventHandler;
@@ -71,8 +66,9 @@ public class GUI extends Application implements IGUI
             }
         });
         
-        primaryStage.setScene(scene);                               //Sets secene
-        primaryStage.show();                                        //Shows stage
+        primaryStage.setScene(scene);                   //Sets scene
+        primaryStage.setTitle("Slower Than Light");
+        primaryStage.show();                            //Shows stage
     }
 
     @Override

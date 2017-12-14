@@ -28,7 +28,7 @@ public class GameInfo implements IGameInfo
     
     // The allowed percentage of rooms destroyed. If the destroyedRoomsPercentage 
     // is higher than this value, the game is lost
-    private final double ALLOWED_ROOMS_DESTROYED_PERCENTAGE = 0.7;
+    private final double ALLOWED_ROOMS_DESTROYED_PERCENTAGE = 0.6;
     
     // Information about the destroyed rooms
     private double destroyedRoomsPercentage;
@@ -66,6 +66,7 @@ public class GameInfo implements IGameInfo
         highScoreMap = LogFacade.getInstance().getDataFacade().getLoader().getHighscore();
         score = 0;
         gameFinished = false;
+        System.out.println("Constructor: destroyed rooms: " + destroyedRooms.size() + " percentage " + destroyedRoomsPercentage);
     }
     
     /**
@@ -169,8 +170,9 @@ public class GameInfo implements IGameInfo
      */
     private void updateDestroyedRoomsPercentage ()
     {
-        int totalRooms = Game.getInstance().getRooms().size();
+        double totalRooms = Game.getInstance().getRooms().size();
         destroyedRoomsPercentage = destroyedRooms.size() / totalRooms;
+        System.out.println("destroyed rooms: " + destroyedRooms.size() + " percentage " + destroyedRoomsPercentage + " size " + totalRooms);
     }
     
     /**
@@ -180,8 +182,8 @@ public class GameInfo implements IGameInfo
     {
         int destroyedRoomsCount = destroyedRooms.size();
         double oxygenLeft = Game.getInstance().getTimeHolder().getOxygenLeft();
-        int helperAlivePoints = getHelper() != null? 20 : 0;
-        score = (int) ((roomsRepaired * 5) + (oxygenLeft * 5) + helperAlivePoints - (destroyedRoomsCount * 2));
+        int helperAlivePoints = getHelper() != null? 50 : 0;
+        score = (int) ((roomsRepaired * 15) + (oxygenLeft * 1) + helperAlivePoints - (destroyedRoomsCount * 5));
     }
     
     /**

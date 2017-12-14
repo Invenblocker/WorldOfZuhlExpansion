@@ -14,6 +14,10 @@ import java.util.Map;
  */
 public interface IGameInfo {
 
+    double getALLOWED_ROOMS_DESTROYED_PERCENTAGE();
+    
+    double getDestroyedRoomsPercentage();
+    
     List<IRoom> getDestroyedRooms();
 
     Map<String, Integer> getHighScoreMap();

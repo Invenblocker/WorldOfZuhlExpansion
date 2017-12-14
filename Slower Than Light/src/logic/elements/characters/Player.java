@@ -178,8 +178,9 @@ public class Player extends RoomHopper implements IPlayer
     
     /**
      * @JN97
-     * @returns The Player's ACTION_LOG 
+     * @return The Player's ACTION_LOG 
      */
+    @Override
     public SystemLog getActionLog()
     {
         return ACTION_LOG;
@@ -187,8 +188,9 @@ public class Player extends RoomHopper implements IPlayer
     
     /**
      * @JN97
-     * @returns The Player's ERROR_LOG 
+     * @return The Player's ERROR_LOG 
      */
+    @Override
     public SystemLog getErrorLog()
     {
         return ERROR_LOG;

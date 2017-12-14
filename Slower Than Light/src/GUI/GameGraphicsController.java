@@ -209,6 +209,8 @@ public class GameGraphicsController implements Initializable, IInjectableControl
                 processGameLost("oxygon ran out");
             else if (logFacade.getPlayer().getCurrentRoom() == logFacade.getSaboteur().getCurrentRoom())
                 processGameLost("saboteur hit player");
+            else if (logFacade.getGameInfo().getDestroyedRoomsPercentage() > logFacade.getGameInfo().getALLOWED_ROOMS_DESTROYED_PERCENTAGE())
+                processGameLost("to many rooms were destroyed");
             
             return true;
         }
@@ -546,7 +548,7 @@ public class GameGraphicsController implements Initializable, IInjectableControl
     private void processGameLost(String msg)
     {
         logFacade.quit();
-        System.out.println("Game lost from " + msg);
+        System.out.println("Game lost because " + msg);
         changeScene("Highscore.fxml");
     }
     
