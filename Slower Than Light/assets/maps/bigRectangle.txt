@@ -14,7 +14,7 @@ RightThruster left true LoadingBay up true Office
 SpecialItem: Tool ducttape Tool pc
 Item: Tool PC Office Tool Acid Lab Tool Knife Kitchen Tool Screwdriver OxygenContainer Tool Wrench ShieldGenerator Tool Blowtorch LivingQuarters Tool Jack LoadingBay Tool Crowbar LeftThruster Tool Welder RightThruster Tool ThermitePaste EntryRamp
 Player: controlRoom 2 
-Saboteur: Office 0.5 0.1 0.1 0.9 5
+Saboteur: Office 0.5 0.1 0.1 0.5 5
 Helper: controlRoom Erik Bodyguard 0.1 0.1 0.9
 RoomsRepaired: 2
 TimeHolder: 300.0 360.0 300.0 360.0 0 0

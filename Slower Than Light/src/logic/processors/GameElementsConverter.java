@@ -188,7 +188,7 @@ public class GameElementsConverter
         saboteurInfo += saboteur.getCurrentRoom().getName() + " ";
         saboteurInfo += saboteur.DEFAULT_CHANCE_OF_SABOTAGE + " ";
         saboteurInfo += saboteur.CHANCE_OF_SABOTAGE_GROWTH + " ";
-        saboteurInfo += saboteur.DEFAULT_CHANCE_OF_SABOTAGE + " ";
+        saboteurInfo += saboteur.CHANCE_OF_DOOR_SABOTAGE + " ";
         saboteurInfo += saboteur.getChanceOfSabotage() + " ";
         saboteurInfo += saboteur.getStunCountdown() + " ";
     }
