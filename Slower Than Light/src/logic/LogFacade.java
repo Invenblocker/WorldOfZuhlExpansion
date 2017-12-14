@@ -59,7 +59,7 @@ public class LogFacade implements ILogFacade
      * @param caller 
      */
     @Override
-    public void injectGUIUpdateMethod(IVisualUpdater caller)
+    public void injectVisualCaller(IVisualUpdater caller)
     {
         game.getTimeHolder().addVisualUpdateCaller(caller);
     }
@@ -206,7 +206,7 @@ public class LogFacade implements ILogFacade
      * @return's a map with highscore
      */
     @Override
-    public Map<String, Integer> getHighScore() 
+    public Map<String, Integer> getHighscore() 
     {
         return data.getLoader().getHighscore();
     }

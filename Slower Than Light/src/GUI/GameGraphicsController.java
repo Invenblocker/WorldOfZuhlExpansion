@@ -138,7 +138,7 @@ public class GameGraphicsController implements Initializable, IInjectableControl
         updateMinimap();
         updateIsChasingPlayer();
         
-        logFacade.injectGUIUpdateMethod(this);
+        logFacade.injectVisualCaller(this);
         logFacade.play();
         
         updateBackground(logFacade.getPlayer().getCurrentRoom().getName());

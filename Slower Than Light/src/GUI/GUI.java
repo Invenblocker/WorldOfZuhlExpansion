@@ -33,13 +33,8 @@ public class GUI extends Application implements IGUI
     }
     
     private ILogFacade logFacade;
-    private Log log;
     
-    public GUI()
-    {
-        //this.minimap = new MiniMap();       //Creates new minimap object
-        this.log = new Log(5);
-    }
+    public GUI() {}
     
     @Override
     public void injectLogic(ILogFacade _logFacade)

@@ -3,29 +3,23 @@ package acq;
 import java.awt.Point;
 import java.util.Map;
 
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
-
 /**
  *
  * @author Johnn
  */
-public interface ILogFacade {
-
+public interface ILogFacade
+{
+    void newGame();
+    
+    void loadGame();
+    
     void play();
     
     void quit();
     
-    void loadGame();
-    
-    void newGame();
-    
     void injectData(IDataFacade dataFacade);
     
-    void injectGUIUpdateMethod(IVisualUpdater caller);
+    void injectVisualCaller(IVisualUpdater caller);
 
     void processCommand(String Command);
     
@@ -37,13 +31,13 @@ public interface ILogFacade {
     
     Map<String, Point> getRoomPositions();
     
-    Map<String, Integer> getHighScore();
-
-    IHelper getHelper();
+    Map<String, Integer> getHighscore();
 
     IPlayer getPlayer();
 
     ISaboteur getSaboteur();
+
+    IHelper getHelper();
 
     ITimeHolder getTimeHolder();
     

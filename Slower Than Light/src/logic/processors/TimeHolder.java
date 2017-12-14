@@ -216,27 +216,17 @@ public class TimeHolder extends TimerTask implements ITimeHolder
      * Returns the time until next saboteur action
      * @return The current countdown time in seconds
      */
-    @Override
     public int getSaboteurCountdown () {return saboteurCountdown;}
     
     /**
      * Returns the time until next saboteur action
      * @return The current countdown time in seconds
      */
-    @Override
     public int getHelperCountdown() {return helperCountdown;}
     
-    /**
-     * Returns the amount of time left. If 0, the game is won
-     * @return The amount of time left
-     */
     @Override
     public double getTimeLeft() {return timeLeft;}
     
-    /**
-     * Returns the amount of oxygen left. If 0, the game is lost
-     * @return The amount of oxygen left
-     */
     @Override
     public double getOxygenLeft() {return oxygenLeft;}
 

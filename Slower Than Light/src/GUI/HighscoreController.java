@@ -61,7 +61,7 @@ public class HighscoreController implements Initializable, IInjectableController
     {
         logFacade = GUI.getInstance().getILogFacade();
         
-        Map<String, Integer> highscore = logFacade.getHighScore();
+        Map<String, Integer> highscore = logFacade.getHighscore();
         
         List<String>nameStrings = new ArrayList<>(highscore.keySet());
         nameList = FXCollections.observableList(nameStrings);
