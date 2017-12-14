@@ -213,7 +213,7 @@ public class Game
                     item = items.get(itemKeys.remove(0));
                     
                     room.addRepairTools((Tool) item);
-                    room.addRepairTools((Tool) specialItems.get("ducttape"));
+                    room.addRepairTools((Tool) specialItems.get("Ducttape"));
                 }
                 
                 if (itemKeys.isEmpty()) //Stop assigning items if there is no more
