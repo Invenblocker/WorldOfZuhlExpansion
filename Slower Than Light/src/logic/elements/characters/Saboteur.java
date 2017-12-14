@@ -29,6 +29,7 @@ public class Saboteur extends RoomHopper implements ISaboteur
      * @param room The starting room for the saboteur.
      * @param chanceOfSabotage The starting chance that the saboteur will sabotage its current room.
      * @param chanceOfSabotageGrowth How much the chance of sabotaging the current room should grow when moving instead of sabotaging.
+     * @param chanceOfDoorSabotage
      */
     public Saboteur(Room room, double chanceOfSabotage, double chanceOfSabotageGrowth, double chanceOfDoorSabotage)
     {

@@ -103,7 +103,7 @@ public class TimeHolder extends TimerTask implements ITimeHolder
             @Override
             public void run()
             {
-                System.out.println("Time: " + timeLeft);
+                System.out.println("Time: " + timeLeft + " Oxygen: " + oxygenLeft);
                 if (!gameInfo.isGameFinished())
                 {   
                     // check if game is finished
@@ -111,7 +111,7 @@ public class TimeHolder extends TimerTask implements ITimeHolder
                         gameInfo.setGameFinished(true);
                         caller.updateGameEnd();
                         return;
-                    } System.out.println("allowed " + gameInfo.getALLOWED_ROOMS_DESTROYED_PERCENTAGE() + " current " + gameInfo.getDestroyedRoomsPercentage());
+                    }
 
                     // check if saboteur is stunned or should move
                     if (game.getSaboteur().getStunCountdown() != 0)
