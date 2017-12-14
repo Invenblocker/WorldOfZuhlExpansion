@@ -1,8 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package logic;
 
 import acq.IDataFacade;
@@ -26,6 +21,7 @@ import logic.elements.characters.Item;
  */
 public class LogFacade implements ILogFacade 
 {
+    // used for referencing (Singleton)
     private static LogFacade instance;
     public static LogFacade getInstance()
     {
@@ -37,12 +33,51 @@ public class LogFacade implements ILogFacade
     
     private IDataFacade data;
     private Game game;
-    private ILogFacade logFacade;
     
     public LogFacade()
     {
         game = Game.getInstance();
-    }  
+    }
+    
+    /**
+     * Makes a refrence to where out newGame fill is.
+     * And tells setupGame how to get it when you load a new game.
+     */
+    @Override
+    public void newGame()
+    {
+        data.getLoader().newGame("assets/maps/bigRectangle.txt");
+        game.setupGame(data.getLoader());
+       
+    }
+    /**
+     * Makes a refrence to where out saveGame fill is.
+     * And tells setupGame how to get it when you load a saved game.
+     */
+    @Override
+    public void loadGame() 
+    {
+        data.getLoader().loadGame("assets/maps/saveGame.txt");
+        game.setupGame(data.getLoader());
+    }
+    
+    /**
+     * makes a referece to the play method
+     */
+    @Override
+    public void play()
+    {
+        game.play();
+    }
+    
+    /**
+     * make a refrence to the endGame method
+     */
+    @Override
+    public void quit()
+    {
+        game.endGame();
+    }
     
     /**
      * gets a refrence of the objekt datafacede
@@ -115,100 +150,57 @@ public class LogFacade implements ILogFacade
     
     /**
      * 
-     * @return's a reference to the roomPosition.
+     * @return a reference to the roomPosition.
      */
     @Override
     public Map<String, Point> getRoomPositions() {return game.getRoomPositions();}
     
     /**
      * 
-     * @return's a refrence to the player. 
+     * @return a refrence to the player. 
      */
     @Override
     public IPlayer getPlayer() {return game.getPlayer();}
     
     /**
      * 
-     * @return's a refrence to the Saboteur.
+     * @return a refrence to the Saboteur.
      */
     @Override
     public ISaboteur getSaboteur() {return game.getSaboteur();}
     
     /**
      * 
-     * @return's a refrence to the Helper
+     * @return a refrence to the Helper
      */
     @Override
     public IHelper getHelper() {return game.getHelper();}
     
     /**
      * 
-     * @return's a refrence to timeHolder
+     * @return a refrence to timeHolder
      */
     @Override
     public ITimeHolder getTimeHolder() {return game.getTimeHolder();}
     
     /**
      * 
-     * @return's a refrence to gameInfo.
+     * @return a refrence to gameInfo.
      */
     @Override
     public IGameInfo getGameInfo() {return game.getGameInfo();}
     
     /**
      * 
-     * @return's a refrence to our dataFacede. 
+     * @return a refrence to our dataFacede. 
      */
     public IDataFacade getDataFacade() {return data;}
     
     /**
-     * Makes a refrence to where out newGame fill is.
-     * And tells setupGame how to get it when you load a new game.
-     */
-    @Override
-    public void newGame()
-    {
-        data.getLoader().newGame("assets/maps/bigRectangle.txt");
-        game.setupGame(data.getLoader());
-       
-    }
-    /**
-     * Makes a refrence to where out saveGame fill is.
-     * And tells setupGame how to get it when you load a saved game.
-     */
-    @Override
-    public void loadGame() 
-    {
-        data.getLoader().loadGame("assets/maps/saveGame.txt");
-        game.setupGame(data.getLoader());
-    }
-    
-    /**
-     * makes a referece to the play method
-     */
-    @Override
-    public void play()
-    {
-        game.play();
-    }
-    
-    /**
-     * make a refrence to the endGame method
-     */
-    @Override
-    public void quit()
-    {
-        game.endGame();
-    }
-    
-    /**
      * 
-     * @return's a map with highscore
+     * @return a map with highscore
      */
     @Override
-    public Map<String, Integer> getHighscore() 
-    {
-        return data.getLoader().getHighscore();
-    }
+    public Map<String, Integer> getHighscore() {return data.getLoader().getHighscore();}
     
 }

@@ -25,11 +25,11 @@ import logic.processors.TimeHolder;
 import logic.user_input.Parser;
 
 /**
- * @author  Michael Kolling and David J. Barnes
- * @version 2006.03.30
+ * @author  Erik
  */
 public class Game 
 {
+    // used for referencing (Singleton)
     private static Game instance = null;
     public static Game getInstance()
     {
@@ -39,12 +39,15 @@ public class Game
         return instance;
     }
     
-    private Map<String, Point> roomPositions;
+    // room positions on minimap
+    private Map <String, Point> roomPositions;
     
-    private Map<String, Room>rooms;
-    private Map<String, Item>items;
-    private Map<String, Item>specialItems;
+    // objects in the game
+    private Map <String, Room> rooms;
+    private Map <String, Item> items;
+    private Map <String, Item> specialItems;
     
+    // single objects in game
     private GameInfo gameInfo;
     private Parser parser;
     private Player player;
@@ -53,7 +56,10 @@ public class Game
     private TimeHolder timeHolder;
     private GameCommand gameCommand;
     
+    // the timer which activates the run method in TimeHolder
     private Timer timer;
+    
+    // information about whether or not the game has been loaded
     private boolean gameLoaded;
     
         
@@ -106,8 +112,6 @@ public class Game
         if (helper == null)
             helper = new Helper(randomRoom, "Krunk", 0.1, 0.1);
         
-        saboteur.setRoom(randomRoom);
-        
         // Setup GameInfo
         gameInfo = new GameInfo(helper);
         gameInfo.updateRoomsDestroyed();
@@ -121,6 +125,10 @@ public class Game
         if (sc.timeHolderSC == null)
             timeHolder = new TimeHolder(300, 350);
         timeHolder.setupReferences();
+        
+        // move saboteur to a random room if it is a new game
+        if (timeHolder.getTimeLeft() == timeHolder.getTimeMax())
+            saboteur.setRoom(randomRoom);
         
         // Setup GameCommand
         gameCommand = new GameCommand();
@@ -250,7 +258,6 @@ public class Game
         private String playerPositionSC;
         private String saboteurPositionSC;
         
-        
         private Map<String, Room> roomsSC;
         private Map<String, Item> itemsSC;
         private Map<String, Item> specialItemsSC;
@@ -375,24 +382,17 @@ public class Game
                 for (String key : roomsSC.keySet()){      // checks all rooms in hashmap rooms
                     if (key.equals(words[k])){          // finds the other room that has to set as an exit. 
                         room2 = roomsSC.get(key);         // sets the room to room2
-                        if (room2.getExit(room) != null){
-                           exit = room2.getExit(room);
-                           
-                         //   System.out.println("Room2 is: " + room2.getName() + " and gets exit: " + exit + " to room: " + room.getName());
-                        }
-                        else{
-                           exit = new Exit(room, room2);  
                         
-                          //  System.out.println("makes a new exit: Room2 is: " + room2.getName() + " and gets exit: " + exit + " to room: " + room.getName());
-                        }
+                        if (room2.getExit(room) != null)
+                           exit = room2.getExit(room);
+                        else
+                           exit = new Exit(room, room2);
                         
                         exit.setOperating(Boolean.parseBoolean(words[j]));
                         
                         room.setExit(words[i], exit);  // sets an exit with a point i a direction and a room.
-                        System.out.println(room + " har sat direction " + words[i] + " der leder mod " + exit);
                     }
                 }
-                
                 
                 i += 3;
                 j += 3;
@@ -408,26 +408,22 @@ public class Game
             
             int i = 3;         //index for item in txtfile
             
-            for (int j = 1; j <= playerSC.getInventory().length; j++){
-                
-             if(i < words.length){
-            
-            if(itemsSC.containsKey(words[i])){           //checks if txtfile contains same key in items hashmap
-                playerSC.addItem(itemsSC.get(words[i])); //adds item to player inventory
+            for (int j = 1; j <= playerSC.getInventory().length; j++)
+            {
+                if(i < words.length)
+                {
+                    if(itemsSC.containsKey(words[i])){           //checks if txtfile contains same key in items hashmap
+                        playerSC.addItem(itemsSC.get(words[i])); //adds item to player inventory
+                    }
+                    else if (specialItemsSC.containsKey(words[i])) { //checks if txtfile contains same key in specialItems hashmap
+                        playerSC.addItem(specialItemsSC.get(words[i]));    //adds specialItem to player inventory
+                    }
+                    
+                    i++;
+                }
+                else
+                    playerSC.addItem(null);
             }
-            else if (specialItemsSC.containsKey(words[i])) { //checks if txtfile contains same key in specialItems hashmap
-                playerSC.addItem(specialItemsSC.get(words[i]));    //adds specialItem to player inventory
-        
-            }
-            
-            i++;
-            }
-             else{
-                 playerSC.addItem(null);
-             }
-            }
-            System.out.println("Færdig med for loop");
-
         }
       
         private void initializeSaboteur(String[] words)

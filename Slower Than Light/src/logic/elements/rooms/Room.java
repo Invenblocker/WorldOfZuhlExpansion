@@ -166,7 +166,6 @@ public class Room implements IRoom
     public Exit getExit(Room room)
     {
         for(Exit exit : exits.values()){
-            System.out.println("Compares: " + exit.getExitRoom2() + " and " + room + " || " + exit.getExitRoom1() + " and " + this);
             if(exit.getExitRoom2().equals(room) || exit.getExitRoom1().equals(room)){
                 
                 return(exit);

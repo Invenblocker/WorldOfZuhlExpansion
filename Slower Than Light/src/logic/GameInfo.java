@@ -1,8 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package logic;
 
 import acq.IGameInfo;
@@ -66,7 +61,6 @@ public class GameInfo implements IGameInfo
         highScoreMap = LogFacade.getInstance().getDataFacade().getLoader().getHighscore();
         score = 0;
         gameFinished = false;
-        System.out.println("Constructor: destroyed rooms: " + destroyedRooms.size() + " percentage " + destroyedRoomsPercentage);
     }
     
     /**
@@ -144,7 +138,7 @@ public class GameInfo implements IGameInfo
     public Helper getHelper() {return helper;}
     public void killHepler()
     {
-        writeToActionLog("Helper(" + helper.getName() + ") was killed");
+        ACTION_LOG.writeToLog("Helper(" + helper.getName() + ") was killed");
         helper = null;
     }
 
@@ -162,7 +156,7 @@ public class GameInfo implements IGameInfo
             return;
         
         gameFinished = value;
-        writeToActionLog("Game finished set to " + value);
+        ACTION_LOG.writeToLog("Game finished set to " + value);
     }
     
     /**
@@ -206,20 +200,11 @@ public class GameInfo implements IGameInfo
             
             listToSort.set(position, currentItem);
         }
+        
         // Copy scores from list to Map
         highScoreMap = new LinkedHashMap<>();
         for (Map.Entry<String, Integer> entry : listToSort)
             highScoreMap.put(entry.getKey(), entry.getValue());
-        
     }
     
-    /**
-     * Used for debuging. The message is printed in the console and the log file
-     * @param msg Message to log
-     */
-    private void writeToActionLog(String msg)
-    {
-        ACTION_LOG.writeToLog(msg);
-        System.out.println(msg);
-    }
 }
