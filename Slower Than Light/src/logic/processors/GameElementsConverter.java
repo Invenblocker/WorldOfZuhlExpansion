@@ -1,8 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package logic.processors;
 
 import java.awt.Point;
@@ -26,6 +21,7 @@ import logic.elements.rooms.WorkshopRoom;
 public class GameElementsConverter
 {
     private String roomsInfo;
+    private String roomPositionsInfo;
     private String itemsInfo;
     private String specialItemsInfo;
     private List<String> exitInfo;
@@ -33,14 +29,13 @@ public class GameElementsConverter
     private String saboteurInfo;
     private String helperInfo;
     private String timeHolderInfo;
-    private String roomPositions;
     
     public GameElementsConverter ()
     {
         exitInfo = new ArrayList<>();
     }
     
-    public void convertRooms (Map<String, Room> rooms)
+    public void convertRooms (Map <String, Room> rooms)
     {
         roomsInfo = "Room: ";
         for (String roomName : rooms.keySet())
@@ -64,17 +59,7 @@ public class GameElementsConverter
         
     }
     
-    public void convertRoomPositions (Map<String, Point> roomPosition, Player player, Saboteur saboteur){
-        this.roomPositions = "RoomPos: ";
-        
-        this.roomPositions += player.getCurrentRoom().getName() + " " + saboteur.getCurrentRoom().getName() + " ";
-        for (String key : roomPosition.keySet()) {
-            this.roomPositions += key + " " + roomPosition.get(key).x + " " + roomPosition.get(key).y + " ";
-        }
-        
-    }
-    
-    private void convertExit (Map<String, Room> rooms, Room room)
+    private void convertExit (Map <String, Room> rooms, Room room)
     {
         String roomName = room.getName();           // Rummet der bliver arbejdet på's navn.
         String exitString = roomName + " ";
@@ -148,7 +133,17 @@ public class GameElementsConverter
         exitInfo.add(exitString);
     }
     
-    public void convertItems (Map<String, Item> items)
+    public void convertRoomPositions (Map <String, Point> roomPositions, Player player, Saboteur saboteur){
+        this.roomPositionsInfo = "RoomPos: ";
+        
+        this.roomPositionsInfo += player.getCurrentRoom().getName() + " " + saboteur.getCurrentRoom().getName() + " ";
+        for (String key : roomPositions.keySet()) {
+            this.roomPositionsInfo += key + " " + roomPositions.get(key).x + " " + roomPositions.get(key).y + " ";
+        }
+        
+    }
+    
+    public void convertItems (Map <String, Item> items)
     {
         itemsInfo = "Item: ";
         for (String itemKey : items.keySet())
@@ -216,6 +211,8 @@ public class GameElementsConverter
     }
 
     public String getRoomsInfo() {return roomsInfo;}
+    
+    public String getRoomPositions() {return roomPositionsInfo;}
 
     public String getItemsInfo() {return itemsInfo;}
 
@@ -230,7 +227,5 @@ public class GameElementsConverter
     public String getHelperInfo() {return helperInfo;}
 
     public String getTimeHolderInfo() {return timeHolderInfo;}
-    
-    public String getRoomPositions() {return roomPositions;}
     
 }

@@ -15,8 +15,6 @@ import java.io.IOException;
 import java.net.URL;
 import java.util.List;
 import java.util.ResourceBundle;
-import javafx.beans.value.ChangeListener;
-import javafx.beans.value.ObservableValue;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
@@ -27,16 +25,13 @@ import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.ProgressBar;
 import javafx.scene.control.TextArea;
-import javafx.scene.control.TextFormatter;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.KeyEvent;
-import javafx.scene.layout.Background;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.StackPane;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Circle;
-import javafx.scene.text.Text;
 import javafx.stage.Stage;
 
 /**
@@ -286,6 +281,7 @@ public class GameGraphicsController implements Initializable, IInjectableControl
         
         logFacade.processCommand("repair");
         updatePlayerItemButtons();
+        updateRoomItemButtons();
         
         IRoom playerRoom = logFacade.getPlayer().getCurrentRoom();
         minimap.updatePlayerPosition(playerRoom);

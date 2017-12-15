@@ -96,7 +96,7 @@ public class LogFacade implements ILogFacade
     @Override
     public void injectVisualCaller(IVisualUpdater caller)
     {
-        game.getTimeHolder().addVisualUpdateCaller(caller);
+        game.getTimeHolder().addVisualCaller(caller);
     }
     
     /**
@@ -118,7 +118,7 @@ public class LogFacade implements ILogFacade
     @Override
     public IItem[] getItemsInCurrentRoom()
     {
-        return game.getGameCommand().getItemsInCurrentRoomItems();
+        return game.getGameCommand().getItemsInCurrentRoom();
     }
     
     /**

@@ -91,7 +91,7 @@ public class GameCommand
      * and last it returnes the itemArray.
      * @return 
      */
-    public Item[] getItemsInCurrentRoomItems ()
+    public Item[] getItemsInCurrentRoom ()
     {
         List<Item> itemList = roomItemList();
         Item[] itemArray = new Item[itemList.size()];
@@ -133,8 +133,7 @@ public class GameCommand
                 else
                 {
                     game.getGameInfo().setGameFinished(true);
-                    writeToActionLog("You went into the same room as the saboteur. ");
-                    writeToActionLog("Game over !!");
+                    ACTION_LOG.writeToLog("You went into the same room as the saboteur. ", "Game over !!");
                     return;
                 }
             }
@@ -164,10 +163,10 @@ public class GameCommand
             return;
         }
         
-        ArrayList<Item> roomInventory = roomItemList();
+        List<Item> roomInventory = roomItemList();
         if (roomInventory.isEmpty())
         {
-            writeToActionLog("There is no items in this room");
+            ACTION_LOG.writeToLog("There is no items in this room");
             return;
         }
         
@@ -193,7 +192,7 @@ public class GameCommand
             else if (room instanceof WorkshopRoom)
                 ((WorkshopRoom) room).removeItem(itemTaken);
             
-            writeToActionLog("Player took item: " + itemTaken.getName());
+            ACTION_LOG.writeToLog("Player took item: " + itemTaken.getName());
         } 
         catch (NumberFormatException | IndexOutOfBoundsException e) 
         {
@@ -219,7 +218,7 @@ public class GameCommand
         
         if (game.getPlayer().getItemCount() == 0)
         {
-            writeToActionLog("The player is not carrying any items");
+            ACTION_LOG.writeToLog("The player is not carrying any items");
             return;
         }
         
@@ -240,9 +239,11 @@ public class GameCommand
                     currentRoomAsWorkshopRoom.addItem(itemDropped);
                 }
                 else
-                    setItemToDefault(itemDropped);
+                {
+                    itemDropped.returnToDefaultRoom();
+                }
                 
-                writeToActionLog("Player dropped item " + itemDropped);
+                ACTION_LOG.writeToLog("Player dropped item " + itemDropped);
            }
         }
         catch (NumberFormatException | IndexOutOfBoundsException e) 
@@ -310,7 +311,7 @@ public class GameCommand
     {
         if (game.getPlayer().getCurrentRoom().isControlRoom())
         {
-            writeToActionLog("The room is operating and cannot be repaired");
+            ACTION_LOG.writeToLog("The room is operating and cannot be repaired");
             return;
         }
         
@@ -325,16 +326,16 @@ public class GameCommand
                 {
                     game.getPlayer().getCurrentRoom().setOperating(true);
                     game.getPlayer().removeItem(item);
-                    setItemToDefault(item);
+                    item.returnToDefaultRoom();
                     game.getGameInfo().updateRoomsDestroyed();
                     
-                    writeToActionLog("The room was repaired with a " + item);
+                    ACTION_LOG.writeToLog("The room was repaired with a " + item);
                     return;
                 }
             }
         }
         
-        writeToActionLog("You didn't have the necessary item to repair the room (" + roomRepairTool + ")");
+        ACTION_LOG.writeToLog("You didn't have the necessary item to repair the room (" + roomRepairTool + ")");
     }
     
     /**
@@ -351,7 +352,7 @@ public class GameCommand
             return;
         }
 
-        ArrayList<Item> roomInventory = roomItemList();
+        List<Item> roomInventory = roomItemList();
         if (roomInventory != null && !roomInventory.isEmpty())
         {
             System.out.println("These items are in this room: ");
@@ -371,7 +372,7 @@ public class GameCommand
     {
         if (game.getGameInfo().getHelper() == null)
         {
-            writeToActionLog("You cannot set the helper action because the helper is dead");
+            ACTION_LOG.writeToLog("You cannot set the helper action because the helper is dead");
             return;
         }
         
@@ -401,7 +402,7 @@ public class GameCommand
                 System.out.println("Please type in a task for helper before hitting enter!");
         }
         else
-            writeToActionLog("You need to be in the control room to give " + helperName + " a control!");
+            ACTION_LOG.writeToLog("You need to be in the control room to give " + helperName + " a control!");
     }
     
     /**
@@ -427,22 +428,7 @@ public class GameCommand
                 gec.getExitInfo(), gec.getPlayerInfo(), gec.getSaboteurInfo(), gec.getHelperInfo(),
                 gec.getTimeHolderInfo(), game.getGameInfo().getRoomsRepaired(), gec.getRoomPositions());
         
-        writeToActionLog("The game was saved succesfully");
-    }
-    
-    /**
-     * Finds the item's default room and sets the item to that room. 
-     * @param item 
-     */
-    private void setItemToDefault(Item item)
-    {
-        Room defaultRoom = item.getDefaultRoom();
-        
-        if (defaultRoom != null && defaultRoom instanceof ItemRoom) 
-        {
-            ItemRoom defaultRoomAsItemRoom = (ItemRoom)item.getDefaultRoom();
-            defaultRoomAsItemRoom.setItem(item);
-        }
+        ACTION_LOG.writeToLog("The game was saved succesfully");
     }
     
     /**
@@ -465,7 +451,7 @@ public class GameCommand
      * However, if the currentRoom is not an instance of either 
      * of these classes, it returns null.
      */
-    private ArrayList<Item> roomItemList ()
+    private List<Item> roomItemList ()
     {
         ArrayList<Item> roomInventory = new ArrayList<>();
         Room currentRoom = game.getPlayer().getCurrentRoom();
@@ -491,9 +477,4 @@ public class GameCommand
         return roomInventory;
     }
     
-    private void writeToActionLog (String msg)
-    {
-        ACTION_LOG.writeToLog(msg);
-        System.out.println(msg);
-    }
 }

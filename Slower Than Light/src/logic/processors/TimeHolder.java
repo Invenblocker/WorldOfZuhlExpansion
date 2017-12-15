@@ -115,7 +115,7 @@ public class TimeHolder extends TimerTask implements ITimeHolder
                     // check if saboteur is stunned or should move
                     if (game.getSaboteur().getStunCountdown() != 0)
                     {
-                        writeToActionLog("Decrement saboteur stun countdown " + game.getSaboteur().getStunCountdown());
+                        ACTION_LOG.writeToLog("Decrement saboteur stun countdown " + game.getSaboteur().getStunCountdown());
                         game.getSaboteur().decrementStunCountdown();
                         
                         if(game.getSaboteur().getStunCountdown() == 0)
@@ -137,7 +137,7 @@ public class TimeHolder extends TimerTask implements ITimeHolder
                     }    
                     else
                     {
-                        writeToActionLog("Decrement saboteur countdown " + saboteurCountdown);
+                        ACTION_LOG.writeToLog("Decrement saboteur countdown " + saboteurCountdown);
                         saboteurCountdown--;
                     }
 
@@ -181,7 +181,7 @@ public class TimeHolder extends TimerTask implements ITimeHolder
      * Add a reference to the Visual object which visuals should be updated
      * @param _caller The visual object
      */
-    public void addVisualUpdateCaller (IVisualUpdater _caller)
+    public void addVisualCaller (IVisualUpdater _caller)
     {
         caller = _caller;
     }
@@ -202,27 +202,17 @@ public class TimeHolder extends TimerTask implements ITimeHolder
         }
     }
     
+    public int getSaboteurCountdown () {return saboteurCountdown;}
     public void setSaboteurCountdown(int value) 
     {
         this.saboteurCountdown = value;
     }
     
+    public int getHelperCountdown() {return helperCountdown;}
     public void setHelperCountdown(int value) 
     {
         this.helperCountdown = value;
     }
-    
-    /**
-     * Returns the time until next saboteur action
-     * @return The current countdown time in seconds
-     */
-    public int getSaboteurCountdown () {return saboteurCountdown;}
-    
-    /**
-     * Returns the time until next saboteur action
-     * @return The current countdown time in seconds
-     */
-    public int getHelperCountdown() {return helperCountdown;}
     
     @Override
     public double getTimeLeft() {return timeLeft;}
@@ -247,7 +237,7 @@ public class TimeHolder extends TimerTask implements ITimeHolder
             if (gameInfo.getHelper() == null)
             {
                 gameInfo.setGameFinished(true);
-                writeToActionLog("Game over!!");
+                ACTION_LOG.writeToLog("Game over!!");
             }
             else
             {
@@ -261,14 +251,5 @@ public class TimeHolder extends TimerTask implements ITimeHolder
         }
     }
     
-    /**
-     * Used for debuging. The message is printed in the console and the log file
-     * @param msg Message to log
-     */
-    private void writeToActionLog (String msg)
-    {
-        ACTION_LOG.writeToLog(msg);
-        //System.out.println(msg);
-    }
 }
 
