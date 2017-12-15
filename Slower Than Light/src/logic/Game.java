@@ -91,6 +91,7 @@ public class Game
         sc.initializeHelper(loader.getHelperInfo());
         sc.initializeTimeHolder(loader.getTimeHolderInfo());
         
+        
         roomPositions = sc.roomPositionsSC;
         rooms = sc.roomsSC;
         items = sc.itemsSC;
@@ -113,7 +114,7 @@ public class Game
             helper = new Helper(randomRoom, "Krunk", 0.1, 0.1);
         
         // Setup GameInfo
-        gameInfo = new GameInfo(helper);
+        gameInfo = new GameInfo(helper, loader.getRoomsRepaired());
         gameInfo.updateRoomsDestroyed();
         
         for (String key : rooms.keySet())
@@ -309,6 +310,8 @@ public class Game
                 k += 3;
             }
         }
+        
+      
         
         private void initializeMiniMap (String[] words) {
             

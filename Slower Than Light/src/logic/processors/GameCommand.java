@@ -330,6 +330,7 @@ public class GameCommand
                     game.getGameInfo().updateRoomsDestroyed();
                     
                     ACTION_LOG.writeToLog("The room was repaired with a " + item);
+                    game.getGameInfo().incrementRoomsRepaired();
                     return;
                 }
             }

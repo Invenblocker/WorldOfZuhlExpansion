@@ -177,6 +177,7 @@ public class GameInfo implements IGameInfo
         double oxygenLeft = Game.getInstance().getTimeHolder().getOxygenLeft();
         int helperAlivePoints = getHelper() != null? 50 : 0;
         score = (int) ((roomsRepaired * 15) + (oxygenLeft * 1) + helperAlivePoints - (destroyedRoomsCount * 5));
+        System.out.println("Score is: repaired rooms: " + roomsRepaired +" Oxygentime: " + oxygenLeft + " Alive? " + helperAlivePoints + " destroyed rooms: " + destroyedRoomsCount);
     }
     
     /**
