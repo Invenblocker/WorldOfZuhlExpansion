@@ -1,11 +1,5 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package GUI;
 
-import acq.IGUI;
 import acq.IInjectableController;
 import acq.ILogFacade;
 import java.io.IOException;
@@ -16,8 +10,6 @@ import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
-import javafx.scene.control.Button;
-import javafx.scene.input.DragEvent;
 import javafx.scene.input.MouseEvent;
 import javafx.stage.Stage;
 
@@ -29,17 +21,8 @@ import javafx.stage.Stage;
 public class MainMenuController implements Initializable, IInjectableController
 {
     
-    @FXML
-    private Button newGameButton;
-    @FXML
-    private Button loadGameButton;
-    @FXML
-    private Button highscoreButton;
-    @FXML
-    private Button quitButton;
-
-    ILogFacade logFacade;
-    Stage stage;
+    private ILogFacade logFacade;
+    private Stage stage;
 
     /**
      * Initializes the controller class.
@@ -47,7 +30,7 @@ public class MainMenuController implements Initializable, IInjectableController
     @Override
     public void initialize(URL url, ResourceBundle rb) 
     {
-       logFacade = GUI.getInstance().getILogFacade();
+       logFacade = GUI.getInstance().getLogFacade();
     }
     
     @Override
@@ -60,54 +43,47 @@ public class MainMenuController implements Initializable, IInjectableController
     private void handleNewGameBtn(MouseEvent event) throws IOException
     {
         logFacade.newGame();
-        FXMLLoader loader = new FXMLLoader(getClass().getResource("GameGraphics.fxml"));
-        Parent root = loader.load();
-        
-        Scene scene = new Scene(root);
-        
-        
-        IInjectableController controller = loader.getController();
-        controller.injectStage(stage);
-        
-        stage.setScene(scene);
-        stage.show();
+        changeScene("GameGraphics.fxml");
     }
 
     @FXML
     private void handleLoadGameBtn(MouseEvent event) throws IOException
     {
         logFacade.loadGame();
-        FXMLLoader loader = new FXMLLoader(getClass().getResource("GameGraphics.fxml"));
-        Parent root = loader.load();
-        
-        Scene scene = new Scene(root);
-        
-        IInjectableController controller = loader.getController();
-        controller.injectStage(stage);
-        
-        stage.setScene(scene);
-        stage.show();
+        changeScene("GameGraphics.fxml");
     }
 
     @FXML
     private void handleHighscoreBtn(MouseEvent event) throws IOException
     {
-        FXMLLoader loader = new FXMLLoader(getClass().getResource("Highscore.fxml"));
-        Parent root = loader.load();
-        
-        Scene scene = new Scene(root);
-        
-        IInjectableController controller = loader.getController();
-        controller.injectStage(stage);
-        
-        stage.setScene(scene);
-        stage.show();
+        changeScene("Highscore.fxml");
     }
 
     @FXML
     private void handleQuitBtn(MouseEvent event) throws IOException
     {
         System.exit(0);
+    }
+    
+    private void changeScene(String sceneName)
+    {
+        try {
+            FXMLLoader loader = new FXMLLoader(getClass().getResource(sceneName));
+            Parent root = loader.load();
+
+            Scene scene = new Scene(root);
+
+            IInjectableController controller = loader.getController();
+            controller.injectStage(stage);
+
+            stage.setScene(scene);
+            stage.show();
+        }
+        catch (IOException e)
+        {
+            System.out.println("Game: Tried to change scene to " + sceneName);
+            e.printStackTrace();
+        }
     }
     
 }

@@ -86,7 +86,7 @@
                         <Pane prefHeight="200.0" prefWidth="200.0" />
                         <HBox prefHeight="120.0" prefWidth="700.0">
                            <children>
-                              <StackPane fx:id="logPane" prefHeight="100.0" prefWidth="231.0">
+                              <StackPane prefHeight="100.0" prefWidth="231.0">
                                  <children>
                                     <TextArea fx:id="logTextArea" prefHeight="200.0" prefWidth="180.0" style="-fx-background-color: black; -fx-border-color: black;" />
                                  </children>
@@ -107,7 +107,7 @@
                                              <children>
                                                 <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#262626" height="40.0" stroke="#006680" strokeType="INSIDE" strokeWidth="2.0" width="75.0" />
                                                 <Label fx:id="playerItem1" text="Item1" textFill="WHITE" />
-                                                <Pane fx:id="playerItem1Button" onMouseClicked="#dropItem0" prefHeight="200.0" prefWidth="200.0">
+                                                <Pane onMouseClicked="#dropItem0" prefHeight="200.0" prefWidth="200.0">
                                                    <StackPane.margin>
                                                       <Insets bottom="20.0" left="20.0" right="20.0" top="20.0" />
                                                    </StackPane.margin>
@@ -118,7 +118,7 @@
                                              <children>
                                                 <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#262626" height="40.0" stroke="#006680" strokeType="INSIDE" strokeWidth="2.0" width="75.0" />
                                                 <Label fx:id="playerItem2" text="Item2" textFill="WHITE" />
-                                                <Pane fx:id="playerItem2Button" onMouseClicked="#dropItem1" prefHeight="200.0" prefWidth="200.0">
+                                                <Pane onMouseClicked="#dropItem1" prefHeight="200.0" prefWidth="200.0">
                                                    <StackPane.margin>
                                                       <Insets bottom="20.0" left="20.0" right="20.0" top="20.0" />
                                                    </StackPane.margin>
@@ -146,7 +146,7 @@
                                              <children>
                                                 <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#262626" height="40.0" stroke="#006680" strokeType="INSIDE" strokeWidth="2.0" width="75.0" />
                                                 <Label fx:id="roomItem1" text="Item1" textFill="WHITE" />
-                                                <Pane fx:id="roomItem1Button" onMouseClicked="#takeItem0" prefHeight="200.0" prefWidth="200.0">
+                                                <Pane onMouseClicked="#takeItem0" prefHeight="200.0" prefWidth="200.0">
                                                    <StackPane.margin>
                                                       <Insets bottom="20.0" left="20.0" right="20.0" top="20.0" />
                                                    </StackPane.margin>
@@ -157,7 +157,7 @@
                                              <children>
                                                 <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#262626" height="40.0" stroke="#006680" strokeType="INSIDE" strokeWidth="2.0" width="75.0" />
                                                 <Label fx:id="roomItem2" text="Item2" textFill="WHITE" />
-                                                <Pane fx:id="roomItem2Button" onMouseClicked="#takeItem1" prefHeight="200.0" prefWidth="200.0">
+                                                <Pane onMouseClicked="#takeItem1" prefHeight="200.0" prefWidth="200.0">
                                                    <StackPane.margin>
                                                       <Insets bottom="20.0" left="20.0" right="20.0" top="20.0" />
                                                    </StackPane.margin>
@@ -195,42 +195,42 @@
                             <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
                           </rowConstraints>
                            <children>
-                              <Button fx:id="repairButton" alignment="CENTER" mnemonicParsing="false" onAction="#repair" prefHeight="48.0" prefWidth="100.0" style="-fx-background-color: linear-gradient(#00ffff 0%, #000000 25%, #373837 75%, #00ffff 100%); -fx-border-radius: 5; -fx-border-color: dodgerblue;" text="Repair" textFill="DODGERBLUE">
+                              <Button alignment="CENTER" mnemonicParsing="false" onAction="#repair" prefHeight="48.0" prefWidth="100.0" style="-fx-background-color: linear-gradient(#00ffff 0%, #000000 25%, #373837 75%, #00ffff 100%); -fx-border-radius: 5; -fx-border-color: dodgerblue;" text="Repair" textFill="DODGERBLUE">
                                  <GridPane.margin>
                                     <Insets right="10.0" />
                                  </GridPane.margin>
                                  <font>
                                     <Font size="13.0" />
                                  </font></Button>
-                              <Button fx:id="investigateButton" alignment="CENTER" mnemonicParsing="false" onAction="#investigate" prefHeight="48.0" prefWidth="100.0" style="-fx-background-color: linear-gradient(#00ffff 0%, #000000 25%, #373837 75%, #00ffff 100%); -fx-border-radius: 5; -fx-border-color: dodgerblue;" text="Investigate" textFill="DODGERBLUE" GridPane.columnIndex="1">
+                              <Button alignment="CENTER" mnemonicParsing="false" onAction="#investigate" prefHeight="48.0" prefWidth="100.0" style="-fx-background-color: linear-gradient(#00ffff 0%, #000000 25%, #373837 75%, #00ffff 100%); -fx-border-radius: 5; -fx-border-color: dodgerblue;" text="Investigate" textFill="DODGERBLUE" GridPane.columnIndex="1">
                                  <GridPane.margin>
                                     <Insets />
                                  </GridPane.margin>
                                  <font>
                                     <Font size="13.0" />
                                  </font></Button>
-                              <Button fx:id="talkButton" alignment="CENTER" mnemonicParsing="false" onAction="#talk" prefHeight="48.0" prefWidth="100.0" style="-fx-background-color: linear-gradient(#00ffff 0%, #000000 25%, #373837 75%, #00ffff 100%); -fx-border-radius: 5; -fx-border-color: dodgerblue;" text="Talk" textFill="DODGERBLUE" GridPane.columnIndex="2">
+                              <Button alignment="CENTER" mnemonicParsing="false" onAction="#talk" prefHeight="48.0" prefWidth="100.0" style="-fx-background-color: linear-gradient(#00ffff 0%, #000000 25%, #373837 75%, #00ffff 100%); -fx-border-radius: 5; -fx-border-color: dodgerblue;" text="Talk" textFill="DODGERBLUE" GridPane.columnIndex="2">
                                  <GridPane.margin>
                                     <Insets left="10.0" />
                                  </GridPane.margin>
                                  <font>
                                     <Font size="13.0" />
                                  </font></Button>
-                              <Button fx:id="helpButton" alignment="CENTER" mnemonicParsing="false" onAction="#help" onKeyPressed="#keyPressed" prefHeight="48.0" prefWidth="100.0" style="-fx-background-color: linear-gradient(#00ffff 0%, #000000 25%, #373837 75%, #00ffff 100%); -fx-border-radius: 5; -fx-border-color: dodgerblue;" text="Help" textFill="DODGERBLUE" GridPane.rowIndex="1">
+                              <Button alignment="CENTER" mnemonicParsing="false" onAction="#help" onKeyPressed="#keyPressed" prefHeight="48.0" prefWidth="100.0" style="-fx-background-color: linear-gradient(#00ffff 0%, #000000 25%, #373837 75%, #00ffff 100%); -fx-border-radius: 5; -fx-border-color: dodgerblue;" text="Help" textFill="DODGERBLUE" GridPane.rowIndex="1">
                                  <GridPane.margin>
                                     <Insets right="10.0" />
                                  </GridPane.margin>
                                  <font>
                                     <Font size="13.0" />
                                  </font></Button>
-                              <Button fx:id="saveButton" alignment="CENTER" mnemonicParsing="false" onAction="#saveGame" prefHeight="48.0" prefWidth="100.0" style="-fx-background-color: linear-gradient(#00ffff 0%, #000000 25%, #373837 75%, #00ffff 100%); -fx-border-radius: 5; -fx-border-color: dodgerblue;" text="Save" textFill="DODGERBLUE" GridPane.columnIndex="1" GridPane.rowIndex="1">
+                              <Button alignment="CENTER" mnemonicParsing="false" onAction="#saveGame" prefHeight="48.0" prefWidth="100.0" style="-fx-background-color: linear-gradient(#00ffff 0%, #000000 25%, #373837 75%, #00ffff 100%); -fx-border-radius: 5; -fx-border-color: dodgerblue;" text="Save" textFill="DODGERBLUE" GridPane.columnIndex="1" GridPane.rowIndex="1">
                                  <GridPane.margin>
                                     <Insets />
                                  </GridPane.margin>
                                  <font>
                                     <Font size="13.0" />
                                  </font></Button>
-                              <Button fx:id="quitButton" alignment="CENTER" mnemonicParsing="false" onAction="#quit" prefHeight="48.0" prefWidth="100.0" style="-fx-background-color: linear-gradient(#00ffff 0%, #000000 25%, #373837 75%, #00ffff 100%); -fx-border-radius: 5; -fx-border-color: dodgerblue;" text="Quit" textFill="DODGERBLUE" GridPane.columnIndex="2" GridPane.rowIndex="1">
+                              <Button alignment="CENTER" mnemonicParsing="false" onAction="#quit" prefHeight="48.0" prefWidth="100.0" style="-fx-background-color: linear-gradient(#00ffff 0%, #000000 25%, #373837 75%, #00ffff 100%); -fx-border-radius: 5; -fx-border-color: dodgerblue;" text="Quit" textFill="DODGERBLUE" GridPane.columnIndex="2" GridPane.rowIndex="1">
                                  <GridPane.margin>
                                     <Insets left="10.0" />
                                  </GridPane.margin>
@@ -255,22 +255,22 @@
                             <RowConstraints maxHeight="1.7976931348623157E308" minHeight="-Infinity" prefHeight="42.0" vgrow="SOMETIMES" />
                           </rowConstraints>
                            <children>
-                              <Button fx:id="leftButton" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" onAction="#walkLeft" onKeyPressed="#keyPressed" prefHeight="41.0" prefWidth="42.0" style="-fx-background-color: linear-gradient(#00ffff 0%, #000000 25%, #373837 75%, #00ffff 100%); -fx-border-radius: 5; -fx-border-color: dodgerblue;" text="Left" textFill="DODGERBLUE" GridPane.rowIndex="1">
+                              <Button maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" onAction="#walkLeft" onKeyPressed="#keyPressed" prefHeight="41.0" prefWidth="42.0" style="-fx-background-color: linear-gradient(#00ffff 0%, #000000 25%, #373837 75%, #00ffff 100%); -fx-border-radius: 5; -fx-border-color: dodgerblue;" text="Left" textFill="DODGERBLUE" GridPane.rowIndex="1">
                                  <font>
                                     <Font size="13.0" />
                                  </font></Button>
-                              <Button fx:id="upButton" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" onAction="#walkUp" onKeyPressed="#keyPressed" prefHeight="42.0" prefWidth="41.0" style="-fx-background-color: linear-gradient(#00ffff 0%, #000000 25%, #373837 75%, #00ffff 100%); -fx-border-radius: 5; -fx-border-color: dodgerblue;" text="Up" textFill="DODGERBLUE" GridPane.columnIndex="1">
+                              <Button maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" onAction="#walkUp" onKeyPressed="#keyPressed" prefHeight="42.0" prefWidth="41.0" style="-fx-background-color: linear-gradient(#00ffff 0%, #000000 25%, #373837 75%, #00ffff 100%); -fx-border-radius: 5; -fx-border-color: dodgerblue;" text="Up" textFill="DODGERBLUE" GridPane.columnIndex="1">
                                  <font>
                                     <Font size="13.0" />
                                  </font></Button>
-                              <Button fx:id="rightButton" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" onAction="#walkRight" onKeyPressed="#keyPressed" prefHeight="41.0" prefWidth="42.0" style="-fx-background-color: linear-gradient(#00ffff 0%, #000000 25%, #373837 75%, #00ffff 100%); -fx-border-radius: 5; -fx-border-color: dodgerblue;" text="Right" textFill="DODGERBLUE" GridPane.columnIndex="2" GridPane.rowIndex="1">
+                              <Button maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" onAction="#walkRight" onKeyPressed="#keyPressed" prefHeight="41.0" prefWidth="42.0" style="-fx-background-color: linear-gradient(#00ffff 0%, #000000 25%, #373837 75%, #00ffff 100%); -fx-border-radius: 5; -fx-border-color: dodgerblue;" text="Right" textFill="DODGERBLUE" GridPane.columnIndex="2" GridPane.rowIndex="1">
                                  <GridPane.margin>
                                     <Insets />
                                  </GridPane.margin>
                                  <font>
                                     <Font size="13.0" />
                                  </font></Button>
-                              <Button fx:id="downButton" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" onAction="#walkDown" onKeyPressed="#keyPressed" prefHeight="42.0" prefWidth="41.0" style="-fx-background-color: linear-gradient(#00ffff 0%, #000000 25%, #373837 75%, #00ffff 100%); -fx-border-radius: 5; -fx-border-color: dodgerblue;" text="Down" textFill="DODGERBLUE" GridPane.columnIndex="1" GridPane.rowIndex="2">
+                              <Button maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" onAction="#walkDown" onKeyPressed="#keyPressed" prefHeight="42.0" prefWidth="41.0" style="-fx-background-color: linear-gradient(#00ffff 0%, #000000 25%, #373837 75%, #00ffff 100%); -fx-border-radius: 5; -fx-border-color: dodgerblue;" text="Down" textFill="DODGERBLUE" GridPane.columnIndex="1" GridPane.rowIndex="2">
                                  <font>
                                     <Font size="13.0" />
                                  </font></Button>

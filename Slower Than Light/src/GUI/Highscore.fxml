@@ -79,7 +79,7 @@
                   </Bloom>
                </effect>
             </Label>
-            <Button fx:id="BackToMainMenuBtn" layoutX="318.0" layoutY="389.0" mnemonicParsing="false" onMouseClicked="#handleBackToMainMenuBtn" style="-fx-background-color: transparent; -fx-border-color: grey; -fx-border-width: 3;" text="Back to main menu" textFill="#00daff" wrapText="true" GridPane.rowIndex="3" GridPane.valignment="BOTTOM">
+            <Button layoutX="318.0" layoutY="389.0" mnemonicParsing="false" onMouseClicked="#handleBackToMainMenuBtn" style="-fx-background-color: transparent; -fx-border-color: grey; -fx-border-width: 3;" text="Back to main menu" textFill="#00daff" wrapText="true" GridPane.rowIndex="3" GridPane.valignment="BOTTOM">
                <GridPane.margin>
                   <Insets bottom="5.0" left="5.0" />
                </GridPane.margin>

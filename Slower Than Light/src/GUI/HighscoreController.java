@@ -1,8 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package GUI;
 
 import acq.IInjectableController;
@@ -32,12 +27,9 @@ import javafx.stage.Stage;
  */
 public class HighscoreController implements Initializable, IInjectableController 
 {
-    ILogFacade logFacade;
-    Stage stage;
-    @FXML
-    private Button BackToMainMenuBtn;
+    private ILogFacade logFacade;
+    private Stage stage;
     
-
     @FXML
     private ListView<String> nameCol;
     private ObservableList<String> nameList;
@@ -59,7 +51,7 @@ public class HighscoreController implements Initializable, IInjectableController
     @Override
     public void initialize(URL url, ResourceBundle rb) 
     {
-        logFacade = GUI.getInstance().getILogFacade();
+        logFacade = GUI.getInstance().getLogFacade();
         
         Map<String, Integer> highscore = logFacade.getHighscore();
         

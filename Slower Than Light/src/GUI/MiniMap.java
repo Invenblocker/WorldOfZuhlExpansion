@@ -1,8 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package GUI;
 
 import acq.IRoom;
@@ -19,20 +14,20 @@ import javafx.scene.canvas.GraphicsContext;
  */
 public class MiniMap
 {
-    LayeredSprite ls = new LayeredSprite();
-    Map<String, Point> roomPositions = new HashMap<>();
-    GraphicsContext gc;
+    private LayeredSprite ls = new LayeredSprite();
+    private Map <String, Point> roomPositions = new HashMap<>();
+    private GraphicsContext gc;
     
-    List<IRoom> destroyedRooms;
-    String playerRoom;
-    String saboteurRoom;
+    private List<IRoom> destroyedRooms;
+    private String playerRoom;
+    private String saboteurRoom;
     
     /**
      * Initializes a minimap, given a Map consisting og String names and Point coordinates, togehter with a GraphicsContext.
      * @param roomPositions
      * @param gc 
      */
-    public MiniMap(Map<String, Point> roomPositions, GraphicsContext gc)
+    public MiniMap(Map <String, Point> roomPositions, GraphicsContext gc)
     {
         this.roomPositions = roomPositions;
         this.gc = gc;
@@ -97,18 +92,16 @@ public class MiniMap
     private void redraw ()
     {
         ls = new LayeredSprite();
-        updateRoom(destroyedRooms, ls);
-        updatePlayer(playerRoom, ls);
-        updateSaboteur(saboteurRoom, ls);
+        updateRoom();
+        updatePlayer();
+        updateSaboteur();
         ls.render(gc);
     }
     
     /**
-     * Adds the rooms to the LayeredSprite, with the destroyed rooms drawn on top of the non-destroyed rooms. 
-     * @param destroyedRooms Array som består af de rum som er ødelagt.
-     * @param gc Det
+     * Adds the rooms to the LayeredSprite, with the destroyed rooms drawn on top of the non-destroyed rooms.
      */
-    private void updateRoom(List<IRoom> destroyedRooms, LayeredSprite ls)
+    private void updateRoom()
     {
         // iterates through the array with destroyed rooms
         List<String> destroyedRoomNames = new ArrayList<>();
@@ -128,10 +121,8 @@ public class MiniMap
     
     /**
      * Adds the player to the LayeredSprite - on top of the rooms, regardless of their state, but on same layer as the saboteur.
-     * @param playerRoom
-     * @param ls 
      */
-    private void updatePlayer(String playerRoom, LayeredSprite ls)
+    private void updatePlayer()
     {
         for (String key : roomPositions.keySet())
             if (key.equals(playerRoom))
@@ -141,10 +132,8 @@ public class MiniMap
     
     /**
      * Adds the saboteur to the LayeredSprite - on top of the rooms, regardless of their state, but on same layer as the player.
-     * @param saboteurRoom
-     * @param ls 
      */
-    private void updateSaboteur(String saboteurRoom, LayeredSprite ls)
+    private void updateSaboteur()
     {
         for (String key : roomPositions.keySet())
             if (key.equals(saboteurRoom))

@@ -1,8 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package GUI;
 
 import javafx.scene.canvas.GraphicsContext;
@@ -18,7 +13,6 @@ public class BaseSprite extends ImageView{
      public BaseSprite(){
         super();
     }
-
      
     public BaseSprite(Image image){
         super(image);
@@ -32,7 +26,7 @@ public class BaseSprite extends ImageView{
         setFitHeight(height);
     }
     
-     public void render(GraphicsContext gc){
+    public void render(GraphicsContext gc){
         gc.drawImage(this.getImage(), xProperty().doubleValue(), yProperty().doubleValue());
     }
      

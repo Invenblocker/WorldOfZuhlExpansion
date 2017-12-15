@@ -1,8 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package GUI;
 
 import acq.IInjectableController;
@@ -21,15 +16,12 @@ import javafx.fxml.Initializable;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.canvas.Canvas;
-import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.ProgressBar;
 import javafx.scene.control.TextArea;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.KeyEvent;
-import javafx.scene.layout.Pane;
-import javafx.scene.layout.StackPane;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Circle;
 import javafx.stage.Stage;
@@ -54,16 +46,14 @@ public class GameGraphicsController implements Initializable, IInjectableControl
     private final String SHIELD_GENERATOR_URL = "images/rooms/shield-generator.png";
     private final String WORKSHOP_URL = "images/rooms/workshop.png";
     
-    private final int MAX_CHARS = 15;
+    private ILogFacade logFacade;
+    private Stage stage;
+    private MiniMap minimap;
     
     @FXML
     private ImageView currentRoomDisplay;
     @FXML
-    private ImageView currentRoomCharacter;
-    @FXML
     private Circle chaseAlert;
-    @FXML
-    private StackPane logPane;
     @FXML
     private TextArea logTextArea;
     @FXML
@@ -71,47 +61,15 @@ public class GameGraphicsController implements Initializable, IInjectableControl
     @FXML
     private Label playerItem2;
     @FXML
-    private Pane playerItem1Button;
-    @FXML
-    private Pane playerItem2Button;
-    @FXML
     private Label roomItem1;
     @FXML
     private Label roomItem2;
-    @FXML
-    private Pane roomItem1Button;
-    @FXML
-    private Pane roomItem2Button;
-    @FXML
-    private Button leftButton;
-    @FXML
-    private Button upButton;
-    @FXML
-    private Button rightButton;
-    @FXML
-    private Button downButton;
     @FXML
     private Canvas minimapCanvas;
     @FXML
     private ProgressBar oxygenBar;
     @FXML
     private ProgressBar timeBar;
-    @FXML
-    private Button repairButton;
-    @FXML
-    private Button investigateButton;
-    @FXML
-    private Button talkButton;
-    @FXML
-    private Button helpButton;
-    @FXML
-    private Button saveButton;
-    @FXML
-    private Button quitButton;
-    
-    private ILogFacade logFacade;
-    private Stage stage;
-    private MiniMap minimap;
     
     /**
      * Initializes the controller class.
@@ -119,7 +77,7 @@ public class GameGraphicsController implements Initializable, IInjectableControl
     @Override
     public void initialize(URL url, ResourceBundle rb)
     {
-        logFacade = GUI.getInstance().getILogFacade();
+        logFacade = GUI.getInstance().getLogFacade();
         
         // setup player log
         logTextArea.setEditable(false);
@@ -294,6 +252,8 @@ public class GameGraphicsController implements Initializable, IInjectableControl
     {
         if(logFacade.getGameInfo().isGameFinished())
             return;
+        
+        writeToLog("Hello :)");
     }
 
     @FXML
@@ -401,6 +361,16 @@ public class GameGraphicsController implements Initializable, IInjectableControl
         
         if (logFacade.getGameInfo().isGameFinished() && logFacade.getPlayer().getCurrentRoom() == logFacade.getSaboteur().getCurrentRoom())
             processGameLost("player walking into saboteur");
+    }
+  
+    private void printWelcome()
+    {
+        writeToLog("Welcome to the game");
+    }
+    
+    private void printHelp()
+    {
+        writeToLog("You can use the keys:\n  W,A,S,D,R,I,H and Q");
     }
     
     public void updateBackground(String roomName)
@@ -567,16 +537,6 @@ public class GameGraphicsController implements Initializable, IInjectableControl
             System.out.println("Game: Tried to change scene to " + sceneName);
             e.printStackTrace();
         }
-    }
-  
-    private void printWelcome()
-    {
-        writeToLog("Welcome to the game");
-    }
-    
-    private void printHelp()
-    {
-        writeToLog("You can use the keys:\n  W,A,S,D,R,I,H and Q");
     }
     
     private void writeToLog(String text)

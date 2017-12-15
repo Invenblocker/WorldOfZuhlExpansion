@@ -1,8 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package GUI;
 
 import acq.IGUI;
@@ -33,8 +28,6 @@ public class GUI extends Application implements IGUI
     }
     
     private ILogFacade logFacade;
-    
-    public GUI() {}
     
     @Override
     public void injectLogic(ILogFacade _logFacade)
@@ -72,6 +65,6 @@ public class GUI extends Application implements IGUI
         launch(args);
     }
     
-    public ILogFacade getILogFacade() {return logFacade;}
+    public ILogFacade getLogFacade() {return logFacade;}
 }
 
