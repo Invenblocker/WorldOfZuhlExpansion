@@ -84,7 +84,7 @@ public class txtLoader implements ILoader
             else if(words[0].equals("Item:")){
                 itemsInfo = words;
             }
-            else if(words[0].equals("Player:")){// mangler noget, special item og item? defaultRoom
+            else if(words[0].equals("Player:")){
                 playerInfo = words;
             }
             else if(words[0].equals("Saboteur:")){

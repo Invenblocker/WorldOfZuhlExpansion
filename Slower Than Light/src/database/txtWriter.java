@@ -78,7 +78,7 @@ public class txtWriter implements IWriter {
         txtWriter.print(timeHolderInfo);
         txtWriter.println();
 
-        txtWriter.print("RoomsRepaired: " + roomsRepaired);   // roomsrepaired kommer fra gameinfo.increment 
+        txtWriter.print("RoomsRepaired: " + roomsRepaired);   
         txtWriter.println();
         
         txtWriter.print(roomPosition);
@@ -95,7 +95,7 @@ public class txtWriter implements IWriter {
     @Override
     public void writeHighScore(Map<String, Integer> highScore, String highscoreName)
     {
-        // hashmappet må kun være en vis størrelse
+        
         PrintWriter txtWriter = null;
         
         try
