@@ -1,4 +1,4 @@
-Room: controlRoom ControlRoom true Workshop WorkshopRoom true Kitchen ItemRoom false EntryRamp ItemRoom true Lab ItemRoom true LeftThruster ItemRoom true LoadingBay ItemRoom true RightThruster ItemRoom true Office ItemRoom true OxygenContainer ItemRoom true LivingQuarters ItemRoom true ShieldGenerator ItemRoom true
+Room: controlRoom ControlRoom true Workshop WorkshopRoom true Kitchen ItemRoom true EntryRamp ItemRoom true Lab ItemRoom true LeftThruster ItemRoom true LoadingBay ItemRoom true RightThruster ItemRoom true Office ItemRoom true OxygenContainer ItemRoom true LivingQuarters ItemRoom true ShieldGenerator ItemRoom true
 Kitchen down true EntryRamp right true ShieldGenerator
 ShieldGenerator left true Kitchen down true controlRoom right true LivingQuarters
 LivingQuarters left true ShieldGenerator down true OxygenContainer
@@ -16,6 +16,6 @@ Item: Tool PC Office Tool Acid Lab Tool Knife Kitchen Tool Screwdriver OxygenCon
 Player: controlRoom 2 
 Saboteur: Office 0.5 0.1 0.1 0.5 5
 Helper: controlRoom Erik Bodyguard 0.1 0.1 0.9
-RoomsRepaired: 10
-TimeHolder: 10.0 360.0 300.0 360.0 0 0
+RoomsRepaired: 0
+TimeHolder: 300.0 360.0 300.0 360.0 0 0
 RoomPos: controlRoom Office controlRoom 135 85 Office 170 115 Kitchen 100 55 EntryRamp 20 100 RightThruster 170 145 LivingQuarters 170 55 ShieldGenerator 135 55 OxygenContainer 170 85 Workshop 135 115 LoadingBay 135 145 EntryRamp 100 85 Lab 100 115 LeftThruster 100 145
